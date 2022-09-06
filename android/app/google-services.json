@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1090390887405",
+    "project_id": "mannergamer-c2546",
+    "storage_bucket": "mannergamer-c2546.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090390887405:android:5ba22cdde416cf1dd9b5e4",
+        "android_client_info": {
+          "package_name": "com.mannergamer.mannergamer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090390887405-rmdret28amerrj46kq7hjo5j79hv3eh6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh0EZOx44fQxm_a-VBqDabtvP0qH16Vuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090390887405-rmdret28amerrj46kq7hjo5j79hv3eh6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1090390887405-9k0ifd1cks200ibu9s9760mdcsim36ss.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dsfsdfsdf"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
