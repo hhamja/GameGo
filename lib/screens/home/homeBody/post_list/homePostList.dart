@@ -1,13 +1,20 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class HomePostList extends StatelessWidget {
+class HomePostList extends StatefulWidget {
   HomePostList({Key? key}) : super(key: key);
 
+  @override
+  State<HomePostList> createState() => _HomePostListState();
+}
+
+class _HomePostListState extends State<HomePostList> {
   /* Post Controller 최초 선언 */
   final PostController controller = Get.put(PostController());
 
   @override
   Widget build(BuildContext context) {
+    print(controller.postList);
+
     return Obx(
       () => ListView.separated(
         padding: EdgeInsets.only(top: 10),

@@ -26,13 +26,24 @@ class PostModel {
     final map = doc.data();
     return PostModel(
       postid: doc.id,
-      username: map?['username'] ?? '',
+      username: map?['username'],
       title: map?['title'],
       maintext: map?['maintext'],
       gamemode: map?['gamemode'],
-      position: map?['position'] ?? '',
-      tear: map?['tear'] ?? '',
+      position: map?['position'],
+      tear: map?['tear'],
       createdAt: map?['createdAt'],
     );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (username != null) 'username': username,
+      if (title != null) 'title': title,
+      if (maintext != null) 'maintext': maintext,
+      if (gamemode != null) 'gamemode': gamemode,
+      if (tear != null) 'tear': tear,
+      if (createdAt != null) 'createdAt': createdAt,
+    };
   }
 }

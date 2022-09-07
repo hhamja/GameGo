@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index.dart';
 class PostController extends GetxController {
   /* Initialize Firestore Instance */
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  /* RxList streamPostList [] 선언 */
+  /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
 
   /* Lifecycle */
@@ -11,6 +11,7 @@ class PostController extends GetxController {
   void onInit() {
     super.onInit();
     readPostData();
+    print(postList);
   }
 
   @override
@@ -44,12 +45,14 @@ class PostController extends GetxController {
           .collection('post')
           .orderBy('createdAt', descending: true)
           .get();
-      print(res.docs);
-      for (var re in res.docs) {
-        final postModel = PostModel.fromDocumentSnapshot(re);
-        print(postModel);
-        postList.add(postModel);
-      }
+      postList.addAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
+      print(postList);
+      return postList;
+      // for (var re in res.docs) {
+      //   final postModel = PostModel.fromDocumentSnapshot(re);
+      //   print(postModel);
+      //   postList.add(postModel);
+      // }
     } catch (e) {
       print('read error : ${e}');
     }

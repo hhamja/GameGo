@@ -41,7 +41,7 @@ class _HomeAddPostState extends State<HomeAddPost> {
                 createdAt: Timestamp.now(),
               );
               await _postController.createPost(_postModel);
-              _postController.readPostData();
+              await _postController.readPostData();
               Get.back();
             },
             child: Text(
