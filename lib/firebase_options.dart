@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,9 +46,19 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCp9f7EVZrisE-Kf96hwooJgAv1OtqCTls',
+    appId: '1:1090390887405:web:dfa971cff8f168a4d9b5e4',
+    messagingSenderId: '1090390887405',
+    projectId: 'mannergamer-c2546',
+    authDomain: 'mannergamer-c2546.firebaseapp.com',
+    storageBucket: 'mannergamer-c2546.appspot.com',
+    measurementId: 'G-WHS4FB278Z',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBh0EZOx44fQxm_a-VBqDabtvP0qH16Vuk',
-    appId: '1:1090390887405:android:5ba22cdde416cf1dd9b5e4',
+    appId: '1:1090390887405:android:425089d55f409499d9b5e4',
     messagingSenderId: '1090390887405',
     projectId: 'mannergamer-c2546',
     storageBucket: 'mannergamer-c2546.appspot.com',
@@ -59,7 +66,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCm5PWhthwwCDjOrL2ICzinf5WIMQN4-aQ',
-    appId: '1:1090390887405:ios:98ef9cb2bdd13b80d9b5e4',
+    appId: '1:1090390887405:ios:c3b3b740ff1f564fd9b5e4',
     messagingSenderId: '1090390887405',
     projectId: 'mannergamer-c2546',
     storageBucket: 'mannergamer-c2546.appspot.com',

@@ -27,24 +27,26 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  badges: null
-  chat_bubbles: null
-  cloud_firestore: 
-  cupertino_icons: ^1.0.2
-  dropdown_button2: null
-  firebase: ^9.0.3
-  firebase_core: ^1.19.2
+  badges:
+  chat_bubbles:
+  cloud_firestore:
+  cupertino_icons:
+  dropdown_button2:
+  firebase_core:
   flutter:
     sdk: flutter
-  flutter_multi_select_items: null
-  flutter_slidable: null
-  font_awesome_flutter: null
-  get: null
-  mask_text_input_formatter: null
-  multi_select_flutter: null
-  settings_ui: null
-  syncfusion_flutter_gauges: null
-  supabase_flutter: ^1.0.0-dev.1
+  flutter_multi_select_items:
+  flutter_slidable:
+  font_awesome_flutter:
+  get:
+  mask_text_input_formatter:
+  multi_select_flutter:
+  settings_ui:
+  syncfusion_flutter_gauges:
+  supabase_flutter:
+  firebase_analytics: ^9.3.3
+  firebase_auth: ^3.7.0
+  firebase_app_installations: ^0.1.1+6
   
 
 dev_dependencies:

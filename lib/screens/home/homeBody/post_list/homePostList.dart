@@ -35,7 +35,7 @@ class HomePostList extends StatelessWidget {
                       SizedBox(width: 5),
                       Text(
                         /* 제목 */
-                        '${controller.postList[index].username!}',
+                        '${controller.postList[index].username}',
                         style: TextStyle(height: 1.2),
                       ),
                       Expanded(
@@ -66,7 +66,7 @@ class HomePostList extends StatelessWidget {
                     /* 게임모드 · 포지션 · 티어 */
                     Expanded(
                       child: Text(
-                          '${controller.postList[index].gamemode!} · ${controller.postList[index].position ?? ''} · ${controller.postList[index].tear ?? ''}'),
+                          '${controller.postList[index].gamemode} · ${controller.postList[index].position ?? ''} · ${controller.postList[index].tear ?? ''}'),
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,

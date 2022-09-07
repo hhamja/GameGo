@@ -1,7 +1,6 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class PostController extends GetxController {
-  final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp();
   /* Initialize Firestore Instance */
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   /* RxList streamPostList [] 선언 */
@@ -29,7 +28,7 @@ class PostController extends GetxController {
         'gamemode': postModel.gamemode,
         'position': postModel.position,
         'tear': postModel.tear,
-        'createdAt': Timestamp.now(),
+        'createdAt': postModel.createdAt,
       });
       print(res);
       return res;

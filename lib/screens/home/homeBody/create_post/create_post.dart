@@ -38,6 +38,7 @@ class _HomeAddPostState extends State<HomeAddPost> {
                 gamemode: dropDownController.seledtedPostGamemodeValue,
                 position: dropDownController.seledtedPostdPositionValue,
                 tear: dropDownController.seledtedPostTearValue,
+                createdAt: Timestamp.now(),
               );
               await _postController.createPost(_postModel);
               _postController.readPostData();
