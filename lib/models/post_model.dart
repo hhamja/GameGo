@@ -21,29 +21,16 @@ class PostModel {
     this.createdAt,
   });
 
-  factory PostModel.fromDocumentSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> doc) {
-    final map = doc.data();
+  factory PostModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     return PostModel(
       postid: doc.id,
-      username: map?['username'],
-      title: map?['title'],
-      maintext: map?['maintext'],
-      gamemode: map?['gamemode'],
-      position: map?['position'],
-      tear: map?['tear'],
-      createdAt: map?['createdAt'],
+      username: doc['username'],
+      title: doc['title'],
+      maintext: doc['maintext'],
+      gamemode: doc['gamemode'],
+      position: doc['position'],
+      tear: doc['tear'],
+      createdAt: doc['createdAt'],
     );
-  }
-
-  Map<String, dynamic> toFirestore() {
-    return {
-      if (username != null) 'username': username,
-      if (title != null) 'title': title,
-      if (maintext != null) 'maintext': maintext,
-      if (gamemode != null) 'gamemode': gamemode,
-      if (tear != null) 'tear': tear,
-      if (createdAt != null) 'createdAt': createdAt,
-    };
   }
 }

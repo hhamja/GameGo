@@ -1,6 +1,6 @@
 import 'package:mannergamer/utilites/index.dart';
 
-/* 수정페이지 드랍다운버튼 컨트롤러 */
+/*------------------- 수정페이지 드랍다운버튼 컨트롤러 ---------------------*/
 
 class EditDropDownController extends GetxController {
   /* PostArguments Controller */

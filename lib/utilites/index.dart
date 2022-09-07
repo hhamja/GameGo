@@ -87,9 +87,12 @@ export 'package:mannergamer/models/post_model.dart';
 export 'package:mannergamer/models/profile.dart';
 
 /* Controller */
-export 'package:mannergamer/controller/dropdownButton_controller.dart';
-export 'package:mannergamer/controller/post_controller.dart';
-export 'package:mannergamer/controller/edit_dropdown_controller.dart';
+export 'package:mannergamer/controller/dropdownButton.dart';
+export 'package:mannergamer/controller/post.dart';
+export 'package:mannergamer/controller/edit_dropdown.dart';
+export 'package:mannergamer/controller/homeDropDownButton.dart';
+export 'package:mannergamer/controller/post_filter.dart';
+export 'package:mannergamer/controller/user.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';

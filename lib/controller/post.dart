@@ -10,7 +10,7 @@ class PostController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    postList.bindStream(readPostData);
+    postList.bindStream(readPostData());
     print(postList);
   }
 
@@ -38,24 +38,20 @@ class PostController extends GetxController {
     }
   }
 
-  /* Read Post Data(realtime X) */
-  Stream readPostData() async* {
-    try {
-      yield* firestore
-          .collection('post')
-          .orderBy('createdAt', descending: true)
-          .snapshots()
-          .map((element) =>
-              element.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
-
-      // for (var re in res.docs) {
-      //   final postModel = PostModel.fromDocumentSnapshot(re);
-      //   print(postModel);
-      //   postList.add(postModel);
-      // }
-    } catch (e) {
-      print('read error : ${e}');
-    }
+  /* Stream Read Post */
+  Stream<List<PostModel>> readPostData() {
+    return firestore
+        .collection('post')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((QuerySnapshot query) {
+      List<PostModel> posts = [];
+      for (var post in query.docs) {
+        final todoModel = PostModel.fromDocumentSnapshot(post);
+        posts.add(todoModel);
+      }
+      return posts;
+    });
   }
 
   /* Update Post, edit post*/
