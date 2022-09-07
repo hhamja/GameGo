@@ -13,21 +13,11 @@ class PostController extends GetxController {
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
 
-  /* 게시물 필터 결과값 담을 resultList 선언 */
-  RxList<PostModel> resultList = <PostModel>[].obs;
-
   /* Lifecycle */
   @override
   void onInit() {
     super.onInit();
     postList.bindStream(readPostData());
-    resultList.bindStream(
-      streamPostData(
-        _.selectedModeValue,
-        _.selectedPositionValue,
-        _.selectedTearValue,
-      ),
-    );
   }
 
   @override
@@ -69,190 +59,6 @@ class PostController extends GetxController {
     });
   }
 
-  /* Stream Read Post */
-  Stream<List<PostModel>> gamemodeFilter(
-      String gamemode, String? position, String? tear) {
-    filter(List gamemode, index) {
-      List gamemode = gameModes;
-      _post
-          .orderBy('createdAt', descending: true)
-          .where('gamemode', isEqualTo: gamemode)
-          .snapshots()
-          .map((snapshot) => snapshot.docs.map((e) {
-                return PostModel.fromDocumentSnapshot(e);
-              }).toList());
-    }
-
-    switch (gamemode) {
-      case '솔로랭크':
-        resultList.clear();
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('gamemode', isEqualTo: '솔로랭크')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-
-        break;
-      case '자유랭크':
-        resultList.clear();
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('gamemode', isEqualTo: gameModes[0])
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-
-        break;
-      case '일반게임':
-        resultList.clear();
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('gamemode', isEqualTo: '일반게임')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-
-        break;
-      case '무작위 총력전':
-        resultList.clear();
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('gamemode', isEqualTo: '무작위 총력전')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case 'AI 대전':
-        resultList.clear();
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('gamemode', isEqualTo: 'AI 대전')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-    }
-    switch (position) {
-      case '탑':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('position', isEqualTo: 'AI 대전')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '정글':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('position', isEqualTo: '정글')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '미드':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('position', isEqualTo: '미드')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '원딜':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('position', isEqualTo: '원딜')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '서포터':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('position', isEqualTo: '서포터')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-    }
-    switch (tear) {
-      case '언랭크':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('tear', isEqualTo: '언랭크')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '아이언':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('tear', isEqualTo: '아이언')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '브론즈':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('tear', isEqualTo: '브론즈')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '실버':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('tear', isEqualTo: '실버')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '골드':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('tear', isEqualTo: '골드')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '플래티넘':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('tear', isEqualTo: '플래티넘')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-      case '다이아몬드':
-        _post
-            .orderBy('createdAt', descending: true)
-            .where('tear', isEqualTo: '다이아몬드')
-            .snapshots()
-            .map((snapshot) => snapshot.docs.map((e) {
-                  return PostModel.fromDocumentSnapshot(e);
-                }).toList());
-        break;
-    }
-    throw [];
-  }
-
   /* Update Post, edit post*/
   Future updatePost(
     postid,
@@ -283,5 +89,114 @@ class PostController extends GetxController {
     } catch (e) {
       print('deletePost error : ${e}');
     }
+  }
+
+  /* PostList -> Gamemode Filtering */
+  Stream<List<PostModel>> gamemodeFilter(gamemode) {
+    /* 각 게임모드 case의 중복코드 단일화 */
+    filter(gamemode) {
+      postList.clear();
+      _post
+          .orderBy('createdAt', descending: true)
+          .where('gamemode', isEqualTo: gamemode)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((e) {
+                return PostModel.fromDocumentSnapshot(e);
+              }).toList());
+    }
+
+    /* switch - case */
+    switch (gamemode) {
+      case '솔로랭크':
+        filter(gameModes[0]);
+        break;
+      case '자유랭크':
+        filter(gameModes[1]);
+        break;
+      case '일반게임':
+        filter(gameModes[2]);
+        break;
+      case '무작위 총력전':
+        filter(gameModes[3]);
+        break;
+      case 'AI 대전':
+        filter(gameModes[4]);
+        break;
+    }
+    throw ['게임모드 필터 오류'];
+  }
+
+  /* PostList -> Position Filtering */
+  Stream<List<PostModel>> positionFilter(position) {
+    /* 각 포지션 case의 중복코드 단일화 */
+    filter(position) {
+      _post
+          .orderBy('createdAt', descending: true)
+          .where('gamemode', isEqualTo: position)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((e) {
+                return PostModel.fromDocumentSnapshot(e);
+              }).toList());
+    }
+
+    /* switch - case */
+    switch (position) {
+      case '탑':
+        filter(postions[0]);
+        break;
+      case '정글':
+        filter(postions[1]);
+        break;
+      case '미드':
+        filter(postions[2]);
+        break;
+      case '원딜':
+        filter(postions[3]);
+        break;
+      case '서포터':
+        filter(postions[4]);
+        break;
+    }
+    throw [];
+  }
+
+  /* Tear -> Position Filtering */
+  Stream<List<PostModel>> tearFilter(tear) {
+    /* 각 티어 case의 중복코드 단일화 */
+    filter(tear) {
+      _post
+          .orderBy('createdAt', descending: true)
+          .where('gamemode', isEqualTo: tear)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((e) {
+                return PostModel.fromDocumentSnapshot(e);
+              }).toList());
+    }
+
+    /* switch - case */
+    switch (tear) {
+      case '언랭크':
+        filter(tears[0]);
+        break;
+      case '아이언':
+        filter(tears[1]);
+        break;
+      case '브론즈':
+        filter(tears[2]);
+        break;
+      case '실버':
+        filter(tears[3]);
+        break;
+      case '골드':
+        filter(tears[4]);
+        break;
+      case '플래티넘':
+        filter(tears[5]);
+        break;
+      case '다이아몬드':
+        filter(tears[6]);
+        break;
+    }
+    throw [];
   }
 }
