@@ -10,7 +10,7 @@ class PostController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    readPostData();
+    postList.bindStream(readPostData);
     print(postList);
   }
 
@@ -39,15 +39,15 @@ class PostController extends GetxController {
   }
 
   /* Read Post Data(realtime X) */
-  Future readPostData() async {
+  Stream readPostData() async* {
     try {
-      final res = await firestore
+      yield* firestore
           .collection('post')
           .orderBy('createdAt', descending: true)
-          .get();
-      postList.addAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
-      print(postList);
-      return postList;
+          .snapshots()
+          .map((element) =>
+              element.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
+
       // for (var re in res.docs) {
       //   final postModel = PostModel.fromDocumentSnapshot(re);
       //   print(postModel);
