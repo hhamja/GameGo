@@ -8,26 +8,23 @@ class PostController extends GetxController {
   final CollectionReference _post =
       FirebaseFirestore.instance.collection('post');
 
-  /* Home DropDwonButton Controller 불러오기 */
-  HomePageDropDownBTController _buttonController =
-      Get.put(HomePageDropDownBTController());
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
   /* 버튼컨트롤러의 selectedValue 담은 변수 */
-  var selectedMode, selectedPosition, selectedTear;
+  // var selectedMode, selectedPosition, selectedTear;
 
   /* Lifecycle */
   @override
   void onInit() {
     super.onInit();
-    selectedMode = _buttonController.selectedModeValue;
-    selectedPosition = _buttonController.selectedPositionValue;
-    selectedTear = _buttonController.selectedTearValue;
-    print(selectedMode);
-    print(selectedPosition);
-    print(selectedTear);
-    postList
-        .bindStream(postFilter(selectedMode, selectedPosition, selectedTear));
+    // selectedMode = _buttonController.selectedModeValue;
+    // selectedPosition = _buttonController.selectedPositionValue;
+    // selectedTear = _buttonController.selectedTearValue;
+    // print(selectedMode);
+    // print(selectedPosition);
+    // print(selectedTear);
+    // postList
+    //     .bindStream(postFilter(selectedMode, selectedPosition, selectedTear));
     postList.bindStream(readPostData());
   }
 
@@ -59,6 +56,28 @@ class PostController extends GetxController {
   Stream<List<PostModel>> readPostData() {
     return _post
         .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((e) {
+              return PostModel.fromDocumentSnapshot(e);
+            }).toList());
+  }
+  /* Stream Read Post */
+
+  Stream<List<PostModel>> gamemode(x) {
+    postList.clear();
+    return _post
+        .orderBy('createdAt', descending: true)
+        .where('gamemode', isEqualTo: x)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((e) {
+              return PostModel.fromDocumentSnapshot(e);
+            }).toList());
+  }
+
+  Stream<List<PostModel>> free() {
+    return _post
+        .orderBy('createdAt', descending: true)
+        .where('gamemode', isEqualTo: '자유랭크')
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
               return PostModel.fromDocumentSnapshot(e);
@@ -114,10 +133,9 @@ class PostController extends GetxController {
 
     /* 게임모드 switch - case */
     switch (gamemode) {
-      case null:
+      case '게임모드':
         filter;
         break;
-
       case '솔로랭크':
         filter('솔로랭크', null, null);
         break;
@@ -137,11 +155,8 @@ class PostController extends GetxController {
 
     /* 포지션 switch - case */
     switch (position) {
-      case null:
+      case '포지션':
         filter(gamemode, null, null);
-        break;
-      case '포지션 전체':
-        filter;
         break;
       case '탑':
         filter(gamemode, '탑', null);
@@ -162,7 +177,7 @@ class PostController extends GetxController {
 
     /* 티어 switch - case */
     switch (tear) {
-      case null:
+      case '티어':
         filter(gamemode, position, null);
         break;
       case '언랭크':
@@ -192,40 +207,39 @@ class PostController extends GetxController {
 
 /* ------------------------------------------------------------------------ */
   /* PostList -> Position Filtering */
-  Stream<List<PostModel>> positionFilter(POSITION position) {
+  Stream<List<PostModel>> positionFilter(position) {
     /* 각 포지션 case의 중복코드 단일화 */
-    filter(position) {
+    filter(_position) {
       _post
           .orderBy('createdAt', descending: true)
-          .where('position', isEqualTo: position)
+          .where('position', isEqualTo: _position)
           .snapshots()
           .map((snapshot) => snapshot.docs.map((e) {
                 return PostModel.fromDocumentSnapshot(e);
               }).toList());
     }
 
-    /* switch - case */
+    /* 포지션 switch - case */
     switch (position) {
-      case POSITION.ALL:
-        filter;
+      case '포지션':
+        filter(null);
         break;
-      case POSITION.Top:
-        filter(postions[0]);
+      case '탑':
+        filter('탑');
         break;
-      case POSITION.Jungle:
-        filter(postions[1]);
+      case '정글':
+        filter('정글');
         break;
-      case POSITION.Mid:
-        filter(postions[2]);
+      case '미드':
+        filter('미드');
         break;
-      case POSITION.AD:
-        filter(postions[3]);
+      case '원딜':
+        filter('원딜');
         break;
-      case POSITION.Supporter:
-        filter(postions[4]);
+      case '서포터':
+        filter('서포터');
         break;
     }
-
     throw '포지션 필터 오류';
   }
 

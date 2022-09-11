@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:mannergamer/utilites/index.dart';
 
 /*-------------------- 홈페이지의 드랍다운버튼 컨트롤러 --------------------*/
@@ -13,39 +15,52 @@ class HomePageDropDownBTController extends GetxController {
   /* 티어 선택 value */
   var selectedTearValue = tears[0];
 
+  PostController _postController = Get.put(PostController());
   /* 게임모드가 
   * 솔로,자유 ? 포지션, 티어 둘다 표시 
   * 일반 ? 포지션만 표시 
   * 칼바람, AI ? null 
   */
   showPositonAndTear(modeValue) {
-    selectedModeValue = modeValue;
-    /* 솔로랭크, 자유랭크 */
-    if (selectedModeValue == gameModes[1] ||
-        selectedModeValue == gameModes[2]) {
-      showPosition = true;
-      showTear = true;
-      update();
-      /* 일반게임 */
-    } else if (selectedModeValue == gameModes[3]) {
-      showPosition = true;
-      showTear = false;
-      update();
-      /* 칼바람, AI대전 */
-    } else {
-      showPosition = false;
-      showTear = false;
-      update();
+    selectedModeValue = modeValue as String;
+    update();
+    filter(_gamemode) {
+      _postController.postList.bindStream(_postController.gamemode(_gamemode));
     }
-  }
 
-  void changePosition(value) {
-    selectedPositionValue = value;
-    update();
-  }
-
-  void changeTear(value) {
-    selectedTearValue = value;
-    update();
+    /* 솔로랭크, 자유랭크 */
+    /* 게임모드 switch - case */
+    switch (selectedModeValue) {
+      case '게임모드':
+        showPosition = false;
+        showTear = false;
+        filter(null);
+        break;
+      case '솔로랭크':
+        showPosition = true;
+        showTear = true;
+        filter('솔로랭크');
+        break;
+      case '자유랭크':
+        showPosition = true;
+        showTear = true;
+        filter('자유랭크');
+        break;
+      case '일반게임':
+        showPosition = true;
+        showTear = false;
+        filter('일반게임');
+        break;
+      case '무작위 총력전':
+        showPosition = false;
+        showTear = false;
+        filter('무작위 총력전');
+        break;
+      case 'AI 대전':
+        showPosition = false;
+        showTear = false;
+        filter('AI 대전');
+        break;
+    }
   }
 }
