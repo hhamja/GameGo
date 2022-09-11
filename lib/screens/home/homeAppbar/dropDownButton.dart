@@ -23,7 +23,6 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
               buttonWidth: controller.selectedModeValue == '무작위 총력전' ? 125 : 85,
               dropdownWidth: 130,
               isExpanded: true,
-              hint: Text('게임모드'),
               items: gameModes
                   .map(
                     (item) => DropdownMenuItem<String>(
@@ -47,7 +46,6 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                 buttonWidth: 70,
                 dropdownWidth: 100,
                 isExpanded: true,
-                hint: Text('포지션'),
                 items: postions
                     .map(
                       (item) => DropdownMenuItem<String>(
@@ -57,10 +55,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                     )
                     .toList(),
                 value: controller.selectedPositionValue,
-                onChanged: (value) {
-                  controller.selectedPositionValue = value as String;
-                  controller.update();
-                },
+                onChanged: controller.changePosition,
               ),
             ),
           ),
@@ -74,7 +69,6 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                 buttonWidth: 70,
                 dropdownWidth: 110,
                 isExpanded: true,
-                hint: Text('티어'),
                 items: tears
                     .map(
                       (item) => DropdownMenuItem<String>(
@@ -84,10 +78,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                     )
                     .toList(),
                 value: controller.selectedTearValue,
-                onChanged: (value) {
-                  controller.selectedTearValue = value as String;
-                  controller.update();
-                },
+                onChanged: controller.changeTear,
               ),
             ),
           ),

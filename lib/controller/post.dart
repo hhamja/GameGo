@@ -13,16 +13,22 @@ class PostController extends GetxController {
       Get.put(HomePageDropDownBTController());
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
+  /* 버튼컨트롤러의 selectedValue 담은 변수 */
+  var selectedMode, selectedPosition, selectedTear;
 
   /* Lifecycle */
   @override
   void onInit() {
     super.onInit();
-    var selectedMode = _buttonController.selectedModeValue;
-    var selectedPosition = _buttonController.selectedPositionValue;
-    var selectedTear = _buttonController.selectedTearValue;
-    postList.bindStream(
-        gamemodeFilter(selectedMode, selectedPosition, selectedTear));
+    selectedMode = _buttonController.selectedModeValue;
+    selectedPosition = _buttonController.selectedPositionValue;
+    selectedTear = _buttonController.selectedTearValue;
+    print(selectedMode);
+    print(selectedPosition);
+    print(selectedTear);
+    postList
+        .bindStream(postFilter(selectedMode, selectedPosition, selectedTear));
+    postList.bindStream(readPostData());
   }
 
   @override
@@ -91,55 +97,106 @@ class PostController extends GetxController {
     }
   }
 
-  /* PostList -> Gamemode Filtering */
-  Stream<List<PostModel>> gamemodeFilter(gamemode, position, tear) {
+  /* PostList를 게임모드, 포지션, 티어 Filtering 함수 */
+  Stream<List<PostModel>> postFilter(gamemode, position, tear) {
     /* 각 게임모드 case의 중복코드 단일화 */
-    void filter(gamemode) {
-      postList.clear();
+    void filter(g, p, t) {
       _post
           .orderBy('createdAt', descending: true)
-          .where('gamemode', isEqualTo: gamemode)
+          .where('gamemode', isEqualTo: g)
+          .where('position', isEqualTo: p)
+          .where('tear', isEqualTo: t)
           .snapshots()
           .map((snapshot) => snapshot.docs.map((e) {
                 return PostModel.fromDocumentSnapshot(e);
               }).toList());
     }
 
-    /* switch - case */
+    /* 게임모드 switch - case */
     switch (gamemode) {
-      case '게임모드':
+      case null:
         filter;
         break;
+
       case '솔로랭크':
-        filter(gameModes[0]);
-        switch(position){
-          case}
-        
-        
+        filter('솔로랭크', null, null);
         break;
       case '자유랭크':
-        filter(gameModes[1]);
+        filter('자유랭크', null, null);
         break;
       case '일반게임':
-        filter(gameModes[2]);
+        filter('일반게임', null, null);
         break;
       case '무작위 총력전':
-        filter(gameModes[3]);
+        filter('무작위 총력전', null, null);
         break;
       case 'AI 대전':
-        filter(gameModes[4]);
+        filter('AI 대전', null, null);
         break;
     }
-    throw '게임모드 필터 오류';
+
+    /* 포지션 switch - case */
+    switch (position) {
+      case null:
+        filter(gamemode, null, null);
+        break;
+      case '포지션 전체':
+        filter;
+        break;
+      case '탑':
+        filter(gamemode, '탑', null);
+        break;
+      case '정글':
+        filter(gamemode, '정글', null);
+        break;
+      case '미드':
+        filter(gamemode, '미드', null);
+        break;
+      case '원딜':
+        filter(gamemode, '원딜', null);
+        break;
+      case '서포터':
+        filter(gamemode, '서포터', null);
+        break;
+    }
+
+    /* 티어 switch - case */
+    switch (tear) {
+      case null:
+        filter(gamemode, position, null);
+        break;
+      case '언랭크':
+        filter(gamemode, position, '언랭크');
+        break;
+      case '아이언':
+        filter(gamemode, position, '아이언');
+        break;
+      case '브론즈':
+        filter(gamemode, position, '브론즈');
+        break;
+      case '실버':
+        filter(gamemode, position, '실버');
+        break;
+      case '골드':
+        filter(gamemode, position, '골드');
+        break;
+      case '플래티넘':
+        filter(gamemode, position, '플래티넘');
+        break;
+      case '다이아몬드':
+        filter(gamemode, position, '다이아몬드');
+        break;
+    }
+    throw '필터 실패';
   }
 
+/* ------------------------------------------------------------------------ */
   /* PostList -> Position Filtering */
   Stream<List<PostModel>> positionFilter(POSITION position) {
     /* 각 포지션 case의 중복코드 단일화 */
     filter(position) {
       _post
           .orderBy('createdAt', descending: true)
-          .where('gamemode', isEqualTo: gamemode)
           .where('position', isEqualTo: position)
           .snapshots()
           .map((snapshot) => snapshot.docs.map((e) {
@@ -168,11 +225,12 @@ class PostController extends GetxController {
         filter(postions[4]);
         break;
     }
+
     throw '포지션 필터 오류';
   }
 
   /* Tear -> Position Filtering */
-  Stream<List<PostModel>> tearFilter(gamemode, position, TEAR tear) {
+  Stream<List<PostModel>> tearFilter(gamemode, position, tear) {
     /* 각 티어 case의 중복코드 단일화 */
     filter(tear) {
       _post

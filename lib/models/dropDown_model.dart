@@ -1,4 +1,5 @@
 final List<String> gameModes = [
+  '게임모드',
   '솔로랭크',
   '자유랭크',
   '일반게임',
@@ -6,6 +7,7 @@ final List<String> gameModes = [
   'AI 대전',
 ];
 final List<String> postions = [
+  '포지션',
   '탑',
   '정글',
   '미드',
@@ -13,6 +15,7 @@ final List<String> postions = [
   '서포터',
 ];
 final List<String> tears = [
+  '티어',
   '언랭크',
   '아이언',
   '브론즈',
