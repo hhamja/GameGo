@@ -3,13 +3,14 @@ import 'package:mannergamer/utilites/index.dart';
 class PostController extends GetxController {
   // /* Initialize Firestore Instance */
   // FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   /* 파이어스토어 Post 컬렉션 참조 instance */
   final CollectionReference _post =
-      FirebaseFirestore.instance.collection('posts');
+      FirebaseFirestore.instance.collection('post');
 
-  /* Put -> 홈페이지 드랍다운버튼 컨트롤러 */
-  HomePageDropDownBTController _ = Get.find<HomePageDropDownBTController>();
-
+  /* Home DropDwonButton Controller 불러오기 */
+  HomePageDropDownBTController _buttonController =
+      Get.put(HomePageDropDownBTController());
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
 
@@ -17,7 +18,11 @@ class PostController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    postList.bindStream(readPostData());
+    var selectedMode = _buttonController.selectedModeValue;
+    var selectedPosition = _buttonController.selectedPositionValue;
+    var selectedTear = _buttonController.selectedTearValue;
+    postList.bindStream(
+        gamemodeFilter(selectedMode, selectedPosition, selectedTear));
   }
 
   @override
@@ -49,14 +54,9 @@ class PostController extends GetxController {
     return _post
         .orderBy('createdAt', descending: true)
         .snapshots()
-        .map((QuerySnapshot query) {
-      List<PostModel> posts = [];
-      for (var post in query.docs) {
-        final todoModel = PostModel.fromDocumentSnapshot(post);
-        posts.add(todoModel);
-      }
-      return posts;
-    });
+        .map((snapshot) => snapshot.docs.map((e) {
+              return PostModel.fromDocumentSnapshot(e);
+            }).toList());
   }
 
   /* Update Post, edit post*/
@@ -92,9 +92,9 @@ class PostController extends GetxController {
   }
 
   /* PostList -> Gamemode Filtering */
-  Stream<List<PostModel>> gamemodeFilter(gamemode) {
+  Stream<List<PostModel>> gamemodeFilter(gamemode, position, tear) {
     /* 각 게임모드 case의 중복코드 단일화 */
-    filter(gamemode) {
+    void filter(gamemode) {
       postList.clear();
       _post
           .orderBy('createdAt', descending: true)
@@ -107,8 +107,15 @@ class PostController extends GetxController {
 
     /* switch - case */
     switch (gamemode) {
+      case '게임모드':
+        filter;
+        break;
       case '솔로랭크':
         filter(gameModes[0]);
+        switch(position){
+          case}
+        
+        
         break;
       case '자유랭크':
         filter(gameModes[1]);
@@ -123,16 +130,17 @@ class PostController extends GetxController {
         filter(gameModes[4]);
         break;
     }
-    throw ['게임모드 필터 오류'];
+    throw '게임모드 필터 오류';
   }
 
   /* PostList -> Position Filtering */
-  Stream<List<PostModel>> positionFilter(position) {
+  Stream<List<PostModel>> positionFilter(POSITION position) {
     /* 각 포지션 case의 중복코드 단일화 */
     filter(position) {
       _post
           .orderBy('createdAt', descending: true)
-          .where('gamemode', isEqualTo: position)
+          .where('gamemode', isEqualTo: gamemode)
+          .where('position', isEqualTo: position)
           .snapshots()
           .map((snapshot) => snapshot.docs.map((e) {
                 return PostModel.fromDocumentSnapshot(e);
@@ -141,32 +149,37 @@ class PostController extends GetxController {
 
     /* switch - case */
     switch (position) {
-      case '탑':
+      case POSITION.ALL:
+        filter;
+        break;
+      case POSITION.Top:
         filter(postions[0]);
         break;
-      case '정글':
+      case POSITION.Jungle:
         filter(postions[1]);
         break;
-      case '미드':
+      case POSITION.Mid:
         filter(postions[2]);
         break;
-      case '원딜':
+      case POSITION.AD:
         filter(postions[3]);
         break;
-      case '서포터':
+      case POSITION.Supporter:
         filter(postions[4]);
         break;
     }
-    throw [];
+    throw '포지션 필터 오류';
   }
 
   /* Tear -> Position Filtering */
-  Stream<List<PostModel>> tearFilter(tear) {
+  Stream<List<PostModel>> tearFilter(gamemode, position, TEAR tear) {
     /* 각 티어 case의 중복코드 단일화 */
     filter(tear) {
       _post
           .orderBy('createdAt', descending: true)
-          .where('gamemode', isEqualTo: tear)
+          .where('gamemode', isEqualTo: gamemode)
+          .where('position', isEqualTo: position)
+          .where('tear', isEqualTo: tear)
           .snapshots()
           .map((snapshot) => snapshot.docs.map((e) {
                 return PostModel.fromDocumentSnapshot(e);
@@ -175,28 +188,31 @@ class PostController extends GetxController {
 
     /* switch - case */
     switch (tear) {
-      case '언랭크':
+      case TEAR.ALL:
         filter(tears[0]);
         break;
-      case '아이언':
+      case TEAR.Unrank:
+        filter(tears[0]);
+        break;
+      case TEAR.Iron:
         filter(tears[1]);
         break;
-      case '브론즈':
+      case TEAR.Bronze:
         filter(tears[2]);
         break;
-      case '실버':
+      case TEAR.Silver:
         filter(tears[3]);
         break;
-      case '골드':
+      case TEAR.Gold:
         filter(tears[4]);
         break;
-      case '플래티넘':
+      case TEAR.Platinum:
         filter(tears[5]);
         break;
-      case '다이아몬드':
+      case TEAR.Diamond:
         filter(tears[6]);
         break;
     }
-    throw [];
+    throw '티어 필터 오류';
   }
 }

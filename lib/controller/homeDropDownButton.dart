@@ -6,13 +6,17 @@ class HomePageDropDownBTController extends GetxController {
   bool showPosition = false;
   /* 티어 드랍다운 버튼 보여주는 bool값  */
   bool showTear = false;
-
   /* 게임모드 선택 value */
   var selectedModeValue;
   /* 포지션 선택 value */
   var selectedPositionValue;
   /* 티어 선택 value */
   var selectedTearValue;
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 
   /* 게임모드가 
   * 솔로,자유 ? 포지션, 티어 둘다 표시 
@@ -21,19 +25,22 @@ class HomePageDropDownBTController extends GetxController {
   */
   showPositonAndTear(modeValue) {
     selectedModeValue = modeValue as String;
-    if (selectedModeValue == '솔로랭크' || selectedModeValue == '자유랭크') {
+    /* 솔로랭크, 자유랭크 */
+    if (selectedModeValue == gameModes[0] ||
+        selectedModeValue == gameModes[1]) {
       showPosition = true;
       showTear = true;
       update();
-    } else if (selectedModeValue == '일반게임') {
+      /* 일반게임 */
+    } else if (selectedModeValue == gameModes[2]) {
       showPosition = true;
       showTear = false;
       update();
+      /* 칼바람, AI대전 */
     } else {
       showPosition = false;
       showTear = false;
       update();
     }
-    update();
   }
 }

@@ -1,9 +1,9 @@
 import 'package:mannergamer/utilites/index.dart';
 
-/*------------------- 수정페이지 드랍다운버튼 컨트롤러 ---------------------*/
+/*------------------- 수정페이지 드랍다운버튼 컨트롤러 ----------------------*/
 
 class EditDropDownController extends GetxController {
-  /* PostArguments Controller */
+  /* find -> PostController */
   PostController _controller = Get.find<PostController>();
   /* 포지션 · 티어의 드랍다운버튼 보여주는 bool 값 */
   bool showPosition = true;
