@@ -11,7 +11,6 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
   /* Put -> DropDwon Button Controller */
   HomePageDropDownBTController homeDropDownBTController =
       Get.put(HomePageDropDownBTController());
-  PostController _ = Get.put(PostController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                   )
                   .toList(),
               value: controller.selectedModeValue,
-              onChanged: controller.showPositonAndTear,
+              onChanged: controller.changeGamemode,
             ),
           ),
           SizedBox(width: 10),
@@ -56,11 +55,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                     )
                     .toList(),
                 value: controller.selectedPositionValue,
-                onChanged: (value) {
-                  controller.selectedPositionValue = value as String;
-                  // _.postList.bindStream(_.positionFi
-                  // lter());
-                },
+                onChanged: controller.changePosition,
               ),
             ),
           ),
@@ -83,12 +78,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                     )
                     .toList(),
                 value: controller.selectedTearValue,
-                onChanged: (value) {
-                  controller.selectedTearValue = value as String;
-                  controller.update();
-                  // _.postList.bindStream(_.positionFi
-                  // lter());
-                },
+                onChanged: controller.changeTear,
               ),
             ),
           ),
