@@ -64,6 +64,7 @@ class PostController extends GetxController {
 
   /* 게시물 포지션 필터링 */
   Stream<List<PostModel>> filterPosition(gamemode, position) {
+    postList.clear();
     return _post
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
@@ -76,6 +77,7 @@ class PostController extends GetxController {
 
   /* 게시물 티어 필터링 */
   Stream<List<PostModel>> filterTear(gamemode, position, tear) {
+    postList.clear();
     return _post
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)

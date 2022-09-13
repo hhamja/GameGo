@@ -77,7 +77,7 @@ class HomePageDropDownBTController extends GetxController {
     /* 게임모드 switch - case */
     switch (selectedPositionValue) {
       case '포지션':
-        filter(null, null);
+        filter(selectedModeValue, null);
         break;
       case '탑':
         filter(selectedModeValue, '탑');
@@ -109,7 +109,7 @@ class HomePageDropDownBTController extends GetxController {
     /* 게임모드 switch - case */
     switch (selectedTearValue) {
       case '티어':
-        filter(null, null, null);
+        filter(selectedModeValue, selectedPositionValue, null);
         break;
       case '언랭크':
         filter(selectedModeValue, selectedPositionValue, '언랭크');
