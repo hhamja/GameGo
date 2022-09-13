@@ -93,6 +93,7 @@ export 'package:mannergamer/controller/edit_dropdown.dart';
 export 'package:mannergamer/controller/homeDropDownButton.dart';
 export 'package:mannergamer/controller/post_filter.dart';
 export 'package:mannergamer/controller/user.dart';
+export 'package:mannergamer/controller/searchPage.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';
