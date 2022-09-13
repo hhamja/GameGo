@@ -89,6 +89,7 @@ class PostController extends GetxController {
             }).toList());
   }
 
+/* dsfddsf */
   /* Update Post, edit post*/
   Future updatePost(
     postid,
