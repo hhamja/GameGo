@@ -24,11 +24,6 @@ Future<void> main() async {
       GetPage(name: '/illegal', page: () => IllegallyPostedPage()),
 
       GetPage(name: '/otherReason', page: () => OtherReasonsPage()),
-      GetPage(
-        name: '/search',
-        page: () => SerachPage(),
-        transition: Transition.noTransition,
-      ),
       GetPage(name: '/addPost', page: () => HomeAddPost()),
     ],
     title: 'MannerGamer',
