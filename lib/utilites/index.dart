@@ -29,7 +29,6 @@ export 'package:mannergamer/screens/home/home.dart';
 /*** homeAppbar */
 export 'package:mannergamer/screens/home/homeAppbar/dropDownButton.dart';
 export 'package:mannergamer/screens/home/homeAppbar/notification.dart';
-export 'package:mannergamer/screens/home/homeAppbar/searchPage.dart';
 /*** homeBody */
 export 'package:mannergamer/screens/home/homeBody/create_post/create_post.dart';
 export 'package:mannergamer/screens/home/homeBody/create_post/create_post_dropDownbutton.dart';
@@ -93,7 +92,6 @@ export 'package:mannergamer/controller/edit_dropdown.dart';
 export 'package:mannergamer/controller/homeDropDownButton.dart';
 export 'package:mannergamer/controller/post_filter.dart';
 export 'package:mannergamer/controller/user.dart';
-export 'package:mannergamer/controller/searchPage.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';
