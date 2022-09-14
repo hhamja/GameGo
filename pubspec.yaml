@@ -43,7 +43,6 @@ dependencies:
   multi_select_flutter:
   settings_ui:
   syncfusion_flutter_gauges:
-  supabase_flutter:
   firebase_analytics: ^9.3.3
   firebase_auth: ^3.7.0
   firebase_app_installations: ^0.1.1+6

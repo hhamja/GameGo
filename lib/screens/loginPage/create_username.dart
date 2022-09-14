@@ -112,7 +112,7 @@ class _CreateUsernameState extends State<CreateUsername> {
             color: _bottomButtonColorChange,
             child: TextButton(
               onPressed: () {
-                Get.back();
+                Get.offAll(() => Homepage());
                 setState(() {});
               },
               style: TextButton.styleFrom(

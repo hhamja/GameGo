@@ -3,15 +3,12 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await Supabase.initialize(
-      url: 'https://whpjzctadbbslbgnkttx.supabase.co',
-      anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndocGp6Y3RhZGJic2xiZ25rdHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTc1MzA1MzksImV4cCI6MTk3MzEwNjUzOX0.MTT4HqcGbBM5cdeQl0s0mv-kUJV1lrl_fmsqn1dFkFc');
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/',
+    initialRoute: '/lo',
     getPages: [
       // 라우트 관리
       GetPage(name: '/', page: () => MyApp()),

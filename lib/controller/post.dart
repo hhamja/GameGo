@@ -7,7 +7,6 @@ class PostController extends GetxController {
 
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
-  /* 버튼컨트롤러의 selectedValue 담은 변수 */
 
   /* Lifecycle */
   @override

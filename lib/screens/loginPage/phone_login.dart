@@ -8,13 +8,19 @@ class PhoneLoginPage extends StatefulWidget {
 }
 
 class _PhoneLoginPageState extends State<PhoneLoginPage> {
-  final supabase = Supabase.instance.client;
-  final _formKey = GlobalKey<FormState>();
+  /* Phone Auth Controller */
+  final UserController _userController = Get.put(UserController());
+
+  /* 폰번호 입력 컨트롤러*/
   final _phoneController = TextEditingController();
+  /* OTP 번호 입력 컨트롤러 */
   final _otpController = TextEditingController();
 
+  /* OTP 처음 받는 경우 : false
+  * 두번 째 부터는 true로 됨. */
   bool _otpBool = false;
 
+  /* Life Cycle */
   @override
   void initState() {
     super.initState();
@@ -40,31 +46,37 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
           Text('환영합니다!'),
           Text('휴대폰 번호로 가입해주세요.'),
           Text('휴대폰번호는 안전하게 보관되며 어디에도 공개되지 않아요.'),
+          /* 폰번호 입력 칸 */
           TextField(
             controller: _phoneController,
             keyboardType: TextInputType.number,
-            key: _formKey,
             inputFormatters: [
               MaskTextInputFormatter(
                 mask: '### #### ####',
               ),
             ],
             decoration: InputDecoration(
-                border: OutlineInputBorder(), hintText: '휴대폰 번호(- 없이 숫자만 입력)'),
+              border: OutlineInputBorder(),
+              hintText: '휴대폰 번호(- 없이 숫자만 입력)',
+            ),
           ),
+          /* otpBool가 true가 아니라면? */
           !_otpBool
+              /* orpBool이 false면 실행 */
               ? Column(
                   children: [
+                    /* 인증문자 받는 버튼, 클릭시 : optBool = true */
                     TextButton(
                       onPressed: () async {
-                        SupabaseHelper().sendVerifyOTP(
-                            phone: '+82${_phoneController.text}');
+                        _userController
+                            .verifyPhone('+82${_phoneController.text}');
                         setState(() {
                           _otpBool = true;
                         });
                       },
                       child: Text('인증 문자 받기'),
                     ),
+                    /* 이메일로 계정찾기 */
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -77,14 +89,18 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                     ),
                   ],
                 )
+              /* 인증문자받기 버튼 클릭 시(otpBool == true) 실행 */
               : Column(
                   children: [
+                    /* 인증문자다시받기 */
                     TextButton(
                         onPressed: () async {
-                          SupabaseHelper().sendVerifyOTP(
-                              phone: '+82${_phoneController.text}');
+                          _userController.signIn(
+                            _otpController.text,
+                          );
                         },
                         child: Text('인증문자 다시 받기(05분 00초)')),
+                    /* OTP 입력 란 */
                     TextField(
                       controller: _otpController,
                       keyboardType: TextInputType.number,
@@ -95,8 +111,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                           hintText: '인증번호 6자리 입력',
                           helperText: '어떤 경우에도 타인과 공유하지 마세요.'),
                     ),
-
-                    //이용약관 및 개인정보 취급방침
+                    /* 이용약관 및 개인정보 취급방침 */
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -105,12 +120,13 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                         TextButton(onPressed: () {}, child: Text('개인정보취급방침')),
                       ],
                     ),
+                    /* 최종완료버튼 (클릭 -> HomePage로 이동) */
                     TextButton(
-                        onPressed: () async {
-                          SupabaseHelper().verifyPhoneNumber(
-                              phone: '+82${_phoneController.text}',
-                              token: _otpController.text);
-                          Get.offAll(CreateUsername());
+                        onPressed: () {
+                          Get.offAll(
+                            CreateUsername(),
+                            arguments: _phoneController.text,
+                          );
                         },
                         child: Text('동의하고 시작하기'))
                   ],

@@ -8,8 +8,7 @@ export 'dart:async';
 /* Packages */
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
-export 'package:firebase_core/firebase_core.dart';
-export 'package:supabase_flutter/supabase_flutter.dart';
+// export 'package:supabase_flutter/supabase_flutter.dart';
 export 'package:get/get.dart';
 export 'package:badges/badges.dart';
 export 'package:chat_bubbles/chat_bubbles.dart';
@@ -19,9 +18,9 @@ export 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 export 'package:settings_ui/settings_ui.dart';
 export 'package:dropdown_button2/dropdown_button2.dart';
 export 'package:syncfusion_flutter_gauges/gauges.dart';
+export 'package:firebase_auth/firebase_auth.dart';
 
 /* Screens */
-
 export 'package:mannergamer/screens/chat/chat_list.dart';
 export 'package:mannergamer/screens/chat/livechat.dart';
 export 'package:mannergamer/screens/home/home.dart';
@@ -73,7 +72,7 @@ export 'package:mannergamer/screens/setting/userSetting/accountManagement/selfAu
 export 'package:mannergamer/models/data.dart';
 export 'package:mannergamer/models/dropDown_model.dart';
 export 'package:mannergamer/models/post_model.dart';
-export 'package:mannergamer/models/profile.dart';
+export 'package:mannergamer/models/user.dart';
 
 /* Controller */
 export 'package:mannergamer/controller/dropdownButton.dart';
@@ -81,13 +80,12 @@ export 'package:mannergamer/controller/post.dart';
 export 'package:mannergamer/controller/edit_dropdown.dart';
 export 'package:mannergamer/controller/homeDropDownButton.dart';
 export 'package:mannergamer/controller/post_filter.dart';
-export 'package:mannergamer/controller/user.dart';
+export 'package:mannergamer/controller/user_controller.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';
 
 /* Utilities */
-export 'package:mannergamer/utilites/supabase_auth.dart';
 
 /* Themes */
 export 'package:mannergamer/theme/theme.dart';

@@ -34,9 +34,3 @@ class PostModel {
     );
   }
 }
-
-enum GAMEMODE { ALL, SoloGame, FreeGame, NormalGame, Calbaram, AI }
-
-enum POSITION { ALL, Top, Jungle, Mid, AD, Supporter }
-
-enum TEAR { ALL, Unrank, Iron, Bronze, Silver, Gold, Platinum, Diamond }
