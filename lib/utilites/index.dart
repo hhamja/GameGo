@@ -21,15 +21,12 @@ export 'package:dropdown_button2/dropdown_button2.dart';
 export 'package:syncfusion_flutter_gauges/gauges.dart';
 
 /* Screens */
-/** chat */
+
 export 'package:mannergamer/screens/chat/chat_list.dart';
 export 'package:mannergamer/screens/chat/livechat.dart';
-/** home */
 export 'package:mannergamer/screens/home/home.dart';
-/*** homeAppbar */
 export 'package:mannergamer/screens/home/homeAppbar/dropDownButton.dart';
 export 'package:mannergamer/screens/home/homeAppbar/notification.dart';
-/*** homeBody */
 export 'package:mannergamer/screens/home/homeBody/create_post/create_post.dart';
 export 'package:mannergamer/screens/home/homeBody/create_post/create_post_dropDownbutton.dart';
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/edit_post/edit_post.dart';
@@ -41,19 +38,17 @@ export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/re
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/_otherReasons.dart';
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportDialog.dart';
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportPost.dart';
-/*+ loginPage */
+
 export 'package:mannergamer/screens/loginPage/create_username.dart';
 export 'package:mannergamer/screens/loginPage/find_account_for_email.dart';
 export 'package:mannergamer/screens/loginPage/loginPage.dart';
 export 'package:mannergamer/screens/loginPage/phone_login.dart';
-/** mypage */
+
 export 'package:mannergamer/screens/mypage/mypage.dart';
-/*** etc */
 export 'package:mannergamer/screens/mypage/etc_/faq.dart';
 export 'package:mannergamer/screens/mypage/etc_/feedback.dart';
 export 'package:mannergamer/screens/mypage/etc_/notice/duoduoNotice.dart';
 export 'package:mannergamer/screens/mypage/etc_/notice/noticeDetailPage.dart';
-/*** myActivity */
 export 'package:mannergamer/screens/mypage/myActivity/mannerAge.dart';
 export 'package:mannergamer/screens/mypage/myActivity/receivedDuoReview.dart';
 export 'package:mannergamer/screens/mypage/myActivity/receivedMannerEvaluation.dart';
@@ -61,16 +56,11 @@ export 'package:mannergamer/screens/mypage/myActivity/myPostList/bottomSheets.da
 export 'package:mannergamer/screens/mypage/myActivity/myPostList/myPostList.dart';
 export 'package:mannergamer/screens/mypage/myActivity/myPostList/receivedReviews.dart';
 export 'package:mannergamer/screens/mypage/myActivity/myPostList/viewSentReviews.dart';
-/*** profile */
 export 'package:mannergamer/screens/mypage/profile/profileEdit.dart';
-/** setting */
 export 'package:mannergamer/screens/setting/setting.dart';
-/*** alertSetting */
 export 'package:mannergamer/screens/setting/alertSetting/alertSetting.dart';
-/*** etc */
 export 'package:mannergamer/screens/setting/etc/leaveApp.dart';
 export 'package:mannergamer/screens/setting/etc/logOutDialog.dart';
-/*** userSetting */
 export 'package:mannergamer/screens/setting/userSetting/accountManagement.dart';
 export 'package:mannergamer/screens/setting/userSetting/blockUserManagement.dart';
 export 'package:mannergamer/screens/setting/userSetting/favoriteUserManagement.dart';
