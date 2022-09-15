@@ -1,8 +1,11 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class UserController extends GetxController {
+class UserAuthController extends GetxController {
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
+  /* 유저가입시 유저정보 담은 변수 */
+  var user;
+
   // /* 모든유저정보 */
   // late Rx<User?> firebaseUser;
   /* FireStore User Collection Instance */
@@ -12,10 +15,9 @@ class UserController extends GetxController {
   /* User 정보 담을 UserList */
   RxList<UserModel> userList = <UserModel>[].obs;
   /* 유저매너나이 변수. 초기값=20, 변화공식 설정 어떻게? */
-  RxDouble age = 20.0.obs;
+  var mannerage = 20.0.obs;
   /* 폰번호확인코드저장 */
   String verificationID = '';
-
   /* 매너나이 변화 공식 */
   updownMannerAge() {}
 
@@ -32,36 +34,44 @@ class UserController extends GetxController {
   // /* 유저에 따라 다르게 첫화면 띄우기 */
   // _setInitialScreen(User? user) {
   //   if (user == null) {
-  //     /* 유저정보 없으면, 시작하기 뜨는 페이지가 첫 ㄴ화면  */
+  //     /* 유저정보 X , 첫화면 : 사용자등록페이지  */
   //     Get.offAllNamed('/login');
   //   } else {
-  //     /* 유저정보 있으면, 바로 게시물리스트 있는 Homepage가 첫 화면 */
+  //     /* 유저정보 O , 첫화면 : HomePage()  */
   //     Get.offAllNamed('/');
   //   }
   // }
+
   @override
   void onInit() {
     super.onInit();
-    addNewUser;
-    verifyPhone;
+    userList.bindStream(readUserList());
   }
 
   /* Create User */
   Future addNewUser(UserModel userModel) async {
     try {
-      final res = await _user.add({
-        'phonenumber': userModel.phonenumber,
+      final res = await _user.doc(user.uid).set({
         'username': userModel.username,
         'avatar': userModel.avatar,
         'email': userModel.email,
         'mannerAge': userModel.mannerAge,
         'createdAt': userModel.createdAt,
       });
-      print(res);
       return res;
     } catch (e) {
       print('addNewUser error = ${e}');
     }
+  }
+
+  /* Stream read User DB */
+  Stream<List<UserModel>> readUserList() {
+    return _user
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((e) {
+              return UserModel.fromDocumentSnapshot(e);
+            }).toList());
   }
 
   /* 유저 폰 번호로 SMS 전송 */
@@ -99,7 +109,9 @@ class UserController extends GetxController {
   Future signIn(token) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationID, smsCode: token);
-    await _auth.signInWithCredential(credential);
+    final userCredential = await _auth.signInWithCredential(credential);
+    user = userCredential.user;
+    print(user?.uid);
   }
 
   /* 로그아웃 */

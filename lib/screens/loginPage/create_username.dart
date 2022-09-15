@@ -8,16 +8,20 @@ class CreateUsername extends StatefulWidget {
 }
 
 class _CreateUsernameState extends State<CreateUsername> {
+  /* 닉네임 입력 컨트롤러 */
   final TextEditingController _usernameController = TextEditingController();
+  /* User GetX Controller */
+  final UserAuthController _userAuth = Get.find<UserAuthController>();
+
   @override
   void dispose() {
-    _usernameController.dispose();
+    _usernameController;
     super.dispose();
   }
 
-  //닉네임 입력에 대한 에러택스트 조건식
+  /* 닉네임  입력 수에 따른 에러 택스트 */
   Text? get _showErrorText {
-    final text = _usernameController.value.text;
+    final text = _usernameController.text;
     if (text.isEmpty) {
       return Text(
         '닉네임을 입력해주세요!',
@@ -33,12 +37,27 @@ class _CreateUsernameState extends State<CreateUsername> {
     return Text('프로필 사진과 닉네임을 입력해주세요.');
   }
 
+  /* 닉네임 입력 수에 따른 bottomButton 색 */
   Color? get _bottomButtonColorChange {
-    final text = _usernameController.value.text;
+    final text = _usernameController.text;
     if (text.isEmpty || text.length < 2) {
       return Colors.grey;
     }
     return Colors.blue;
+  }
+
+  validateButton() async {
+    final text = _usernameController.text;
+    UserModel userModel = UserModel(
+      username: text,
+      mannerAge: 20,
+      createdAt: Timestamp.now(),
+    );
+    if (!text.isEmpty || text.length >= 2) {
+      _userAuth.addNewUser(userModel);
+      Get.offAllNamed('/');
+    }
+    null;
   }
 
   @override
@@ -50,7 +69,7 @@ class _CreateUsernameState extends State<CreateUsername> {
         centerTitle: true,
         actions: [
           TextButton(
-            onPressed: () => Get.offAll(() => Homepage()),
+            onPressed: validateButton,
             child: Text(
               '완료',
               style: TextStyle(color: Colors.white),
@@ -111,10 +130,7 @@ class _CreateUsernameState extends State<CreateUsername> {
             width: double.infinity,
             color: _bottomButtonColorChange,
             child: TextButton(
-              onPressed: () {
-                Get.offAll(() => Homepage());
-                setState(() {});
-              },
+              onPressed: validateButton,
               style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 20),
               ),

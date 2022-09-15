@@ -9,7 +9,7 @@ class PhoneLoginPage extends StatefulWidget {
 
 class _PhoneLoginPageState extends State<PhoneLoginPage> {
   /* Phone Auth Controller */
-  final UserController _userController = Get.put(UserController());
+  final UserAuthController _userAuth = Get.put(UserAuthController());
 
   /* 폰번호 입력 컨트롤러*/
   final _phoneController = TextEditingController();
@@ -21,8 +21,9 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
   bool _otpBool = false;
 
   phoneVaildate() async {
-    if (_phoneController.text.length > 10) {
-      await _userController.verifyPhone('+82${_phoneController.text}');
+    final text = _phoneController.text;
+    if (text.trim().length >= 13) {
+      await _userAuth.verifyPhone('+82${_phoneController.text}');
       setState(() {
         _otpBool = true;
       });
@@ -77,13 +78,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                     TextButton(
                       /* 인증문자 받는 버튼, 클릭시 : optBool = true 
                       * 전화번호가 11자리가 채워지지 X ? null : 버튼활성화 */
-                      onPressed: () async {
-                        await _userController
-                            .verifyPhone('+82${_phoneController.text}');
-                        setState(() {
-                          _otpBool = true;
-                        });
-                      },
+                      onPressed: phoneVaildate,
                       child: Text('인증 문자 받기'),
                     ),
                     /* 이메일로 계정찾기 */
@@ -104,13 +99,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                   children: [
                     /* 인증문자다시받기 */
                     TextButton(
-                        onPressed: () async {
-                          await _userController
-                              .verifyPhone('+82${_phoneController.text}');
-                          setState(() {
-                            _otpBool = true;
-                          });
-                        },
+                        onPressed: phoneVaildate,
                         child: Text('인증문자 다시 받기(05분 00초)')),
                     /* OTP 입력 란 */
                     TextField(
@@ -136,14 +125,13 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                     TextButton(
                         onPressed: () async {
                           /* 유저정보저장 */
-                          await _userController.signIn(
+                          await _userAuth.signIn(
                             _otpController.text,
                           );
                           /* 닉네임, 프로필 설정 페이지로 이동 */
-                          Get.offAll(
-                            () => CreateUsername(),
-                            arguments: _phoneController.text,
-                          );
+                          Get.offAll(() => CreateUsername(),
+                              arguments: _userAuth.user.uid);
+                          print(_userAuth.verificationID);
                         },
                         child: Text('동의하고 시작하기'))
                   ],

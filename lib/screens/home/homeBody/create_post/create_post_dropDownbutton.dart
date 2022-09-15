@@ -16,7 +16,7 @@ class CreatePostDropDownButton extends StatelessWidget {
               hint: Text(
                 '게임모드',
               ),
-              items: gameModes
+              items: gameModes2
                   .map(
                     (modeItem) => DropdownMenuItem<String>(
                       value: modeItem,
@@ -41,7 +41,7 @@ class CreatePostDropDownButton extends StatelessWidget {
                 hint: Text(
                   '포지션',
                 ),
-                items: postions
+                items: postions2
                     .map(
                       (positionItem) => DropdownMenuItem<String>(
                         value: positionItem,
@@ -71,7 +71,7 @@ class CreatePostDropDownButton extends StatelessWidget {
                 hint: Text(
                   '티어',
                 ),
-                items: tears
+                items: tears2
                     .map(
                       (tearItem) => DropdownMenuItem<String>(
                         value: tearItem,
