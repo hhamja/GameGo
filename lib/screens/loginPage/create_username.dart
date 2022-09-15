@@ -50,7 +50,7 @@ class _CreateUsernameState extends State<CreateUsername> {
         centerTitle: true,
         actions: [
           TextButton(
-            onPressed: () => Get.offAll(Homepage()),
+            onPressed: () => Get.offAll(() => Homepage()),
             child: Text(
               '완료',
               style: TextStyle(color: Colors.white),

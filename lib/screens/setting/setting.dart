@@ -70,25 +70,25 @@ class _SettingPageState extends State<SettingPage> {
               SettingsTile.navigation(
                 title: Text('계정/정보 관리'),
                 onPressed: (_) {
-                  Get.to(AccountManagementPage());
+                  Get.to(() => AccountManagementPage());
                 },
               ),
               SettingsTile.navigation(
                 title: Text('팔로우 유저 관리'),
                 onPressed: (_) {
-                  Get.to(FavoriteUserManagementPage());
+                  Get.to(() => FavoriteUserManagementPage());
                 },
               ),
               SettingsTile.navigation(
                 title: Text('차단 유저 관리'),
                 onPressed: (_) {
-                  Get.to(BlockUserManagement());
+                  Get.to(() => BlockUserManagement());
                 },
               ),
               SettingsTile.navigation(
                 title: Text('게시글 미노출 유저 관리'),
                 onPressed: (_) {
-                  Get.to(UnexposeUserManagementPage());
+                  Get.to(() => UnexposeUserManagementPage());
                 },
               ),
             ],
@@ -120,7 +120,7 @@ class _SettingPageState extends State<SettingPage> {
               SettingsTile.navigation(
                 title: Text('탈퇴하기'),
                 onPressed: (_) {
-                  Get.to(LeaveAppPage());
+                  Get.to(() => LeaveAppPage());
                 },
               ),
             ],

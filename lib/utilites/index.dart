@@ -8,7 +8,6 @@ export 'dart:async';
 /* Packages */
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
-// export 'package:supabase_flutter/supabase_flutter.dart';
 export 'package:get/get.dart';
 export 'package:badges/badges.dart';
 export 'package:chat_bubbles/chat_bubbles.dart';
@@ -19,6 +18,7 @@ export 'package:settings_ui/settings_ui.dart';
 export 'package:dropdown_button2/dropdown_button2.dart';
 export 'package:syncfusion_flutter_gauges/gauges.dart';
 export 'package:firebase_auth/firebase_auth.dart';
+export 'package:image_picker/image_picker.dart';
 
 /* Screens */
 export 'package:mannergamer/screens/chat/chat_list.dart';

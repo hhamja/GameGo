@@ -162,7 +162,7 @@ class _MyPostListPageState extends State<MyPostListPage> {
                                     MaterialTapTargetSize.shrinkWrap),
                             onPressed: () {
                               Get.to(
-                                ViewSentReviews(),
+                                () => ViewSentReviews(),
                                 transition: Transition.rightToLeft,
                               );
                             },

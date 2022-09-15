@@ -3,13 +3,13 @@ import 'package:mannergamer/utilites/index.dart';
 class UserController extends GetxController {
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
-  /* 모든유저정보 */
-  late Rx<User?> firebaseUser;
+  // /* 모든유저정보 */
+  // late Rx<User?> firebaseUser;
   /* FireStore User Collection Instance */
   final CollectionReference _user =
       FirebaseFirestore.instance.collection('user');
 
-  /* User 정보 담을 userList */
+  /* User 정보 담을 UserList */
   RxList<UserModel> userList = <UserModel>[].obs;
   /* 유저매너나이 변수. 초기값=20, 변화공식 설정 어떻게? */
   RxDouble age = 20.0.obs;
@@ -19,25 +19,31 @@ class UserController extends GetxController {
   /* 매너나이 변화 공식 */
   updownMannerAge() {}
 
-  @override
-  void onReady() {
-    /* firebaseUser가 유저변화 반응형으로 감지하도록 함 */
-    firebaseUser = Rx<User?>(_auth.currentUser);
-    firebaseUser.bindStream(_auth.userChanges());
-    /* firebaseUser변화 감지해서 _setInitialScreen함수 실행 */
-    ever(firebaseUser, _setInitialScreen);
-    super.onReady();
-  }
+  // @override
+  // void onReady() {
+  //   /* firebaseUser가 유저변화 반응형으로 감지하도록 함 */
+  //   firebaseUser = Rx<User?>(_auth.currentUser);
+  //   firebaseUser.bindStream(_auth.userChanges());
+  //   /* firebaseUser변화 감지해서 _setInitialScreen함수 실행 */
+  //   ever(firebaseUser, _setInitialScreen);
+  //   super.onReady();
+  // }
 
-  /* 유저에 따라 다르게 첫화면 띄우기 */
-  _setInitialScreen(User? user) {
-    if (user == null) {
-      /* 유저정보 없으면, 시작하기 뜨는 페이지가 첫 ㄴ화면  */
-      Get.offAllNamed('/login');
-    } else {
-      /* 유저정보 있으면, 바로 게시물리스트 있는 Homepage가 첫 화면 */
-      Get.offAllNamed('/');
-    }
+  // /* 유저에 따라 다르게 첫화면 띄우기 */
+  // _setInitialScreen(User? user) {
+  //   if (user == null) {
+  //     /* 유저정보 없으면, 시작하기 뜨는 페이지가 첫 ㄴ화면  */
+  //     Get.offAllNamed('/login');
+  //   } else {
+  //     /* 유저정보 있으면, 바로 게시물리스트 있는 Homepage가 첫 화면 */
+  //     Get.offAllNamed('/');
+  //   }
+  // }
+  @override
+  void onInit() {
+    super.onInit();
+    addNewUser;
+    verifyPhone;
   }
 
   /* Create User */
@@ -60,7 +66,6 @@ class UserController extends GetxController {
 
   /* 유저 폰 번호로 SMS 전송 */
   Future verifyPhone(String phonenumber) async {
-    
     try {
       await _auth.verifyPhoneNumber(
         /* 폰번호 입력 */
@@ -84,7 +89,6 @@ class UserController extends GetxController {
         },
         /* 자동 SMS 코드 처리가 실패할 때의 시간 초과를 처리 */
         codeAutoRetrievalTimeout: (String verificationId) {},
-        
       );
     } catch (e) {
       print(e);

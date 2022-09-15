@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1090390887405-o2cuut4rlvhufop0uv7if3a61ajghlsg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mannergamer.mannergamer",
+            "certificate_hash": "bb4fbd80448cd93d17ac67c191d2ae2adb482fb6"
+          }
+        },
+        {
           "client_id": "1090390887405-rmdret28amerrj46kq7hjo5j79hv3eh6.apps.googleusercontent.com",
           "client_type": 3
         }

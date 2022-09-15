@@ -66,7 +66,7 @@ class ViewSentReviews extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   Get.to(
-                    ViewReceivedReviews(),
+                    () => ViewReceivedReviews(),
                     transition: Transition.downToUp,
                   );
                 },

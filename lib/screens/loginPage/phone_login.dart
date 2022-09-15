@@ -20,6 +20,15 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
   * 두번 째 부터는 true로 됨. */
   bool _otpBool = false;
 
+  phoneVaildate() async {
+    if (_phoneController.text.length > 10) {
+      await _userController.verifyPhone('+82${_phoneController.text}');
+      setState(() {
+        _otpBool = true;
+      });
+    }
+  }
+
   /* Life Cycle */
   @override
   void initState() {
@@ -65,10 +74,11 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
               /* orpBool이 false면 실행 */
               ? Column(
                   children: [
-                    /* 인증문자 받는 버튼, 클릭시 : optBool = true */
                     TextButton(
+                      /* 인증문자 받는 버튼, 클릭시 : optBool = true 
+                      * 전화번호가 11자리가 채워지지 X ? null : 버튼활성화 */
                       onPressed: () async {
-                        _userController
+                        await _userController
                             .verifyPhone('+82${_phoneController.text}');
                         setState(() {
                           _otpBool = true;
@@ -82,7 +92,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                       children: [
                         Text('전화번호가 변경되었나요?'),
                         TextButton(
-                          onPressed: () => Get.to(FindAccountPage()),
+                          onPressed: () => Get.to(() => FindAccountPage()),
                           child: Text('이메일로 계정찾기'),
                         )
                       ],
@@ -95,9 +105,11 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                     /* 인증문자다시받기 */
                     TextButton(
                         onPressed: () async {
-                          _userController.signIn(
-                            _otpController.text,
-                          );
+                          await _userController
+                              .verifyPhone('+82${_phoneController.text}');
+                          setState(() {
+                            _otpBool = true;
+                          });
                         },
                         child: Text('인증문자 다시 받기(05분 00초)')),
                     /* OTP 입력 란 */
@@ -122,9 +134,14 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                     ),
                     /* 최종완료버튼 (클릭 -> HomePage로 이동) */
                     TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          /* 유저정보저장 */
+                          await _userController.signIn(
+                            _otpController.text,
+                          );
+                          /* 닉네임, 프로필 설정 페이지로 이동 */
                           Get.offAll(
-                            CreateUsername(),
+                            () => CreateUsername(),
                             arguments: _phoneController.text,
                           );
                         },

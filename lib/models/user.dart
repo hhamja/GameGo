@@ -6,7 +6,7 @@ class UserModel {
   String username;
   CircleAvatar? avatar;
   String? email;
-  double mannerAge;
+  double mannerAge; //초기값 20.0세
   Timestamp createdAt;
 
   UserModel({

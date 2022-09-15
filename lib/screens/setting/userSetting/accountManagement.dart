@@ -20,7 +20,7 @@ class AccountManagementPage extends StatelessWidget {
             title: Text('이메일'),
             trailing: TextButton(
               onPressed: () {
-                Get.to(EmailEnrollPage());
+                Get.to(() => EmailEnrollPage());
               },
               child: Text(
                 '등록',
@@ -37,7 +37,7 @@ class AccountManagementPage extends StatelessWidget {
             subtitle: Text('010-1234-5678'),
             trailing: TextButton(
               onPressed: () {
-                Get.to(PhoneNumberEditPage());
+                Get.to(() => PhoneNumberEditPage());
               },
               child: Text('변경'),
               style: TextButton.styleFrom(
@@ -51,7 +51,7 @@ class AccountManagementPage extends StatelessWidget {
             subtitle: Text('2022.6.25'),
             trailing: TextButton(
               onPressed: () {
-                Get.to(SelfAuthenticationPage());
+                Get.to(() => SelfAuthenticationPage());
               },
               child: Text('확인'),
               style: TextButton.styleFrom(

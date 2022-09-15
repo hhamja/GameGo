@@ -35,7 +35,7 @@ class _AppNoticeListPageState extends State<AppNoticeListPage> {
             subtitle: Text(noticeListData['noticeDateList'][index]),
             onTap: () {
               Get.to(
-                NoticeDetailPage(),
+                () => NoticeDetailPage(),
               );
             },
           );

@@ -8,7 +8,7 @@ Future<void> main() async {
   );
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/lo',
+    initialRoute: '/login',
     getPages: [
       // 라우트 관리
       GetPage(name: '/', page: () => MyApp()),

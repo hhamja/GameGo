@@ -15,7 +15,7 @@ class _MyPageState extends State<MyPage> {
         title: Text('나의 정보'),
         actions: [
           IconButton(
-              onPressed: () => {Get.to(SettingPage())},
+              onPressed: () => {Get.to(() => SettingPage())},
               icon: Icon(Icons.settings_outlined))
         ],
       ),
@@ -34,7 +34,7 @@ class _MyPageState extends State<MyPage> {
                 description: Text('#유저id'),
                 trailing: Icon(Icons.keyboard_control_outlined),
                 onPressed: (value) {
-                  Get.to(ProfileEditPage());
+                  Get.to(() => ProfileEditPage());
                 },
               ),
               SettingsTile(
@@ -134,21 +134,21 @@ class _MyPageState extends State<MyPage> {
                 title: Text('나의 글 0개'), //나의 글 $state
                 trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 onPressed: (_) {
-                  Get.to(MyPostListPage());
+                  Get.to(() => MyPostListPage());
                 },
               ),
               SettingsTile.navigation(
                 title: Text('받은 매너 평가'),
                 trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 onPressed: (_) {
-                  Get.to(ReceivedMannerEvaluationPage());
+                  Get.to(() => ReceivedMannerEvaluationPage());
                 },
               ),
               SettingsTile.navigation(
                 title: Text('받은 듀오 후기'),
                 trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 onPressed: (_) {
-                  Get.to(ReceivedReviewPage());
+                  Get.to(() => ReceivedReviewPage());
                 },
               ),
             ],
@@ -159,24 +159,24 @@ class _MyPageState extends State<MyPage> {
               SettingsTile.navigation(
                 title: Text('공지사항'),
                 onPressed: (_) {
-                  Get.to(AppNoticeListPage());
+                  Get.to(() => AppNoticeListPage());
                 },
               ),
               SettingsTile.navigation(
                 title: Text('1:1 문의 및 피드백'),
                 onPressed: (_) {
-                  Get.to(FeedbackPage());
+                  Get.to(() => FeedbackPage());
                 },
               ),
               SettingsTile.navigation(
                 title: Text('FAQ'),
                 onPressed: (_) {
-                  Get.to(FAQPage());
+                  Get.to(() => FAQPage());
                 },
               ),
               SettingsTile.navigation(
                 title: Text('설정'),
-                onPressed: (_) => {Get.to(SettingPage())},
+                onPressed: (_) => {Get.to(() => SettingPage())},
               ),
             ],
           ),

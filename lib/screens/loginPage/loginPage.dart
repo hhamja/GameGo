@@ -14,7 +14,7 @@ class LogInPage extends StatelessWidget {
               Text('MG'),
               TextButton(
                   child: Text('시작하기'),
-                  onPressed: () => Get.to(PhoneLoginPage())),
+                  onPressed: () => Get.to(() => PhoneLoginPage())),
             ],
           ),
         ),
