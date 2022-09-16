@@ -75,6 +75,7 @@ export 'package:mannergamer/models/post_model.dart';
 export 'package:mannergamer/models/user.dart';
 
 /* Controller */
+export 'package:mannergamer/controller/initialScreen.dart';
 export 'package:mannergamer/controller/dropdownButton.dart';
 export 'package:mannergamer/controller/post.dart';
 export 'package:mannergamer/controller/edit_dropdown.dart';
@@ -86,6 +87,6 @@ export 'package:mannergamer/controller/user_controller.dart';
 export 'package:mannergamer/component/bottomSheet.dart';
 
 /* Utilities */
-
+export 'package:mannergamer/utilites/route.dart';
 /* Themes */
 export 'package:mannergamer/theme/theme.dart';

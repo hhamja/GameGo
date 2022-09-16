@@ -3,30 +3,18 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  /* GetX Controller */
+  Get.put<UserAuthController>(UserAuthController());
+  Get.put<CreatePostDropDownBTController>(CreatePostDropDownBTController());
+  Get.put<EditDropDownController>(EditDropDownController());
+  Get.put<HomePageDropDownBTController>(HomePageDropDownBTController());
+  Get.put<InitialScreenCntroller>(InitialScreenCntroller());
+  Get.put<FilterPostController>(FilterPostController());
+  Get.put<UserAuthController>(UserAuthController());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(GetMaterialApp(
-    debugShowCheckedModeBanner: false,
-    initialRoute: '/login',
-    getPages: [
-      // 라우트 관리
-      GetPage(name: '/', page: () => MyApp()),
-      GetPage(name: '/login', page: () => LogInPage()),
-      GetPage(name: '/home', page: () => Homepage()),
-      GetPage(name: '/chat', page: () => ChatListPage()),
-      GetPage(name: '/ntf', page: () => NotificationPage()),
-      GetPage(name: '/postDetail', page: () => UserPostDetailPage()),
-      GetPage(name: '/reportList', page: () => ReportPostPage()),
-      GetPage(name: '/illegal', page: () => IllegallyPostedPage()),
-
-      GetPage(name: '/otherReason', page: () => OtherReasonsPage()),
-      GetPage(name: '/addPost', page: () => HomeAddPost()),
-    ],
-    title: 'MannerGamer',
-    theme: ThemeData(primarySwatch: Colors.blue), // material design3로 앱 색 설정
-    home: MyApp(),
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -79,16 +67,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _bodylist[tabIndex], //하단 탭바를 이용한 홈-게시글올리기-채팅-나의정보 페이지
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _changeTabindex,
-        currentIndex: tabIndex,
-        items: [
-          _BottomBarItem(Icon(Icons.home_outlined), Icon(Icons.home), '홈'),
-          _chatBottomBarItem(),
-          _BottomBarItem(Icon(Icons.face_outlined), Icon(Icons.face), '나의 정보'),
-        ],
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      getPages: AppRoutes.routes,
+      title: 'MannerGamer',
+      theme: ThemeData(primarySwatch: Colors.blue), //
+      home: Scaffold(
+        body: _bodylist[tabIndex], //하단 탭바를 이용한 홈-게시글올리기-채팅-나의정보 페이지
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: _changeTabindex,
+          currentIndex: tabIndex,
+          items: [
+            _BottomBarItem(Icon(Icons.home_outlined), Icon(Icons.home), '홈'),
+            _chatBottomBarItem(),
+            _BottomBarItem(
+                Icon(Icons.face_outlined), Icon(Icons.face), '나의 정보'),
+          ],
+        ),
       ),
     );
   }
