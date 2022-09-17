@@ -1,6 +1,8 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class PostController extends GetxController {
+  static final PostController to = Get.find<PostController>();
+
   /* 파이어스토어 Post 컬렉션 참조 instance */
   final CollectionReference _post =
       FirebaseFirestore.instance.collection('post');

@@ -59,10 +59,10 @@ class UserAuthController extends GetxController {
         /* 폰번호 입력 */
         phoneNumber: phonenumber,
         /* 폰인증 성공 시 */
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await _auth
-              .signInWithCredential(credential)
-              .then((value) => print('전화번호인증선공'));
+        verificationCompleted: (PhoneAuthCredential credential) {
+          // await _auth
+          //     .signInWithCredential(credential)
+          //     .then((value) => print('전화번호인증선공'));
         },
         /* 잘못된 전화번호 또는 SMS 할당량 초과 여부와 같은 실패 이벤트를 처리 */
         verificationFailed: (FirebaseAuthException e) {

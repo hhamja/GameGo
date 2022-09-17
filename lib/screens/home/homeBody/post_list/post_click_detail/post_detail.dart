@@ -203,7 +203,11 @@ class _UserPostDetailPageState extends State<UserPostDetailPage> {
           children: [
             ButtomSheetContent('게시물 수정', Colors.blue, () async {
               Get.back();
-              await Get.to(() => EditPostPage(), arguments: index);
+              await Get.to(
+                () => EditPostPage(),
+                arguments: index,
+                binding: EditPageDropButtonBinding(),
+              );
             }),
             ButtomSheetContent('삭제', Colors.redAccent, () async {
               Get.back();

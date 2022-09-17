@@ -1,6 +1,8 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class InitialScreenCntroller extends GetxController {
+  // static final InitialScreenCntroller to = Get.find<InitialScreenCntroller>();
+
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
 
@@ -8,23 +10,27 @@ class InitialScreenCntroller extends GetxController {
   late Rx<User?> firebaseUser;
 
   @override
-  void onReady() {
-    /* firebaseUser가 유저변화 반응형으로 감지하도록 함 */
+  void onInit() {
+    super.onInit();
+    /* 파이베이스 auth User목록 */
     firebaseUser = Rx<User?>(_auth.currentUser);
+    /* AUTH의 유저변화 반응형으로 감지 */
     firebaseUser.bindStream(_auth.userChanges());
     /* firebaseUser변화 감지해서 _setInitialScreen함수 실행 */
     ever(firebaseUser, _setInitialScreen);
-    super.onReady();
+    print('현재유저정보 ${_auth.currentUser}');
   }
 
-/* 유저에 따라 다르게 첫화면 띄우기 */
+  /* 유저에 따라 다르게 첫화면 띄우기 */
   _setInitialScreen(User? user) {
     if (user == null) {
       /* 유저정보 X , 첫화면 : 사용자등록페이지  */
-      Get.offAllNamed('/login');
+      print('유저null ${user}');
+      Get.offAll(() => CreateUsername());
     } else {
       /* 유저정보 O , 첫화면 : HomePage()  */
-      Get.offAllNamed('/');
+      print('유저정보 O : ${user}');
+      Get.offAll(() => Homepage());
     }
   }
 }

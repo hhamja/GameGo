@@ -10,7 +10,8 @@ class PhoneLoginPage extends StatefulWidget {
 class _PhoneLoginPageState extends State<PhoneLoginPage> {
   /* Phone Auth Controller */
   final UserAuthController _userAuth = Get.put(UserAuthController());
-
+  /* InitialScreenCntroller */
+  // final InitialScreenCntroller _screen = Get.put(InitialScreenCntroller());
   /* 폰번호 입력 컨트롤러*/
   final _phoneController = TextEditingController();
   /* OTP 번호 입력 컨트롤러 */
@@ -31,11 +32,6 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
   }
 
   /* Life Cycle */
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   void dispose() {
     _phoneController.dispose();
@@ -123,17 +119,15 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                     ),
                     /* 최종완료버튼 (클릭 -> HomePage로 이동) */
                     TextButton(
-                        onPressed: () async {
-                          /* 유저정보저장 */
-                          await _userAuth.signIn(
-                            _otpController.text,
-                          );
-                          /* 닉네임, 프로필 설정 페이지로 이동 */
-                          Get.offAll(() => CreateUsername(),
-                              arguments: _userAuth.user.uid);
-                          print(_userAuth.verificationID);
-                        },
-                        child: Text('동의하고 시작하기'))
+                      onPressed: () async {
+                        await Get.put(InitialScreenCntroller());
+                        /* 유저정보저장 */
+                        await _userAuth.signIn(
+                          _otpController.text,
+                        );
+                      },
+                      child: Text('동의하고 시작하기'),
+                    ),
                   ],
                 ),
         ],

@@ -3,17 +3,17 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   /* GetX Controller */
   Get.put<UserAuthController>(UserAuthController());
-  Get.put<CreatePostDropDownBTController>(CreatePostDropDownBTController());
-  Get.put<EditDropDownController>(EditDropDownController());
-  Get.put<HomePageDropDownBTController>(HomePageDropDownBTController());
-  Get.put<InitialScreenCntroller>(InitialScreenCntroller());
-  Get.put<FilterPostController>(FilterPostController());
-  Get.put<UserAuthController>(UserAuthController());
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // Get.put<InitialScreenCntroller>(InitialScreenCntroller());
+  // Get.put<CreatePostDropDownBTController>(CreatePostDropDownBTController());
+  // Get.put<EditDropDownController>(EditDropDownController());
+  // Get.put<HomePageDropDownBTController>(HomePageDropDownBTController());
+  // Get.put<FilterPostController>(FilterPostController());
+  // Get.put<PostController>(PostController());
+
   runApp(MyApp());
 }
 
@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/login',
       getPages: AppRoutes.routes,
       title: 'MannerGamer',
       theme: ThemeData(primarySwatch: Colors.blue), //

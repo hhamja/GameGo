@@ -68,25 +68,29 @@ export 'package:mannergamer/screens/setting/userSetting/accountManagement/emailE
 export 'package:mannergamer/screens/setting/userSetting/accountManagement/phoneNumberEdit.dart';
 export 'package:mannergamer/screens/setting/userSetting/accountManagement/selfAuthentication.dart';
 
+export 'package:mannergamer/screens/splashPage/splash.dart';
+
 /* Models */
 export 'package:mannergamer/models/data.dart';
-export 'package:mannergamer/models/dropDown_model.dart';
-export 'package:mannergamer/models/post_model.dart';
+export 'package:mannergamer/models/dropDownButton.dart';
+export 'package:mannergamer/models/post.dart';
 export 'package:mannergamer/models/user.dart';
 
 /* Controller */
 export 'package:mannergamer/controller/initialScreen.dart';
-export 'package:mannergamer/controller/dropdownButton.dart';
+export 'package:mannergamer/controller/create_dropdownButton.dart';
 export 'package:mannergamer/controller/post.dart';
-export 'package:mannergamer/controller/edit_dropdown.dart';
-export 'package:mannergamer/controller/homeDropDownButton.dart';
-export 'package:mannergamer/controller/post_filter.dart';
-export 'package:mannergamer/controller/user_controller.dart';
+export 'package:mannergamer/controller/edit_dropdownbutton.dart';
+export 'package:mannergamer/controller/home_dropdownbutton.dart';
+export 'package:mannergamer/controller/user_auth.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';
 
 /* Utilities */
 export 'package:mannergamer/utilites/route.dart';
+export 'package:mannergamer/utilites/binding.dart';
 /* Themes */
 export 'package:mannergamer/theme/theme.dart';
+
+export 'package:mannergamer/main.dart';

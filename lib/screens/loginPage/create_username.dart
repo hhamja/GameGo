@@ -15,7 +15,7 @@ class _CreateUsernameState extends State<CreateUsername> {
 
   @override
   void dispose() {
-    _usernameController;
+    _usernameController.dispose();
     super.dispose();
   }
 

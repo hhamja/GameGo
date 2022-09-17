@@ -1,8 +1,6 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class Homepage extends StatelessWidget {
-  //Get controller instance 생성
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
