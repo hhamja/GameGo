@@ -58,7 +58,7 @@ export 'package:mannergamer/screens/mypage/myActivity/myPostList/viewSentReviews
 export 'package:mannergamer/screens/mypage/profile/profileEdit.dart';
 export 'package:mannergamer/screens/setting/setting.dart';
 export 'package:mannergamer/screens/setting/alertSetting/alertSetting.dart';
-export 'package:mannergamer/screens/setting/etc/delete_user.dart';
+export 'package:mannergamer/screens/setting/etc/signOut.dart';
 export 'package:mannergamer/screens/setting/etc/logOutDialog.dart';
 export 'package:mannergamer/screens/setting/userSetting/accountManagement.dart';
 export 'package:mannergamer/screens/setting/userSetting/blockUserManagement.dart';

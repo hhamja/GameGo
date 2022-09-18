@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class CreatePostDropDownButton extends StatelessWidget {
-  const CreatePostDropDownButton({Key? key}) : super(key: key);
+class AddPostDropDownButton extends StatelessWidget {
+  const AddPostDropDownButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

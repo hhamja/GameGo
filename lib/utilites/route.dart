@@ -6,17 +6,17 @@ class AppRoutes {
   static final routes = [
     /* CHAT */
     GetPage(
-      name: Paths.Chat,
+      name: Paths.ChatList,
       page: () => ChatListPage(),
     ),
     GetPage(
-      name: Paths.AddPost,
+      name: Paths.Chatting,
       page: () => ChattingPage(),
     ),
 
     /* HOME */
     GetPage(
-      name: Paths.AddPost,
+      name: Paths.HomeDropDownBT,
       page: () => HomeDropDownButton(),
     ),
     GetPage(
@@ -24,15 +24,15 @@ class AppRoutes {
       page: () => NotificationPage(),
     ),
     GetPage(
-      name: Paths.AddPost,
-      page: () => CreatePostDropDownButton(),
+      name: Paths.AddPostDropDownBT,
+      page: () => AddPostDropDownButton(),
     ),
     GetPage(
       name: Paths.AddPost,
       page: () => AddPostPage(),
     ),
     GetPage(
-      name: Paths.AddPost,
+      name: Paths.HomePostList,
       page: () => HomePostList(),
     ),
     GetPage(
@@ -40,15 +40,15 @@ class AppRoutes {
       page: () => PostDetailPage(),
     ),
     GetPage(
-      name: Paths.AddPost,
+      name: Paths.DeleteDialog,
       page: () => DeleteDialog(),
     ),
     GetPage(
-      name: Paths.AddPost,
+      name: Paths.EditPostDropDownButton,
       page: () => EditPostDropDownButton(),
     ),
     GetPage(
-      name: Paths.AddPost,
+      name: Paths.EditPost,
       page: () => EditPostPage(),
     ),
     GetPage(
@@ -60,7 +60,7 @@ class AppRoutes {
       page: () => OtherReasonsPage(),
     ),
     GetPage(
-      name: Paths.AddPost,
+      name: Paths.ReportDialog,
       page: () => ReportDialog(),
     ),
     GetPage(
@@ -78,111 +78,111 @@ class AppRoutes {
       page: () => SignUPPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.FindAccount,
       page: () => FindAccountPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.Main,
       page: () => MainPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.SMS,
       page: () => SMSPage(),
     ),
 
     /* MYPAGE */
     GetPage(
-      name: Paths.Home,
+      name: Paths.My,
       page: () => MyPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.FAQ,
       page: () => FAQPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.Feedback,
       page: () => FeedbackPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.AppNoticeList,
       page: () => AppNoticeListPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.NoticeDetail,
       page: () => NoticeDetailPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.MannerAge,
       page: () => MannerAgePage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.ReceivedReview,
       page: () => ReceivedReviewPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.ReceivedMannerEvaluation,
       page: () => ReceivedMannerEvaluationPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.MyPostList,
       page: () => MyPostListPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.ViewReceivedReviews,
       page: () => ViewReceivedReviews(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.ViewSentReviews,
       page: () => ViewSentReviews(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.ProfileEdit,
       page: () => ProfileEditPage(),
     ),
 
     /* SETTING */
     GetPage(
-      name: Paths.Home,
+      name: Paths.Setting,
       page: () => SettingPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.Alram,
       page: () => SettingAlram(),
     ),
     GetPage(
-      name: Paths.Home,
-      page: () => DeleteUserPage(),
+      name: Paths.SignOut,
+      page: () => SignOutPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.LogOutDialog,
       page: () => LogOutDialog(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.Account,
       page: () => AccountManagementPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.BlockUser,
       page: () => BlockUserManagement(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.FavoriteUser,
       page: () => FavoriteUserManagementPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.UnexposeUser,
       page: () => UnexposeUserManagementPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.EmailEnroll,
       page: () => EmailEnrollPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.EditPhone,
       page: () => PhoneNumberEditPage(),
     ),
     GetPage(
-      name: Paths.Home,
+      name: Paths.SelfAuthentication,
       page: () => SelfAuthenticationPage(),
     ),
 

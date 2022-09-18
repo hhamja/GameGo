@@ -60,7 +60,7 @@ class _AddPostPageState extends State<AddPostPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: CreatePostDropDownButton(),
+                child: AddPostDropDownButton(),
               ),
               SizedBox(height: 10),
               Divider(

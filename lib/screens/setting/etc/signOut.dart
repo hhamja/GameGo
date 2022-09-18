@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class DeleteUserPage extends StatefulWidget {
-  const DeleteUserPage({Key? key}) : super(key: key);
+class SignOutPage extends StatefulWidget {
+  const SignOutPage({Key? key}) : super(key: key);
 
   @override
-  State<DeleteUserPage> createState() => _DeleteUserPageState();
+  State<SignOutPage> createState() => _SignOutPageState();
 }
 
-class _DeleteUserPageState extends State<DeleteUserPage> {
+class _SignOutPageState extends State<SignOutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

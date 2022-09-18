@@ -120,7 +120,7 @@ class _SettingPageState extends State<SettingPage> {
               SettingsTile.navigation(
                 title: Text('탈퇴하기'),
                 onPressed: (_) {
-                  Get.to(() => DeleteUserPage());
+                  Get.to(() => SignOutPage());
                 },
               ),
             ],
