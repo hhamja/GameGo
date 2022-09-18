@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class PhoneLoginPage extends StatefulWidget {
-  PhoneLoginPage({Key? key}) : super(key: key);
+class SMSPage extends StatefulWidget {
+  SMSPage({Key? key}) : super(key: key);
 
   @override
-  State<PhoneLoginPage> createState() => _PhoneLoginPageState();
+  State<SMSPage> createState() => _SMSPageState();
 }
 
-class _PhoneLoginPageState extends State<PhoneLoginPage> {
+class _SMSPageState extends State<SMSPage> {
   /* Phone Auth Controller */
   final UserAuthController _userAuth = Get.put(UserAuthController());
   /* InitialScreenCntroller */
@@ -122,7 +122,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                       onPressed: () async {
                         await Get.put(InitialScreenCntroller());
                         /* 유저정보저장 */
-                        await _userAuth.signIn(
+                        await _userAuth.signUP(
                           _otpController.text,
                         );
                       },

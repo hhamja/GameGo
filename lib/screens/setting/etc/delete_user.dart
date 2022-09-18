@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class LeaveAppPage extends StatefulWidget {
-  const LeaveAppPage({Key? key}) : super(key: key);
+class DeleteUserPage extends StatefulWidget {
+  const DeleteUserPage({Key? key}) : super(key: key);
 
   @override
-  State<LeaveAppPage> createState() => _LeaveAppPageState();
+  State<DeleteUserPage> createState() => _DeleteUserPageState();
 }
 
-class _LeaveAppPageState extends State<LeaveAppPage> {
+class _DeleteUserPageState extends State<DeleteUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +46,7 @@ class _LeaveAppPageState extends State<LeaveAppPage> {
                 items: leaveAppValue
                     .map(
                       (item) => DropdownMenuItem(
-                        onTap: () {}, //여기에 각 항목별로 해당하는 문구를 배정시킨 if함수 넣자.
+                        onTap: () {}, //각 항목별로 해당하는 문구를 배정시킨 if함수 넣기
                         value: item,
                         child: Text(
                           item,
@@ -66,6 +66,7 @@ class _LeaveAppPageState extends State<LeaveAppPage> {
               ),
             ),
             showLeaveReasonSolution(),
+            TextButton(onPressed: () {}, child: Text('탈퇴하기'))
           ],
         ),
       ),

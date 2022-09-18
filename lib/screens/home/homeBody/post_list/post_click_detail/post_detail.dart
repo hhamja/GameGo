@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class UserPostDetailPage extends StatefulWidget {
-  const UserPostDetailPage({Key? key}) : super(key: key);
+class PostDetailPage extends StatefulWidget {
+  const PostDetailPage({Key? key}) : super(key: key);
 
   @override
-  State<UserPostDetailPage> createState() => _UserPostDetailPageState();
+  State<PostDetailPage> createState() => _PostDetailPageState();
 }
 
-class _UserPostDetailPageState extends State<UserPostDetailPage> {
+class _PostDetailPageState extends State<PostDetailPage> {
   /* find -> PostController */
   PostController controller = Get.find<PostController>();
   /* HomePostList Listview의 index 값을 전달받음 */

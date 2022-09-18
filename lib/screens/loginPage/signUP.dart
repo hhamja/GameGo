@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class CreateUsername extends StatefulWidget {
-  const CreateUsername({Key? key}) : super(key: key);
+class SignUPPage extends StatefulWidget {
+  const SignUPPage({Key? key}) : super(key: key);
 
   @override
-  State<CreateUsername> createState() => _CreateUsernameState();
+  State<SignUPPage> createState() => _SignUPPageState();
 }
 
-class _CreateUsernameState extends State<CreateUsername> {
+class _SignUPPageState extends State<SignUPPage> {
   /* 닉네임 입력 컨트롤러 */
   final TextEditingController _usernameController = TextEditingController();
   /* User GetX Controller */

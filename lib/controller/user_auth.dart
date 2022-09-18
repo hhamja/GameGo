@@ -1,6 +1,8 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class UserAuthController extends GetxController {
+  static UserAuthController get to => Get.find<UserAuthController>();
+
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
   /* FireStore User Collection Instance */
@@ -52,7 +54,7 @@ class UserAuthController extends GetxController {
             }).toList());
   }
 
-  /* 유저 폰 번호로 SMS 전송 */
+  /* 폰으로 SMS 전송 */
   Future verifyPhone(String phonenumber) async {
     try {
       await _auth.verifyPhoneNumber(
@@ -83,17 +85,25 @@ class UserAuthController extends GetxController {
     }
   }
 
-  /* 폰가입정보 SignIN */
-  Future signIn(token) async {
+  /* 폰가입정보 SignUP */
+  Future signUP(token) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationID, smsCode: token);
     final userCredential = await _auth.signInWithCredential(credential);
     user = userCredential.user;
     print(user?.uid);
   }
-
   /* 로그아웃 */
-  Future signOut() async {
-    await _auth.signOut();
+  // 로그아웃의 경우 : 탈회하기랑은 다르게  자동로그인 쿠키만 앱에서 지움
+
+  /* 탈퇴하기
+  * DB User정보 삭제, 파베 Auth에서 해당 유저 삭제 */
+  Future deleteUser(UID) async {
+    try {
+      await _user.doc(UID).delete();
+      await _auth.signOut();
+    } catch (e) {
+      print('deleteUser error : ${e}');
+    }
   }
 }

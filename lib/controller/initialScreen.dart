@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class InitialScreenCntroller extends GetxController {
-  // static final InitialScreenCntroller to = Get.find<InitialScreenCntroller>();
+  static InitialScreenCntroller get to => Get.find<InitialScreenCntroller>();
 
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
@@ -26,7 +26,7 @@ class InitialScreenCntroller extends GetxController {
     if (user == null) {
       /* 유저정보 X , 첫화면 : 사용자등록페이지  */
       print('유저null ${user}');
-      Get.offAll(() => CreateUsername());
+      Get.offAll(() => SignUPPage());
     } else {
       /* 유저정보 O , 첫화면 : HomePage()  */
       print('유저정보 O : ${user}');

@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class HomeAddPost extends StatefulWidget {
-  HomeAddPost({Key? key}) : super(key: key);
+class AddPostPage extends StatefulWidget {
+  AddPostPage({Key? key}) : super(key: key);
 
   @override
-  State<HomeAddPost> createState() => _HomeAddPostState();
+  State<AddPostPage> createState() => _AddPostPageState();
 }
 
-class _HomeAddPostState extends State<HomeAddPost> {
+class _AddPostPageState extends State<AddPostPage> {
   /* PostController 선언 (∵ Create Post) */
   PostController _postController = Get.find<PostController>();
   /* DropDownBTController 선언 (∵ Create Post) */

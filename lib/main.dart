@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/',
       getPages: AppRoutes.routes,
       title: 'MannerGamer',
       theme: ThemeData(primarySwatch: Colors.blue), //

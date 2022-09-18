@@ -22,7 +22,7 @@ export 'package:image_picker/image_picker.dart';
 
 /* Screens */
 export 'package:mannergamer/screens/chat/chat_list.dart';
-export 'package:mannergamer/screens/chat/livechat.dart';
+export 'package:mannergamer/screens/chat/chatting_page.dart';
 export 'package:mannergamer/screens/home/home.dart';
 export 'package:mannergamer/screens/home/homeAppbar/dropDownButton.dart';
 export 'package:mannergamer/screens/home/homeAppbar/notification.dart';
@@ -38,10 +38,10 @@ export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/re
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportDialog.dart';
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportPost.dart';
 
-export 'package:mannergamer/screens/loginPage/create_username.dart';
+export 'package:mannergamer/screens/loginPage/signUP.dart';
 export 'package:mannergamer/screens/loginPage/find_account_for_email.dart';
-export 'package:mannergamer/screens/loginPage/loginPage.dart';
-export 'package:mannergamer/screens/loginPage/phone_login.dart';
+export 'package:mannergamer/screens/loginPage/main_page.dart';
+export 'package:mannergamer/screens/loginPage/sms.dart';
 
 export 'package:mannergamer/screens/mypage/mypage.dart';
 export 'package:mannergamer/screens/mypage/etc_/faq.dart';
@@ -58,7 +58,7 @@ export 'package:mannergamer/screens/mypage/myActivity/myPostList/viewSentReviews
 export 'package:mannergamer/screens/mypage/profile/profileEdit.dart';
 export 'package:mannergamer/screens/setting/setting.dart';
 export 'package:mannergamer/screens/setting/alertSetting/alertSetting.dart';
-export 'package:mannergamer/screens/setting/etc/leaveApp.dart';
+export 'package:mannergamer/screens/setting/etc/delete_user.dart';
 export 'package:mannergamer/screens/setting/etc/logOutDialog.dart';
 export 'package:mannergamer/screens/setting/userSetting/accountManagement.dart';
 export 'package:mannergamer/screens/setting/userSetting/blockUserManagement.dart';
@@ -90,6 +90,7 @@ export 'package:mannergamer/component/bottomSheet.dart';
 /* Utilities */
 export 'package:mannergamer/utilites/route.dart';
 export 'package:mannergamer/utilites/binding.dart';
+export 'package:mannergamer/utilites/route_path.dart';
 /* Themes */
 export 'package:mannergamer/theme/theme.dart';
 

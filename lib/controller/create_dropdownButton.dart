@@ -2,7 +2,7 @@ import 'package:mannergamer/utilites/index.dart';
 
 /*------------- 게시물 추가하는 페이지의 드랍다운버튼 컨트롤러 ---------------*/
 class CreatePostDropDownBTController extends GetxController {
-  static final CreatePostDropDownBTController to =
+  static CreatePostDropDownBTController get to =>
       Get.find<CreatePostDropDownBTController>();
 
   /* 포지션 드랍다운 버튼 보여주는 bool값 */

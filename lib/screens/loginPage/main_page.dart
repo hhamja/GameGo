@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class LogInPage extends StatelessWidget {
-  LogInPage({Key? key}) : super(key: key);
+class MainPage extends StatelessWidget {
+  MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class LogInPage extends StatelessWidget {
               Text('MG'),
               TextButton(
                   child: Text('시작하기'),
-                  onPressed: () => Get.to(() => PhoneLoginPage())),
+                  onPressed: () => Get.to(() => SMSPage())),
             ],
           ),
         ),

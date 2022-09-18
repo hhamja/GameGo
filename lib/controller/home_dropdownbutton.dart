@@ -2,7 +2,7 @@ import 'package:mannergamer/utilites/index.dart';
 
 /*-------------------- 홈페이지의 드랍다운버튼 컨트롤러 --------------------*/
 class HomePageDropDownBTController extends GetxController {
-  static final HomePageDropDownBTController to =
+  static HomePageDropDownBTController get to =>
       Get.find<HomePageDropDownBTController>();
 
   /* 포지션 드랍다운 버튼 보여주는 bool값 */

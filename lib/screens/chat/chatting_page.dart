@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class UserChatDetail extends StatelessWidget {
-  UserChatDetail({Key? key}) : super(key: key);
+class ChattingPage extends StatelessWidget {
+  ChattingPage({Key? key}) : super(key: key);
   final Duration duration = new Duration();
   final Duration position = new Duration();
   final bool isPlaying = false;
