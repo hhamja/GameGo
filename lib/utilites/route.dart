@@ -18,6 +18,7 @@ class AppRoutes {
     GetPage(
       name: Paths.HomeDropDownBT,
       page: () => HomeDropDownButton(),
+      binding: HomeDropDownBinding(),
     ),
     GetPage(
       name: Paths.Notification,
@@ -26,30 +27,37 @@ class AppRoutes {
     GetPage(
       name: Paths.AddPostDropDownBT,
       page: () => AddPostDropDownButton(),
+      binding: CreatePostDropDownBinding(),
     ),
     GetPage(
       name: Paths.AddPost,
       page: () => AddPostPage(),
+      binding: AddPostBinding(),
     ),
     GetPage(
       name: Paths.HomePostList,
       page: () => HomePostList(),
+      binding: HomePostListBinding(),
     ),
     GetPage(
       name: Paths.Postdetail,
       page: () => PostDetailPage(),
+      binding: PostDetailBinding(),
     ),
     GetPage(
       name: Paths.DeleteDialog,
       page: () => DeleteDialog(),
+      binding: DeleteDialogBinding(),
     ),
     GetPage(
       name: Paths.EditPostDropDownButton,
       page: () => EditPostDropDownButton(),
+      binding: EditDropDownBinding(),
     ),
     GetPage(
       name: Paths.EditPost,
       page: () => EditPostPage(),
+      binding: EditPostBinding(),
     ),
     GetPage(
       name: Paths.Illegal,
@@ -76,6 +84,7 @@ class AppRoutes {
     GetPage(
       name: Paths.Signup,
       page: () => SignUPPage(),
+      binding: SignUpBinding(),
     ),
     GetPage(
       name: Paths.FindAccount,
@@ -88,6 +97,7 @@ class AppRoutes {
     GetPage(
       name: Paths.SMS,
       page: () => SMSPage(),
+      binding: SmsBinding(),
     ),
 
     /* MYPAGE */
@@ -152,6 +162,7 @@ class AppRoutes {
     GetPage(
       name: Paths.SignOut,
       page: () => SignOutPage(),
+      binding: SignOutBinding(),
     ),
     GetPage(
       name: Paths.LogOutDialog,

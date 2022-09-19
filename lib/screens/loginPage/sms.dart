@@ -10,12 +10,11 @@ class SMSPage extends StatefulWidget {
 class _SMSPageState extends State<SMSPage> {
   /* Phone Auth Controller */
   final UserAuthController _userAuth = Get.put(UserAuthController());
-  /* InitialScreenCntroller */
-  // final InitialScreenCntroller _screen = Get.put(InitialScreenCntroller());
+
   /* 폰번호 입력 컨트롤러*/
-  final _phoneController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   /* OTP 번호 입력 컨트롤러 */
-  final _otpController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
 
   /* OTP 처음 받는 경우 : false
   * 두번 째 부터는 true로 됨. */
@@ -36,6 +35,7 @@ class _SMSPageState extends State<SMSPage> {
   void dispose() {
     _phoneController.dispose();
     _otpController.dispose();
+
     super.dispose();
   }
 
@@ -120,11 +120,12 @@ class _SMSPageState extends State<SMSPage> {
                     /* 최종완료버튼 (클릭 -> HomePage로 이동) */
                     TextButton(
                       onPressed: () async {
-                        await Get.put(InitialScreenCntroller());
                         /* 유저정보저장 */
                         await _userAuth.signUP(
                           _otpController.text,
                         );
+
+                        await Get.put(InitialScreenCntroller());
                       },
                       child: Text('동의하고 시작하기'),
                     ),

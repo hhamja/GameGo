@@ -98,10 +98,11 @@ class UserAuthController extends GetxController {
 
   /* 탈퇴하기
   * DB User정보 삭제, 파베 Auth에서 해당 유저 삭제 */
-  Future deleteUser(UID) async {
+  Future signOut() async {
     try {
-      await _user.doc(UID).delete();
+      await _user.doc(user?.uid).delete();
       await _auth.signOut();
+      print('탈퇴');
     } catch (e) {
       print('deleteUser error : ${e}');
     }

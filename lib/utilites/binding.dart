@@ -1,5 +1,34 @@
 import 'package:mannergamer/utilites/index.dart';
 
+class SignOutBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(UserAuthController());
+  }
+}
+
+class HomeDropDownBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(HomePageDropDownBTController());
+  }
+}
+
+class CreatePostDropDownBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(CreatePostDropDownBTController());
+  }
+}
+
+class AddPostBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(CreatePostDropDownBTController());
+    Get.put(PostController());
+  }
+}
+
 class HomePostListBinding implements Bindings {
   @override
   void dependencies() {
@@ -7,35 +36,43 @@ class HomePostListBinding implements Bindings {
   }
 }
 
-class CreatePageDropButtonBinding implements Bindings {
+class PostDetailBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(CreatePostDropDownBTController());
+    Get.put(PostController());
   }
 }
 
-class EditPageDropButtonBinding implements Bindings {
+class DeleteDialogBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(PostController());
+  }
+}
+
+class EditDropDownBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(EditDropDownController());
   }
 }
 
-class HomePageDropButtonBinding implements Bindings {
+class EditPostBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(HomePageDropDownBTController());
+    Get.put(EditDropDownController());
+    Get.put(PostController());
   }
 }
 
-class InitialScreenBinding implements Bindings {
+class SignUpBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(InitialScreenCntroller());
+    Get.put(UserAuthController());
   }
 }
 
-class UserAuthBinding implements Bindings {
+class SmsBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(UserAuthController());

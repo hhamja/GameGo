@@ -206,7 +206,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
               await Get.to(
                 () => EditPostPage(),
                 arguments: index,
-                binding: EditPageDropButtonBinding(),
               );
             }),
             ButtomSheetContent('삭제', Colors.redAccent, () async {

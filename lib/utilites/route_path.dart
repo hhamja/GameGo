@@ -15,7 +15,6 @@ abstract class Paths {
   static const AddPost = '/addPost';
   static const HomePostList = '/hompostlist';
   static const Postdetail = '/postdetail';
-
   static const DeleteDialog = '/deletedialog';
   static const EditPostDropDownButton = '/editDropDown';
   static const EditPost = '/editpost';

@@ -1,23 +1,12 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class SignUPPage extends StatefulWidget {
-  const SignUPPage({Key? key}) : super(key: key);
+class SignUPPage extends StatelessWidget {
+  SignUPPage({Key? key}) : super(key: key);
 
-  @override
-  State<SignUPPage> createState() => _SignUPPageState();
-}
-
-class _SignUPPageState extends State<SignUPPage> {
   /* 닉네임 입력 컨트롤러 */
   final TextEditingController _usernameController = TextEditingController();
   /* User GetX Controller */
   final UserAuthController _userAuth = Get.find<UserAuthController>();
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    super.dispose();
-  }
 
   /* 닉네임  입력 수에 따른 에러 택스트 */
   Text? get _showErrorText {
@@ -108,7 +97,7 @@ class _SignUPPageState extends State<SignUPPage> {
               textAlign: TextAlign.center,
               maxLengthEnforcement: MaxLengthEnforcement.enforced,
               onChanged: (value) {
-                setState(() {});
+                // setState(() {});
               },
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
