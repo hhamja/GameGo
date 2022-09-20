@@ -4,7 +4,7 @@ class UserModel {
   final userid;
   String username;
   CircleAvatar? avatar;
-  String? email;
+  String email;
   var mannerAge; //초기값 20.0세
   Timestamp createdAt;
 
@@ -12,7 +12,7 @@ class UserModel {
     this.userid,
     required this.username,
     this.avatar,
-    this.email,
+    required this.email,
     required this.mannerAge,
     required this.createdAt,
   });

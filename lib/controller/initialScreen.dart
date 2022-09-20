@@ -10,8 +10,8 @@ class InitialScreenCntroller extends GetxController {
   late Rx<User?> firebaseUser;
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     /* 파이베이스 auth User목록 */
     firebaseUser = Rx<User?>(_auth.currentUser);
     /* AUTH의 유저변화 반응형으로 감지 */

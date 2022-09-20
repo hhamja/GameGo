@@ -13,8 +13,17 @@ class MainPage extends StatelessWidget {
             children: [
               Text('MG'),
               TextButton(
-                  child: Text('시작하기'),
-                  onPressed: () => Get.to(() => SMSPage())),
+                child: Text('카카오로 시작하기'),
+                onPressed: () {},
+              ),
+              TextButton(
+                child: Text('네이버로 시작하기'),
+                onPressed: () {},
+              ),
+              /* 회원가입과 로그인 통합 */
+              TextButton(
+                  child: Text('이메일로 시작하기'),
+                  onPressed: () => Get.to(() => SignUpEmailPage())),
             ],
           ),
         ),

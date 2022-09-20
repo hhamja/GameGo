@@ -1,12 +1,11 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class SignUPPage extends StatelessWidget {
-  SignUPPage({Key? key}) : super(key: key);
-
+class CreateUserNamePage extends StatelessWidget {
+  CreateUserNamePage({Key? key}) : super(key: key);
   /* 닉네임 입력 컨트롤러 */
   final TextEditingController _usernameController = TextEditingController();
   /* User GetX Controller */
-  final UserAuthController _userAuth = Get.find<UserAuthController>();
+  final UserController _userAuth = Get.find<UserController>();
 
   /* 닉네임  입력 수에 따른 에러 택스트 */
   Text? get _showErrorText {
@@ -38,6 +37,7 @@ class SignUPPage extends StatelessWidget {
   validateButton() async {
     final text = _usernameController.text;
     UserModel userModel = UserModel(
+      email: 'kmsaa@naver.com',
       username: text,
       mannerAge: 20,
       createdAt: Timestamp.now(),

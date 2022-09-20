@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class UserAuthController extends GetxController {
-  static UserAuthController get to => Get.find<UserAuthController>();
+class UserController extends GetxController {
+  static UserController get to => Get.find<UserController>();
 
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
@@ -16,11 +16,6 @@ class UserAuthController extends GetxController {
   var user;
   /* 폰번호확인코드저장 */
   String verificationID = '';
-
-  /* 유저매너나이 변수. 초기값=20, 변화공식 설정 어떻게? */
-  var mannerage = 20.0.obs;
-  /* 매너나이 변화 공식 */
-  updownMannerAge() {}
 
   @override
   void onInit() {
@@ -44,7 +39,22 @@ class UserAuthController extends GetxController {
     }
   }
 
-  /* Stream read User DB */
+  /* 이메일 회원가입 */
+  Future signUpEmail(String email, password) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } catch (firebaseAuthException) {}
+  }
+
+  /* 이메일 로그인 */
+  Future loginEmail(String email, password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (firebaseAuthException) {}
+  }
+
+  /* Read FireStore User DB  */
   Stream<List<UserModel>> readUserList() {
     return _user
         .orderBy('createdAt', descending: true)
@@ -61,11 +71,7 @@ class UserAuthController extends GetxController {
         /* 폰번호 입력 */
         phoneNumber: phonenumber,
         /* 폰인증 성공 시 */
-        verificationCompleted: (PhoneAuthCredential credential) {
-          // await _auth
-          //     .signInWithCredential(credential)
-          //     .then((value) => print('전화번호인증선공'));
-        },
+        verificationCompleted: (PhoneAuthCredential credential) {},
         /* 잘못된 전화번호 또는 SMS 할당량 초과 여부와 같은 실패 이벤트를 처리 */
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {
@@ -93,8 +99,9 @@ class UserAuthController extends GetxController {
     user = userCredential.user;
     print(user?.uid);
   }
-  /* 로그아웃 */
-  // 로그아웃의 경우 : 탈회하기랑은 다르게  자동로그인 쿠키만 앱에서 지움
+
+  /* 로그아웃 
+  * 로그아웃의 경우 : 탈회하기랑은 다르게  자동로그인 쿠키만 앱에서 지움 */
 
   /* 탈퇴하기
   * DB User정보 삭제, 파베 Auth에서 해당 유저 삭제 */

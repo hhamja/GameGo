@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index.dart';
 class SignOutBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserAuthController());
+    Get.put(UserController());
   }
 }
 
@@ -68,13 +68,13 @@ class EditPostBinding implements Bindings {
 class SignUpBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserAuthController());
+    Get.put(UserController());
   }
 }
 
 class SmsBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserAuthController());
+    Get.put(UserController());
   }
 }
