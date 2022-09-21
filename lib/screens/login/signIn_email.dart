@@ -1,8 +1,8 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class SignUpEmailPage extends StatelessWidget {
+class SignInEmailPage extends StatelessWidget {
+  SignInEmailPage({Key? key}) : super(key: key);
   UserController _user = Get.put(UserController());
-
   /* 이메일 입력 */
   final TextEditingController _emailController = TextEditingController();
   /* 패스워드 입력 */
@@ -32,7 +32,7 @@ class SignUpEmailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Text(''), //back 버튼 없애기
-        title: Text('회원가입'),
+        title: Text('로그인'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -103,16 +103,15 @@ class SignUpEmailPage extends StatelessWidget {
                 child: TextButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      //check if form data are valid,
-                      // your process task ahed if all data are valid
-                      await _user.signUpToEmail(_emailController.text.trim(),
+                      //로그인 함수
+                      await _user.signInToEmail(_emailController.text.trim(),
                           _passwordController.text.trim());
                     }
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 15),
                   ),
-                  child: Text('가입하기', style: TextStyle(color: Colors.white)),
+                  child: Text('시작하기', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],

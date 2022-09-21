@@ -68,7 +68,8 @@ class _SignOutPageState extends State<SignOutPage> {
             showLeaveReasonSolution(),
             TextButton(
                 onPressed: () async {
-                  await UserController.to.signOut();
+                  await UserController.to.deleteUser();
+                  Get.offAllNamed('/main');
                 },
                 child: Text('탈퇴하기'))
           ],

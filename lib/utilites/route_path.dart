@@ -25,10 +25,11 @@ abstract class Paths {
   static const Home = '/home';
 
   /* LOGIN */
-  static const Signup = '/signup';
+  static const SignUp = '/signup';
+  static const SignIn = '/signin';
   static const Main = '/main';
   static const SMS = '/sms';
-
+  static const UserName = '/username';
   /* MYPAGE */
   static const My = '/my';
   static const FAQ = '/faq';

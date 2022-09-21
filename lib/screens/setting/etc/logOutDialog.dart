@@ -1,7 +1,9 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class LogOutDialog extends StatelessWidget {
-  const LogOutDialog({Key? key}) : super(key: key);
+  LogOutDialog({Key? key}) : super(key: key);
+
+  final UserController _user = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,9 @@ class LogOutDialog extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              /* 취소 버튼 */
               Expanded(
-                flex: 3,
+                flex: 5,
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.grey[300],
@@ -45,15 +48,19 @@ class LogOutDialog extends StatelessWidget {
                   ),
                 ),
               ),
+              /* 로그아웃 확인 버튼 */
               Expanded(
-                flex: 5,
+                flex: 3,
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.blue[300],
                     padding: EdgeInsets.symmetric(vertical: 18, horizontal: 0),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await _user.signOut();
+                    Get.offAllNamed('/main');
+                  },
                   child: Text(
                     '확인',
                     style: TextStyle(color: Colors.black),

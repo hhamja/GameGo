@@ -72,8 +72,16 @@ class EditPostBinding implements Bindings {
   }
 }
 
-/* 이메일 가입 페이지 바인딩 */
+/* 이메일 회원가입 */
 class SignUpBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(UserController());
+  }
+}
+
+/* 이메일 로그인 */
+class SignInBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(UserController());

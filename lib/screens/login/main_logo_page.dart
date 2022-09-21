@@ -21,9 +21,17 @@ class MainLogoPage extends StatelessWidget {
                 onPressed: () {},
               ),
               /* 회원가입과 로그인 통합 */
-              TextButton(
-                child: Text('이메일로 시작하기'),
-                onPressed: () => Get.toNamed('/signup'),
+              Row(
+                children: [
+                  TextButton(
+                    child: Text('이메일로 로그인'), //로그인페이지 -> 거기서 회원가입 연결
+                    onPressed: () => Get.to(() => SignInEmailPage()),
+                  ),
+                  TextButton(
+                    child: Text('이메일로 가입'), //로그인페이지 -> 거기서 회원가입 연결
+                    onPressed: () => Get.to(() => SignUpEmailPage()),
+                  ),
+                ],
               ),
             ],
           ),

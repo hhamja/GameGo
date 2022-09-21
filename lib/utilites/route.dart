@@ -88,14 +88,23 @@ class AppRoutes {
 
     /* LOGIN */
     GetPage(
-      name: Paths.Signup,
+      name: Paths.SignUp,
       page: () => SignUpEmailPage(),
       binding: SignUpBinding(),
+    ),
+    GetPage(
+      name: Paths.SignIn,
+      page: () => SignInEmailPage(),
+      binding: SignInBinding(),
     ),
     GetPage(
       name: Paths.Main,
       page: () => MainLogoPage(),
       binding: InitialScreenBinding(),
+    ),
+    GetPage(
+      name: Paths.UserName,
+      page: () => CreateUserNamePage(),
     ),
     GetPage(
       name: Paths.SMS,
