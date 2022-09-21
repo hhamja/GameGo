@@ -47,9 +47,6 @@ class UserController extends GetxController {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         //이미 있다면, 바로 로긔인 수행하면 어떨까?
-        /* 이메일 로그인 */
-        await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
         print('The account already exists for that email.');
       }
     } catch (e) {
@@ -61,7 +58,15 @@ class UserController extends GetxController {
   Future logInToEmail(String email, password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (firebaseAuthException) {}
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        GetSnackBar(message: '이메일을 찾을 수 없습니다.');
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        GetSnackBar(message: '잘못된 비밀번호 입니다.');
+        print('Wrong password provided for that user.');
+      }
+    }
   }
 
   /* Read FireStore User DB */

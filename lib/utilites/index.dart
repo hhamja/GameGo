@@ -41,6 +41,7 @@ export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/re
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportDialog.dart';
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportPost.dart';
 
+export 'package:mannergamer/screens/login/login_email.dart';
 export 'package:mannergamer/screens/login/create_username.dart';
 export 'package:mannergamer/screens/login/main_page.dart';
 export 'package:mannergamer/screens/login/signUp_email.dart';
