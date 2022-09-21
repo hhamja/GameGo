@@ -4,6 +4,12 @@ class AppRoutes {
   AppRoutes._(); // 객체 인스턴스화 방지
 
   static final routes = [
+    /* MyApp */
+    GetPage(
+      name: Paths.MyApp,
+      page: () => MyApp(),
+    ),
+
     /* CHAT */
     GetPage(
       name: Paths.ChatList,
@@ -84,10 +90,12 @@ class AppRoutes {
     GetPage(
       name: Paths.Signup,
       page: () => SignUpEmailPage(),
+      binding: SignUpBinding(),
     ),
     GetPage(
       name: Paths.Main,
-      page: () => MainPage(),
+      page: () => MainLogoPage(),
+      binding: InitialScreenBinding(),
     ),
     GetPage(
       name: Paths.SMS,

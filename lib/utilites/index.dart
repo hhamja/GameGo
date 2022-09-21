@@ -21,6 +21,9 @@ export 'package:firebase_auth/firebase_auth.dart';
 export 'package:image_picker/image_picker.dart';
 
 /* Screens */
+export 'package:mannergamer/screens/splashPage/myApp.dart';
+export 'package:mannergamer/screens/splashPage/splash.dart';
+
 export 'package:mannergamer/screens/chat/chat_list.dart';
 export 'package:mannergamer/screens/chat/chatting_page.dart';
 export 'package:mannergamer/screens/home/home.dart';
@@ -67,8 +70,6 @@ export 'package:mannergamer/screens/setting/userSetting/accountManagement/emailE
 export 'package:mannergamer/screens/setting/userSetting/accountManagement/phoneNumberEdit.dart';
 export 'package:mannergamer/screens/setting/userSetting/accountManagement/selfAuthentication.dart';
 
-export 'package:mannergamer/screens/splashPage/splash.dart';
-
 /* Models */
 export 'package:mannergamer/models/data.dart';
 export 'package:mannergamer/models/dropDownButton.dart';
@@ -82,7 +83,7 @@ export 'package:mannergamer/controller/post.dart';
 export 'package:mannergamer/controller/edit_dropdownbutton.dart';
 export 'package:mannergamer/controller/home_dropdownbutton.dart';
 export 'package:mannergamer/controller/user.dart';
-export 'package:mannergamer/controller/mannerage.dart';
+export 'package:mannergamer/controller/manner_age.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';

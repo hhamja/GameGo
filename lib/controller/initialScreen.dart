@@ -17,7 +17,7 @@ class InitialScreenCntroller extends GetxController {
     /* AUTH의 유저변화 반응형으로 감지 */
     firebaseUser.bindStream(_auth.userChanges());
     /* firebaseUser변화 감지해서 _setInitialScreen함수 실행 */
-    ever(firebaseUser, _setInitialScreen);
+    once(firebaseUser, _setInitialScreen);
     print('현재유저정보 ${_auth.currentUser}');
   }
 
@@ -26,11 +26,11 @@ class InitialScreenCntroller extends GetxController {
     if (user == null) {
       /* 유저정보 X , 첫화면 : 사용자등록페이지  */
       print('유저null ${user}');
-      Get.offAll(() => SignUPPage());
+      Get.offAllNamed('/main');
     } else {
       /* 유저정보 O , 첫화면 : HomePage()  */
       print('유저정보 O : ${user}');
-      Get.offAll(() => Homepage());
+      Get.offAll(() => MyApp());
     }
   }
 }

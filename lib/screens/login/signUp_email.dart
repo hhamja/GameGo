@@ -1,32 +1,31 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class SignUpEmailPage extends StatefulWidget {
-  SignUpEmailPage({Key? key}) : super(key: key);
-
-  @override
-  State<SignUpEmailPage> createState() => _SignUpEmailPageState();
-}
-
-class _SignUpEmailPageState extends State<SignUpEmailPage> {
-  /* Phone Auth Controller */
-  final UserController _user = Get.put(UserController());
+class SignUpEmailPage extends StatelessWidget {
+  /* User Auth Controller */
+  final UserController _user = Get.find<UserController>();
 
   /* 이메일 입력 */
   final TextEditingController _emailController = TextEditingController();
   /* 패스워드 입력 */
   final TextEditingController _passwordController = TextEditingController();
-  /* 패스워드 입력 필드 key */
+  /* 패스워드, 이메일 입력 필드 key */
   final _formKey = GlobalKey<FormState>();
-  /* 특수문자, 소문자, 대문자 포함 패스워드 조건식 */
-  final RegExp _passwordValid = RegExp(
-      r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.&+=])[A-Za-z\d$@$!%*#?~^<>,.&+=]{8,15}$');
 
-  /* Life Cycle */
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+  /* 이메일 Vailidate */
+  _vailidatePassword(value) {
+    final _password = value!.trim();
+    /* 특수문자, 소문자, 대문자 포함 패스워드 조건식 */
+    final RegExp _passwordValid = RegExp(
+        r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.&+=])[A-Za-z\d$@$!%*#?~^<>,.&+=]{8,15}$');
+    /* 8자 미만 패스워드 */
+    if (_password.isEmpty || _password.length < 8) {
+      return '8자 이상 입력해주세요';
+    }
+    /* 특수문자·대·소문자 조건 함수 */
+    if (!_passwordValid.hasMatch(_password)) {
+      return '특수문자, 문자, 숫자를 각각 포함해주세요';
+    }
+    return null;
   }
 
   @override
@@ -81,18 +80,7 @@ class _SignUpEmailPageState extends State<SignUpEmailPage> {
 
               /* 패스워드 */
               TextFormField(
-                validator: (value) {
-                  final _password = value!.trim();
-                  /* 8자 미만 패스워드 */
-                  if (_password.isEmpty || _password.length < 8) {
-                    return '8자 이상 입력해주세요';
-                  }
-                  /* 특수문자·대·소문자 조건 함수 */
-                  if (!_passwordValid.hasMatch(_password)) {
-                    return '특수문자, 문자, 숫자를 각각 포함해주세요';
-                  }
-                  return null;
-                },
+                validator: (value) => _vailidatePassword(value),
                 maxLines: 1,
                 autocorrect: false,
                 controller: _passwordController,
@@ -117,7 +105,8 @@ class _SignUpEmailPageState extends State<SignUpEmailPage> {
                     if (_formKey.currentState!.validate()) {
                       //check if form data are valid,
                       // your process task ahed if all data are valid
-
+                      _user.signupAndSigninToEmail(
+                          _emailController.text, _passwordController.text);
                     }
                   },
                   style: TextButton.styleFrom(

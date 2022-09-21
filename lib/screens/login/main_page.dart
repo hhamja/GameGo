@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class MainPage extends StatelessWidget {
-  MainPage({Key? key}) : super(key: key);
+class MainLogoPage extends StatelessWidget {
+  MainLogoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,9 @@ class MainPage extends StatelessWidget {
               ),
               /* 회원가입과 로그인 통합 */
               TextButton(
-                  child: Text('이메일로 시작하기'),
-                  onPressed: () => Get.to(() => SignUpEmailPage())),
+                child: Text('이메일로 시작하기'),
+                onPressed: () => Get.toNamed('/signup'),
+              ),
             ],
           ),
         ),

@@ -1,5 +1,12 @@
 import 'package:mannergamer/utilites/index.dart';
 
+class InitialScreenBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(InitialScreenCntroller());
+  }
+}
+
 class SignOutBinding implements Bindings {
   @override
   void dependencies() {
@@ -65,6 +72,7 @@ class EditPostBinding implements Bindings {
   }
 }
 
+/* 이메일 가입 페이지 바인딩 */
 class SignUpBinding implements Bindings {
   @override
   void dependencies() {
