@@ -4,12 +4,13 @@ class UserController extends GetxController {
   static UserController get to => Get.find<UserController>();
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
-
   /* FireStore User Collection Instance */
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  /* firestore User collection 담을 UserList */
+  /* UserDB Data 담을 UserList */
   RxList<UserModel> userList = <UserModel>[].obs;
+  /* 폰번호확인코드저장 */
+  String verificationID = '';
 
   /* LifeCycle */
   @override
@@ -21,7 +22,7 @@ class UserController extends GetxController {
   /* Create User */
   Future addNewUser(UserModel userModel) async {
     try {
-      final res = await _userDB.doc(_auth.currentUser?.uid).set({
+      final res = await _userDB.doc(_auth.currentUser!.uid).set({
         'username': userModel.username,
         'avatar': userModel.avatar,
         'email': userModel.email,
@@ -44,46 +45,47 @@ class UserController extends GetxController {
             }).toList());
   }
 
-  /* 이메일 회원가입 */
-  Future signUpToEmail(String email, password) async {
-    print(_auth.currentUser?.emailVerified);
+  /* 폰으로 SMS 전송 */
+  Future verifyPhone(String phonenumber) async {
     try {
-      final userCredential = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      print(userCredential.user!.emailVerified);
-      if (userCredential.user!.emailVerified == false) {
-        userCredential.user?.sendEmailVerification();
-        Get.snackbar('인증메일발송 ', '해당 이메일에서 본인을 인증해주세요.');
-        print(userCredential.user!.emailVerified);
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        Get.snackbar('', '이미 가입한 이메일 계정입니다.');
-        print('The account already exists for that email.');
-      }
+      await _auth.verifyPhoneNumber(
+        //폰번호
+        phoneNumber: phonenumber,
+        //인증성공시
+        verificationCompleted: (PhoneAuthCredential credential) {},
+
+        // 잘못된 전화번호 또는 SMS 할당량 초과 여부 등과 같은 인증실패 시
+        verificationFailed: (FirebaseAuthException e) {
+          if (e.code == 'invalid-phone-number') {
+            Get.snackbar('인증실패', '잘못된 휴대폰 번호입니다.');
+            print('The provided phone number is not valid.');
+          } else {
+            Get.snackbar('인증실패', '고객센터로 문의주세요.');
+          }
+        },
+        /* 기기로 코드 전송 시 처리 */
+        codeSent: (String verificationId, int? resendToken) {
+          verificationID = verificationId;
+          //sms코드를 자동으로 입력하는 autoFill을 넣자.(나중)
+        },
+        /* 자동 SMS 코드 처리가 실패할 때의 시간 초과를 처리 */
+        codeAutoRetrievalTimeout: (String verificationId) {
+          Get.snackbar('인증시간초과', 'SMS인증시간이 초과하였습니다.');
+        },
+        timeout: const Duration(seconds: 120),
+      );
     } catch (e) {
       print(e);
     }
   }
 
-  /* 이메일 로그인 */
-  Future signInToEmail(String email, password) async {
-    try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      Get.offAllNamed('/myapp');
-    } on FirebaseAuthException catch (e) {
-      // 가입 X 이메일 입력 시
-      if (e.code == 'user-not-found') {
-        Get.snackbar('', '가입되어 있지 않은 이메일입니다.');
-        print('No user found for that email.');
-        // 이메일은 있지만 패스워드가 틀린 경우
-      } else if (e.code == 'wrong-password') {
-        Get.snackbar('', '비밀번호가 일치하지 않습니다.');
-        print('Wrong password provided for that user.');
-      }
-    }
+  /* 폰가입정보 SignUP */
+  Future signUP(token) async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationID, smsCode: token);
+    final userCredential = await _auth.signInWithCredential(credential);
+    final user = userCredential.user;
+    print(user?.uid);
   }
 
   /* 로그아웃 

@@ -4,6 +4,7 @@ export 'package:cupertino_icons/cupertino_icons.dart';
 export 'dart:convert';
 export 'package:flutter/services.dart';
 export 'dart:async';
+export 'package:sms_autofill/sms_autofill.dart';
 
 /* Packages */
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,11 +42,9 @@ export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/re
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportDialog.dart';
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportPost.dart';
 
-export 'package:mannergamer/screens/login/signIn_email.dart';
+export 'package:mannergamer/screens/login/phone_auth.dart';
 export 'package:mannergamer/screens/login/create_username.dart';
 export 'package:mannergamer/screens/login/main_logo_page.dart';
-export 'package:mannergamer/screens/login/signUp_email.dart';
-export 'package:mannergamer/screens/login/email_verify.dart';
 
 export 'package:mannergamer/screens/mypage/mypage.dart';
 export 'package:mannergamer/screens/mypage/etc_/faq.dart';
@@ -86,6 +85,7 @@ export 'package:mannergamer/controller/edit_dropdownbutton.dart';
 export 'package:mannergamer/controller/home_dropdownbutton.dart';
 export 'package:mannergamer/controller/user.dart';
 export 'package:mannergamer/controller/manner_age.dart';
+export 'package:mannergamer/controller/phone_sms.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';

@@ -88,7 +88,7 @@ class SignInBinding implements Bindings {
   }
 }
 
-class SmsBinding implements Bindings {
+class PhoneAuthBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(UserController());

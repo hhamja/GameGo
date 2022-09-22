@@ -20,18 +20,11 @@ class MainLogoPage extends StatelessWidget {
                 child: Text('네이버로 시작하기'),
                 onPressed: () {},
               ),
-              /* 회원가입과 로그인 통합 */
-              Row(
-                children: [
-                  TextButton(
-                    child: Text('이메일로 로그인'), //로그인페이지 -> 거기서 회원가입 연결
-                    onPressed: () => Get.to(() => SignInEmailPage()),
-                  ),
-                  TextButton(
-                    child: Text('이메일로 가입'), //로그인페이지 -> 거기서 회원가입 연결
-                    onPressed: () => Get.to(() => SignUpEmailPage()),
-                  ),
-                ],
+              TextButton(
+                child: Text('휴대폰으로 시작하기'),
+                onPressed: () {
+                  Get.to(() => PhoneAuthPage());
+                },
               ),
             ],
           ),

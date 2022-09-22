@@ -87,16 +87,7 @@ class AppRoutes {
     ),
 
     /* LOGIN */
-    GetPage(
-      name: Paths.SignUp,
-      page: () => SignUpEmailPage(),
-      binding: SignUpBinding(),
-    ),
-    GetPage(
-      name: Paths.SignIn,
-      page: () => SignInEmailPage(),
-      binding: SignInBinding(),
-    ),
+
     GetPage(
       name: Paths.Main,
       page: () => MainLogoPage(),
@@ -107,9 +98,9 @@ class AppRoutes {
       page: () => CreateUserNamePage(),
     ),
     GetPage(
-      name: Paths.SMS,
-      page: () => SignUpEmailPage(),
-      binding: SmsBinding(),
+      name: Paths.PhoneAuth,
+      page: () => PhoneAuthPage(),
+      binding: PhoneAuthBinding(),
     ),
 
     /* MYPAGE */
