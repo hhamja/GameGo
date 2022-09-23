@@ -21,6 +21,15 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
   /* OTP 처음 받는 경우 : false
   * 두번 째   true로 됨. */
   bool isSendSms = false;
+  @override
+  void initState() {
+    super.initState();
+    _listenSmsCode();
+  }
+
+  _listenSmsCode() async {
+    await SmsAutoFill().listenForCode();
+  }
 
   @override
   void dispose() {
@@ -94,9 +103,9 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                         onPressed: () async {
                           if (!isSendSms) {
                             setState(() => isSendSms = true);
+                            _phone.StateTimerStart();
                             await _user
                                 .verifyPhone('+82${_phoneController.text}');
-                            // _phone.StateTimerStart();
                           } else {
                             _phone.reset();
                             await _user
