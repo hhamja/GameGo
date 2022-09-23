@@ -2,12 +2,6 @@ import 'package:mannergamer/utilites/index.dart';
 
 class PhoneSMSController extends GetxController {
   static PhoneSMSController get to => Get.find<PhoneSMSController>();
-  /* OTP 처음 받는 경우 : false
-  * 두번 째   true로 됨. */
-  bool isSendSms = false;
-
-  Timer? countdownTimer;
-  Duration myDuration = Duration(minutes: 2);
 
   /* Life Cycle */
   @override
@@ -15,46 +9,41 @@ class PhoneSMSController extends GetxController {
     super.onInit();
   }
 
-  void firstClickButton() {
-    //타이머 시작
-    countdownTimer =
-        Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
-    //SMS입력칸, 시작하기, 개인정보취급방침 UI 표시
-    isSendSms = true;
+  // Initial Count Timer value
+  var count = 120;
+
+  //object for Timer Class
+  late Timer _timer;
+  // a Method to start the Count Down
+  void StateTimerStart() {
+    //Timer Loop will execute every 1 second, until it reach 0
+    // once counter value become 0, we store the timer using _timer.cancel()
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (count > 0) {
+        count--;
+        update();
+      } else {
+        _timer.cancel();
+        update();
+      }
+    });
     update();
   }
 
-  /* SMS 2분 타이머 시작 */
-  void startTimer() {
-    countdownTimer =
-        Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
-  }
-
-  /* 재전송 버튼 다시 클릭 시 */
-  void clickButtonAfterFirst() {
-    countdownTimer!.cancel();
-    myDuration = Duration(minutes: 2);
-    countdownTimer =
-        Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
-    update();
-  }
-
-  // Step 6
-  void setCountDown() {
-    update();
-    final reduceSeconds = 1;
-    update();
-    final seconds = myDuration.inSeconds - reduceSeconds;
-    update();
-    if (seconds < 0) {
-      update();
-      countdownTimer!.cancel();
-      update();
-    } else {
-      update();
-      myDuration = Duration(seconds: seconds);
-      update();
-    }
+  // reset count value to 10
+  void reset() {
+    _timer.cancel();
+    count = 120;
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (count > 0) {
+        count--;
+        update();
+      } else {
+        _timer.cancel();
+        update();
+      }
+    });
     update();
   }
 }

@@ -15,12 +15,12 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
   /* SMS 입력 */
   final TextEditingController _smsController = TextEditingController();
   /* 휴대폰 번호 TextFormField Key */
-  final _phoneFormKey = GlobalKey<FormState>();
   /* SMS TextFormField Key */
   final _smsFormKey = GlobalKey<FormState>();
+
   /* OTP 처음 받는 경우 : false
   * 두번 째   true로 됨. */
-  bool _isSendSms = false;
+  bool isSendSms = false;
 
   @override
   void dispose() {
@@ -32,10 +32,6 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    String strDigits(int n) => n.toString().padLeft(2, '0');
-    final minutes = strDigits(_phone.myDuration.inMinutes.remainder(60));
-    final seconds = strDigits(_phone.myDuration.inSeconds.remainder(60));
-
     return Scaffold(
       appBar: AppBar(
         leading: Text(''), //back 버튼 없애기
@@ -59,44 +55,33 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
               Row(
                 children: [
                   /* 전화번호 입력 칸 */
-                  Form(
-                    key: _phoneFormKey,
-                    child: Flexible(
-                      flex: 1,
-                      child: Container(
-                        child: TextFormField(
-                          validator: (value) {
-                            final phone = value!.trim();
-                            if (phone.length != 13) {
-                              Get.snackbar('', '휴대폰 번호를 올바르게 입력해주세요.',
-                                  snackPosition: SnackPosition.TOP);
-                              return;
-                            }
-                            return null;
-                          },
-                          maxLength: 13,
-                          autocorrect: false,
-                          textInputAction: TextInputAction.next,
-                          controller: _phoneController,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            MaskTextInputFormatter(mask: '### #### ####'),
-                          ],
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                              fontSize: 12,
-                              height: 0.3,
-                            ),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: InputBorder.none,
-                            counterText: '',
-                            labelText: '휴대폰번호',
-                            hintText: '― 없이 숫자만 입력해주세요.',
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      child: TextFormField(
+                        maxLength: 13,
+                        autocorrect: false,
+                        textInputAction: TextInputAction.next,
+                        controller: _phoneController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          MaskTextInputFormatter(mask: '### #### ####'),
+                        ],
+                        decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                            fontSize: 12,
+                            height: 0.3,
                           ),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: InputBorder.none,
+                          counterText: '',
+                          labelText: '휴대폰번호',
+                          hintText: '― 없이 숫자만 입력해주세요.',
                         ),
                       ),
                     ),
                   ),
+
                   /* SMS 전송 버튼 */
                   Align(
                     heightFactor: 1.3,
@@ -107,20 +92,22 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       color: Colors.blue,
                       child: TextButton(
                         onPressed: () async {
-                          if (_phoneFormKey.currentState!.validate() &&
-                              _phoneController.text.length == 13) {
+                          if (!isSendSms) {
+                            setState(() => isSendSms = true);
                             await _user
                                 .verifyPhone('+82${_phoneController.text}');
-                            _phone.firstClickButton();
+                            // _phone.StateTimerStart();
+                          } else {
+                            _phone.reset();
+                            await _user
+                                .verifyPhone('+82${_phoneController.text}');
                           }
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 15),
                         ),
                         child: Text(
-                          !_phone.isSendSms
-                              ? '인증번호 받기'
-                              : '재전송($minutes:$seconds)',
+                          !isSendSms ? '인증번호 받기' : '재전송(${_phone.count}초)',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -133,7 +120,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
               SizedBox(height: 20),
               /* SMS번호 */
               Visibility(
-                visible: _phone.isSendSms,
+                visible: isSendSms,
                 child: Form(
                   key: _smsFormKey,
                   child: Column(

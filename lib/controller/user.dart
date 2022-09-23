@@ -2,6 +2,8 @@ import 'package:mannergamer/utilites/index.dart';
 
 class UserController extends GetxController {
   static UserController get to => Get.find<UserController>();
+  /* PhoneSMSController */
+  PhoneSMSController _phone = Get.put(PhoneSMSController());
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
   /* FireStore User Collection Instance */
@@ -66,6 +68,7 @@ class UserController extends GetxController {
         /* 기기로 코드 전송 시 처리 */
         codeSent: (String verificationId, int? resendToken) {
           verificationID = verificationId;
+          _phone.StateTimerStart();
           //sms코드를 자동으로 입력하는 autoFill을 넣자.(나중)
         },
         /* 자동 SMS 코드 처리가 실패할 때의 시간 초과를 처리 */
