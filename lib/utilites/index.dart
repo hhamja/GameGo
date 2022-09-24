@@ -5,6 +5,7 @@ export 'dart:convert';
 export 'package:flutter/services.dart';
 export 'dart:async';
 export 'package:sms_autofill/sms_autofill.dart';
+export 'package:firebase_storage/firebase_storage.dart';
 
 /* Packages */
 export 'package:cloud_firestore/cloud_firestore.dart';

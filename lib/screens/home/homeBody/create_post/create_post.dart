@@ -8,8 +8,10 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPageState extends State<AddPostPage> {
+  /* FirebaseAuth instance */
+  final _auth = FirebaseAuth.instance;
   /* PostController 선언 (∵ Create Post) */
-  PostController _postController = Get.find<PostController>();
+  final PostController _postController = Get.find<PostController>();
   /* DropDownBTController 선언 (∵ Create Post) */
   CreatePostDropDownBTController dropDownController =
       Get.put(CreatePostDropDownBTController());
@@ -32,16 +34,15 @@ class _AddPostPageState extends State<AddPostPage> {
           TextButton(
             onPressed: () async {
               final _postModel = PostModel(
-                username: '닉네임',
-                title: _titleController.text,
-                maintext: _maintextController.text,
+                username: _auth.currentUser!.displayName,
+                title: _titleController.text.trim(),
+                maintext: _maintextController.text.trim(),
                 gamemode: dropDownController.seledtedPostGamemodeValue,
                 position: dropDownController.seledtedPostdPositionValue,
                 tear: dropDownController.seledtedPostTearValue,
                 createdAt: Timestamp.now(),
               );
               await _postController.createPost(_postModel);
-              await _postController.readPostData();
               Get.back();
             },
             child: Text(

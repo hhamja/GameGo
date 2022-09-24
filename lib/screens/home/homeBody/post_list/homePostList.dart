@@ -27,7 +27,7 @@ class _HomePostListState extends State<HomePostList> {
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             onTap: () {
-              Get.toNamed('/postDetail', arguments: index);
+              Get.toNamed('/postdetail', arguments: index);
             },
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),

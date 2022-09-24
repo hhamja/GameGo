@@ -70,9 +70,7 @@ class UserController extends GetxController {
           //sms코드를 자동으로 입력하는 autoFill을 넣자.(나중)
         },
         /* 자동 SMS 코드 처리가 실패할 때의 시간 초과를 처리 */
-        codeAutoRetrievalTimeout: (String verificationId) {
-          Get.snackbar('인증시간초과', 'SMS인증시간이 초과하였습니다.');
-        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
         timeout: const Duration(seconds: 120),
       );
     } catch (e) {

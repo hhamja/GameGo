@@ -1,6 +1,6 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class CreateUserNamePage extends GetView<UserNameController> {
+class CreateUserNamePage extends StatelessWidget {
   CreateUserNamePage({Key? key}) : super(key: key);
   /* 닉네임 입력 컨트롤러 */
   final TextEditingController _usernameController = TextEditingController();
@@ -35,15 +35,16 @@ class CreateUserNamePage extends GetView<UserNameController> {
   }
 
   validateButton() async {
-    final text = _usernameController.text;
+    final text = _usernameController.text.trim();
     UserModel userModel = UserModel(
       username: text,
       mannerAge: 20,
       createdAt: Timestamp.now(),
     );
     if (!text.isEmpty || text.length >= 2) {
-      _userAuth.addNewUser(userModel);
-      Get.offAllNamed('/');
+      await _userAuth.addNewUser(userModel);
+      await FirebaseAuth.instance.currentUser!.updateDisplayName(text);
+      Get.offAllNamed('/myapp');
     }
     null;
   }
