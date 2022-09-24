@@ -1,6 +1,6 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class CreateUserNamePage extends StatelessWidget {
+class CreateUserNamePage extends GetView<UserNameController> {
   CreateUserNamePage({Key? key}) : super(key: key);
   /* 닉네임 입력 컨트롤러 */
   final TextEditingController _usernameController = TextEditingController();
@@ -37,7 +37,6 @@ class CreateUserNamePage extends StatelessWidget {
   validateButton() async {
     final text = _usernameController.text;
     UserModel userModel = UserModel(
-      email: 'kmsaa@naver.com',
       username: text,
       mannerAge: 20,
       createdAt: Timestamp.now(),

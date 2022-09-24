@@ -8,15 +8,17 @@ class PhoneAuthPage extends StatefulWidget {
 }
 
 class _PhoneAuthPageState extends State<PhoneAuthPage> {
+  /* UserNameController */
+  UserNameController _username = Get.put(UserNameController());
+
   final PhoneSMSController _phone = Get.put(PhoneSMSController());
   final UserController _user = Get.put(UserController());
   /* 핸드폰 번호 입력 */
   final TextEditingController _phoneController = TextEditingController();
   /* SMS 입력 */
   final TextEditingController _smsController = TextEditingController();
-  /* 휴대폰 번호 TextFormField Key */
-  /* SMS TextFormField Key */
-  final _smsFormKey = GlobalKey<FormState>();
+  /* 휴대폰 번호, sms  Key */
+  final _formKey = GlobalKey<FormState>();
 
   /* OTP 처음 받는 경우 : false
   * 두번 째   true로 됨. */
@@ -55,9 +57,10 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
           ),
         ],
       ),
-      body: GetBuilder<PhoneSMSController>(
-        builder: (_) => Container(
-          padding: EdgeInsets.all(20),
+      body: Container(
+        padding: EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -68,6 +71,13 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                     flex: 1,
                     child: Container(
                       child: TextFormField(
+                        validator: (value) {
+                          final phone = value!.trim();
+                          if (phone.length != 13) {
+                            return '휴대폰 번호를 전부 입력해주세요.';
+                          }
+                          return null;
+                        },
                         maxLength: 13,
                         autocorrect: false,
                         textInputAction: TextInputAction.next,
@@ -99,26 +109,30 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       height: 50,
                       width: 120,
                       color: Colors.blue,
-                      child: TextButton(
-                        onPressed: () async {
-                          if (!isSendSms) {
-                            setState(() => isSendSms = true);
-                            _phone.StateTimerStart();
-                            await _user
-                                .verifyPhone('+82${_phoneController.text}');
-                          } else {
-                            _phone.reset();
-                            await _user
-                                .verifyPhone('+82${_phoneController.text}');
-                          }
-                        },
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                        ),
-                        child: Text(
-                          !isSendSms ? '인증번호 받기' : '재전송(${_phone.count}초)',
-                          style: TextStyle(
-                            color: Colors.white,
+                      child: GetBuilder<PhoneSMSController>(
+                        builder: (controller) => TextButton(
+                          onPressed: () async {
+                            if (!isSendSms &&
+                                _phoneController.text.length == 13) {
+                              setState(() => isSendSms = true);
+                              _phone.StateTimerStart();
+                              await _user
+                                  .verifyPhone('+82${_phoneController.text}');
+                            } else if (isSendSms &&
+                                _phoneController.text.length == 13) {
+                              _phone.reset();
+                              await _user
+                                  .verifyPhone('+82${_phoneController.text}');
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                          ),
+                          child: Text(
+                            !isSendSms ? '인증번호 받기' : '재전송(${_phone.count}초)',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -130,68 +144,66 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
               /* SMS번호 */
               Visibility(
                 visible: isSendSms,
-                child: Form(
-                  key: _smsFormKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        validator: (value) {
-                          final _sms = value!.trim();
-                          if (_sms.length != 6) {
-                            return '6자리인지 확인해주세요.';
-                          } else if (!_sms.isNum) {
-                            return '숫자가 아닌 다른 문자가 포함되어있어요.';
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        final _sms = value!.trim();
+                        if (_sms.length != 6) {
+                          return '6자리인지 확인해주세요.';
+                        } else if (!_sms.isNum) {
+                          return '숫자가 아닌 다른 문자가 포함되어있어요.';
+                        }
+                        return null;
+                      },
+                      maxLength: 6,
+                      autocorrect: false,
+                      textInputAction: TextInputAction.done,
+                      controller: _smsController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        errorStyle: TextStyle(
+                          fontSize: 12,
+                          height: 0.5,
+                        ),
+                        border: InputBorder.none,
+                        counterText: '',
+                        hintText: '인증번호 6자리를 입력해주세요.',
+                        labelText: '인증번호',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      color: Colors.blue,
+                      child: TextButton(
+                        onPressed: () async {
+                          //sms입력 ok , 폰번호 13자리 전부 입력 시
+                          if (_formKey.currentState!.validate() &&
+                              _phoneController.text.length == 13) {
+                            // 유저정보저장
+                            await _user.signUP(_smsController.text.trim());
+                            // DB에 유저정보존재 ? 홈 : 닉네임생성페이지  이동
+                            await _username.checkIfDocExists();
                           }
-                          return null;
                         },
-                        maxLength: 6,
-                        autocorrect: false,
-                        textInputAction: TextInputAction.done,
-                        controller: _smsController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          errorStyle: TextStyle(
-                            fontSize: 12,
-                            height: 0.5,
-                          ),
-                          border: InputBorder.none,
-                          counterText: '',
-                          hintText: '인증번호 6자리를 입력해주세요.',
-                          labelText: '인증번호',
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 15),
                         ),
+                        child:
+                            Text('시작하기', style: TextStyle(color: Colors.white)),
                       ),
-                      SizedBox(height: 20),
-                      Container(
-                        width: double.infinity,
-                        color: Colors.blue,
-                        child: TextButton(
-                          onPressed: () async {
-                            if (_smsFormKey.currentState!.validate()) {
-                              // 유저정보저장
-                              await _user.signUP(
-                                _smsController.text.trim(),
-                              );
-                              await Get.to(() => CreateUserNamePage());
-                            }
-                          },
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                          ),
-                          child: Text('시작하기',
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextButton(onPressed: () {}, child: Text('이용약관')),
-                          Text('및'),
-                          TextButton(onPressed: () {}, child: Text('개인정보취급방침')),
-                        ],
-                      ),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextButton(onPressed: () {}, child: Text('이용약관')),
+                        Text('및'),
+                        TextButton(onPressed: () {}, child: Text('개인정보취급방침')),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               /* 이용약관 및 개인정보 취급방침 */

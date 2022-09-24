@@ -2,8 +2,6 @@ import 'package:mannergamer/utilites/index.dart';
 
 class UserController extends GetxController {
   static UserController get to => Get.find<UserController>();
-  /* PhoneSMSController */
-  PhoneSMSController _phone = Get.put(PhoneSMSController());
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
   /* FireStore User Collection Instance */

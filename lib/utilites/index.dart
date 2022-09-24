@@ -86,6 +86,7 @@ export 'package:mannergamer/controller/home_dropdownbutton.dart';
 export 'package:mannergamer/controller/user.dart';
 export 'package:mannergamer/controller/manner_age.dart';
 export 'package:mannergamer/controller/phone_sms.dart';
+export 'package:mannergamer/controller/user_name.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';
