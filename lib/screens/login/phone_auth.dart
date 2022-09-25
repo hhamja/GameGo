@@ -8,8 +8,8 @@ class PhoneAuthPage extends StatefulWidget {
 }
 
 class _PhoneAuthPageState extends State<PhoneAuthPage> {
-  /* UserNameController */
-  UserNameController _username = Get.put(UserNameController());
+  /* ProfileController */
+  ProfileController _username = Get.put(ProfileController());
 
   final PhoneSMSController _phone = Get.put(PhoneSMSController());
   final UserController _user = Get.put(UserController());

@@ -8,16 +8,16 @@ class ProfileEditPage extends StatefulWidget {
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _ProfileController = TextEditingController();
   @override
   void dispose() {
-    _usernameController.dispose();
+    _ProfileController.dispose();
     super.dispose();
   }
 
   //닉네임 입력에 대한 에러택스트 조건식
   Text? get _showErrorText {
-    final text = _usernameController.value.text;
+    final text = _ProfileController.value.text;
     if (text.isEmpty) {
       return Text(
         '닉네임을 입력해주세요!',
@@ -34,7 +34,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   }
 
   Color? get _bottomButtonColorChange {
-    final text = _usernameController.value.text;
+    final text = _ProfileController.value.text;
     if (text.isEmpty || text.length < 2) {
       return Colors.grey;
     }
@@ -85,7 +85,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               ),
               maxLines: 1,
               showCursor: true,
-              controller: _usernameController,
+              controller: _ProfileController,
               maxLength: 12,
               textAlignVertical: TextAlignVertical.center,
               textAlign: TextAlign.center,

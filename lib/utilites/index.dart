@@ -21,6 +21,7 @@ export 'package:dropdown_button2/dropdown_button2.dart';
 export 'package:syncfusion_flutter_gauges/gauges.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:image_picker/image_picker.dart';
+export 'package:path/path.dart';
 
 /* Screens */
 export 'package:mannergamer/screens/splashPage/myApp.dart';
@@ -87,7 +88,7 @@ export 'package:mannergamer/controller/home_dropdownbutton.dart';
 export 'package:mannergamer/controller/user.dart';
 export 'package:mannergamer/controller/manner_age.dart';
 export 'package:mannergamer/controller/phone_sms.dart';
-export 'package:mannergamer/controller/user_name.dart';
+export 'package:mannergamer/controller/user_profile.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';

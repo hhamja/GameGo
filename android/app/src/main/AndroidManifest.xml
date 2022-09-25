@@ -1,6 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mannergamer.mannergamer">
-   <application
+
+    <uses-permission android:name="android.name.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.name.CAMERA"/>
+    <uses-permission android:name="android.name.INTERNET"/>
+
+    <application
         android:label="mannergamer"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
