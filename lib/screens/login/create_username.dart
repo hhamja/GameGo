@@ -19,8 +19,6 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
   File? _photo;
   /* 프로필 사진 url 담는 변수 */
   String? profileImageUrl;
-  /* 프로필 아바타 key값 */
-  GlobalKey _profileKey = GlobalKey();
 
   /* 갤러리에서 사진 선택하기 */
   Future pickImgFromGallery() async {
@@ -136,15 +134,12 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
           SizedBox(height: 40),
           Stack(
             children: [
-              Form(
-                key: _profileKey,
-                child: CircleAvatar(
-                  backgroundImage: _photo == null
-                      ? NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689')
-                      : null,
-                  radius: 80,
-                ),
+              CircleAvatar(
+                backgroundImage: _photo == null
+                    ? NetworkImage(
+                        'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689')
+                    : null,
+                radius: 80,
               ),
               Positioned(
                 bottom: 7,
