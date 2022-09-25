@@ -17,6 +17,10 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
   final ImagePicker _picker = ImagePicker();
   /* 사진 담는 변수 */
   File? _photo;
+  /* 프로필 사진 url 담는 변수 */
+  String? profileImageUrl;
+  /* 프로필 아바타 key값 */
+  GlobalKey _profileKey = GlobalKey();
 
   /* 갤러리에서 사진 선택하기 */
   Future pickImgFromGallery() async {
@@ -34,7 +38,10 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
 
   /* 카메라로 사진 찍기 */
   Future pickImgFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final pickedFile = await _picker.pickImage(
+      source: ImageSource.camera,
+      preferredCameraDevice: CameraDevice.rear,
+    );
     setState(() {
       if (pickedFile != null) {
         _photo = File(pickedFile.path); //해당 이미지 담기 _photo변수에 담기
@@ -48,14 +55,17 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
   /* 파베 스토리지에 업로드하기 */
   Future uploadFile() async {
     if (_photo == null) return;
-    final fileName = basename(_photo!.path);
-    final destination = 'files/$fileName';
+    final fileName = basename(_photo!.path); //path 패키지로 파일이름 변수에 담기
+    // final destination = 'profile/$fileName';
 
     try {
-      final ref = _storage.ref(destination).child('file/');
-      await ref.putFile(_photo!);
+      //storage > profile 폴더 > filename의 파일 경로
+      final ref = _storage.ref().child('profile').child(fileName);
+      await ref.putFile(_photo!); //스토리지에 업로드
+      profileImageUrl = await ref.getDownloadURL();
+      print(profileImageUrl);
     } catch (e) {
-      print('error occured');
+      print('error uploadFile');
     }
   }
 
@@ -64,21 +74,15 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
   final UserController _userAuth = Get.find<UserController>();
 
   /* 닉네임 입력에 따른 에러 택스트 */
-  Text? get _showErrorText {
+  String get _showErrorText {
     final text = _userNameController.text.trim();
-    if (text.isEmpty) {
-      return Text(
-        '닉네임을 입력해주세요!',
-        style: TextStyle(color: Colors.red),
-      );
+
+    if (text.isEmpty || text.length < 2) {
+      setState(() {});
+      return '특수문자를 제외한 2자 이상 입력해주세요.';
     }
-    if (text.length < 2) {
-      return Text(
-        '닉네임은 2자 이상 입력해주세요.',
-        style: TextStyle(color: Colors.red),
-      );
-    }
-    return Text('프로필 사진과 닉네임을 입력해주세요.');
+    setState(() {});
+    return '';
   }
 
   /* 닉네임 입력에 따른 바텀 버튼 색 */
@@ -87,8 +91,10 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
 
     if (text.isEmpty || text.length < 2) {
       //닉네임 2자 이상이라면?
+      setState(() {});
       return Colors.grey;
     }
+    setState(() {});
     return Colors.blue;
   }
 
@@ -110,57 +116,6 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
 
   @override
   Widget build(BuildContext context) {
-    /* 카메라 아이콘 클릭시 띄울 모달 팝업 */
-    Widget bottomSheet() {
-      return Container(
-        height: 100,
-        width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Column(
-          children: <Widget>[
-            Text(
-              '프로필 사진을 선택해주세요',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                TextButton.icon(
-                  icon: Icon(
-                    Icons.camera,
-                    size: 50,
-                  ),
-                  onPressed: () {
-                    // takePhoto(ImageSource.camera);
-                  },
-                  label: Text(
-                    '카메라',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                TextButton.icon(
-                  icon: Icon(
-                    Icons.photo_library,
-                    size: 50,
-                  ),
-                  onPressed: () {
-                    // takePhoto(ImageSource.gallery);
-                  },
-                  label: Text(
-                    '갤러리',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      );
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -178,64 +133,71 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 50),
+          SizedBox(height: 40),
           Stack(
             children: [
-              CircleAvatar(
-                child: Icon(Icons.person_pin),
-                backgroundImage: null, //
-                radius: 80,
+              Form(
+                key: _profileKey,
+                child: CircleAvatar(
+                  backgroundImage: _photo == null
+                      ? NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689')
+                      : null,
+                  radius: 80,
+                ),
               ),
               Positioned(
-                bottom: 20,
-                right: 20,
-                child: InkWell(
-                  onTap: () {
-                    // 클릭시 모달 팝업을 띄워준다.
-                    showModalBottomSheet(
-                        context: context,
-                        builder: ((builder) => bottomSheet()));
-                  },
-                  child: Icon(
-                    Icons.camera_alt,
-                    // color: secondaryTextColor,
-                    size: 40,
+                bottom: 7,
+                right: 7,
+                child: GestureDetector(
+                  // 클릭시 모달 팝업을 띄워준다.
+                  onTap: () => Get.bottomSheet(showBottomSheet()),
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.black,
+                      size: 30,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 30),
-          TextField(
-              decoration: InputDecoration(
-                hintText: '닉네임을 입력해주세요.',
-                hintStyle: TextStyle(color: Colors.black),
-                fillColor: Colors.white,
-                counterText: '',
-                border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-              ),
-              maxLines: 1,
-              showCursor: true,
-              controller: _userNameController,
-              maxLength: 12,
-              textAlignVertical: TextAlignVertical.center,
-              textAlign: TextAlign.center,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              onChanged: (value) {
-                // setState(() {});
-              },
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(
-                    RegExp(r'[a-z|A-Z|0-9|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]'))
-              ]),
-          SizedBox(
-            height: 10,
+          SizedBox(height: 40),
+          TextFormField(
+            decoration: InputDecoration(
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              floatingLabelAlignment: FloatingLabelAlignment.center,
+              hintText: '닉네임을 입력해주세요 :)',
+              fillColor: Colors.white,
+              labelText: '-------- 닉네임 --------',
+              counterText: '',
+              border: InputBorder.none,
+            ),
+            autocorrect: false,
+            textInputAction: TextInputAction.done,
+            maxLines: 1,
+            showCursor: true,
+            controller: _userNameController,
+            maxLength: 12,
+            textAlignVertical: TextAlignVertical.center,
+            textAlign: TextAlign.center,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+            onChanged: (value) {
+              // setState(() {});
+            },
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(
+                  RegExp(r'[a-z|A-Z|0-9|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]'))
+            ],
           ),
-          Container(
-            child: _showErrorText,
+          SizedBox(height: 10),
+          Text(
+            _showErrorText,
+            style: TextStyle(color: Colors.red),
           )
         ],
       ),
@@ -255,6 +217,54 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  /* 카메라 아이콘 클릭시 띄울 바텀시트 */
+  Widget showBottomSheet() {
+    return Container(
+      height: 240,
+      color: Colors.white, //투염도 설정(나중)
+      child: Column(
+        children: [
+          ButtomSheetContent(
+            '갤러리에서 사진 선택', // ★★★★★갤러리 권한 요청
+            Colors.blue,
+            () async {
+              //갤러리에서 사진 가져오고 프로필 + 스토리지 업로드하기
+              await pickImgFromGallery();
+              Get.back();
+            },
+          ),
+          ButtomSheetContent(
+            '기본 카메라로 사진 찍기', // ★★★★★카메라 권한 요청
+            Colors.blue,
+            () async {
+              //카메라에서 사진 찍고 프로필 + 스토리지 업로드하기
+              await pickImgFromCamera();
+              Get.back();
+            },
+          ),
+          ButtomSheetContent(
+            '기본 이미지로 설정',
+            Colors.blue,
+            () {
+              //스토리지, 프로필 이미지 제거 후 기본 프로필 사진으로
+              setState(() {
+                _photo = null;
+              });
+              Get.back();
+            },
+          ),
+          ButtomSheetContent(
+            '취소',
+            Colors.black,
+            () {
+              Get.back();
+            },
+          ),
+        ],
       ),
     );
   }

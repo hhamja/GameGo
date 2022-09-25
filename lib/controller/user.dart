@@ -102,8 +102,8 @@ class UserController extends GetxController {
   * DB, Auth정보 삭제O | mainLogoPage()로 이동 */
   Future deleteUser() async {
     try {
-      await _auth.currentUser!.delete(); //Auth 정보 삭제
-      await _userDB.doc(_auth.currentUser!.uid).delete(); //DB user정보 삭제
+      await _auth.currentUser?.delete(); //Auth 정보 삭제
+      await _userDB.doc(_auth.currentUser?.uid).delete(); //DB user정보 삭제
       print('탈퇴하기');
     } catch (e) {
       print('deleteUser error : ${e}');
