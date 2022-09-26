@@ -11,6 +11,8 @@ class UserController extends GetxController {
   RxList<UserModel> userList = <UserModel>[].obs;
   /* 폰번호확인코드저장 */
   String verificationID = '';
+  var userCredential;
+  var token;
 
   /* LifeCycle */
   @override
@@ -80,9 +82,9 @@ class UserController extends GetxController {
 
   /* 폰가입정보 SignUP */
   Future signUP(token) async {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+    final credential = PhoneAuthProvider.credential(
         verificationId: verificationID, smsCode: token);
-    final userCredential = await _auth.signInWithCredential(credential);
+    userCredential = await _auth.signInWithCredential(credential);
     final user = userCredential.user;
     print(user?.uid);
   }
@@ -102,8 +104,12 @@ class UserController extends GetxController {
   * DB, Auth정보 삭제O | mainLogoPage()로 이동 */
   Future deleteUser() async {
     try {
-      await _auth.currentUser?.delete(); //Auth 정보 삭제
-      await _userDB.doc(_auth.currentUser?.uid).delete(); //DB user정보 삭제
+      print(userCredential);
+      await _auth.currentUser!
+          .reauthenticateWithCredential(userCredential!)
+          .then((value) => print(value));
+      await _auth.currentUser!.delete(); //Auth 정보 삭제
+      await _userDB.doc(_auth.currentUser!.uid).delete(); //DB user정보 삭제
       print('탈퇴하기');
     } catch (e) {
       print('deleteUser error : ${e}');
