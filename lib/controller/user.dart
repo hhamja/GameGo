@@ -24,8 +24,7 @@ class UserController extends GetxController {
     try {
       final res = await _userDB.doc(_auth.currentUser!.uid).set({
         'username': userModel.username,
-        'avatar': userModel.avatar,
-        'email': userModel.email,
+        'profileUrl': userModel.profileUrl,
         'mannerAge': userModel.mannerAge,
         'createdAt': userModel.createdAt,
       });

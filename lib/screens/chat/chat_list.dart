@@ -84,7 +84,7 @@ class _ChatListPageState extends State<ChatListPage> {
               subtitle: _subtitleList[index],
               trailing: _trailingList[index],
               onTap: () {
-                Get.to(() => ChattingPage());
+                Get.to(() => MessagePage());
               },
             ),
           );

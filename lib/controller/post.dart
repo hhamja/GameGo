@@ -51,7 +51,7 @@ class PostController extends GetxController {
             }).toList());
   }
 
-  /* 게시물 게임모드 필터링 */
+  /* 게시물 - 게임모드 필터링 */
   Stream<List<PostModel>> filterGamemode(gamemode) {
     postList.clear();
     return _post
@@ -63,7 +63,7 @@ class PostController extends GetxController {
             }).toList());
   }
 
-  /* 게시물 포지션 필터링 */
+  /* 게시물 - 포지션 필터링 */
   Stream<List<PostModel>> filterPosition(gamemode, position) {
     postList.clear();
     return _post
@@ -76,7 +76,7 @@ class PostController extends GetxController {
             }).toList());
   }
 
-  /* 게시물 티어 필터링 */
+  /* 게시물 - 티어 필터링 */
   Stream<List<PostModel>> filterTear(gamemode, position, tear) {
     postList.clear();
     return _post
@@ -90,7 +90,7 @@ class PostController extends GetxController {
             }).toList());
   }
 
-  /* Update Post, edit post*/
+  /* 게시물 수정하기 */
   Future updatePost(
     postid,
     String title,
@@ -112,7 +112,7 @@ class PostController extends GetxController {
     }
   }
 
-  /* Delete Post () */
+  /* 게시물 삭제하기 */
   Future deletePost(postid) async {
     try {
       final data = await _post.doc(postid).delete();
