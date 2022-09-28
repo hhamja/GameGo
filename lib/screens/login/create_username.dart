@@ -53,17 +53,18 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
   /* 파베 스토리지에 업로드하기 */
   Future uploadFile() async {
     if (_photo == null) return;
-    final fileName = basename(_photo!.path); //path 패키지로 파일이름 변수에 담기
-    // final destination = 'profile/$fileName';
+    final fileName = _auth.currentUser?.uid; //유저고유 id값을 파일명으로
 
     try {
       //storage > profile 폴더 > filename의 파일 경로
-      final ref = _storage.ref().child('profile').child(fileName);
+      final ref = _storage.ref().child('profile').child(fileName!);
+      print(ref);
+      print(_photo);
       await ref.putFile(_photo!); //스토리지에 업로드
       profileImageUrl = await ref.getDownloadURL();
       print(profileImageUrl);
     } catch (e) {
-      print('error uploadFile');
+      print(e);
     }
   }
 
@@ -76,10 +77,8 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
     final text = _userNameController.text.trim();
 
     if (text.isEmpty || text.length < 2) {
-      setState(() {});
       return '특수문자를 제외한 2자 이상 입력해주세요.';
     }
-    setState(() {});
     return '';
   }
 
@@ -89,10 +88,8 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
 
     if (text.isEmpty || text.length < 2) {
       //닉네임 2자 이상이라면?
-      setState(() {});
       return Colors.grey;
     }
-    setState(() {});
     return Colors.blue;
   }
 
@@ -137,8 +134,10 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
               CircleAvatar(
                 backgroundImage: _photo == null
                     ? NetworkImage(
+                        // 기본 프로필 url
                         'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689')
-                    : null,
+                    // 사용자 설정 url
+                    : NetworkImage(profileImageUrl!),
                 radius: 80,
               ),
               Positioned(

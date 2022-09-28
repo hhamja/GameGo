@@ -72,6 +72,7 @@ export 'package:mannergamer/screens/setting/userSetting/unexposeUserManagement.d
 export 'package:mannergamer/screens/setting/userSetting/accountManagement/emailEnroll.dart';
 export 'package:mannergamer/screens/setting/userSetting/accountManagement/phoneNumberEdit.dart';
 export 'package:mannergamer/screens/setting/userSetting/accountManagement/selfAuthentication.dart';
+export 'package:mannergamer/screens/setting/etc/signOut_sms.dart';
 
 /* Models */
 export 'package:mannergamer/models/data.dart';

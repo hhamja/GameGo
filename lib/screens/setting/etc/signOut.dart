@@ -8,6 +8,8 @@ class SignOutPage extends StatefulWidget {
 }
 
 class _SignOutPageState extends State<SignOutPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,8 +70,11 @@ class _SignOutPageState extends State<SignOutPage> {
             showLeaveReasonSolution(),
             TextButton(
                 onPressed: () async {
-                  await UserController.to.deleteUser();
-                  Get.offAllNamed('/main');
+                  // await UserController.to.deleteUser();
+                  // Get.offAllNamed('/main');
+                  await UserController.to
+                      .verifyPhone(_auth.currentUser!.phoneNumber!);
+                  Get.to(() => SignOutSmsPage());
                 },
                 child: Text('탈퇴하기'))
           ],
