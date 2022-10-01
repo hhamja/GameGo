@@ -14,16 +14,21 @@ class _NewMessageState extends State<NewMessage> {
   final ChatController _chat = Get.put(ChatController());
   /* 유저 GetX 컨트롤러 */
   final UserController _user = Get.put(UserController());
+  /* 파베 auth 인스턴스 */
+  final _auth = FirebaseAuth.instance;
+
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() {
-    final message = MessageModel(
-      dateTime: Timestamp.now(),
-      messageText: _messageController.text.trim(),
-      recieverId: '', //보내는 유저의 UID
-      senderId: '', //받는 유저의 UID
-    );
-    _chat.addMessageToDB(message);
-    _messageController.clear();
+    setState(() {
+      final message = MessageModel(
+        dateTime: Timestamp.now(),
+        messageText: _messageController.text.trim(),
+        recieverId: _auth.currentUser!.uid, //보내는 유저의 UID
+        senderId: '', //받는 유저의 UID
+      );
+      _chat.addMessageToDB(message);
+      _messageController.clear();
+    });
   }
 
   @override
@@ -36,7 +41,7 @@ class _NewMessageState extends State<NewMessage> {
             autocorrect: false,
             controller: _messageController,
             keyboardType: TextInputType.text,
-            maxLines: 1,
+            maxLines: null,
             showCursor: true,
             cursorColor: Colors.blue,
             textAlignVertical: TextAlignVertical.center,

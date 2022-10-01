@@ -1,23 +1,23 @@
 import 'dart:io';
 import 'package:mannergamer/utilites/index.dart';
 
-class CreateUserNamePage extends StatefulWidget {
-  CreateUserNamePage({Key? key}) : super(key: key);
+class CreateProfilePage extends StatefulWidget {
+  CreateProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<CreateUserNamePage> createState() => _CreateUserNamePageState();
+  State<CreateProfilePage> createState() => _CreateProfilePageState();
 }
 
-class _CreateUserNamePageState extends State<CreateUserNamePage> {
-  /* FirebaseStorage instance */
+class _CreateProfilePageState extends State<CreateProfilePage> {
+  /* Firebase Storage instance */
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  /* FirebaseAuth instance */
+  /* Firebase Auth instance */
   final FirebaseAuth _auth = FirebaseAuth.instance;
   /* ImagePicker */
   final ImagePicker _picker = ImagePicker();
-  /* 사진 담는 변수 */
+  /* 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수 */
   File? _photo;
-  /* 프로필 사진 url 담는 변수 */
+  /* 파베 스토리지에서 불러올 사진 url */
   String? profileImageUrl;
 
   /* 갤러리에서 사진 선택하기 */
@@ -98,6 +98,7 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
     final text = _userNameController.text.trim();
     UserModel userModel = UserModel(
       username: text,
+      profileUrl: profileImageUrl,
       mannerAge: 20,
       createdAt: Timestamp.now(),
     );
@@ -133,9 +134,15 @@ class _CreateUserNamePageState extends State<CreateUserNamePage> {
             children: [
               CircleAvatar(
                 backgroundImage: _photo == null
-                    ? NetworkImage(
+                    ? NetworkImage(_storage
+                            .ref()
+                            .child('profile')
+                            .child('default_profile.png')
+                            .getDownloadURL()
+                            .toString()
                         // 기본 프로필 url
-                        'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689')
+                        // 'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689'
+                        )
                     // 사용자 설정 url
                     : NetworkImage(profileImageUrl!),
                 radius: 80,

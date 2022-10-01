@@ -95,7 +95,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Paths.UserName,
-      page: () => CreateUserNamePage(),
+      page: () => CreateProfilePage(),
     ),
     GetPage(
       name: Paths.PhoneAuth,

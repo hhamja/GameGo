@@ -6,13 +6,13 @@ class ChatController extends GetxController {
       FirebaseFirestore.instance.collection('chat');
 
   /* RxList chatList [] 선언 */
-  RxList<MessageModel> chatList = <MessageModel>[].obs;
+  RxList<MessageModel> messageList = <MessageModel>[].obs;
 
   /* Lifecycle */
   @override
   void onInit() {
     super.onInit();
-    chatList.bindStream(readAllMessage());
+    messageList.bindStream(readAllMessage());
   }
 
   @override
@@ -37,7 +37,7 @@ class ChatController extends GetxController {
   /* Stream Read Message */
   Stream<List<MessageModel>> readAllMessage() {
     return _chat
-        .orderBy('dateTime', descending: true)
+        .orderBy('dateTime', descending: false)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
               return MessageModel.fromDocumentSnapshot(e);

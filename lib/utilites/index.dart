@@ -27,9 +27,10 @@ export 'package:path/path.dart';
 export 'package:mannergamer/screens/splashPage/myApp.dart';
 export 'package:mannergamer/screens/splashPage/splash.dart';
 
-export 'package:mannergamer/screens/chat/tile.dart';
+export 'package:mannergamer/screens/chat/messages.dart';
+export 'package:mannergamer/screens/chat/bubble.dart';
 export 'package:mannergamer/screens/chat/new_message.dart';
-export 'package:mannergamer/screens/chat/chattingPage.dart';
+export 'package:mannergamer/screens/chat/chat_screen.dart';
 export 'package:mannergamer/screens/chat/chat_list.dart';
 export 'package:mannergamer/screens/chat/x.dart';
 export 'package:mannergamer/screens/home/home.dart';
@@ -48,7 +49,7 @@ export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/re
 export 'package:mannergamer/screens/home/homeBody/post_list/post_click_detail/reportPost/reportPost.dart';
 
 export 'package:mannergamer/screens/login/phone_auth.dart';
-export 'package:mannergamer/screens/login/create_username.dart';
+export 'package:mannergamer/screens/login/create_profile.dart';
 export 'package:mannergamer/screens/login/main_logo_page.dart';
 
 export 'package:mannergamer/screens/mypage/mypage.dart';

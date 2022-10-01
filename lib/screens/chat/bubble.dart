@@ -1,27 +1,26 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class MessageTile extends StatefulWidget {
-  MessageTile({Key? key}) : super(key: key);
+class ChatBubble extends StatelessWidget {
+  ChatBubble({Key? key}) : super(key: key);
 
-  @override
-  State<MessageTile> createState() => _MessageTileState();
-}
-
-class _MessageTileState extends State<MessageTile> {
-  /* 메시지 입력 칸 */
-  final TextEditingController _messageController = TextEditingController();
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
   /* 유저 GetX 컨트롤러 */
   final UserController _user = Get.put(UserController());
-  var isMe = false;
+  /* 내가보낸 메시지인지 반환하는 bool값 */
+  var isMe;
+  var message;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      //내가보냄 ? 오른쪽위치 : 왼쪽위치
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.7,
+          ),
           decoration: BoxDecoration(
             color: isMe ? Colors.grey[300] : Colors.blue,
             borderRadius: BorderRadius.only(
@@ -34,7 +33,7 @@ class _MessageTileState extends State<MessageTile> {
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           child: Text(
-            'd',
+            '',
             style: TextStyle(color: isMe ? Colors.black : Colors.white),
           ),
         ),
