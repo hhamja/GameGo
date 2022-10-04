@@ -33,8 +33,9 @@ class _AddPostPageState extends State<AddPostPage> {
         actions: [
           TextButton(
             onPressed: () async {
-              final _postModel = PostModel(
-                username: _auth.currentUser!.displayName,
+              final postModel = PostModel(
+                uid: _auth.currentUser?.uid,
+                username: _auth.currentUser?.displayName ?? '이름없음',
                 title: _titleController.text.trim(),
                 maintext: _maintextController.text.trim(),
                 gamemode: dropDownController.seledtedPostGamemodeValue,
@@ -42,7 +43,7 @@ class _AddPostPageState extends State<AddPostPage> {
                 tear: dropDownController.seledtedPostTearValue,
                 createdAt: Timestamp.now(),
               );
-              await _postController.createPost(_postModel);
+              await _postController.createPost(postModel);
               Get.back();
             },
             child: Text(

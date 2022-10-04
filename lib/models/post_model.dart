@@ -2,6 +2,7 @@ import 'package:mannergamer/utilites/index.dart';
 
 class PostModel {
   final postid;
+  var uid;
   final String? username;
   final String title;
   final String maintext;
@@ -12,6 +13,7 @@ class PostModel {
 
   PostModel({
     this.postid,
+    this.uid,
     this.username,
     required this.title,
     required this.maintext,
@@ -24,6 +26,7 @@ class PostModel {
   factory PostModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     return PostModel(
       postid: doc.id,
+      uid: doc['uid'],
       username: doc['username'],
       title: doc['title'],
       maintext: doc['maintext'],

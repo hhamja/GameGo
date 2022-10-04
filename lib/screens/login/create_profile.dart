@@ -98,6 +98,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     final text = _userNameController.text.trim();
     UserModel userModel = UserModel(
       username: text,
+      uid: _auth.currentUser!.uid,
       phoneNumber: Get.arguments,
       profileUrl: profileImageUrl,
       mannerAge: 20,
@@ -135,15 +136,17 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             children: [
               CircleAvatar(
                 backgroundImage: _photo == null
-                    ? NetworkImage(_storage
-                            .ref()
-                            .child('profile')
-                            .child('default_profile.png')
-                            .getDownloadURL()
-                            .toString()
+                    ? NetworkImage(
+                        // //기본 프로필 사진 url
+                        // _storage
+                        //     .ref()
+                        //     .child('profile')
+                        //     .child('default_profile')
+                        //     .getDownloadURL()
+                        //     .toString()
+
                         // 기본 프로필 url
-                        // 'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689'
-                        )
+                        'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689')
                     // 사용자 설정 url
                     : NetworkImage(profileImageUrl!),
                 radius: 80,
@@ -169,6 +172,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             ],
           ),
           SizedBox(height: 40),
+
+          /* 닉네임 입력란 */
           TextFormField(
             decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,

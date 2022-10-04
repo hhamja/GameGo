@@ -3,6 +3,9 @@ import 'package:mannergamer/utilites/index.dart';
 class MessagePage extends StatelessWidget {
   MessagePage({Key? key}) : super(key: key);
 
+  /* 게시물 올린 유저의 uid */
+  final String? uid = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +29,13 @@ class MessagePage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Messages(),
+              child: Messages(
+                uid: uid ?? '', //상대 유저 uid값 전달
+              ),
             ),
-            NewMessage(),
+            NewMessage(
+              uid: uid ?? '', //상대 유저 uid값 전달
+            ),
           ],
         ),
       ),

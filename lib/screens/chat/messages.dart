@@ -1,7 +1,9 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class Messages extends StatelessWidget {
-  Messages({Key? key}) : super(key: key);
+  Messages({Key? key, required this.uid}) : super(key: key);
+  /* 상대유저의 uid 값 */
+  final String uid;
   /* 기기의 현재 유저 */
   final user = FirebaseAuth.instance.currentUser!;
   /* 채팅 GetX 컨트롤러 */

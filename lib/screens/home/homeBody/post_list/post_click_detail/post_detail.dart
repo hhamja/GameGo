@@ -12,6 +12,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   PostController controller = Get.find<PostController>();
   /* HomePostList Listview의 index 값을 전달받음 */
   final index = Get.arguments;
+
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   bool _click = true;
 
@@ -45,6 +46,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      /* 유저 매너나이 */
+                      // 유저 DB에서 uid로 해당 유저의 매너나이 불러오기
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -65,7 +68,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   thickness: 1,
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(16, 25, 16, 30),
+                  padding: EdgeInsets.fromLTRB(16, 25, 16, 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -82,27 +85,28 @@ class _PostDetailPageState extends State<PostDetailPage> {
                         style: TextStyle(fontSize: 15, color: Colors.black54),
                       ),
                       /* 본문글 */
-                      Center(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 50),
                         child: Text(
                           '${controller.postList[index].maintext}',
+                          textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 18,
-                            height: 4,
                           ),
                         ),
                       ),
-                      SizedBox(height: 30),
+
+                      // SizedBox(height: 30),
                       /* 채팅 · 좋아요 · 조회 수 */
-                      Text('채팅 1 · 관심 1 · 조회 82',
-                          style: TextStyle(fontSize: 15, color: Colors.black54),
-                          textAlign: TextAlign.right,
-                          textWidthBasis: TextWidthBasis.longestLine),
+                      // Text('채팅 1 · 관심 1 · 조회 82',
+                      //     style: TextStyle(fontSize: 15, color: Colors.black54),
+                      //     textAlign: TextAlign.right,
+                      //     textWidthBasis: TextWidthBasis.longestLine),
                     ],
                   ),
                 ),
 
                 //sizedbox, divider, 폰트사이즈 커스텀화 시켜야함 (여유되면).
-
                 Divider(
                   color: Colors.grey[300],
                   height: 0,
@@ -156,11 +160,18 @@ class _PostDetailPageState extends State<PostDetailPage> {
                           ),
                   ),
                 ),
+
                 /* 채팅하기 버튼 -> ChatPage 이동 */
                 Expanded(
                   flex: 5,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(
+                        () => MessagePage(),
+                        //게시자 UID 값 전달
+                        arguments: controller.postList[index].uid!,
+                      );
+                    },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 20),
                       backgroundColor: Colors.blue,

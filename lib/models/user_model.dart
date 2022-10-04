@@ -1,7 +1,8 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class UserModel {
-  final userid;
+  final id;
+  final uid;
   final String username;
   final String phoneNumber;
   final String? profileUrl;
@@ -9,7 +10,8 @@ class UserModel {
   final Timestamp createdAt;
 
   UserModel({
-    this.userid,
+    this.id,
+    required this.uid,
     required this.username,
     required this.phoneNumber,
     this.profileUrl,
@@ -19,7 +21,8 @@ class UserModel {
 
   factory UserModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     return UserModel(
-      userid: doc.id,
+      id: doc.id,
+      uid: doc['uid'],
       phoneNumber: doc['phoneNumber'],
       username: doc['username'],
       profileUrl: doc['profileUrl'],

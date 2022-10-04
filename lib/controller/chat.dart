@@ -12,16 +12,12 @@ class ChatController extends GetxController {
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
 
-  /* 상대 유저 이름 */
-  var userFieldData;
-  /* 상대 유저 프로필 사진 */
   /* 라이프사이클 */
   @override
   void onInit() {
     super.onInit();
-    chatRoomList.bindStream(readAllChatList()); //채팅리스트
+    chatRoomList.bindStream(readAllChatList());
     messageList.bindStream(readAllMessageList());
-    userFieldData;
   }
 
   @override
@@ -30,10 +26,10 @@ class ChatController extends GetxController {
   }
 
   /* 새로운 채팅 입력 시 메시지DB 추가 */
-  Future sendNewMessege(MessageModel messageModel) async {
+  Future sendNewMessege(MessageModel messageModel, chatId) async {
     try {
       //채팅(col) - 그룹UID(Doc) - 메시지(Col) - 메시지내용()
-      await _chatDB.doc().collection('message').add({
+      await _chatDB.doc(chatId).collection('message').add({
         'content': messageModel.content,
         'senderId': messageModel.senderId,
         'timestamp': messageModel.timestamp,
@@ -47,7 +43,7 @@ class ChatController extends GetxController {
   Future createNewChatRoom(ChatRoomModel chatRoomModel) async {
     try {
       //Chat(col) - 채팅방UID(Doc)
-      await _chatDB.add({
+      await _chatDB.doc(chatRoomModel.id).set({
         'lastContent': chatRoomModel.lastContent,
         'postingUserId': chatRoomModel.postingUserId,
         'peerUserId': chatRoomModel.peerUserId,
@@ -61,7 +57,7 @@ class ChatController extends GetxController {
   /* 모든 '채팅' 리스트 스트림으로 받기 */
   Stream<List<ChatRoomModel>> readAllChatList() {
     return _chatDB
-        // .orderBy('updatedAt', descending: true) //최신이 맨 위
+        .orderBy('updatedAt', descending: true) //최신이 맨 위s
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
               return ChatRoomModel.fromDocumentSnapshot(e);
@@ -79,8 +75,8 @@ class ChatController extends GetxController {
   }
 
   /* 채팅 상대 유저 정보 받기 */
-  Stream getPeerUserInfo(peerId, field) {
-    return _userDB.doc(peerId).snapshots();
+  Stream getPeerUserInfo(id, field) {
+    return _userDB.doc(id).snapshots();
   }
 
   /* 채팅 업데이트 */
