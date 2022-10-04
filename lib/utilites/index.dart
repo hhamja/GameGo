@@ -84,6 +84,7 @@ export 'package:mannergamer/models/dropDownBT_model.dart';
 export 'package:mannergamer/models/post_model.dart';
 export 'package:mannergamer/models/user_model.dart';
 export 'package:mannergamer/models/message_model.dart';
+export 'package:mannergamer/models/chatRoom_model.dart';
 
 /* Controller */
 export 'package:mannergamer/controller/chat.dart';

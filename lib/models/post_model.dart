@@ -2,13 +2,13 @@ import 'package:mannergamer/utilites/index.dart';
 
 class PostModel {
   final postid;
-  String? username;
-  String title;
-  String maintext;
-  String gamemode;
-  String? position;
-  String? tear;
-  Timestamp? createdAt;
+  final String? username;
+  final String title;
+  final String maintext;
+  final String gamemode;
+  final String? position;
+  final String? tear;
+  final Timestamp? createdAt;
 
   PostModel({
     this.postid,

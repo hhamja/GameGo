@@ -98,6 +98,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     final text = _userNameController.text.trim();
     UserModel userModel = UserModel(
       username: text,
+      phoneNumber: Get.arguments,
       profileUrl: profileImageUrl,
       mannerAge: 20,
       createdAt: Timestamp.now(),

@@ -10,6 +10,9 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
+  /* Chat Controller */
+  final ChatController _chat = Get.put(ChatController());
+
   bool _click = true;
   List<CircleAvatar> _userAvatar = [
     CircleAvatar(child: Icon(Icons.person_rounded)),
@@ -43,52 +46,63 @@ class _ChatListPageState extends State<ChatListPage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: _trailingList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Slidable(
-            endActionPane: ActionPane(
-              extentRatio: 0.4,
-              motion: DrawerMotion(),
-              children: [
-                SlidableAction(
-                  backgroundColor: Colors.grey,
-                  foregroundColor: Colors.white,
-                  icon: (_click == true)
-                      ? Icons.notifications
-                      : Icons.notifications_off,
-                  onPressed: (_) {
-                    setState(() {
-                      _click = !_click;
-                    });
-                  },
-                ),
-                SlidableAction(
-                  onPressed: (_) {
-                    setState(() {
-                      _userAvatar.removeAt(index);
-                      _titlelist.removeAt(index);
-                      _subtitleList.removeAt(index);
-                      _trailingList.removeAt(index);
-                    });
-                  },
-                  backgroundColor: Color(0xFFFE4A49),
-                  foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                ),
-              ],
-            ),
-            child: ListTile(
-              leading: _userAvatar[index],
-              title: _titlelist[index],
-              subtitle: _subtitleList[index],
-              trailing: _trailingList[index],
-              onTap: () {
-                Get.to(() => MessagePage());
-              },
-            ),
-          );
-        },
+      body: Obx(
+        () => ListView.builder(
+          itemCount: _chat.chatRoomList.length,
+          itemBuilder: (BuildContext context, int index) {
+            //상대유저 UID
+            final _peerUserId = _chat.chatRoomList[index].peerUserId;
+            print(_peerUserId);
+            //상대유저 이름
+            final name =
+                _chat.getPeerUserInfo(_peerUserId, 'username').toString();
+
+            // 마지막 대화내용
+            final _lastContent =
+                _chat.chatRoomList[index].lastContent.toString();
+            // 최근 날짜
+            final _updatedAt = _chat.chatRoomList[index].updatedAt.toString();
+            return Slidable(
+              endActionPane: ActionPane(
+                extentRatio: 0.4,
+                motion: DrawerMotion(),
+                children: [
+                  SlidableAction(
+                    backgroundColor: Colors.grey,
+                    foregroundColor: Colors.white,
+                    icon: (_click == true)
+                        ? Icons.notifications
+                        : Icons.notifications_off,
+                    onPressed: (_) {
+                      setState(() {
+                        _click = !_click;
+                      });
+                    },
+                  ),
+                  SlidableAction(
+                    onPressed: (_) {
+                      setState(() {
+                        _chat.chatRoomList.removeAt(index);
+                      });
+                    },
+                    backgroundColor: Color(0xFFFE4A49),
+                    foregroundColor: Colors.white,
+                    icon: Icons.delete,
+                  ),
+                ],
+              ),
+              child: ListTile(
+                leading: CircleAvatar(), // 상대 유저 프로필 사진
+                title: Text(name), // 상대 유저 이름
+                subtitle: Text(_lastContent), // 채팅방 마지막 대화 내용 요약
+                trailing: Text(_updatedAt), // 최근 대화 날짜 (며칠 전)
+                onTap: () {
+                  Get.to(() => MessagePage());
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

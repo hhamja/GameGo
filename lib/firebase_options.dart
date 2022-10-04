@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1090390887405',
     projectId: 'mannergamer-c2546',
     storageBucket: 'mannergamer-c2546.appspot.com',
-    iosClientId: '1090390887405-v3e2ttc6bvm7m9b4dvfdnbakhq4uhjba.apps.googleusercontent.com',
+    iosClientId:
+        '1090390887405-v3e2ttc6bvm7m9b4dvfdnbakhq4uhjba.apps.googleusercontent.com',
     iosBundleId: 'com.mannergamer.mannergamer',
   );
 }

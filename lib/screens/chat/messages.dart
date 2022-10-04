@@ -38,7 +38,7 @@ class Messages extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                 child: Text(
-                  _chat.messageList[index].messageText.toString(), //메시지 입력 리스트
+                  _chat.messageList[index].content.toString(), //메시지 입력 리스트
                   style: TextStyle(color: _isMe ? Colors.black : Colors.white),
                 ),
               ),

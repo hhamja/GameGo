@@ -20,13 +20,12 @@ class _NewMessageState extends State<NewMessage> {
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() {
     setState(() {
-      final message = MessageModel(
-        dateTime: Timestamp.now(),
-        messageText: _messageController.text.trim(),
-        recieverId: _auth.currentUser!.uid, //보내는 유저의 UID
-        senderId: '', //받는 유저의 UID
+      final messageModel = MessageModel(
+        timestamp: Timestamp.now().toString(),
+        content: _messageController.text.trim(),
+        senderId: _auth.currentUser!.uid, //받는 유저의 UID
       );
-      _chat.addMessageToDB(message);
+      _chat.sendNewMessege(messageModel);
       _messageController.clear();
     });
   }

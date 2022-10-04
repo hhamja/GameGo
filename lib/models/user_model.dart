@@ -2,14 +2,16 @@ import 'package:mannergamer/utilites/index.dart';
 
 class UserModel {
   final userid;
-  String username;
-  String? profileUrl;
-  var mannerAge; //초기값 20.0세
-  Timestamp createdAt;
+  final String username;
+  final String phoneNumber;
+  final String? profileUrl;
+  final mannerAge; //초기값 20.0세
+  final Timestamp createdAt;
 
   UserModel({
     this.userid,
     required this.username,
+    required this.phoneNumber,
     this.profileUrl,
     required this.mannerAge,
     required this.createdAt,
@@ -18,6 +20,7 @@ class UserModel {
   factory UserModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     return UserModel(
       userid: doc.id,
+      phoneNumber: doc['phoneNumber'],
       username: doc['username'],
       profileUrl: doc['profileUrl'],
       mannerAge: doc['mannerAge'],

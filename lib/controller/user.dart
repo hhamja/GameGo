@@ -27,6 +27,7 @@ class UserController extends GetxController {
         'profileUrl': userModel.profileUrl,
         'mannerAge': userModel.mannerAge,
         'createdAt': userModel.createdAt,
+        'phoneNumber': userModel.phoneNumber,
       });
       return res;
     } catch (e) {
