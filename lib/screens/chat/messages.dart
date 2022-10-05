@@ -1,13 +1,26 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class Messages extends StatelessWidget {
-  Messages({Key? key, required this.uid}) : super(key: key);
+class Messages extends StatefulWidget {
   /* 상대유저의 uid 값 */
   final String uid;
+
+  Messages({Key? key, required this.uid}) : super(key: key);
+
+  @override
+  State<Messages> createState() => _MessagesState();
+}
+
+class _MessagesState extends State<Messages> {
   /* 기기의 현재 유저 */
-  final _user = FirebaseAuth.instance.currentUser!;
+  final _currentUser = FirebaseAuth.instance.currentUser!;
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
+  @override
+  void initState() {
+    _chat.messageList.bindStream(
+        _chat.readAllMessageList(widget.uid + '_' + _currentUser.uid));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +29,8 @@ class Messages extends StatelessWidget {
         itemCount: _chat.messageList.length,
         itemBuilder: (context, index) {
           //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
-          final bool _isMe = _user.uid == _chat.messageList[index].senderId;
+          final bool _isMe =
+              _currentUser.uid == _chat.messageList[index].senderId;
           return Row(
             //내가보냄 ? 오른쪽위치 : 왼쪽위치
             mainAxisAlignment:

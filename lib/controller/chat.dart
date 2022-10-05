@@ -19,7 +19,7 @@ class ChatController extends GetxController {
   void onInit() {
     getUserInfo;
     chatRoomList.bindStream(readAllChatList());
-    messageList.bindStream(readAllMessageList());
+
     super.onInit();
   }
 
@@ -68,8 +68,10 @@ class ChatController extends GetxController {
   }
 
   /* 모든 '메시지' 리스트 스트림으로 받기 */
-  Stream<List<MessageModel>> readAllMessageList() {
+  Stream<List<MessageModel>> readAllMessageList(chatRoomId) {
     return _chatDB
+        .doc(chatRoomId)
+        .collection('message')
         .orderBy('timestamp', descending: false) //최신이 맨 아래
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
