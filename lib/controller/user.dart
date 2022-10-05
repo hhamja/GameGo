@@ -16,7 +16,7 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    userList.bindStream(readUserList());
+    // userList.bindStream(readUserList());
   }
 
   /* Create User */
@@ -35,15 +35,15 @@ class UserController extends GetxController {
     }
   }
 
-  /* Read FireStore User DB */
-  Stream<List<UserModel>> readUserList() {
-    return _userDB
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              return UserModel.fromDocumentSnapshot(e);
-            }).toList());
-  }
+  // /* Read FireStore User DB */
+  // Stream<List<UserModel>> readUserList() {
+  //   return _userDB
+  //       .orderBy('createdAt', descending: true)
+  //       .snapshots()
+  //       .map((snapshot) => snapshot.docs.map((e) {
+  //             return UserModel.fromDocumentSnapshot(e);
+  //           }).toList());
+  // }
 
   /* 폰으로 SMS 전송 */
   Future verifyPhone(String phonenumber) async {

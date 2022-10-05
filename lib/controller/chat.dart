@@ -12,7 +12,7 @@ class ChatController extends GetxController {
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
 
-  /* UID로 받은 유저정보 */
+  /* UID로 받은 유저리스트 */
   var userInfo;
 
   /* 라이프사이클 */
@@ -79,11 +79,11 @@ class ChatController extends GetxController {
 
   /* 채팅 상대 유저 정보 받기 */
   Future getUserInfo(id) async {
-    final result = await _userDB.doc(id).get();
-    userInfo = result.data();
-    print(userInfo);
-    return userInfo;
+    await _userDB.doc(id).get().then((value) => userInfo = value.data());
+    update();
   }
+
+  getUser() {}
 
   /* 채팅 업데이트 */
   Future updatechat(MessageModel messageModel) async {

@@ -172,7 +172,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Get.to(
                         () => MessagePage(),
                         //게시자 UID 값 전달
-                        arguments: controller.postList[index].uid!,
+                        arguments: {'uid': uid},
                       );
                     },
                     style: TextButton.styleFrom(

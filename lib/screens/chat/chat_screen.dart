@@ -1,29 +1,33 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class MessagePage extends StatelessWidget {
+class MessagePage extends StatefulWidget {
   MessagePage({Key? key}) : super(key: key);
+
+  @override
+  State<MessagePage> createState() => _MessagePageState();
+}
+
+class _MessagePageState extends State<MessagePage> {
   /* 게시물 올린 유저의 uid */
-  final String? uid = Get.arguments;
+  final String? uid = Get.arguments['uid'];
+
   /* Chat Controller */
   final ChatController _chat = Get.put(ChatController());
 
   @override
   Widget build(BuildContext context) {
     print(uid);
-    _chat.getUserInfo(uid);
-    //유저정보 UID로 get
+
     return Scaffold(
       appBar: AppBar(
-        title: GetBuilder<ChatController>(
-          builder: (_) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(_chat.userInfo['userName']), // 상대유저이름
-                Text(_chat.userInfo['mannerAge']), //유저 나이 (글씨 작게)
-              ],
-            );
-          },
+        title: Obx(
+          () => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(_chat.userInfo['userName']!), // 상대유저이름
+              Text(_chat.userInfo['mannerAge']!), //유저 나이 (글씨 작게)
+            ],
+          ),
         ),
         centerTitle: true,
         actions: [
