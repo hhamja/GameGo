@@ -23,7 +23,7 @@ class UserController extends GetxController {
   Future addNewUser(UserModel userModel) async {
     try {
       final res = await _userDB.doc(_auth.currentUser!.uid).set({
-        'username': userModel.username,
+        'userName': userModel.userName,
         'profileUrl': userModel.profileUrl,
         'mannerAge': userModel.mannerAge,
         'createdAt': userModel.createdAt,

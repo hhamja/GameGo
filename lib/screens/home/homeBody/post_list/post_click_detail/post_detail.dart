@@ -10,15 +10,18 @@ class PostDetailPage extends StatefulWidget {
 class _PostDetailPageState extends State<PostDetailPage> {
   /* find -> PostController */
   PostController controller = Get.find<PostController>();
-  /* HomePostList Listview의 index 값을 전달받음 */
-  final index = Get.arguments;
+  /* 해당 게시물의 lisview에서의 index값 전달 받음 */
+  final index = Get.arguments['index'];
+  /* 게시물 게시한 유저의 uid값 전달 받음 */
+  final uid = Get.arguments['uid'];
 
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   bool _click = true;
 
   @override
   Widget build(BuildContext context) {
-    print('index : ${Get.arguments}');
+    print(index);
+    print(uid);
 
     return Scaffold(
       appBar: AppBar(

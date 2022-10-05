@@ -27,7 +27,10 @@ class _HomePostListState extends State<HomePostList> {
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             onTap: () {
-              Get.toNamed('/postdetail', arguments: index);
+              Get.toNamed('/postdetail', arguments: {
+                'index': index,
+                'uid': controller.postList[index].uid
+              });
             },
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),

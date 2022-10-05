@@ -54,8 +54,7 @@ class _ChatListPageState extends State<ChatListPage> {
             final _peerUserId = _chat.chatRoomList[index].peerUserId;
             print(_peerUserId);
             //상대유저 이름
-            final name =
-                _chat.getPeerUserInfo(_peerUserId, 'username').toString();
+            // final name = _chat.getUserInfo(_peerUserId).toString();
 
             // 마지막 대화내용
             final _lastContent =
@@ -93,7 +92,7 @@ class _ChatListPageState extends State<ChatListPage> {
               ),
               child: ListTile(
                 leading: CircleAvatar(), // 상대 유저 프로필 사진
-                title: Text(name), // 상대 유저 이름
+                // title: Text(name), // 상대 유저 이름
                 subtitle: Text(_lastContent), // 채팅방 마지막 대화 내용 요약
                 trailing: Text(_updatedAt), // 최근 대화 날짜 (며칠 전)
                 onTap: () {

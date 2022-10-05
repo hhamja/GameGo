@@ -97,11 +97,11 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   validateButton() async {
     final text = _userNameController.text.trim();
     UserModel userModel = UserModel(
-      username: text,
+      userName: text,
       uid: _auth.currentUser!.uid,
       phoneNumber: Get.arguments,
       profileUrl: profileImageUrl,
-      mannerAge: 20,
+      mannerAge: '20.0세',
       createdAt: Timestamp.now(),
     );
     if (!text.isEmpty || text.length >= 2) {
