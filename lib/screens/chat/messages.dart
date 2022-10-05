@@ -5,7 +5,7 @@ class Messages extends StatelessWidget {
   /* 상대유저의 uid 값 */
   final String uid;
   /* 기기의 현재 유저 */
-  final user = FirebaseAuth.instance.currentUser!;
+  final _user = FirebaseAuth.instance.currentUser!;
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
   /* 내가보낸 메시지인지 반환하는 bool값 */

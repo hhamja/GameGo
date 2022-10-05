@@ -14,18 +14,19 @@ class _NewMessageState extends State<NewMessage> {
   final TextEditingController _messageController = TextEditingController();
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
-  /* 유저 GetX 컨트롤러 */
-  final UserController _user = Get.put(UserController());
   /* 파베 auth 인스턴스 */
   final _auth = FirebaseAuth.instance;
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
-    final chatRoomID = _auth.currentUser!.uid + '_' + widget.uid!;
+    //채팅방이름 = 게시글유저ID_현재폰유저ID
+    //채팅방이 이미 있다면 ? 메시지 update : 없다면 채팅방추가 함수 실행
+    final chatRoomID = widget.uid! + '_' + _auth.currentUser!.uid;
     final chatRoomModel = ChatRoomModel(
       id: chatRoomID,
       postingUserId: _auth.currentUser!.uid,
       peerUserId: widget.uid,
+      //마지막글, 마지막시간은 메시지리스트의 마지막값을 받아서 보여주는 식?
       // lastContent: _chat.messageList[_chat.messageList.length].content ?? '',
       // updatedAt: _chat.messageList[_chat.messageList.length].timestamp ?? '',
     );
@@ -42,11 +43,8 @@ class _NewMessageState extends State<NewMessage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_auth.currentUser!.uid + '1xxxxxxxxxxxxxxxx');
-    print(widget.uid! + '2xxxxxxxxxxxxxxxx');
-
     print(
-      _auth.currentUser!.uid + '_' + widget.uid!,
+      '채팅방id는 ' + _auth.currentUser!.uid + '_' + widget.uid!,
     );
     return Row(
       children: [

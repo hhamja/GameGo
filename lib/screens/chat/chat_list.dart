@@ -12,26 +12,7 @@ class ChatListPage extends StatefulWidget {
 class _ChatListPageState extends State<ChatListPage> {
   /* Chat Controller */
   final ChatController _chat = Get.put(ChatController());
-
   bool _click = true;
-  List<CircleAvatar> _userAvatar = [
-    CircleAvatar(child: Icon(Icons.person_rounded)),
-    CircleAvatar(child: Icon(Icons.person_rounded)),
-    CircleAvatar(child: Icon(Icons.person_rounded)),
-    CircleAvatar(child: Icon(Icons.person_rounded)),
-  ];
-  List<Text> _titlelist = [
-    Text('닉네임1'),
-    Text('닉네임2'),
-  ];
-  List<Text> _subtitleList = [
-    Text('마지막 채팅 내용1'),
-    Text('마지막 채팅 내용2'),
-  ];
-  List<Text> _trailingList = [
-    Text('1일전'),
-    Text('2일전'),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +32,15 @@ class _ChatListPageState extends State<ChatListPage> {
           itemCount: _chat.chatRoomList.length,
           itemBuilder: (BuildContext context, int index) {
             //상대유저 UID
-            final _peerUserId = _chat.chatRoomList[index].peerUserId;
-            print(_peerUserId);
-            //상대유저 이름
-            // final name = _chat.getUserInfo(_peerUserId).toString();
-
+            final peerUserId = _chat.chatRoomList[index].peerUserId;
+            print(peerUserId);
+            //상대유저정보 Get
+            _chat.getUserInfo(peerUserId);
             // 마지막 대화내용
-            final _lastContent =
-                _chat.chatRoomList[index].lastContent.toString();
+            final lastContent =
+                _chat.chatRoomList[index].lastContent?.toString();
             // 최근 날짜
-            final _updatedAt = _chat.chatRoomList[index].updatedAt.toString();
+            final updatedAt = _chat.chatRoomList[index].updatedAt?.toString();
             return Slidable(
               endActionPane: ActionPane(
                 extentRatio: 0.4,
@@ -92,11 +72,14 @@ class _ChatListPageState extends State<ChatListPage> {
               ),
               child: ListTile(
                 leading: CircleAvatar(), // 상대 유저 프로필 사진
-                // title: Text(name), // 상대 유저 이름
-                subtitle: Text(_lastContent), // 채팅방 마지막 대화 내용 요약
-                trailing: Text(_updatedAt), // 최근 대화 날짜 (며칠 전)
+                title: Text(_chat.userInfo['userName']), // 상대 유저 이름
+                subtitle: Text('마지막 대화 내용'), // 채팅방 마지막 대화 내용 요약
+                trailing: Text('1일 전'), // 최근 대화 날짜 (며칠 전)
                 onTap: () {
-                  Get.to(() => MessagePage());
+                  Get.to(
+                    () => MessagePage(),
+                    arguments: {'uid': peerUserId}, //uid값 전달
+                  );
                 },
               ),
             );

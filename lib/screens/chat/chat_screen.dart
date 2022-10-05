@@ -16,18 +16,22 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(uid);
+    print('유저 UID 값은 ${uid}');
 
     return Scaffold(
       appBar: AppBar(
         title: Obx(
-          () => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(_chat.userInfo['userName']!), // 상대유저이름
-              Text(_chat.userInfo['mannerAge']!), //유저 나이 (글씨 작게)
-            ],
-          ),
+          () {
+            _chat.getUserInfo(uid); //UID 값으로 유저정보 받기
+            print(_chat.userInfo['userName']); //받은 유저정보 중 유저이름 프린트
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(_chat.userInfo['userName'] ?? '이름없음'), // 상대유저이름
+                Text(_chat.userInfo['mannerAge'] ?? '20세'), //유저 매너나이 (글씨 작게)
+              ],
+            );
+          },
         ),
         centerTitle: true,
         actions: [

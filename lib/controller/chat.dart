@@ -11,16 +11,16 @@ class ChatController extends GetxController {
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
-
-  /* UID로 받은 유저리스트 */
-  var userInfo;
+  /* UID로 받은 유저정보 */
+  RxMap<dynamic, dynamic> userInfo = <dynamic, dynamic>{}.obs;
 
   /* 라이프사이클 */
   @override
   void onInit() {
-    super.onInit();
+    getUserInfo;
     chatRoomList.bindStream(readAllChatList());
     messageList.bindStream(readAllMessageList());
+    super.onInit();
   }
 
   @override
@@ -29,10 +29,10 @@ class ChatController extends GetxController {
   }
 
   /* 새로운 채팅 입력 시 메시지DB 추가 */
-  Future sendNewMessege(MessageModel messageModel, chatId) async {
+  Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
     try {
       //채팅(col) - 그룹UID(Doc) - 메시지(Col) - 메시지내용()
-      await _chatDB.doc(chatId).collection('message').add({
+      await _chatDB.doc(chatRoomId).collection('message').add({
         'content': messageModel.content,
         'senderId': messageModel.senderId,
         'timestamp': messageModel.timestamp,
@@ -79,11 +79,11 @@ class ChatController extends GetxController {
 
   /* 채팅 상대 유저 정보 받기 */
   Future getUserInfo(id) async {
-    await _userDB.doc(id).get().then((value) => userInfo = value.data());
-    update();
+    await _userDB
+        .doc(id)
+        .get()
+        .then((value) => userInfo.addAll(value.data() as Map));
   }
-
-  getUser() {}
 
   /* 채팅 업데이트 */
   Future updatechat(MessageModel messageModel) async {
