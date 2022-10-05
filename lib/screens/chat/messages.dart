@@ -8,8 +8,6 @@ class Messages extends StatelessWidget {
   final _user = FirebaseAuth.instance.currentUser!;
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
-  /* 내가보낸 메시지인지 반환하는 bool값 */
-  final _isMe = true;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +15,8 @@ class Messages extends StatelessWidget {
       () => ListView.builder(
         itemCount: _chat.messageList.length,
         itemBuilder: (context, index) {
+          //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
+          final bool _isMe = _user.uid == _chat.messageList[index].senderId;
           return Row(
             //내가보냄 ? 오른쪽위치 : 왼쪽위치
             mainAxisAlignment:

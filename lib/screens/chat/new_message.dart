@@ -27,14 +27,15 @@ class _NewMessageState extends State<NewMessage> {
       postingUserId: _auth.currentUser!.uid,
       peerUserId: widget.uid,
       //마지막글, 마지막시간은 메시지리스트의 마지막값을 받아서 보여주는 식?
-      // lastContent: _chat.messageList[_chat.messageList.length].content ?? '',
-      // updatedAt: _chat.messageList[_chat.messageList.length].timestamp ?? '',
+      lastContent: _messageController.text.trim(),
+      updatedAt: Timestamp.now().toString(),
     );
     final messageModel = MessageModel(
       timestamp: Timestamp.now().toString(),
       content: _messageController.text.trim(),
-      senderId: _auth.currentUser!.uid, //받는 유저의 UID
+      senderId: _auth.currentUser!.uid, //보내는 유저의 UID
     );
+
     await _chat.createNewChatRoom(chatRoomModel);
     await _chat.sendNewMessege(messageModel, chatRoomID);
     _messageController.clear();
