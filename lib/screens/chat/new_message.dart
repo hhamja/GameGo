@@ -50,24 +50,41 @@ class _NewMessageState extends State<NewMessage> {
       '채팅방id는 ' + widget.uid! + '_' + _currentUser.uid,
     );
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
+        IconButton(
+          onPressed: () {}, //클릭 시 사진보내기 (나중)
+          icon: Icon(
+            Icons.add_sharp,
+            size: 30,
+            color: Colors.grey[500],
+          ),
+        ),
         /* 메시지 입력란 */
         Expanded(
-          child: TextField(
-            autocorrect: false,
-            controller: _messageController,
-            keyboardType: TextInputType.text,
-            maxLines: null,
-            showCursor: true,
-            cursorColor: Colors.blue,
-            textAlignVertical: TextAlignVertical.center,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: '메시지 보내기',
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+            height: 40,
+            decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.all(Radius.circular(25))),
+            child: TextField(
+              autocorrect: false,
+              controller: _messageController,
+              keyboardType: TextInputType.text,
+              maxLines: null,
+              cursorHeight: MediaQuery.of(context).size.height,
+              showCursor: true,
+              textAlignVertical: TextAlignVertical.center,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: '메시지 보내기',
+                  hintStyle: TextStyle(height: 1.21, color: Colors.grey[400])),
+              onChanged: (value) {
+                setState(() {});
+              },
             ),
-            onChanged: (value) {
-              setState(() {});
-            },
           ),
         ),
         /* 보내기 버튼 */
@@ -75,8 +92,12 @@ class _NewMessageState extends State<NewMessage> {
           onPressed: _messageController.text.trim().isEmpty
               ? null // 메시지 아무것도 입력되어 있지 않으면 버튼 작동 X
               : _sendMessage, //클릭 시 chat DB에 입력 데이터 보냄
-          icon: Icon(Icons.send),
-          color: Colors.blue,
+          icon: Icon(
+            Icons.send,
+            color: _messageController.text.trim().isNotEmpty
+                ? Colors.blue //입력하는 순간 아이콘 블루 색
+                : Colors.grey[400], // 텍스트 입력 x -> 그레이 색
+          ),
         ),
       ],
     );
