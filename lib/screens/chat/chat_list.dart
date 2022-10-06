@@ -72,14 +72,14 @@ class _ChatListPageState extends State<ChatListPage> {
               child: ListTile(
                 leading: CircleAvatar(), // 상대 유저 프로필 사진
                 title: Text(
-                  _chat.userInfo['userName']!,
+                  _chat.userInfo['userName'] ?? '(알수없음)',
                   maxLines: 1,
                 ), // 상대 유저 이름
                 subtitle: Text(
                   lastContent,
                   maxLines: 1,
                   softWrap: true,
-                  overflow: TextOverflow.fade,
+                  overflow: TextOverflow.ellipsis,
                 ), // 채팅방 마지막 대화 내용 요약
                 trailing: Text(
                   '1일전',

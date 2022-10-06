@@ -17,7 +17,6 @@ class ChatController extends GetxController {
   /* 라이프사이클 */
   @override
   void onInit() {
-    getUserInfo;
     chatRoomList.bindStream(readAllChatList());
 
     super.onInit();
