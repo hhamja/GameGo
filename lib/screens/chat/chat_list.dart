@@ -32,15 +32,14 @@ class _ChatListPageState extends State<ChatListPage> {
           itemCount: _chat.chatRoomList.length,
           itemBuilder: (BuildContext context, int index) {
             //상대유저 UID
-            final peerUserId = _chat.chatRoomList[index].peerUserId;
+            final peerUserId = _chat.chatRoomList[index].peerUserId!;
             print(peerUserId);
             //상대유저정보 Get
             _chat.getUserInfo(peerUserId);
             // 마지막 대화내용
-            final lastContent =
-                _chat.chatRoomList[index].lastContent?.toString();
+            final lastContent = _chat.chatRoomList[index].lastContent ?? '';
             // 최근 날짜
-            final updatedAt = _chat.chatRoomList[index].updatedAt?.toString();
+            final updatedAt = _chat.chatRoomList[index].updatedAt ?? '';
             return Slidable(
               endActionPane: ActionPane(
                 extentRatio: 0.4,
@@ -72,9 +71,20 @@ class _ChatListPageState extends State<ChatListPage> {
               ),
               child: ListTile(
                 leading: CircleAvatar(), // 상대 유저 프로필 사진
-                title: Text(_chat.userInfo['userName']), // 상대 유저 이름
-                subtitle: Text('마지막 대화 내용'), // 채팅방 마지막 대화 내용 요약
-                trailing: Text('1일 전'), // 최근 대화 날짜 (며칠 전)
+                title: Text(
+                  _chat.userInfo['userName']!,
+                  maxLines: 1,
+                ), // 상대 유저 이름
+                subtitle: Text(
+                  lastContent,
+                  maxLines: 1,
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
+                ), // 채팅방 마지막 대화 내용 요약
+                trailing: Text(
+                  '1일전',
+                  maxLines: 1,
+                ), // 최근 대화 날짜 (며칠 전)
                 onTap: () {
                   Get.to(
                     () => MessagePage(),
