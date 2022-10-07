@@ -14,19 +14,6 @@ class ChatController extends GetxController {
   /* UID로 받은 유저정보 */
   RxMap<dynamic, dynamic> userInfo = <dynamic, dynamic>{}.obs;
 
-  /* 라이프사이클 */
-  @override
-  void onInit() {
-    chatRoomList.bindStream(readAllChatList());
-
-    super.onInit();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   /* 새로운 채팅 입력 시 메시지DB 추가 */
   Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
     try {
@@ -46,6 +33,8 @@ class ChatController extends GetxController {
     try {
       //Chat(col) - 채팅방UID(Doc)
       await _chatDB.doc(chatRoomModel.id).set({
+        'id': chatRoomModel.id,
+        'userIdList': chatRoomModel.userIdList,
         'lastContent': chatRoomModel.lastContent,
         'postingUserId': chatRoomModel.postingUserId,
         'peerUserId': chatRoomModel.peerUserId,
@@ -57,8 +46,9 @@ class ChatController extends GetxController {
   }
 
   /* 모든 '채팅' 리스트 스트림으로 받기 */
-  Stream<List<ChatRoomModel>> readAllChatList() {
+  Stream<List<ChatRoomModel>> readAllChatList(currentUid) {
     return _chatDB
+        .where('userIdList', arrayContains: currentUid)
         .orderBy('updatedAt', descending: true) //최신이 맨 위s
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {

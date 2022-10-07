@@ -28,6 +28,7 @@ class _NewMessageState extends State<NewMessage> {
     chatRoomID = widget.uid! + '_' + _currentUser.uid;
     final chatRoomModel = ChatRoomModel(
       id: chatRoomID,
+      userIdList: [_currentUser.uid, widget.uid],
       postingUserId: _currentUser.uid,
       peerUserId: widget.uid,
       //마지막글, 마지막시간은 메시지리스트의 마지막값을 받아서 보여주는 식?

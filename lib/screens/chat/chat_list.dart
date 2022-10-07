@@ -13,6 +13,13 @@ class _ChatListPageState extends State<ChatListPage> {
   /* Chat Controller */
   final ChatController _chat = Get.put(ChatController());
   bool _click = true;
+  /* 현재 유저의 uid */
+  final _currentUid = FirebaseAuth.instance.currentUser?.uid.toString();
+  @override
+  void initState() {
+    _chat.chatRoomList.bindStream(_chat.readAllChatList(_currentUid));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +41,7 @@ class _ChatListPageState extends State<ChatListPage> {
             //상대유저 UID
             final peerUserId = _chat.chatRoomList[index].peerUserId!;
             print(peerUserId);
-            Future getUserInfo() async {
-              //상대유저정보 Get
-              await _chat.getUserInfo(peerUserId);
-            }
-
-            getUserInfo();
-
+            _chat.getUserInfo(peerUserId); //상대유저정보받기
             // 마지막 대화내용
             final lastContent = _chat.chatRoomList[index].lastContent ?? '';
             // 최근 날짜

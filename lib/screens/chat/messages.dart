@@ -27,6 +27,7 @@ class _MessagesState extends State<Messages> {
   Widget build(BuildContext context) {
     return Obx(
       () => ListView.builder(
+        controller: ScrollController(),
         itemCount: _chat.messageList.length,
         itemBuilder: (context, index) {
           //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
