@@ -51,7 +51,7 @@ class _HomePostListState extends State<HomePostList> {
                       Expanded(
                         child: Text(
                           '1일 전',
-                          style: TextStyle(height: 1.2, fontSize: 8),
+                          style: TextStyle(height: 1.2, fontSize: 10),
                           textAlign: TextAlign.end,
                         ),
                       ),
@@ -78,17 +78,17 @@ class _HomePostListState extends State<HomePostList> {
                       child: Text(
                           '${controller.postList[index].gamemode} · ${controller.postList[index].position ?? ''} · ${controller.postList[index].tear ?? ''}'),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        /* 체팅 수 */
-                        Icon(Icons.chat_bubble_outline, size: 15),
-                        Text('1'),
-                        /* 좋아요 수 */
-                        Icon(Icons.favorite_border_outlined, size: 15),
-                        Text('1'),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   children: [
+                    //     /* 체팅 수 */
+                    //     Icon(Icons.chat_bubble_outline, size: 15),
+                    //     Text('1'),
+                    //     /* 좋아요 수 */
+                    //     Icon(Icons.favorite_border_outlined, size: 15),
+                    //     Text('1'),
+                    //   ],
+                    // ),
                   ],
                 ),
               ],

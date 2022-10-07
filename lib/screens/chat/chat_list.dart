@@ -34,8 +34,13 @@ class _ChatListPageState extends State<ChatListPage> {
             //상대유저 UID
             final peerUserId = _chat.chatRoomList[index].peerUserId!;
             print(peerUserId);
-            //상대유저정보 Get
-            _chat.getUserInfo(peerUserId);
+            Future getUserInfo() async {
+              //상대유저정보 Get
+              await _chat.getUserInfo(peerUserId);
+            }
+
+            getUserInfo();
+
             // 마지막 대화내용
             final lastContent = _chat.chatRoomList[index].lastContent ?? '';
             // 최근 날짜

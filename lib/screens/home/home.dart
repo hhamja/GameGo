@@ -8,7 +8,7 @@ class Homepage extends StatelessWidget {
         title: HomeDropDownButton(),
         actions: [
           IconButton(
-            onPressed: () => {Get.toNamed('/ntf')},
+            onPressed: () => {Get.toNamed('/notification')},
             icon: Icon(Icons
                 .notifications_none_outlined), //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
           ),
