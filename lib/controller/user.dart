@@ -9,15 +9,13 @@ class UserController extends GetxController {
       FirebaseFirestore.instance.collection('user');
   /* UserDB Data 담을 UserList */
   RxList<UserModel> userList = <UserModel>[].obs;
+  /* UID로 받은 유저정보 */
+  RxMap<dynamic, dynamic> userInfo = Map<dynamic, dynamic>().obs;
+  /* UserDB Data 담을 UserList */
+  RxList chatUserUidList = [].obs;
+
   /* 폰번호확인코드저장 */
   String verificationID = '';
-
-  /* LifeCycle */
-  @override
-  void onInit() {
-    super.onInit();
-    // userList.bindStream(readUserList());
-  }
 
   /* Create User */
   Future addNewUser(UserModel userModel) async {
@@ -130,4 +128,26 @@ class UserController extends GetxController {
       print('deleteUser error : ${e}');
     }
   }
+
+  /* UID로 유저 정보 받기 */
+  Future getUserInfo(id) async {
+    try {
+      await _userDB
+          .doc(id)
+          .get()
+          .then((value) => userInfo.addAll(value.data()! as Map));
+    } on FirebaseAuthException catch (e) {
+      print('유저정보 에러 ${e}');
+    }
+  }
+
+  // Stream getUserInfoList(id) {
+  //   return _userDB
+  //       .doc(id)
+  //       .orderBy('createdAt', descending: true)
+  //       .snapshots()
+  //       .map((snapshot) => snapshot.docs.map((e) {
+  //             return PostModel.fromDocumentSnapshot(e);
+  //           }).toList());
+  // }
 }

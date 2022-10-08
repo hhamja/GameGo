@@ -11,8 +11,6 @@ class ChatController extends GetxController {
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
-  /* UID로 받은 유저정보 */
-  RxMap<dynamic, dynamic> userInfo = <dynamic, dynamic>{}.obs;
 
   /* 새로운 채팅 입력 시 메시지DB 추가 */
   Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
@@ -66,14 +64,6 @@ class ChatController extends GetxController {
         .map((snapshot) => snapshot.docs.map((e) {
               return MessageModel.fromDocumentSnapshot(e);
             }).toList());
-  }
-
-  /* 채팅 상대 유저 정보 받기 */
-  Future getUserInfo(id) async {
-    await _userDB
-        .doc(id)
-        .get()
-        .then((value) => userInfo.addAll(value.data() as Map));
   }
 
   /* 채팅 업데이트 */

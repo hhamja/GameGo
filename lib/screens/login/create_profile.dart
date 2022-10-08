@@ -9,6 +9,8 @@ class CreateProfilePage extends StatefulWidget {
 }
 
 class _CreateProfilePageState extends State<CreateProfilePage> {
+  /* 프로필 컨트롤러 */
+  final ProfileController _profile = Get.put(ProfileController());
   /* Firebase Storage instance */
   final FirebaseStorage _storage = FirebaseStorage.instance;
   /* Firebase Auth instance */
@@ -94,13 +96,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   /* 완료 버튼 */
-  validateButton() async {
+  Future validateButton() async {
     final text = _userNameController.text.trim();
     UserModel userModel = UserModel(
       userName: text,
       uid: _auth.currentUser!.uid,
       phoneNumber: Get.arguments,
-      profileUrl: profileImageUrl,
+      profileUrl:
+          profileImageUrl ?? _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
       mannerAge: '20.0세',
       createdAt: Timestamp.now(),
     );
@@ -138,15 +141,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                 backgroundImage: _photo == null
                     ? NetworkImage(
                         // //기본 프로필 사진 url
-                        // _storage
-                        //     .ref()
-                        //     .child('profile')
-                        //     .child('default_profile')
-                        //     .getDownloadURL()
-                        //     .toString()
-
+                        _profile.defaultProfile,
                         // 기본 프로필 url
-                        'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689')
+                        // 'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689'
+                      )
                     // 사용자 설정 url
                     : NetworkImage(profileImageUrl!),
                 radius: 80,

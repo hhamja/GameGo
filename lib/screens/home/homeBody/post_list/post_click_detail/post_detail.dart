@@ -83,9 +83,28 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       ),
                       SizedBox(height: 10),
                       /* 게임모드 */
-                      Text(
-                        '${controller.postList[index].gamemode}',
-                        style: TextStyle(fontSize: 15, color: Colors.black54),
+                      Row(
+                        children: [
+                          Text(
+                            '${controller.postList[index].gamemode}',
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black54),
+                          ),
+                          Text(
+                            controller.postList[index].position != null
+                                ? ' · ${controller.postList[index].position}'
+                                : '',
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black54),
+                          ),
+                          Text(
+                            controller.postList[index].tear != null
+                                ? ' · ${controller.postList[index].tear}'
+                                : '',
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black54),
+                          ),
+                        ],
                       ),
                       /* 본문글 */
                       Padding(

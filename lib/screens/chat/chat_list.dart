@@ -12,9 +12,13 @@ class ChatListPage extends StatefulWidget {
 class _ChatListPageState extends State<ChatListPage> {
   /* Chat Controller */
   final ChatController _chat = Get.put(ChatController());
-  bool _click = true;
+  /* User 컨트롤러 */
+  final UserController _user = Get.put(UserController());
   /* 현재 유저의 uid */
   final _currentUid = FirebaseAuth.instance.currentUser?.uid.toString();
+  /*  */
+  bool _click = true;
+  /* initState : 현재유저의 채팅방 리스트 스트림으로 가져와 ChatRoomList에 담기 */
   @override
   void initState() {
     _chat.chatRoomList.bindStream(_chat.readAllChatList(_currentUid));
@@ -28,7 +32,7 @@ class _ChatListPageState extends State<ChatListPage> {
         title: Text('채팅'),
         actions: [
           IconButton(
-            onPressed: () => {Get.toNamed('/ntf')},
+            onPressed: () => {Get.toNamed('/notification')},
             icon: Icon(Icons
                 .notifications_none_outlined), //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
           ),
@@ -41,7 +45,7 @@ class _ChatListPageState extends State<ChatListPage> {
             //상대유저 UID
             final peerUserId = _chat.chatRoomList[index].peerUserId!;
             print(peerUserId);
-            _chat.getUserInfo(peerUserId); //상대유저정보받기
+            _user.getUserInfo(peerUserId); //상대유저정보받기
             // 마지막 대화내용
             final lastContent = _chat.chatRoomList[index].lastContent ?? '';
             // 최근 날짜
@@ -78,7 +82,7 @@ class _ChatListPageState extends State<ChatListPage> {
               child: ListTile(
                 leading: CircleAvatar(), // 상대 유저 프로필 사진
                 title: Text(
-                  _chat.userInfo['userName'] ?? '(알수없음)',
+                  _user.userInfo['userName'] ?? '(알수없음)',
                   maxLines: 1,
                 ), // 상대 유저 이름
                 subtitle: Text(

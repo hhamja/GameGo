@@ -10,10 +10,8 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
   /* 게시물 올린 유저의 uid */
   final String? uid = Get.arguments['uid'];
-
-  /* Chat Controller */
-  final ChatController _chat = Get.put(ChatController());
-
+  /* User 컨트롤러 */
+  final UserController _user = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     print('유저 UID 값은 ${uid}');
@@ -22,13 +20,13 @@ class _MessagePageState extends State<MessagePage> {
       appBar: AppBar(
         title: Obx(
           () {
-            _chat.getUserInfo(uid); //UID 값으로 유저정보 받기
-            print(_chat.userInfo['userName']); //받은 유저정보 중 유저이름 프린트
+            _user.getUserInfo(uid); //UID 값으로 유저정보 받기
+            print(_user.userInfo['userName']); //받은 유저정보 중 유저이름 프린트
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(_chat.userInfo['userName'] ?? '이름없음'), // 상대유저이름
-                Text(_chat.userInfo['mannerAge'] ?? '20세'), //유저 매너나이 (글씨 작게)
+                Text(_user.userInfo['userName'] ?? '이름없음'), // 상대유저이름
+                Text(_user.userInfo['mannerAge'] ?? '20세'), //유저 매너나이 (글씨 작게)
               ],
             );
           },
