@@ -12,7 +12,7 @@ class UserController extends GetxController {
   /* UID로 받은 유저정보 */
   RxMap<dynamic, dynamic> userInfo = Map<dynamic, dynamic>().obs;
   /* UserDB Data 담을 UserList */
-  RxList chatUserUidList = [].obs;
+  RxList userInfoList = [].obs;
 
   /* 폰번호확인코드저장 */
   String verificationID = '';
@@ -20,14 +20,14 @@ class UserController extends GetxController {
   /* Create User */
   Future addNewUser(UserModel userModel) async {
     try {
-      final res = await _userDB.doc(_auth.currentUser!.uid).set({
+      await _userDB.doc(userModel.uid).set({
+        'uid': userModel.uid,
         'userName': userModel.userName,
         'profileUrl': userModel.profileUrl,
         'mannerAge': userModel.mannerAge,
         'createdAt': userModel.createdAt,
         'phoneNumber': userModel.phoneNumber,
       });
-      return res;
     } catch (e) {
       print('addNewUser error = ${e}');
     }
@@ -141,13 +141,12 @@ class UserController extends GetxController {
     }
   }
 
-  // Stream getUserInfoList(id) {
-  //   return _userDB
-  //       .doc(id)
-  //       .orderBy('createdAt', descending: true)
-  //       .snapshots()
-  //       .map((snapshot) => snapshot.docs.map((e) {
-  //             return PostModel.fromDocumentSnapshot(e);
-  //           }).toList());
-  // }
+  Stream<List<UserModel>> getUserInfoList(uid) {
+    return _userDB
+        .where('uid', isEqualTo: uid)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((e) {
+              return UserModel.fromDocumentSnapshot(e);
+            }).toList());
+  }
 }

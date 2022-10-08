@@ -99,8 +99,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Future validateButton() async {
     final text = _userNameController.text.trim();
     UserModel userModel = UserModel(
-      userName: text,
       uid: _auth.currentUser!.uid,
+      userName: text,
       phoneNumber: Get.arguments,
       profileUrl:
           profileImageUrl ?? _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
