@@ -2,10 +2,11 @@ import 'dart:ui';
 import 'package:mannergamer/utilites/index.dart';
 
 class Messages extends StatefulWidget {
-  /* 상대유저의 uid 값 */
-  final String uid;
+  /* 상대유저의 uid, 게시물 id 값 */
+  final String uid, postId;
 
-  Messages({Key? key, required this.uid}) : super(key: key);
+  Messages({Key? key, required this.uid, required this.postId})
+      : super(key: key);
 
   @override
   State<Messages> createState() => _MessagesState();

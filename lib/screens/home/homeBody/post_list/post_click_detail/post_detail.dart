@@ -14,6 +14,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
   final index = Get.arguments['index'];
   /* 게시물 게시한 유저의 uid값 전달 받음 */
   final uid = Get.arguments['uid'];
+  /* 게시물 Id 값 */
+  final postId = Get.arguments['postId'];
 
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   bool _click = true;
@@ -191,7 +193,10 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Get.to(
                         () => MessagePage(),
                         //게시자 UID 값 전달
-                        arguments: {'uid': uid},
+                        arguments: {
+                          'uid': uid,
+                          'postId': postId,
+                        },
                       );
                     },
                     style: TextButton.styleFrom(

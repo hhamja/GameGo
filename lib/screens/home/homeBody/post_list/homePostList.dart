@@ -35,7 +35,8 @@ class _HomePostListState extends State<HomePostList> {
             onTap: () {
               Get.toNamed('/postdetail', arguments: {
                 'index': index,
-                'uid': _post.postList[index].uid
+                'uid': _post.postList[index].uid,
+                'postId': _post.postList[index].postId,
               });
             },
             title: Padding(

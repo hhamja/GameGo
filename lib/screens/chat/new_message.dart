@@ -1,11 +1,11 @@
 import 'dart:ui';
-
 import 'package:mannergamer/utilites/index.dart';
 
 class NewMessage extends StatefulWidget {
-  /* 상대유저의 uid 값 */
-  final String? uid;
-  NewMessage({Key? key, required this.uid}) : super(key: key);
+  final String? uid; // 상대유저의 uid
+  final String postId; //게시물 id
+  NewMessage({Key? key, required this.uid, required this.postId})
+      : super(key: key);
 
   @override
   State<NewMessage> createState() => _NewMessageState();
@@ -23,9 +23,9 @@ class _NewMessageState extends State<NewMessage> {
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
-    //채팅방이름 = 게시글유저ID_현재폰유저ID
+    //채팅방이름 = postId_현재폰유저ID
     //채팅방이 이미 있다면 ? 메시지 update : 없다면 채팅방추가 함수 실행
-    chatRoomID = widget.uid! + '_' + _currentUser.uid;
+    chatRoomID = widget.postId + '_' + _currentUser.uid;
     final chatRoomModel = ChatRoomModel(
       id: chatRoomID,
       userIdList: [_currentUser.uid, widget.uid],
@@ -50,7 +50,7 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     print(
-      '채팅방id는 ' + widget.uid! + '_' + _currentUser.uid,
+      '채팅방id는 ' + widget.postId + '_' + _currentUser.uid,
     );
     return Container(
       margin: EdgeInsets.fromLTRB(10, 3, 0, 3),

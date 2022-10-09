@@ -16,7 +16,7 @@ class _DeleteDialogState extends State<DeleteDialog> {
   @override
   Widget build(BuildContext context) {
     print(index);
-    print(_controller.postList[index].postid!);
+    print(_controller.postList[index].postId);
     return Container(
       child: AlertDialog(
         buttonPadding: EdgeInsets.zero,
@@ -60,7 +60,7 @@ class _DeleteDialogState extends State<DeleteDialog> {
                   ),
                   onPressed: () async {
                     await _controller
-                        .deletePost(_controller.postList[index].postid!);
+                        .deletePost(_controller.postList[index].postId);
                     await _controller.readPostData();
                     Get.offAll(() => Homepage());
                   },

@@ -34,6 +34,7 @@ class _AddPostPageState extends State<AddPostPage> {
           TextButton(
             onPressed: () async {
               final postModel = PostModel(
+                postId: FirebaseFirestore.instance.collection('post').doc().id,
                 uid: _auth.currentUser?.uid,
                 username: _auth.currentUser?.displayName ?? '이름없음',
                 title: _titleController.text.trim(),

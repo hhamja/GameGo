@@ -52,7 +52,7 @@ class _EditPostPageState extends State<EditPostPage> {
           TextButton(
             onPressed: () async {
               await _postController.updatePost(
-                _postController.postList[index].postid,
+                _postController.postList[index].postId,
                 _titleController.text,
                 _maintextController.text,
                 _editDropDownController.seledtedPostGamemodeValue,

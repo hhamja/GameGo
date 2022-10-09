@@ -2,11 +2,9 @@ import 'package:mannergamer/utilites/index.dart';
 
 class PostController extends GetxController {
   static PostController get to => Get.find<PostController>();
-
   /* 파이어스토어 Post 컬렉션 참조 instance */
   final CollectionReference _post =
       FirebaseFirestore.instance.collection('post');
-
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
 
@@ -25,7 +23,8 @@ class PostController extends GetxController {
   /* Create Post */
   Future createPost(PostModel postModel) async {
     try {
-      final res = await _post.add({
+      final res = await _post.doc(postModel.postId).set({
+        'postId': postModel.postId,
         'uid': postModel.uid,
         'username': postModel.username,
         'title': postModel.title,
@@ -35,16 +34,15 @@ class PostController extends GetxController {
         'tear': postModel.tear,
         'createdAt': postModel.createdAt,
       });
-      print(res);
       return res;
     } catch (e) {
       print('createPost error');
     }
   }
 
-  /* Stream Read Post */
-  Stream<List<PostModel>> readPostData() {
-    return _post
+  /* 스트림으로 게시물 전체 받기 */
+  Stream<List<PostModel>> readPostData() async* {
+    yield* _post
         .orderBy('createdAt', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
