@@ -77,7 +77,7 @@ class _ChatListPageState extends State<ChatListPage> {
               child: ListTile(
                 leading: CircleAvatar(), // 상대 유저 프로필 사진
                 title: Text(
-                  _user.userList[index].userName,
+                  _user.userList[index].userName!,
                   maxLines: 1,
                 ), // 상대 유저 이름
                 subtitle: Text(

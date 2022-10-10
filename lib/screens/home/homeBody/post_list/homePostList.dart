@@ -12,10 +12,6 @@ class _HomePostListState extends State<HomePostList> {
   final PostController _post = Get.put(PostController());
   /* 프로필 컨트롤러 */
   final ProfileController _profile = Get.put(ProfileController());
-  /* Firebase Storage instance */
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-  /* 파베 스토리지에서 불러올 사진 url */
-  String? profileImageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +31,6 @@ class _HomePostListState extends State<HomePostList> {
             onTap: () {
               Get.toNamed('/postdetail', arguments: {
                 'index': index,
-                'uid': _post.postList[index].uid,
                 'postId': _post.postList[index].postId,
               });
             },
@@ -53,7 +48,7 @@ class _HomePostListState extends State<HomePostList> {
                       SizedBox(width: 5),
                       Text(
                         /* 제목 */
-                        '${_post.postList[index].username}',
+                        '${_post.postList[index].userName}',
                         style: TextStyle(height: 1.2),
                       ),
                       Expanded(
