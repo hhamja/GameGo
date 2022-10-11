@@ -14,11 +14,12 @@ class MessageModel {
   });
 
   factory MessageModel.fromDocumentSnapshot(DocumentSnapshot doc) {
+    var snapshot = doc.data() as Map<String, dynamic>;
     return MessageModel(
       id: doc.id,
-      content: doc['content'],
-      senderId: doc['senderId'],
-      timestamp: doc['timestamp'],
+      content: snapshot['content'],
+      senderId: snapshot['senderId'],
+      timestamp: snapshot['timestamp'],
     );
   }
 }

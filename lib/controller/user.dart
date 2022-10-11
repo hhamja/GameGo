@@ -17,6 +17,15 @@ class UserController extends GetxController {
   /* 폰번호확인코드저장 */
   String verificationID = '';
 
+  final userModel = UserModel().obs;
+
+  /* Lifecycle */
+  @override
+  void onInit() {
+    super.onInit();
+    userModel.bindStream(getUserInfo('yCANOOvMIHaBLsllv8VkQEQ6DMr2'));
+  }
+
   /* Create User */
   Future addNewUser(UserModel userModel) async {
     try {

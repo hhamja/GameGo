@@ -3,9 +3,7 @@ import 'package:mannergamer/utilites/index.dart';
 class PostModel {
   final String postId;
   final String uid; //게시물 작성 유저 id
-  final String? profileUrl; // 유저 프로필
-  final String? userName; // 유저 이름
-  final String? mannerAge; // 유저의 매너나이
+  final UserModel? user;
   final String title;
   final String maintext;
   final String gamemode;
@@ -16,9 +14,7 @@ class PostModel {
   PostModel({
     required this.postId,
     required this.uid,
-    this.profileUrl,
-    this.userName,
-    this.mannerAge,
+    this.user,
     required this.title,
     required this.maintext,
     required this.gamemode,
@@ -33,9 +29,7 @@ class PostModel {
     return PostModel(
       postId: snapshot['postId'],
       uid: snapshot['uid'],
-      userName: usermodel.userName,
-      mannerAge: usermodel.mannerAge,
-      profileUrl: usermodel.profileUrl,
+      user: usermodel,
       title: snapshot['title'],
       maintext: snapshot['maintext'],
       gamemode: snapshot['gamemode'],

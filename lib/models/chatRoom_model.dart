@@ -18,13 +18,14 @@ class ChatRoomModel {
   });
 
   factory ChatRoomModel.fromDocumentSnapshot(DocumentSnapshot doc) {
+    var snapshot = doc.data() as Map<String, dynamic>;
     return ChatRoomModel(
-      id: doc['id'],
-      userIdList: doc['userIdList'],
-      postingUserId: doc['postingUserId'],
-      peerUserId: doc['peerUserId'],
-      lastContent: doc['lastContent'],
-      updatedAt: doc['updatedAt'],
+      id: snapshot['id'],
+      userIdList: snapshot['userIdList'],
+      postingUserId: snapshot['postingUserId'],
+      peerUserId: snapshot['peerUserId'],
+      lastContent: snapshot['lastContent'],
+      updatedAt: snapshot['updatedAt'],
     );
   }
 }

@@ -2,7 +2,7 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class UserModel {
-  final String? uid;
+  final String? uid; //문서의 id도 uid 필드랑 같게하기
   final String? userName;
   final String? phoneNumber;
   final String? profileUrl;

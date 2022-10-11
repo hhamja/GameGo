@@ -28,21 +28,17 @@ class PostController extends GetxController {
 
   /* Create Post */
   Future createPost(PostModel postModel) async {
-    try {
-      final res = await _postDB.doc(postModel.postId).set({
-        'postId': postModel.postId,
-        'uid': postModel.uid,
-        'title': postModel.title,
-        'maintext': postModel.maintext,
-        'gamemode': postModel.gamemode,
-        'position': postModel.position,
-        'tear': postModel.tear,
-        'createdAt': postModel.createdAt,
-      });
-      return res;
-    } catch (e) {
-      print('createPost error');
-    }
+    final res = await _postDB.doc(postModel.postId).set({
+      'postId': postModel.postId,
+      'uid': postModel.uid,
+      'title': postModel.title,
+      'maintext': postModel.maintext,
+      'gamemode': postModel.gamemode,
+      'position': postModel.position,
+      'tear': postModel.tear,
+      'createdAt': postModel.createdAt,
+    });
+    return res;
   }
 
   /* 스트림으로 게시물 전체 받기 */
@@ -55,7 +51,9 @@ class PostController extends GetxController {
                 userModel.bindStream(_user.getUserInfo(e['uid']));
                 return PostModel.fromDocumentSnapshot(e, userModel.value);
               }).toList());
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   /* 게시물 - 게임모드 필터링 */
