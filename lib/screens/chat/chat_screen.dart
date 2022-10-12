@@ -22,7 +22,7 @@ class _MessagePageState extends State<MessagePage> {
       appBar: AppBar(
         title: Obx(
           () {
-            _user.getUserInfo(uid); //UID 값으로 유저정보 받기
+            // _user.getUserInfo('uid'); //UID 값으로 유저정보 받기
             print(_user.userInfo['userName']); //받은 유저정보 중 유저이름 프린트
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,

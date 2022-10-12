@@ -5,9 +5,9 @@ class PostController extends GetxController {
   /* 파이어스토어 Post 컬렉션 참조 instance */
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
-
   /* 유저 컨트롤러 */
   final UserController _user = Get.put(UserController());
+
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
 
@@ -18,7 +18,6 @@ class PostController extends GetxController {
   void onInit() {
     super.onInit();
     postList.bindStream(readPostData());
-    userModel.bindStream(_user.getUserInfo('yCANOOvMIHaBLsllv8VkQEQ6DMr2'));
   }
 
   @override
@@ -48,7 +47,7 @@ class PostController extends GetxController {
           .orderBy('createdAt', descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs.map((e) {
-                userModel.bindStream(_user.getUserInfo(e['uid']));
+                // userModel.bindStream(_user.getUserInfo(e['uid']));
                 return PostModel.fromDocumentSnapshot(e, userModel.value);
               }).toList());
     } catch (e) {
@@ -64,7 +63,7 @@ class PostController extends GetxController {
         .where('gamemode', isEqualTo: gamemode)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
-              userModel.bindStream(_user.getUserInfo(e['uid']));
+              // userModel.bindStream(_user.getUserInfo(e['uid']));
               return PostModel.fromDocumentSnapshot(e, userModel.value);
             }).toList());
   }
@@ -78,7 +77,7 @@ class PostController extends GetxController {
         .where('position', isEqualTo: position)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
-              userModel.bindStream(_user.getUserInfo(e['uid']));
+              // userModel.bindStream(_user.getUserInfo(e['uid']));
               return PostModel.fromDocumentSnapshot(e, userModel.value);
             }).toList());
   }
@@ -93,7 +92,7 @@ class PostController extends GetxController {
         .where('tear', isEqualTo: tear)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
-              userModel.bindStream(_user.getUserInfo(e['uid']));
+              // userModel.bindStream(_user.getUserInfo(e['uid']));
               return PostModel.fromDocumentSnapshot(e, userModel.value);
             }).toList());
   }

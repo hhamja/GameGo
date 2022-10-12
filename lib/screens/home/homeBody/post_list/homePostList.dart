@@ -48,7 +48,7 @@ class _HomePostListState extends State<HomePostList> {
                       SizedBox(width: 5),
                       Text(
                         /* 제목 */
-                        '${_post.postList[index].userName}',
+                        '${_post.postList[index].user!.userName}',
                         style: TextStyle(height: 1.2),
                       ),
                       Expanded(
