@@ -85,6 +85,7 @@ class PostController extends GetxController {
             }).toList());
   }
 
+//
   /* 게시물 - 티어 필터링 */
   Stream<List<PostModel>> filterTear(gamemode, position, tear) async* {
     postList.clear();
