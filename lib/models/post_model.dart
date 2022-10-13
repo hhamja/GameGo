@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index.dart';
 class PostModel {
   final String postId;
   final String uid; //게시물 작성 유저 id
-  final UserModel? user;
+  UserModel? user;
   final String title;
   final String maintext;
   final String gamemode;

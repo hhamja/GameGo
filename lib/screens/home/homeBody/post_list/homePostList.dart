@@ -16,7 +16,6 @@ class _HomePostListState extends State<HomePostList> {
   @override
   Widget build(BuildContext context) {
     print(_post.postList);
-
     return Obx(
       () => ListView.separated(
         padding: EdgeInsets.only(top: 10),
@@ -27,6 +26,8 @@ class _HomePostListState extends State<HomePostList> {
         },
         itemCount: _post.postList.length,
         itemBuilder: (BuildContext context, int index) {
+          print(_post.postList[index].user!.userName);
+          //////////////////////////////////////////////
           return ListTile(
             onTap: () {
               Get.toNamed('/postdetail', arguments: {
@@ -41,19 +42,22 @@ class _HomePostListState extends State<HomePostList> {
                 children: [
                   Row(
                     children: [
+                      /* 프로필 */
                       CircleAvatar(
                         radius: 10,
-                        backgroundImage: NetworkImage(_profile.defaultProfile),
+                        backgroundImage: NetworkImage(
+                            '${_post.postList[index].user!.profileUrl}'),
                       ),
                       SizedBox(width: 5),
+                      /* 유저이름 */
                       Text(
-                        /* 제목 */
-                        '${_post.postList[index].user!.userName}',
+                        _post.postList[index].user!.userName,
                         style: TextStyle(height: 1.2),
                       ),
+                      /* 날짜 */
                       Expanded(
                         child: Text(
-                          '',
+                          '1일 전',
                           style: TextStyle(height: 1.2, fontSize: 10),
                           textAlign: TextAlign.end,
                         ),
@@ -61,7 +65,8 @@ class _HomePostListState extends State<HomePostList> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  Text('${_post.postList[index].title}', maxLines: 1),
+                  /* 게시글 제목 */
+                  Text(_post.postList[index].title, maxLines: 1),
                 ],
               ),
             ),
@@ -79,7 +84,7 @@ class _HomePostListState extends State<HomePostList> {
                   children: [
                     /* 게임모드 · 포지션 · 티어 */
                     Text(
-                      '${_post.postList[index].gamemode}',
+                      _post.postList[index].gamemode,
                       style: TextStyle(fontSize: 12),
                     ),
                     Text(
@@ -94,17 +99,17 @@ class _HomePostListState extends State<HomePostList> {
                           : '',
                       style: TextStyle(fontSize: 12),
                     ),
-                    Text(
-                      ' · 1일 전',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    Expanded(child: SizedBox()),
-                    /* 체팅 수 */
-                    Icon(Icons.chat_bubble_outline, size: 15),
-                    Text('1'),
-                    /* 좋아요 수 */
-                    Icon(Icons.favorite_border_outlined, size: 15),
-                    Text('1'),
+                    // Text(
+                    //   ' · 1일 전',
+                    //   style: TextStyle(fontSize: 12),
+                    // ),
+                    // Expanded(child: SizedBox()),
+                    // /* 체팅 수 */
+                    // Icon(Icons.chat_bubble_outline, size: 15),
+                    // Text('1'),
+                    // /* 좋아요 수 */
+                    // Icon(Icons.favorite_border_outlined, size: 15),
+                    // Text('1'),
                   ],
                 ),
               ],

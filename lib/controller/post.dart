@@ -11,8 +11,6 @@ class PostController extends GetxController {
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
 
-  final userModel = UserModel().obs;
-
   /* Lifecycle */
   @override
   void onInit() {
@@ -42,58 +40,67 @@ class PostController extends GetxController {
 
   /* 스트림으로 게시물 전체 받기 */
   Stream<List<PostModel>> readPostData() async* {
-    try {
-      await _postDB
-          .orderBy('createdAt', descending: true)
-          .snapshots()
-          .map((snapshot) => snapshot.docs.map((e) {
-                // userModel.bindStream(_user.getUserInfo(e['uid']));
-                return PostModel.fromDocumentSnapshot(e, userModel.value);
-              }).toList());
-    } catch (e) {
-      print(e);
-    }
+    yield* await _postDB
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((e) {
+              var snapshot = e.data() as Map<String, dynamic>; //문서를 데이터화
+              //게시물의 uid값을 넣어 유저정보 받기
+              // _user.userModel.bindStream(_user.getUserInfo(snapshot['uid']));
+              //PostModel 인스턴스 생성 후 데이터 넣기
+              return PostModel.fromDocumentSnapshot(e, _user.userModel.value);
+            }).toList());
   }
 
   /* 게시물 - 게임모드 필터링 */
   Stream<List<PostModel>> filterGamemode(gamemode) async* {
     postList.clear();
-    await _postDB
+    yield* await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
-              // userModel.bindStream(_user.getUserInfo(e['uid']));
-              return PostModel.fromDocumentSnapshot(e, userModel.value);
+              var snapshot = e.data() as Map<String, dynamic>; //문서를 데이터화
+              //게시물의 uid값을 넣어 유저정보 받기
+              // _user.userModel.bindStream(_user.getUserInfo(snapshot['uid']));
+              //PostModel 인스턴스 생성 후 데이터 넣기
+              return PostModel.fromDocumentSnapshot(e, _user.userModel.value);
             }).toList());
   }
 
   /* 게시물 - 포지션 필터링 */
   Stream<List<PostModel>> filterPosition(gamemode, position) async* {
     postList.clear();
-    await _postDB
+    yield* await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
-              // userModel.bindStream(_user.getUserInfo(e['uid']));
-              return PostModel.fromDocumentSnapshot(e, userModel.value);
+              var snapshot = e.data() as Map<String, dynamic>; //문서를 데이터화
+              //게시물의 uid값을 넣어 유저정보 받기
+              // _user.getUserInfo(snapshot['uid']);
+              //PostModel 인스턴스 생성 후 데이터 넣기
+              return PostModel.fromDocumentSnapshot(e, _user.userModel.value);
             }).toList());
   }
 
   /* 게시물 - 티어 필터링 */
   Stream<List<PostModel>> filterTear(gamemode, position, tear) async* {
     postList.clear();
-    await _postDB
+    yield* await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
         .where('tear', isEqualTo: tear)
         .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              // userModel.bindStream(_user.getUserInfo(e['uid']));
-              return PostModel.fromDocumentSnapshot(e, userModel.value);
+        .map((s) => s.docs.map((e) {
+              var snapshot = e.data() as Map<String, dynamic>; //문서를 데이터화
+              //게시물의 uid값을 넣어 유저정보 받기
+              // _user.getUserInfo(snapshot['uid']);
+              print('snapshot.uid : ${snapshot['uid']}');
+              //PostModel 인스턴스 생성 후 데이터 넣기
+              return PostModel.fromDocumentSnapshot(e, _user.userModel.value);
             }).toList());
   }
 

@@ -10,7 +10,7 @@ class UserController extends GetxController {
   /* UserDB Data 담을 UserList */
   RxList<UserModel> userList = <UserModel>[].obs;
   /* UID로 받은 유저정보 */
-  RxMap<dynamic, dynamic> userInfo = Map<dynamic, dynamic>().obs;
+  RxMap<String, dynamic> userInfo = Map<String, dynamic>().obs;
   /* UserDB Data 담을 UserList */
   RxList userInfoList = [].obs;
 
@@ -18,6 +18,12 @@ class UserController extends GetxController {
   String verificationID = '';
 
   var userModel = UserModel().obs;
+
+  @override
+  void onInit() {
+    userModel.bindStream(getUserInfo());
+    super.onInit();
+  }
 
   /* Create User */
   Future addNewUser(UserModel userModel) async {
@@ -132,24 +138,24 @@ class UserController extends GetxController {
   }
 
   /* UID로 유저 정보 받고 UserModel에 담기 */
-  Future getUserInfo() async {
-    try {
-      final result = _userDB.doc('yCANOOvMIHaBLsllv8VkQEQ6DMr2');
-      return await result.get().then((value) {
-        userModel.value = UserModel.fromDocumentSnapshot(value);
-        print(userModel.value.uid);
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
+  // Future getUserInfo(uid) async {
+  //   final ref = _userDB.doc(uid).get();
+  //   return await ref.then((value) {
+  //     userModel = UserModel.fromDocumentSnapshot(value);
+  //     return userModel;
+  //   });
+  // }
   /* UID로 유저 정보 받고 UserModel에 담기 */
-  Stream<UserModel> x() async* {
-    yield* await _userDB
+
+  Stream<UserModel> getUserInfo() {
+    return _userDB
         .doc('yCANOOvMIHaBLsllv8VkQEQ6DMr2')
         .snapshots()
-        .map((snapshot) => UserModel.fromDocumentSnapshot(snapshot));
+        .map((snapshot) {
+      UserModel _userModel = UserModel.fromDocumentSnapshot(snapshot);
+      print(userModel);
+      return _userModel;
+    });
   }
 
   /* 유저정보 스트림으로 받기 */
