@@ -17,13 +17,7 @@ class UserController extends GetxController {
   /* 폰번호확인코드저장 */
   String verificationID = '';
 
-  var userModel = UserModel().obs;
-
-  @override
-  void onInit() {
-    userModel.bindStream(getUserInfo());
-    super.onInit();
-  }
+  var userModel = UserModel();
 
   /* Create User */
   Future addNewUser(UserModel userModel) async {
@@ -138,25 +132,24 @@ class UserController extends GetxController {
   }
 
   /* UID로 유저 정보 받고 UserModel에 담기 */
-  // Future getUserInfo(uid) async {
-  //   final ref = _userDB.doc(uid).get();
-  //   return await ref.then((value) {
-  //     userModel = UserModel.fromDocumentSnapshot(value);
-  //     return userModel;
-  //   });
-  // }
+  Future getUserInfo(uid) async {
+    final ref = _userDB.doc(uid).get();
+    await ref.then((value) {
+      userModel = UserModel.fromDocumentSnapshot(value);
+      update();
+      return userModel;
+    });
+    update();
+  }
   /* UID로 유저 정보 받고 UserModel에 담기 */
 
-  Stream<UserModel> getUserInfo() {
-    return _userDB
-        .doc('yCANOOvMIHaBLsllv8VkQEQ6DMr2')
-        .snapshots()
-        .map((snapshot) {
-      UserModel _userModel = UserModel.fromDocumentSnapshot(snapshot);
-      print(userModel);
-      return _userModel;
-    });
-  }
+  // Stream<UserModel> getUserInfo(uid) async* {
+  //   yield* await _userDB.doc(uid).snapshots().map((snapshot) {
+  //     UserModel _userModel = UserModel.fromDocumentSnapshot(snapshot);
+  //     print(userModel);
+  //     return _userModel;
+  //   });
+  // }
 
   /* 유저정보 스트림으로 받기 */
   Stream<List<UserModel>> getUserInfoList(uid) {

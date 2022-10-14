@@ -26,7 +26,7 @@ class _HomePostListState extends State<HomePostList> {
         },
         itemCount: _post.postList.length,
         itemBuilder: (BuildContext context, int index) {
-          print(_post.postList[index].user!.userName);
+          print(_post.postList[index].userName);
           //////////////////////////////////////////////
           return ListTile(
             onTap: () {
@@ -45,13 +45,13 @@ class _HomePostListState extends State<HomePostList> {
                       /* 프로필 */
                       CircleAvatar(
                         radius: 10,
-                        backgroundImage: NetworkImage(
-                            '${_post.postList[index].user!.profileUrl}'),
+                        backgroundImage:
+                            NetworkImage(_post.postList[index].profileUrl),
                       ),
                       SizedBox(width: 5),
                       /* 유저이름 */
                       Text(
-                        _post.postList[index].user!.userName,
+                        _post.postList[index].userName,
                         style: TextStyle(height: 1.2),
                       ),
                       /* 날짜 */

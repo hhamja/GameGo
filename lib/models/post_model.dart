@@ -1,20 +1,22 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class PostModel {
-  final String postId;
-  final String uid; //게시물 작성 유저 id
-  UserModel? user;
-  final String title;
-  final String maintext;
-  final String gamemode;
-  final String? position;
-  final String? tear;
-  final Timestamp createdAt;
+  final String postId; //게시글 고유 id값
+  final String userName; //유저의 닉네임
+  final String profileUrl; //유저 프로필
+  final String mannerAge; //유저 매너나이
+  final String title; //게시글 제목
+  final String maintext; //게시글 본문
+  final String gamemode; //게임모드
+  final String? position; //포지션, 솔로·자유·일반게임만 값을 가짐
+  final String? tear; //티어, 솔로·자유만 값을 가짐
+  final Timestamp createdAt; //만든 시간, 수정 시 이 값은 업데이트 되므로 updatedAt도 됨
 
   PostModel({
     required this.postId,
-    required this.uid,
-    this.user,
+    required this.userName,
+    required this.profileUrl,
+    required this.mannerAge,
     required this.title,
     required this.maintext,
     required this.gamemode,
@@ -23,13 +25,16 @@ class PostModel {
     required this.createdAt,
   });
 
-  factory PostModel.fromDocumentSnapshot(
-      DocumentSnapshot doc, UserModel usermodel) {
+  /* 파이어스토어 DB로 부터 데이터를 받는 인스턴스 생성 */
+  factory PostModel.fromDocumentSnapshot(DocumentSnapshot doc) {
+    //Post DB의 문서 데이터로 변환
     var snapshot = doc.data() as Map<String, dynamic>;
+
     return PostModel(
       postId: snapshot['postId'],
-      uid: snapshot['uid'],
-      user: usermodel,
+      userName: snapshot['userName'],
+      profileUrl: snapshot['profileUrl'],
+      mannerAge: snapshot['mannerAge'],
       title: snapshot['title'],
       maintext: snapshot['maintext'],
       gamemode: snapshot['gamemode'],

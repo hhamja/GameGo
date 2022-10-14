@@ -46,7 +46,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   onTap: () {},
                   leading: CircleAvatar(child: Icon(Icons.person)),
                   title: Text(
-                    '${controller.postList[index].user!.userName}',
+                    controller.postList[index].userName,
                   ),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

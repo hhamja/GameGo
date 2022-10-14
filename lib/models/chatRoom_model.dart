@@ -17,6 +17,7 @@ class ChatRoomModel {
     this.updatedAt,
   });
 
+  /* 파이어스토어 DB로 부터 데이터를 받는 인스턴스 생성 */
   factory ChatRoomModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     var snapshot = doc.data() as Map<String, dynamic>;
     return ChatRoomModel(

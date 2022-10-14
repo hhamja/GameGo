@@ -8,6 +8,9 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPageState extends State<AddPostPage> {
+  /* FireStore User Collection Instance */
+  final CollectionReference _userDB =
+      FirebaseFirestore.instance.collection('user');
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
   /* PostController 선언 (∵ Create Post) */
@@ -31,11 +34,20 @@ class _AddPostPageState extends State<AddPostPage> {
         title: Text('매너게이머 글쓰기'),
         centerTitle: true,
         actions: [
+          /* 완료 버튼 */
           TextButton(
             onPressed: () async {
+              //uid로 해당유저의 data UserModel의 인스턴스의 담기
+              UserModel userModel = UserModel();
+              await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
+                return userModel = UserModel.fromDocumentSnapshot(value);
+              });
+              //postModel 인스턴스 생성
               final postModel = PostModel(
                 postId: FirebaseFirestore.instance.collection('post').doc().id,
-                uid: _auth.currentUser!.uid,
+                mannerAge: userModel.mannerAge.toString(),
+                userName: userModel.userName.toString(),
+                profileUrl: userModel.profileUrl.toString(),
                 title: _titleController.text.trim(),
                 maintext: _maintextController.text.trim(),
                 gamemode: dropDownController.seledtedPostGamemodeValue,
@@ -43,6 +55,7 @@ class _AddPostPageState extends State<AddPostPage> {
                 tear: dropDownController.seledtedPostTearValue,
                 createdAt: Timestamp.now(),
               );
+              //게시물 만들기
               await _postController.createPost(postModel);
               Get.back();
             },
@@ -70,7 +83,7 @@ class _AddPostPageState extends State<AddPostPage> {
                 color: Colors.grey,
               ),
 
-              //제목 TextField
+              /* 제목 입력 란 */
               TextField(
                 scrollController: _titleScrollController,
                 maxLines: null,
@@ -107,7 +120,7 @@ class _AddPostPageState extends State<AddPostPage> {
                 color: Colors.grey,
               ),
 
-              //본문 TextField
+              /* 본문 입력 란 */
               TextField(
                 maxLines: null,
                 minLines: 1,

@@ -5,9 +5,6 @@ class PostController extends GetxController {
   /* 파이어스토어 Post 컬렉션 참조 instance */
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
-  /* 유저 컨트롤러 */
-  final UserController _user = Get.put(UserController());
-
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
 
@@ -27,7 +24,9 @@ class PostController extends GetxController {
   Future createPost(PostModel postModel) async {
     final res = await _postDB.doc(postModel.postId).set({
       'postId': postModel.postId,
-      'uid': postModel.uid,
+      'userName': postModel.userName,
+      'profileUrl': postModel.profileUrl,
+      'mannerAge': postModel.mannerAge,
       'title': postModel.title,
       'maintext': postModel.maintext,
       'gamemode': postModel.gamemode,
@@ -40,16 +39,10 @@ class PostController extends GetxController {
 
   /* 스트림으로 게시물 전체 받기 */
   Stream<List<PostModel>> readPostData() async* {
-    yield* await _postDB
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              var snapshot = e.data() as Map<String, dynamic>; //문서를 데이터화
-              //게시물의 uid값을 넣어 유저정보 받기
-              // _user.userModel.bindStream(_user.getUserInfo(snapshot['uid']));
-              //PostModel 인스턴스 생성 후 데이터 넣기
-              return PostModel.fromDocumentSnapshot(e, _user.userModel.value);
-            }).toList());
+    yield* await _postDB.orderBy('createdAt', descending: true).snapshots().map(
+        (snapshot) => snapshot.docs
+            .map((e) => PostModel.fromDocumentSnapshot(e))
+            .toList());
   }
 
   /* 게시물 - 게임모드 필터링 */
@@ -59,13 +52,9 @@ class PostController extends GetxController {
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
         .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              var snapshot = e.data() as Map<String, dynamic>; //문서를 데이터화
-              //게시물의 uid값을 넣어 유저정보 받기
-              // _user.userModel.bindStream(_user.getUserInfo(snapshot['uid']));
-              //PostModel 인스턴스 생성 후 데이터 넣기
-              return PostModel.fromDocumentSnapshot(e, _user.userModel.value);
-            }).toList());
+        .map((snapshot) => snapshot.docs
+            .map((e) => PostModel.fromDocumentSnapshot(e))
+            .toList());
   }
 
   /* 게시물 - 포지션 필터링 */
@@ -76,16 +65,11 @@ class PostController extends GetxController {
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
         .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              var snapshot = e.data() as Map<String, dynamic>; //문서를 데이터화
-              //게시물의 uid값을 넣어 유저정보 받기
-              // _user.getUserInfo(snapshot['uid']);
-              //PostModel 인스턴스 생성 후 데이터 넣기
-              return PostModel.fromDocumentSnapshot(e, _user.userModel.value);
-            }).toList());
+        .map((snapshot) => snapshot.docs
+            .map((e) => PostModel.fromDocumentSnapshot(e))
+            .toList());
   }
 
-//
   /* 게시물 - 티어 필터링 */
   Stream<List<PostModel>> filterTear(gamemode, position, tear) async* {
     postList.clear();
@@ -95,14 +79,9 @@ class PostController extends GetxController {
         .where('position', isEqualTo: position)
         .where('tear', isEqualTo: tear)
         .snapshots()
-        .map((s) => s.docs.map((e) {
-              var snapshot = e.data() as Map<String, dynamic>; //문서를 데이터화
-              //게시물의 uid값을 넣어 유저정보 받기
-              // _user.getUserInfo(snapshot['uid']);
-              print('snapshot.uid : ${snapshot['uid']}');
-              //PostModel 인스턴스 생성 후 데이터 넣기
-              return PostModel.fromDocumentSnapshot(e, _user.userModel.value);
-            }).toList());
+        .map((snapshot) => snapshot.docs
+            .map((e) => PostModel.fromDocumentSnapshot(e))
+            .toList());
   }
 
   /* 게시물 수정하기 */
