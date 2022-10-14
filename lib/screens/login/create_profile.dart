@@ -99,14 +99,13 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Future validateButton() async {
     final text = _userNameController.text.trim(); //닉네임
     UserModel userModel = UserModel(
-      uid: _auth.currentUser!.uid,
-      userName: text,
-      phoneNumber: Get.arguments, //인증받은 폰번호 이전페이지에서 받기
-      profileUrl:
-          profileImageUrl ?? _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
-      mannerAge: '20.0세',
-      createdAt: Timestamp.now(),
-    );
+        uid: _auth.currentUser!.uid,
+        userName: text,
+        phoneNumber: Get.arguments, //인증받은 폰번호 이전페이지에서 받기
+        profileUrl: profileImageUrl ??
+            _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
+        mannerAge: '20.0세',
+        createdAt: Timestamp.now());
     if (!text.isEmpty || text.length >= 2) {
       //닉네임 2자 이상이라면?
       await _userAuth.addNewUser(userModel); //userDB에 저장

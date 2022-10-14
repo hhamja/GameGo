@@ -6,7 +6,7 @@ class ChatRoomModel {
   final String? postingUserId; //보내는 사람 id
   final String? peerUserId; //받는사람 id
   final String? lastContent; //마지막 채팅내용
-  final String? updatedAt; //가장 최근 주고받은 일시
+  final Timestamp? updatedAt; //가장 최근 주고받은 일시
 
   ChatRoomModel({
     required this.id,

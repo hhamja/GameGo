@@ -1,21 +1,14 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class HomePostList extends StatefulWidget {
+class HomePostList extends StatelessWidget {
   HomePostList({Key? key}) : super(key: key);
 
-  @override
-  State<HomePostList> createState() => _HomePostListState();
-}
-
-class _HomePostListState extends State<HomePostList> {
   /* Post Controller 최초 선언 */
   final PostController _post = Get.put(PostController());
-  /* 프로필 컨트롤러 */
-  final ProfileController _profile = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
-    print(_post.postList);
+    print(DateTime.now());
     return Obx(
       () => ListView.separated(
         padding: EdgeInsets.only(top: 10),
@@ -26,8 +19,6 @@ class _HomePostListState extends State<HomePostList> {
         },
         itemCount: _post.postList.length,
         itemBuilder: (BuildContext context, int index) {
-          print(_post.postList[index].userName);
-          //////////////////////////////////////////////
           return ListTile(
             onTap: () {
               Get.toNamed('/postdetail', arguments: {
@@ -99,10 +90,7 @@ class _HomePostListState extends State<HomePostList> {
                           : '',
                       style: TextStyle(fontSize: 12),
                     ),
-                    // Text(
-                    //   ' · 1일 전',
-                    //   style: TextStyle(fontSize: 12),
-                    // ),
+
                     // Expanded(child: SizedBox()),
                     // /* 체팅 수 */
                     // Icon(Icons.chat_bubble_outline, size: 15),

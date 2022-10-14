@@ -4,7 +4,7 @@ class MessageModel {
   final id; // 메시지 id
   final String? content; // 메시지내용
   final String? senderId; // 메시지 보내는 사람 id
-  final String? timestamp; // 메시지 보낸 시간
+  final Timestamp? timestamp; // 메시지 보낸 시간
 
   MessageModel({
     this.id,

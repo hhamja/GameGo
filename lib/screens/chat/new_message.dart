@@ -33,10 +33,10 @@ class _NewMessageState extends State<NewMessage> {
       peerUserId: widget.uid,
       //마지막글, 마지막시간은 메시지리스트의 마지막값을 받아서 보여주는 식?
       lastContent: _messageController.text.trim(),
-      updatedAt: Timestamp.now().toString(),
+      updatedAt: Timestamp.now(),
     );
     final messageModel = MessageModel(
-      timestamp: Timestamp.now().toString(),
+      timestamp: Timestamp.now(),
       content: _messageController.text.trim(),
       senderId: _currentUser.uid, //보내는 유저의 UID
     );

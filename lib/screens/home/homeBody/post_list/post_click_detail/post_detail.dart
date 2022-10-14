@@ -12,8 +12,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
   PostController controller = Get.find<PostController>();
   /* 해당 게시물의 lisview에서의 index값 전달 받음 */
   final index = Get.arguments['index'];
-  /* 게시물 게시한 유저의 uid값 전달 받음 */
-  final uid = Get.arguments['uid'];
   /* 게시물 Id 값 */
   final postId = Get.arguments['postId'];
 
@@ -23,7 +21,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   @override
   Widget build(BuildContext context) {
     print(index);
-    print(uid);
+    print(postId);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +42,10 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 ListTile(
                   contentPadding: EdgeInsets.all(16),
                   onTap: () {},
-                  leading: CircleAvatar(child: Icon(Icons.person)),
+                  leading: CircleAvatar(
+                    backgroundImage:
+                        NetworkImage(controller.postList[index].profileUrl),
+                  ),
                   title: Text(
                     controller.postList[index].userName,
                   ),
@@ -56,7 +57,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('20세'),
+                          Text(controller.postList[index].mannerAge),
                           Icon(Icons.child_care),
                         ],
                       ),
@@ -84,7 +85,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10),
-                      /* 게임모드 */
+                      /* 게임모드, 포지션, 티어 */
                       Row(
                         children: [
                           Text(
@@ -129,14 +130,12 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     ],
                   ),
                 ),
-
-                //sizedbox, divider, 폰트사이즈 커스텀화 시켜야함 (여유되면).
                 Divider(
                   color: Colors.grey[300],
                   height: 0,
                   thickness: 1,
                 ),
-                /* 이 게시물 신고하기 */
+                /* 신고하기 */
                 ListTile(
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -167,7 +166,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
             color: Colors.white,
             child: Row(
               children: [
-                /* 게시물 좋아요 버튼 */
+                /* 좋아요 버튼 */
                 Expanded(
                   flex: 2,
                   child: IconButton(
@@ -184,7 +183,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
                           ),
                   ),
                 ),
-
                 /* 채팅하기 버튼 -> ChatPage 이동 */
                 Expanded(
                   flex: 5,
@@ -192,11 +190,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     onPressed: () {
                       Get.to(
                         () => MessagePage(),
-                        //게시자 UID 값 전달
-                        arguments: {
-                          'uid': uid,
-                          'postId': postId,
-                        },
+                        //게시물 id 값 전달
+                        arguments: {'postId': postId},
                       );
                     },
                     style: TextButton.styleFrom(
