@@ -19,6 +19,8 @@ class HomePostList extends StatelessWidget {
         },
         itemCount: _post.postList.length,
         itemBuilder: (BuildContext context, int index) {
+          String time =
+              Jiffy(_post.postList[index].createdAt.toDate()).fromNow();
           return ListTile(
             onTap: () {
               Get.toNamed('/postdetail', arguments: {
@@ -48,7 +50,7 @@ class HomePostList extends StatelessWidget {
                       /* 날짜 */
                       Expanded(
                         child: Text(
-                          '1일 전',
+                          time,
                           style: TextStyle(height: 1.2, fontSize: 10),
                           textAlign: TextAlign.end,
                         ),

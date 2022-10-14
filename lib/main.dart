@@ -4,6 +4,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Jiffy.locale('ko');
   Get.put(InitialScreenCntroller());
   runApp(
     GetMaterialApp(
