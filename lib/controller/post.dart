@@ -24,6 +24,7 @@ class PostController extends GetxController {
   Future createPost(PostModel postModel) async {
     final res = await _postDB.doc(postModel.postId).set({
       'postId': postModel.postId,
+      'uid': postModel.uid,
       'userName': postModel.userName,
       'profileUrl': postModel.profileUrl,
       'mannerAge': postModel.mannerAge,
