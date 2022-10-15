@@ -2,6 +2,7 @@ import 'package:mannergamer/utilites/index.dart';
 
 class PostModel {
   final String postId; //게시글 고유 id값
+  final String uid; //유저의 id값
   final String userName; //유저의 닉네임
   final String profileUrl; //유저 프로필
   final String mannerAge; //유저 매너나이
@@ -14,6 +15,7 @@ class PostModel {
 
   PostModel({
     required this.postId,
+    required this.uid,
     required this.userName,
     required this.profileUrl,
     required this.mannerAge,
@@ -29,9 +31,9 @@ class PostModel {
   factory PostModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     //Post DB의 문서 데이터로 변환
     var snapshot = doc.data() as Map<String, dynamic>;
-
     return PostModel(
       postId: snapshot['postId'],
+      uid: snapshot['uid'],
       userName: snapshot['userName'],
       profileUrl: snapshot['profileUrl'],
       mannerAge: snapshot['mannerAge'],

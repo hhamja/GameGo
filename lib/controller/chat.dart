@@ -1,10 +1,10 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class ChatController extends GetxController {
-  /* 파이어스토어 Chat 컬렉션 참조 instance */
+  /* 파이어스토어 Chat 컬렉션 참조 */
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
-  /* 파이어스토어 User 컬렉션 참조 instance */
+  /* 파이어스토어 User 컬렉션 참조 */
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
   /* 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수 */
@@ -13,8 +13,10 @@ class ChatController extends GetxController {
   RxList<MessageModel> messageList = <MessageModel>[].obs;
   /* 현재 유저의 uid */
   final _currentUid = FirebaseAuth.instance.currentUser?.uid.toString();
+
   @override
   void onInit() {
+    //현재유저의 채팅리스트 스트림으로 받기
     chatRoomList.bindStream(readAllChatList(_currentUid));
     super.onInit();
   }

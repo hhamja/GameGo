@@ -2,8 +2,8 @@ import 'package:mannergamer/utilites/index.dart';
 
 class ChatRoomModel {
   final String id; //채팅방의 id
-  final List userIdList;
-  final String? postingUserId; //보내는 사람 id
+  final List userIdList; //채팅대상 유저 리스트 -> 채팅리스트 불러오는 쿼리에 쓰임
+  final String? postingUserId; //게시글 올린 유저 ID
   final String? peerUserId; //받는사람 id
   final String? lastContent; //마지막 채팅내용
   final Timestamp? updatedAt; //가장 최근 주고받은 일시

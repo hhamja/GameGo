@@ -45,6 +45,7 @@ class _AddPostPageState extends State<AddPostPage> {
               //postModel 인스턴스 생성
               final postModel = PostModel(
                 postId: FirebaseFirestore.instance.collection('post').doc().id,
+                uid: _auth.currentUser!.uid,
                 mannerAge: userModel.mannerAge.toString(),
                 userName: userModel.userName.toString(),
                 profileUrl: userModel.profileUrl.toString(),
