@@ -25,7 +25,6 @@ class HomePostList extends StatelessWidget {
             onTap: () {
               Get.toNamed('/postdetail', arguments: {
                 'index': index,
-                'postId': _post.postList[index].postId,
               });
             },
             title: Padding(

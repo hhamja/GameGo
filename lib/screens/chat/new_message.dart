@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:mannergamer/utilites/index.dart';
 
 class NewMessage extends StatefulWidget {
@@ -12,6 +11,11 @@ class NewMessage extends StatefulWidget {
 }
 
 class _NewMessageState extends State<NewMessage> {
+  /* FireStore User Collection Instance */
+  final CollectionReference _userDB =
+      FirebaseFirestore.instance.collection('user');
+  /* FirebaseAuth instance */
+  final _auth = FirebaseAuth.instance;
   /* 메시지 입력 칸 */
   final TextEditingController _messageController = TextEditingController();
   /* 채팅 GetX 컨트롤러 */
@@ -23,14 +27,20 @@ class _NewMessageState extends State<NewMessage> {
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
+    //현재 유저 정보 가져오기
+    UserModel userModel = UserModel();
+    await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
+      return userModel = UserModel.fromDocumentSnapshot(value);
+    });
     //채팅방이름 = postId_현재유저ID
-    //채팅방이 이미 있다면 ? 메시지 update : 없다면 채팅방추가 함수 실행
     chatRoomID = widget.postId + '_' + _currentUser.uid;
     final chatRoomModel = ChatRoomModel(
       id: chatRoomID,
       userIdList: [_currentUser.uid, widget.uid],
       postingUserId: widget.uid, //게시글 올린 유지
       peerUserId: _currentUser.uid, //상대유저
+      profileUrl: userModel.profileUrl,
+      userName: userModel.userName,
       //마지막글, 마지막시간은 메시지리스트의 마지막값을 받아서 보여주는 식?
       lastContent: _messageController.text.trim(),
       updatedAt: Timestamp.now(),
@@ -40,11 +50,11 @@ class _NewMessageState extends State<NewMessage> {
       content: _messageController.text.trim(),
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
-
-    await _chat.createNewChatRoom(chatRoomModel);
+    await _chat.createNewChatRoom(chatRoomModel); //채팅방이 이미 있다면 실행안됨
     await _chat.sendNewMessege(messageModel, chatRoomID);
-    _messageController.clear();
-    setState(() {});
+    setState(() {
+      _messageController.clear();
+    });
   }
 
   @override

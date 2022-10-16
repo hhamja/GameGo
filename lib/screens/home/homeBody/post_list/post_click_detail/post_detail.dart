@@ -12,16 +12,12 @@ class _PostDetailPageState extends State<PostDetailPage> {
   PostController controller = Get.find<PostController>();
   /* 해당 게시물의 lisview에서의 index값 전달 받음 */
   final index = Get.arguments['index'];
-  /* 게시물 Id 값 */
-  final postId = Get.arguments['postId'];
-
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   bool _click = true;
 
   @override
   Widget build(BuildContext context) {
     print(index);
-    print(postId);
 
     return Scaffold(
       appBar: AppBar(
@@ -191,7 +187,10 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Get.to(
                         () => MessagePage(),
                         //게시물 id 값 전달
-                        arguments: {'postId': postId},
+                        arguments: {
+                          'postId': controller.postList[index].postId,
+                          'uid': controller.postList[index].uid,
+                        },
                       );
                     },
                     style: TextButton.styleFrom(

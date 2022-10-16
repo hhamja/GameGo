@@ -20,7 +20,7 @@ class _MessagesState extends State<Messages> {
   @override
   void initState() {
     _chat.messageList.bindStream(
-        _chat.readAllMessageList(widget.uid + '_' + _currentUser.uid));
+        _chat.readAllMessageList(widget.postId + '_' + _currentUser.uid));
     super.initState();
   }
 

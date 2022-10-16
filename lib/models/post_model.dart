@@ -2,7 +2,7 @@ import 'package:mannergamer/utilites/index.dart';
 
 class PostModel {
   final String postId; //게시글 고유 id값
-  final String uid; //유저의 id값
+  final String uid; //유저의 id값, 본인의 게시물을 식별하는 조건에 필요
   final String userName; //유저의 닉네임
   final String profileUrl; //유저 프로필
   final String mannerAge; //유저 매너나이

@@ -8,15 +8,16 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
-  /* 게시물 올린 유저의 uid */
-  final String? uid = Get.arguments['uid'];
-  /* 게시물 Id 값 */
-  final postId = Get.arguments['postId'];
+  /* chat List Page에서 받은 게시물 올린 유저의 uid */
+  final String uid = Get.arguments['uid'];
+  /* PostDetailPage에서 받은 게시물 id 값*/
+  final String postId = Get.arguments['postId'];
   /* User 컨트롤러 */
   final UserController _user = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     print('유저 UID 값은 ${uid}');
+    print('PostId 값은 ${postId}');
 
     return Scaffold(
       appBar: AppBar(
@@ -46,12 +47,12 @@ class _MessagePageState extends State<MessagePage> {
           children: [
             Expanded(
               child: Messages(
-                uid: uid ?? '', //게시글 유저 uid값 전달
+                uid: uid, //게시글 유저 uid값 전달
                 postId: postId, //게시물 id값 전달
               ),
             ),
             NewMessage(
-              uid: uid ?? '', //게시글 유저 uid값 전달
+              uid: uid, //게시글 유저 uid값 전달
               postId: postId, //게시물 id값 전달
             ),
           ],

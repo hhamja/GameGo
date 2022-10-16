@@ -21,35 +21,32 @@ class ChatController extends GetxController {
     super.onInit();
   }
 
-  /* 새로운 채팅 입력 시 메시지DB 추가 */
-  Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
-    try {
-      //채팅(col) - 그룹UID(Doc) - 메시지(Col) - 메시지내용()
-      await _chatDB.doc(chatRoomId).collection('message').add({
-        'content': messageModel.content,
-        'senderId': messageModel.senderId,
-        'timestamp': messageModel.timestamp,
-      });
-    } catch (e) {
-      print('sendNewMessege error');
-    }
-  }
-
-  /* 새로운 채팅 입력 시 채팅방 생성하기 */
+/* 새로운 채팅 입력 시 채팅방 생성하기 */
   Future createNewChatRoom(ChatRoomModel chatRoomModel) async {
-    try {
+    final res = await _chatDB.doc(chatRoomModel.id).get();
+    //채팅방이 존재하지 않는다면? 새로운 채팅방 만듬
+    if (!res.exists)
       //Chat(col) - 채팅방UID(Doc)
       await _chatDB.doc(chatRoomModel.id).set({
         'id': chatRoomModel.id,
         'userIdList': chatRoomModel.userIdList,
-        'lastContent': chatRoomModel.lastContent,
         'postingUserId': chatRoomModel.postingUserId,
         'peerUserId': chatRoomModel.peerUserId,
+        'userName': chatRoomModel.userName,
+        'profileUrl': chatRoomModel.profileUrl,
+        'lastContent': chatRoomModel.lastContent,
         'updatedAt': chatRoomModel.updatedAt,
       });
-    } catch (e) {
-      print('createNewChatRoom error');
-    }
+  }
+
+  /* 새로운 채팅 입력 시 메시지DB 추가하기 */
+  Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
+    //채팅(col) - 그룹UID(Doc) - 메시지(Col) - 메시지내용()
+    await _chatDB.doc(chatRoomId).collection('message').add({
+      'content': messageModel.content,
+      'senderId': messageModel.senderId,
+      'timestamp': messageModel.timestamp,
+    });
   }
 
   /* 모든 '채팅' 리스트 스트림으로 받기 */
@@ -75,24 +72,19 @@ class ChatController extends GetxController {
             }).toList());
   }
 
-  /* 채팅 업데이트 */
-  Future updatechat(MessageModel messageModel) async {
+  /* 채팅방 삭제하기 */
+  Future deleteChat(chatRoomId) async {
     try {
-      await _chatDB.doc(messageModel.id).update({
-        'content': messageModel.content,
-        'senderId': messageModel.senderId,
-        'timestamp': messageModel.timestamp,
-      });
+      await _chatDB.doc(chatRoomId).delete();
     } catch (e) {
-      print('updatechat error');
+      print('deleteChat error');
     }
   }
 
-  /* 채팅 삭제하기 */
-  //일단 후순위로 미루자
-  Future deleteChat(chatId) async {
+  /* 해당 메시지 삭제하기 */
+  Future deleteMessage(messageId) async {
     try {
-      await _chatDB.doc(chatId).delete();
+      await _chatDB.doc(messageId).delete();
     } catch (e) {
       print('deleteChat error');
     }
