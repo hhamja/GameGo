@@ -34,17 +34,8 @@ class _ChatListPageState extends State<ChatListPage> {
         () => ListView.builder(
           itemCount: _chat.chatRoomList.length,
           itemBuilder: (BuildContext context, int index) {
-            //상대유저 UID
-            final peerUserId = _chat.chatRoomList[index].peerUserId;
-            print(peerUserId);
-            // 상대 UID로 받은 유저정보 리스트 스트림으로 받기
-
-            _user.userList.bindStream(_user.getUserInfoList(peerUserId));
-            print(_user.userList[index]);
-            // 마지막 대화내용
-            final lastContent = _chat.chatRoomList[index].lastContent;
-            // 최근 날짜
-            final updatedAt = _chat.chatRoomList[index].updatedAt;
+            String time =
+                Jiffy(_chat.chatRoomList[index].updatedAt.toDate()).fromNow();
             return Slidable(
               endActionPane: ActionPane(
                 extentRatio: 0.4,
@@ -75,25 +66,29 @@ class _ChatListPageState extends State<ChatListPage> {
                 ],
               ),
               child: ListTile(
-                leading: CircleAvatar(), // 상대 유저 프로필 사진
+                /* 상대 유저 프로필 사진 */
+                leading: CircleAvatar(
+                  backgroundImage:
+                      NetworkImage(_user.userList[index].profileUrl),
+                ),
+                /*  상대 유저 이름 */
                 title: Text(
                   _user.userList[index].userName,
                   maxLines: 1,
-                ), // 상대 유저 이름
+                ),
+                /* 마지막 대화 내용 */
                 subtitle: Text(
-                  lastContent,
+                  _chat.chatRoomList[index].lastContent,
                   maxLines: 1,
                   softWrap: true,
                   overflow: TextOverflow.ellipsis,
-                ), // 채팅방 마지막 대화 내용 요약
+                ),
                 trailing: Text(
-                  '1일전',
-                  maxLines: 1,
+                  time,
                 ), // 최근 대화 날짜 (며칠 전)
                 onTap: () {
                   Get.to(
                     () => MessagePage(),
-                    arguments: {'uid': peerUserId}, //uid값 전달
                   );
                 },
               ),

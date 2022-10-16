@@ -6,13 +6,13 @@ class ChatController extends GetxController {
       FirebaseFirestore.instance.collection('chat');
   /* 파이어스토어 User 컬렉션 참조 */
   final CollectionReference _userDB =
-      FirebaseFirestore.instance.collection('user');
+      FirebaseFirestore.instance.collection('chat');
   /* 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수 */
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
   /* 현재 유저의 uid */
-  final _currentUid = FirebaseAuth.instance.currentUser?.uid.toString();
+  final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
 
   @override
   void onInit() {
@@ -30,10 +30,7 @@ class ChatController extends GetxController {
       await _chatDB.doc(chatRoomModel.id).set({
         'id': chatRoomModel.id,
         'userIdList': chatRoomModel.userIdList,
-        'postingUserId': chatRoomModel.postingUserId,
-        'peerUserId': chatRoomModel.peerUserId,
-        'userName': chatRoomModel.userName,
-        'profileUrl': chatRoomModel.profileUrl,
+        'userList': chatRoomModel.userList,
         'lastContent': chatRoomModel.lastContent,
         'updatedAt': chatRoomModel.updatedAt,
       });
@@ -53,7 +50,7 @@ class ChatController extends GetxController {
   Stream<List<ChatRoomModel>> readAllChatList(currentUid) {
     return _chatDB
         .where('userIdList', arrayContains: currentUid)
-        .orderBy('updatedAt', descending: true) //최신이 맨 위s
+        .orderBy('updatedAt', descending: true) //최신이 맨 위
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
               return ChatRoomModel.fromDocumentSnapshot(e);
@@ -72,8 +69,9 @@ class ChatController extends GetxController {
             }).toList());
   }
 
-  /* 채팅방 삭제하기 */
+  /* 채팅방 나가기, 삭제는 상대유저랑 내가 둘다 나가기를 햇을 경우 삭제하기 */
   Future deleteChat(chatRoomId) async {
+    //손봐야함
     try {
       await _chatDB.doc(chatRoomId).delete();
     } catch (e) {
@@ -89,11 +87,10 @@ class ChatController extends GetxController {
       print('deleteChat error');
     }
   }
-  // Stream<QuerySnapshot> getChatList(String chatId) {
-  //   return _chatDB
-  //       .doc(chatId)
-  //       .collection('message')
-  //       .orderBy('timestamp', descending: true) //최신이 맨위
-  //       .snapshots();
-  // }
+
+  getUserById(uid) async {
+    await _userDB.doc(uid).get().then((value) {
+      return UserModel.fromDocumentSnapshot(value);
+    });
+  }
 }

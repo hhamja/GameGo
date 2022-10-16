@@ -38,9 +38,9 @@ class _AddPostPageState extends State<AddPostPage> {
           TextButton(
             onPressed: () async {
               //uid로 해당유저의 data UserModel의 인스턴스의 담기
-              UserModel userModel = UserModel();
-              await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
-                return userModel = UserModel.fromDocumentSnapshot(value);
+              UserModel userModel =
+                  await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
+                return UserModel.fromDocumentSnapshot(value);
               });
               //postModel 인스턴스 생성
               final postModel = PostModel(

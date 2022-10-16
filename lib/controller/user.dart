@@ -17,8 +17,6 @@ class UserController extends GetxController {
   /* 폰번호확인코드저장 */
   String verificationID = '';
 
-  var userModel = UserModel();
-
   /* Create User */
   Future addNewUser(UserModel userModel) async {
     try {
@@ -131,16 +129,16 @@ class UserController extends GetxController {
     }
   }
 
-  /* UID로 유저 정보 받고 UserModel에 담기 */
-  Future getUserInfo(uid) async {
-    final ref = _userDB.doc(uid).get();
-    await ref.then((value) {
-      userModel = UserModel.fromDocumentSnapshot(value);
-      update();
-      return userModel;
-    });
-    update();
-  }
+  // /* UID로 유저 정보 받고 UserModel에 담기 */
+  // Future getUserInfo(uid) async {
+  //   final ref = _userDB.doc(uid).get();
+  //   await ref.then((value) {
+  //     userModel = UserModel.fromDocumentSnapshot(value);
+  //     update();
+  //     return userModel;
+  //   });
+  //   update();
+  // }
   /* UID로 유저 정보 받고 UserModel에 담기 */
 
   // Stream<UserModel> getUserInfo(uid) async* {

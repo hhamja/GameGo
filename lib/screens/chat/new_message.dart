@@ -22,26 +22,39 @@ class _NewMessageState extends State<NewMessage> {
   final ChatController _chat = Get.put(ChatController());
   /* 파베 auth 인스턴스 */
   final _currentUser = FirebaseAuth.instance.currentUser!;
-  /* 채팅방 id값 */
-  static var chatRoomID;
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
-    //현재 유저 정보 가져오기
-    UserModel userModel = UserModel();
-    await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
-      return userModel = UserModel.fromDocumentSnapshot(value);
+    //현재폰유저
+    UserModel peerUser =
+        await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
+      return UserModel.fromDocumentSnapshot(value);
     });
-    //채팅방이름 = postId_현재유저ID
-    chatRoomID = widget.postId + '_' + _currentUser.uid;
+    //게시글의 유저
+    UserModel postingUser = await _userDB.doc(widget.uid).get().then((value) {
+      return UserModel.fromDocumentSnapshot(value);
+    });
+    //채팅방 id = postId_현재유저ID
+    final chatRoomID = widget.postId + '_' + _currentUser.uid;
+
     final chatRoomModel = ChatRoomModel(
       id: chatRoomID,
-      userIdList: [_currentUser.uid, widget.uid],
-      postingUserId: widget.uid, //게시글 올린 유지
-      peerUserId: _currentUser.uid, //상대유저
-      profileUrl: userModel.profileUrl,
-      userName: userModel.userName,
-      //마지막글, 마지막시간은 메시지리스트의 마지막값을 받아서 보여주는 식?
+      userIdList: [widget.uid, _currentUser.uid], //게시자, 현재유저 순서
+      userList: [
+        //게시자, 현재유저 순서
+        {
+          'id': postingUser.uid,
+          'userName': postingUser.profileUrl,
+          'profileUrl': postingUser.profileUrl,
+          'mannerAge': postingUser.profileUrl,
+        },
+        {
+          'id': peerUser.uid,
+          'userName': peerUser.profileUrl,
+          'profileUrl': peerUser.profileUrl,
+          'mannerAge': peerUser.profileUrl,
+        },
+      ],
       lastContent: _messageController.text.trim(),
       updatedAt: Timestamp.now(),
     );
