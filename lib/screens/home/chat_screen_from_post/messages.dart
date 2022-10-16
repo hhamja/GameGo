@@ -1,33 +1,25 @@
 import 'dart:ui';
 import 'package:mannergamer/utilites/index.dart';
 
-class Messages extends StatefulWidget {
-  /* 상대유저 이름, 프로필, 매너나이 */
-  final String userName, profileUrl, mannerAge;
-  /* ChatRoomList의 index값 */
-  final int index;
-  Messages({
-    Key? key,
-    required this.userName,
-    required this.profileUrl,
-    required this.mannerAge,
-    required this.index,
-  }) : super(key: key);
+class MessagesFromPost extends StatefulWidget {
+  /* 게시글 유저의  UID, 게시물 id 값 */
+  final String uid, postId;
+  MessagesFromPost({Key? key, required this.uid, required this.postId})
+      : super(key: key);
 
   @override
-  State<Messages> createState() => _MessagesState();
+  State<MessagesFromPost> createState() => _MessagesFromPostState();
 }
 
-class _MessagesState extends State<Messages> {
+class _MessagesFromPostState extends State<MessagesFromPost> {
   /* 기기의 현재 유저 */
   final _currentUser = FirebaseAuth.instance.currentUser!;
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
-
   @override
   void initState() {
     _chat.messageList.bindStream(
-        _chat.readAllMessageList(_chat.chatRoomList[widget.index].id));
+        _chat.readAllMessageList(widget.postId + '_' + _currentUser.uid));
     super.initState();
   }
 

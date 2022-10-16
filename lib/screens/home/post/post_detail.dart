@@ -146,6 +146,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   height: 0,
                   thickness: 1,
                 ),
+                Center(child: Text('(이자리에 광고), 신고빼고')),
               ],
             ),
           ),
@@ -185,7 +186,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   child: TextButton(
                     onPressed: () {
                       Get.to(
-                        () => MessagePage(),
+                        () => MessagePageFromPost(),
                         //게시물 id 값 전달
                         arguments: {
                           'postId': controller.postList[index].postId,

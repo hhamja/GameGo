@@ -8,23 +8,27 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
-  /* PostDetailPage에서 받은 게시물 올린 유저의 uid */
-  final String uid = Get.arguments['uid'];
-  /* PostDetailPage에서 받은 게시물 id 값*/
-  final String postId = Get.arguments['postId'];
+  final String userName = Get.arguments['userName'];
+  final String profileUrl = Get.arguments['profileUrl'];
+  final String mannerAge = Get.arguments['mannerAge'];
+  final String chatRoomId = Get.arguments['chatRoomId'];
+  final int index = Get.arguments['index'];
 
   @override
   Widget build(BuildContext context) {
-    print('유저 UID 값은 ${uid}');
-    print('PostId 값은 ${postId}');
+    print('userName 값은 ${userName}');
+    print('profileUrl 값은 ${profileUrl}');
+    print('mannerAge 값은 ${mannerAge}');
+    print('chatRoomId 값은 ${chatRoomId}');
+    print('index 값은 ${index}');
 
     return Scaffold(
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('d'), // 상대유저이름
-            Text('d'), //유저 매너나이 (글씨 작게)
+            Text(userName), // 상대유저이름
+            Text(mannerAge), //유저 매너나이 (글씨 작게)
           ],
         ),
         centerTitle: true,
@@ -40,13 +44,15 @@ class _MessagePageState extends State<MessagePage> {
           children: [
             Expanded(
               child: Messages(
-                uid: uid, //게시글 유저 uid값 전달
-                postId: postId, //게시물 id값 전달
+                index: index,
+                userName: userName,
+                profileUrl: profileUrl,
+                mannerAge : mannerAge,
               ),
             ),
             NewMessage(
-              uid: uid, //게시글 유저 uid값 전달
-              postId: postId, //게시물 id값 전달
+              chatRoomId: chatRoomId,
+              index: index,
             ),
           ],
         ),

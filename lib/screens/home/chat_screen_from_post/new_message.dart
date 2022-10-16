@@ -1,16 +1,21 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class NewMessage extends StatefulWidget {
-  final int index;
-  final String chatRoomId;
-  NewMessage({Key? key, required this.index, required this.chatRoomId})
+class NewMessageFromPost extends StatefulWidget {
+  final String uid; // 게시글 유저 uid
+  final String postId; //게시물 id
+  NewMessageFromPost({Key? key, required this.uid, required this.postId})
       : super(key: key);
 
   @override
-  State<NewMessage> createState() => _NewMessageState();
+  State<NewMessageFromPost> createState() => _NewMessageFromPostState();
 }
 
-class _NewMessageState extends State<NewMessage> {
+class _NewMessageFromPostState extends State<NewMessageFromPost> {
+  /* FireStore User Collection Instance */
+  final CollectionReference _userDB =
+      FirebaseFirestore.instance.collection('user');
+  /* FirebaseAuth instance */
+  final _auth = FirebaseAuth.instance;
   /* 메시지 입력 칸 */
   final TextEditingController _messageController = TextEditingController();
   /* 채팅 GetX 컨트롤러 */
@@ -20,17 +25,44 @@ class _NewMessageState extends State<NewMessage> {
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
-    // //마지막 채팅내용과 시간만 업데이트
-    // final chatRoomModel = ChatRoomModel(
-    //   lastContent: _messageController.text.trim(),
-    //   updatedAt: Timestamp.now(),
-    // );
+    //현재폰유저
+    UserModel peerUser =
+        await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
+      return UserModel.fromDocumentSnapshot(value);
+    });
+    //게시글의 유저
+    UserModel postingUser = await _userDB.doc(widget.uid).get().then((value) {
+      return UserModel.fromDocumentSnapshot(value);
+    });
+
+    final chatRoomModel = ChatRoomModel(
+      id: widget.postId + '_' + _currentUser.uid, //채팅방 id = postId_현재유저ID
+      userIdList: [widget.uid, _currentUser.uid], //게시자, 현재유저 순서
+      userList: [
+        //게시자, 현재유저 순서
+        {
+          'id': postingUser.uid,
+          'userName': postingUser.userName,
+          'profileUrl': postingUser.profileUrl,
+          'mannerAge': postingUser.mannerAge,
+        },
+        {
+          'id': peerUser.uid,
+          'userName': peerUser.userName,
+          'profileUrl': peerUser.profileUrl,
+          'mannerAge': peerUser.mannerAge,
+        },
+      ],
+      lastContent: _messageController.text.trim(),
+      updatedAt: Timestamp.now(),
+    );
     final messageModel = MessageModel(
       timestamp: Timestamp.now(),
       content: _messageController.text.trim(),
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
-    await _chat.sendNewMessege(messageModel, widget.chatRoomId);
+    await _chat.createNewChatRoom(chatRoomModel); //채팅방이 이미 있다면 실행안됨
+    await _chat.sendNewMessege(messageModel, chatRoomModel.id);
     setState(() {
       _messageController.clear();
     });
@@ -38,8 +70,9 @@ class _NewMessageState extends State<NewMessage> {
 
   @override
   Widget build(BuildContext context) {
-    print('채팅방id는 ' + widget.chatRoomId);
-    print('채팅방id는 ' + _chat.chatRoomList[widget.index].id);
+    print(
+      '채팅방id는 ' + widget.postId + '_' + _currentUser.uid,
+    );
     return Container(
       margin: EdgeInsets.fromLTRB(10, 3, 0, 3),
       child: Row(

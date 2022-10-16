@@ -1,7 +1,6 @@
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mannergamer/utilites/index.dart';
 
-//당근마켓 같은 채팅시스템 구현. 외부에서 가져다 쓰고 추후에 사용자가 많아지면 직접 구현.
 class ChatListPage extends StatefulWidget {
   ChatListPage({Key? key}) : super(key: key);
 
@@ -12,8 +11,6 @@ class ChatListPage extends StatefulWidget {
 class _ChatListPageState extends State<ChatListPage> {
   /* Chat Controller */
   final ChatController _chat = Get.put(ChatController());
-  /* User 컨트롤러 */
-  final UserController _user = Get.put(UserController());
   /*  */
   bool _click = true;
 
@@ -34,13 +31,18 @@ class _ChatListPageState extends State<ChatListPage> {
         () => ListView.builder(
           itemCount: _chat.chatRoomList.length,
           itemBuilder: (BuildContext context, int index) {
-            String time =
-                Jiffy(_chat.chatRoomList[index].updatedAt.toDate()).fromNow();
+            //상대유저 정보(프로필, 이름, 매너나이)
+            // == 를 != 로 수정해야한다
+            Map<String, dynamic> contactUser =
+                _chat.chatRoomList[index].userList.firstWhere((element) =>
+                    element['id'] == FirebaseAuth.instance.currentUser!.uid);
+
             return Slidable(
               endActionPane: ActionPane(
                 extentRatio: 0.4,
                 motion: DrawerMotion(),
                 children: [
+                  /* 알림 on/off */
                   SlidableAction(
                     backgroundColor: Colors.grey,
                     foregroundColor: Colors.white,
@@ -53,12 +55,9 @@ class _ChatListPageState extends State<ChatListPage> {
                       });
                     },
                   ),
+                  /* 채팅 나가기 (DB에서 삭제 X)*/
                   SlidableAction(
-                    onPressed: (_) {
-                      setState(() {
-                        _chat.chatRoomList.removeAt(index);
-                      });
-                    },
+                    onPressed: (_) {},
                     backgroundColor: Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
                     icon: Icons.delete,
@@ -68,12 +67,11 @@ class _ChatListPageState extends State<ChatListPage> {
               child: ListTile(
                 /* 상대 유저 프로필 사진 */
                 leading: CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(_user.userList[index].profileUrl),
+                  backgroundImage: NetworkImage(contactUser['profileUrl']),
                 ),
                 /*  상대 유저 이름 */
                 title: Text(
-                  _user.userList[index].userName,
+                  contactUser['userName'],
                   maxLines: 1,
                 ),
                 /* 마지막 대화 내용 */
@@ -83,12 +81,21 @@ class _ChatListPageState extends State<ChatListPage> {
                   softWrap: true,
                   overflow: TextOverflow.ellipsis,
                 ),
+                /* 최근 대화 날짜 (며칠 전) */
                 trailing: Text(
-                  time,
-                ), // 최근 대화 날짜 (며칠 전)
+                  Jiffy(_chat.chatRoomList[index].updatedAt.toDate()).fromNow(),
+                ),
                 onTap: () {
                   Get.to(
                     () => MessagePage(),
+                    arguments: {
+                      //상대유저정보 전달
+                      'userName': contactUser['userName'],
+                      'profileUrl': contactUser['profileUrl'],
+                      'mannerAge': contactUser['mannerAge'],
+                      'index': index,
+                      'chatRoomId': _chat.chatRoomList[index].id,
+                    },
                   );
                 },
               ),
