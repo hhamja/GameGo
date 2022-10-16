@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:mannergamer/utilites/index.dart';
 
 class NewMessage extends StatefulWidget {
-  final String? uid; // 상대유저의 uid
+  final String uid; // 게시글 유저 uid
   final String postId; //게시물 id
   NewMessage({Key? key, required this.uid, required this.postId})
       : super(key: key);
@@ -23,14 +23,14 @@ class _NewMessageState extends State<NewMessage> {
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
-    //채팅방이름 = postId_현재폰유저ID
+    //채팅방이름 = postId_현재유저ID
     //채팅방이 이미 있다면 ? 메시지 update : 없다면 채팅방추가 함수 실행
     chatRoomID = widget.postId + '_' + _currentUser.uid;
     final chatRoomModel = ChatRoomModel(
       id: chatRoomID,
       userIdList: [_currentUser.uid, widget.uid],
-      postingUserId: _currentUser.uid,
-      peerUserId: widget.uid,
+      postingUserId: widget.uid, //게시글 올린 유지
+      peerUserId: _currentUser.uid, //상대유저
       //마지막글, 마지막시간은 메시지리스트의 마지막값을 받아서 보여주는 식?
       lastContent: _messageController.text.trim(),
       updatedAt: Timestamp.now(),

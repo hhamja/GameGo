@@ -46,12 +46,12 @@ class _MessagePageState extends State<MessagePage> {
           children: [
             Expanded(
               child: Messages(
-                uid: uid ?? '', //상대 유저 uid값 전달
+                uid: uid ?? '', //게시글 유저 uid값 전달
                 postId: postId, //게시물 id값 전달
               ),
             ),
             NewMessage(
-              uid: uid ?? '', //상대 유저 uid값 전달
+              uid: uid ?? '', //게시글 유저 uid값 전달
               postId: postId, //게시물 id값 전달
             ),
           ],

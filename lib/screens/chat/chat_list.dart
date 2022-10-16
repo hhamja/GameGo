@@ -35,16 +35,16 @@ class _ChatListPageState extends State<ChatListPage> {
           itemCount: _chat.chatRoomList.length,
           itemBuilder: (BuildContext context, int index) {
             //상대유저 UID
-            final peerUserId = _chat.chatRoomList[index].peerUserId!;
+            final peerUserId = _chat.chatRoomList[index].peerUserId;
             print(peerUserId);
             // 상대 UID로 받은 유저정보 리스트 스트림으로 받기
 
             _user.userList.bindStream(_user.getUserInfoList(peerUserId));
             print(_user.userList[index]);
             // 마지막 대화내용
-            final lastContent = _chat.chatRoomList[index].lastContent ?? '';
+            final lastContent = _chat.chatRoomList[index].lastContent;
             // 최근 날짜
-            final updatedAt = _chat.chatRoomList[index].updatedAt ?? '';
+            final updatedAt = _chat.chatRoomList[index].updatedAt;
             return Slidable(
               endActionPane: ActionPane(
                 extentRatio: 0.4,
