@@ -9,6 +9,7 @@ class PostController extends GetxController {
   RxList<PostModel> postList = <PostModel>[].obs;
   /* 게시물 리스트 받아올 때 로딩상태를 나타내줄 값 */
   var isLoading = false.obs;
+
   @override
   void onInit() {
     readPostData();
@@ -35,47 +36,53 @@ class PostController extends GetxController {
 
   /* Future로 게시물 전체 받기 */
   Future readPostData() async {
-    isLoading;
+    isLoading == true; //데이터 받기 전 로딩 중
     final res = await _postDB.orderBy('createdAt', descending: true).get();
     postList.assignAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
+    isLoading == false; //데이터 받은 후 로딩 끝
     return postList;
   }
 
   /* 게시글을 게임모드 필터링하여 받기 */
   Future filterGamemode(gamemode) async {
-    postList.clear();
-    await _postDB
+    postList.clear(); //리스트 초기화
+    isLoading == true; //데이터 받기 전 로딩 중
+    final res = await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
-        .get()
-        .then((snapshot) => snapshot.docs
-            .map((e) => postList.add(PostModel.fromDocumentSnapshot(e))));
+        .get();
+    postList.assignAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
+    isLoading == false; //데이터 받은 후 로딩 끝
+    return postList;
   }
 
   /* 게시글을 게임모드, 포지션 필터링하여 받기 */
   Future filterPosition(gamemode, position) async {
-    postList.clear();
+    postList.clear(); //리스트 초기화
+    isLoading == true; //데이터 받기 전 로딩 중
     final res = await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
-        .get()
-        .then((snapshot) => snapshot.docs
-            .map((e) => postList.add(PostModel.fromDocumentSnapshot(e))));
-    return res;
+        .get();
+    postList.assignAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
+    isLoading == false; //데이터 받은 후 로딩 끝
+    return postList;
   }
 
   /* 게시글을 게임모드, 포지션, 티어 필터링하여 받기 */
   Future filterTear(gamemode, position, tear) async {
-    postList.clear();
-    await _postDB
+    postList.clear(); //리스트 초기화
+    isLoading == true; //데이터 받기 전 로딩 중
+    final res = await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
         .where('tear', isEqualTo: tear)
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((e) => postList.add(PostModel.fromDocumentSnapshot(e))));
+        .get();
+    postList.assignAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
+    isLoading == false; //데이터 받은 후 로딩 끝
+    return postList;
   }
 
   /* 게시물 수정하기 */
