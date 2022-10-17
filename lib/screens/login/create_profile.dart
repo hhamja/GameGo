@@ -9,6 +9,9 @@ class CreateProfilePage extends StatefulWidget {
 }
 
 class _CreateProfilePageState extends State<CreateProfilePage> {
+  final TextEditingController _userNameController = TextEditingController();
+  /* User GetX Controller */
+  final UserController _userAuth = Get.put(UserController());
   /* 프로필 컨트롤러 */
   final ProfileController _profile = Get.put(ProfileController());
   /* Firebase Storage instance */
@@ -69,10 +72,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       print(e);
     }
   }
-
-  final TextEditingController _userNameController = TextEditingController();
-  /* User GetX Controller */
-  final UserController _userAuth = Get.find<UserController>();
 
   /* 닉네임 입력에 따른 에러 택스트 */
   String get _showErrorText {

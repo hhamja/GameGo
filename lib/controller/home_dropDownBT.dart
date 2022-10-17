@@ -29,8 +29,7 @@ class HomePageDropDownBTController extends GetxController {
     selectedModeValue = modeValue as String;
     update();
     filter(_gamemode) {
-      _postController.postList
-          .bindStream(_postController.filterGamemode(_gamemode));
+      _postController.filterGamemode(_gamemode);
     }
 
     /* 게임모드 switch - case */
@@ -73,8 +72,7 @@ class HomePageDropDownBTController extends GetxController {
     selectedPositionValue = value as String;
     update();
     filter(gamemode, position) {
-      _postController.postList
-          .bindStream(_postController.filterPosition(gamemode, position));
+      _postController.filterPosition(gamemode, position);
     }
 
     /* 게임모드 switch - case */
@@ -105,8 +103,7 @@ class HomePageDropDownBTController extends GetxController {
     selectedTearValue = value as String;
     update();
     filter(gamemode, position, tear) {
-      _postController.postList
-          .bindStream(_postController.filterTear(gamemode, position, tear));
+      _postController.filterTear(gamemode, position, tear);
     }
 
     /* 게임모드 switch - case */

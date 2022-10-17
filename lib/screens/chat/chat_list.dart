@@ -35,7 +35,7 @@ class _ChatListPageState extends State<ChatListPage> {
             // == 를 != 로 수정해야한다
             Map<String, dynamic> contactUser =
                 _chat.chatRoomList[index].userList.firstWhere((element) =>
-                    element['id'] == FirebaseAuth.instance.currentUser!.uid);
+                    element['id'] != FirebaseAuth.instance.currentUser!.uid);
 
             return Slidable(
               endActionPane: ActionPane(

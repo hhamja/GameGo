@@ -8,14 +8,17 @@ class MessagePageFromPost extends StatefulWidget {
 }
 
 class _MessagePageFromPostState extends State<MessagePageFromPost> {
-  /* PostDetailPage에서 받은 게시물 올린 유저의 uid */
+  final int index = Get.arguments['index'];
+  /* PostDetailPage에서 받은 게시자 uid, 이름, 프로필, 매너나이 */
   final String uid = Get.arguments['uid'];
-  /* PostDetailPage에서 받은 게시물 id 값*/
+  final String userName = Get.arguments['userName'];
+  final String mannerAge = Get.arguments['mannerAge'];
+  final String profileUrl = Get.arguments['profileUrl'];
+  /* PostDetailPage에서 게시글의 고유 id값 */
   final String postId = Get.arguments['postId'];
 
   @override
   Widget build(BuildContext context) {
-    print(Get.previousRoute);
     print('유저 UID 값은 ${uid}');
     print('PostId 값은 ${postId}');
 
@@ -24,7 +27,7 @@ class _MessagePageFromPostState extends State<MessagePageFromPost> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('d'), // 상대유저이름
+            Text('userName'), // 게시자 유저이름
             Text('d'), //유저 매너나이 (글씨 작게)
           ],
         ),

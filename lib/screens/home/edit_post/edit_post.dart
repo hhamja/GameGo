@@ -60,7 +60,7 @@ class _EditPostPageState extends State<EditPostPage> {
                 _editDropDownController.seledtedPostTearValue,
               );
               await _postController.readPostData();
-              _postController.postList.refresh();
+              // _postController.postList.refresh();
               _postController.update();
               Get.back();
             },

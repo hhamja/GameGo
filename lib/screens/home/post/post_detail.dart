@@ -8,8 +8,8 @@ class PostDetailPage extends StatefulWidget {
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
-  /* find -> PostController */
-  PostController controller = Get.find<PostController>();
+  /* 게시물 컨트롤러 Find */
+  PostController _post = Get.find<PostController>();
   /* 해당 게시물의 lisview에서의 index값 전달 받음 */
   final index = Get.arguments['index'];
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
@@ -18,7 +18,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
   @override
   Widget build(BuildContext context) {
     print(index);
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -40,10 +39,10 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   onTap: () {},
                   leading: CircleAvatar(
                     backgroundImage:
-                        NetworkImage(controller.postList[index].profileUrl),
+                        NetworkImage(_post.postList[index].profileUrl),
                   ),
                   title: Text(
-                    controller.postList[index].userName,
+                    _post.postList[index].userName,
                   ),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +52,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(controller.postList[index].mannerAge),
+                          Text(_post.postList[index].mannerAge),
                           Icon(Icons.child_care),
                         ],
                       ),
@@ -76,7 +75,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     children: [
                       /* 제목 */
                       Text(
-                        '${controller.postList[index].title}',
+                        _post.postList[index].title,
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
@@ -85,20 +84,20 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         children: [
                           Text(
-                            '${controller.postList[index].gamemode}',
+                            '${_post.postList[index].gamemode}',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
                           ),
                           Text(
-                            controller.postList[index].position != null
-                                ? ' · ${controller.postList[index].position}'
+                            _post.postList[index].position != null
+                                ? ' · ${_post.postList[index].position}'
                                 : '',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
                           ),
                           Text(
-                            controller.postList[index].tear != null
-                                ? ' · ${controller.postList[index].tear}'
+                            _post.postList[index].tear != null
+                                ? ' · ${_post.postList[index].tear}'
                                 : '',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
@@ -109,7 +108,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 50),
                         child: Text(
-                          '${controller.postList[index].maintext}',
+                          '${_post.postList[index].maintext}',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 18,
@@ -189,8 +188,12 @@ class _PostDetailPageState extends State<PostDetailPage> {
                         () => MessagePageFromPost(),
                         //게시물 id 값 전달
                         arguments: {
-                          'postId': controller.postList[index].postId,
-                          'uid': controller.postList[index].uid,
+                          'postId': _post.postList[index].postId,
+                          'uid': _post.postList[index].uid,
+                          'userName': _post.postList[index].userName,
+                          'mannerAge': _post.postList[index].mannerAge,
+                          'profileUrl': _post.postList[index].profileUrl,
+                          'index': index,
                         },
                       );
                     },
