@@ -8,7 +8,6 @@ class MessagePageFromPost extends StatefulWidget {
 }
 
 class _MessagePageFromPostState extends State<MessagePageFromPost> {
-  final int index = Get.arguments['index'];
   /* PostDetailPage에서 받은 게시자 uid, 이름, 프로필, 매너나이 */
   final String uid = Get.arguments['uid'];
   final String userName = Get.arguments['userName'];
@@ -27,8 +26,8 @@ class _MessagePageFromPostState extends State<MessagePageFromPost> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('userName'), // 게시자 유저이름
-            Text('d'), //유저 매너나이 (글씨 작게)
+            Text(userName), // 게시자 유저이름
+            Text(mannerAge), //유저 매너나이 (글씨 작게)
           ],
         ),
         centerTitle: true,

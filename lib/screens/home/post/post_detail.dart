@@ -193,7 +193,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
                           'userName': _post.postList[index].userName,
                           'mannerAge': _post.postList[index].mannerAge,
                           'profileUrl': _post.postList[index].profileUrl,
-                          'index': index,
                         },
                       );
                     },

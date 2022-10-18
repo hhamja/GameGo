@@ -18,7 +18,7 @@ class HomePageDropDownBTController extends GetxController {
   var selectedTearValue = tears[0];
 
   /* PostController find */
-  PostController _postController = PostController.to;
+  final PostController _post = Get.put(PostController());
 
   /* 게임모드가 
   * 솔로,자유 ? 포지션, 티어 둘다 표시 
@@ -29,7 +29,7 @@ class HomePageDropDownBTController extends GetxController {
     selectedModeValue = modeValue as String;
     update();
     filter(_gamemode) {
-      _postController.filterGamemode(_gamemode);
+      _post.filterGamemode(_gamemode);
     }
 
     /* 게임모드 switch - case */
@@ -72,7 +72,7 @@ class HomePageDropDownBTController extends GetxController {
     selectedPositionValue = value as String;
     update();
     filter(gamemode, position) {
-      _postController.filterPosition(gamemode, position);
+      _post.filterPosition(gamemode, position);
     }
 
     /* 게임모드 switch - case */
@@ -103,7 +103,7 @@ class HomePageDropDownBTController extends GetxController {
     selectedTearValue = value as String;
     update();
     filter(gamemode, position, tear) {
-      _postController.filterTear(gamemode, position, tear);
+      _post.filterTear(gamemode, position, tear);
     }
 
     /* 게임모드 switch - case */

@@ -1,6 +1,7 @@
 import 'package:mannergamer/utilites/index.dart';
 
 class Homepage extends StatelessWidget {
+  PostController _post = Get.put(PostController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

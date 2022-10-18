@@ -1,14 +1,12 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class PostController extends GetxController {
+class PostController extends GetxController with StateMixin<RxList<PostModel>> {
   static PostController get to => Get.find<PostController>();
   /* 파이어스토어 Post 컬렉션 참조 instance */
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
-  /* 게시물 리스트 받아올 때 로딩상태를 나타내줄 값 */
-  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -36,53 +34,91 @@ class PostController extends GetxController {
 
   /* Future로 게시물 전체 받기 */
   Future readPostData() async {
-    isLoading == true; //데이터 받기 전 로딩 중
-    final res = await _postDB.orderBy('createdAt', descending: true).get();
-    postList.assignAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
-    isLoading == false; //데이터 받은 후 로딩 끝
-    return postList;
+    change(postList, status: RxStatus.loading()); //데이터 받기 전 로딩상태
+    //파이어스토어 DB에서 데이터 받기
+    await _postDB.orderBy('createdAt', descending: true).get().then(
+          (snapshot) => postList.assignAll(
+              snapshot.docs.map((e) => PostModel.fromDocumentSnapshot(e))),
+          onError: (err) => change(null,
+              status: RxStatus.error(err.toString())), //데이터 받는 과정에서 에러나는 경우
+        );
+    /* 데이터가 있다 ? 완료상태 : 빈 상태 */
+    if (postList.isNotEmpty || postList.length > 0) {
+      return change(postList, status: RxStatus.success()); //데이터 받은 후 완료상태로 변경
+    } else {
+      return change(postList, status: RxStatus.empty()); //리스트가 비었을 경우
+    }
   }
 
   /* 게시글을 게임모드 필터링하여 받기 */
   Future filterGamemode(gamemode) async {
     postList.clear(); //리스트 초기화
-    isLoading == true; //데이터 받기 전 로딩 중
-    final res = await _postDB
+    change(postList, status: RxStatus.loading()); //데이터 받기 전 로딩상태
+    await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
-        .get();
-    postList.assignAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
-    isLoading == false; //데이터 받은 후 로딩 끝
-    return postList;
+        .get()
+        .then(
+          (snapshot) => postList.assignAll(
+              snapshot.docs.map((e) => PostModel.fromDocumentSnapshot(e))),
+          onError: (err) => change(null,
+              status: RxStatus.error(err.toString())), //데이터 받는 과정에서 에러나는 경우
+        );
+    /* 데이터가 있다 ? 완료상태 : 빈 상태 */
+    if (postList.isNotEmpty || postList.length > 0) {
+      return change(postList, status: RxStatus.success()); //데이터 받은 후 완료상태로 변경
+    } else {
+      return change(postList, status: RxStatus.empty()); //리스트가 비었을 경우
+    }
   }
 
   /* 게시글을 게임모드, 포지션 필터링하여 받기 */
   Future filterPosition(gamemode, position) async {
     postList.clear(); //리스트 초기화
-    isLoading == true; //데이터 받기 전 로딩 중
-    final res = await _postDB
+    change(postList, status: RxStatus.loading()); //데이터 받기 전 로딩상태
+    await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
-        .get();
-    postList.assignAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
-    isLoading == false; //데이터 받은 후 로딩 끝
-    return postList;
+        .get()
+        .then(
+          (snapshot) => postList.assignAll(
+              snapshot.docs.map((e) => PostModel.fromDocumentSnapshot(e))),
+          onError: (err) => change(null,
+              status: RxStatus.error(err.toString())), //데이터 받는 과정에서 에러나는 경우
+        );
+    /* 데이터가 있다 ? 완료상태 : 빈 상태 */
+    if (postList.isNotEmpty || postList.length > 0) {
+      return change(postList, status: RxStatus.success()); //데이터 받은 후 완료상태로 변경
+    } else {
+      return change(postList, status: RxStatus.empty()); //리스트가 비었을 경우
+    }
   }
 
   /* 게시글을 게임모드, 포지션, 티어 필터링하여 받기 */
   Future filterTear(gamemode, position, tear) async {
     postList.clear(); //리스트 초기화
-    isLoading == true; //데이터 받기 전 로딩 중
-    final res = await _postDB
+    change(postList, status: RxStatus.loading()); //데이터 받기 전 로딩상태
+    await _postDB
         .orderBy('createdAt', descending: true)
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
         .where('tear', isEqualTo: tear)
-        .get();
-    postList.assignAll(res.docs.map((e) => PostModel.fromDocumentSnapshot(e)));
-    isLoading == false; //데이터 받은 후 로딩 끝
-    return postList;
+        .get()
+        .then(
+            (snapshot) => postList.assignAll(
+                snapshot.docs.map((e) => PostModel.fromDocumentSnapshot(e))),
+            onError: (err) => change(
+                  null,
+                  status: RxStatus.error(err.toString()),
+                ) //데이터 받는 과정에서 에러나는 경우
+            );
+    /* 데이터가 있다 ? 완료상태 : 빈 상태 */
+    if (postList.isNotEmpty || postList.length > 0) {
+      return change(postList, status: RxStatus.success()); //데이터 받은 후 완료상태로 변경
+    } else {
+      return change(postList, status: RxStatus.empty()); //리스트가 비었을 경우
+    }
   }
 
   /* 게시물 수정하기 */
