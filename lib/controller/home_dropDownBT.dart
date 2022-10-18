@@ -2,19 +2,15 @@ import 'package:mannergamer/utilites/index.dart';
 
 /*-------------------- 홈페이지의 드랍다운버튼 컨트롤러 --------------------*/
 class HomePageDropDownBTController extends GetxController {
-  static HomePageDropDownBTController get to =>
-      Get.find<HomePageDropDownBTController>();
-
   /* 포지션 드랍다운 버튼 보여주는 bool값 */
   bool showPosition = false;
   /* 티어 드랍다운 버튼 보여주는 bool값  */
   bool showTear = false;
-
-  /* 게임모드 선택 value */
+  /* 게임모드 선택 value, 초기값 = '게임모드' */
   var selectedModeValue = gameModes[0];
-  /* 포지션 선택 value */
+  /* 포지션 선택 value, 초기값 = '포지션' */
   var selectedPositionValue = postions[0];
-  /* 티어 선택 value */
+  /* 티어 선택 value, 초기값 = '티어' */
   var selectedTearValue = tears[0];
 
   /* PostController find */
@@ -27,6 +23,8 @@ class HomePageDropDownBTController extends GetxController {
   */
   changeGamemode(modeValue) {
     selectedModeValue = modeValue as String;
+    selectedPositionValue = '포지션';
+    selectedTearValue = '티어';
     update();
     filter(_gamemode) {
       _post.filterGamemode(_gamemode);
@@ -70,6 +68,7 @@ class HomePageDropDownBTController extends GetxController {
   /* 포지션 드랍다운버튼 클릭 시 */
   changePosition(value) {
     selectedPositionValue = value as String;
+    selectedTearValue = '티어';
     update();
     filter(gamemode, position) {
       _post.filterPosition(gamemode, position);

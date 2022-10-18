@@ -23,15 +23,15 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
               buttonWidth: controller.selectedModeValue == '무작위 총력전' ? 125 : 85,
               dropdownWidth: 130,
               isExpanded: true,
-              items: gameModes
-                  .map(
-                    (item) => DropdownMenuItem<String>(
-                      onTap: () {}, // 솔로,자유 -> 포지션과 티어 표시, 일반게임 -> 포지션만 나오게
-                      value: item,
-                      child: Text(item),
-                    ),
-                  )
-                  .toList(),
+              items: gameModes.map(
+                (item) {
+                  return DropdownMenuItem<String>(
+                    onTap: () {}, // 솔로,자유 -> 포지션과 티어 표시, 일반게임 -> 포지션만 나오게
+                    value: item,
+                    child: Text(item),
+                  );
+                },
+              ).toList(),
               value: controller.selectedModeValue,
               onChanged: controller.changeGamemode,
             ),
@@ -46,14 +46,15 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                 buttonWidth: 70,
                 dropdownWidth: 100,
                 isExpanded: true,
-                items: postions
-                    .map(
-                      (item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(item),
-                      ),
-                    )
-                    .toList(),
+                items: postions.map(
+                  (item) {
+                    return DropdownMenuItem<String>(
+                      onTap: () {}, // 솔로,자유 -> 포지션과 티어 표시, 일반게임 -> 포지션만 나오게
+                      value: item,
+                      child: Text(item),
+                    );
+                  },
+                ).toList(),
                 value: controller.selectedPositionValue,
                 onChanged: controller.changePosition,
               ),

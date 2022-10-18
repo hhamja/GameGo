@@ -1,7 +1,17 @@
 import 'package:mannergamer/utilites/index.dart';
 
-class Homepage extends StatelessWidget {
-  PostController _post = Get.put(PostController());
+class Homepage extends StatefulWidget {
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  @override
+  void initState() {
+    Get.put(PostController());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

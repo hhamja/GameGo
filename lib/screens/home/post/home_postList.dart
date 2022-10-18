@@ -5,14 +5,13 @@ class HomePostList extends GetView<PostController> {
 
   @override
   Widget build(BuildContext context) {
-    // controller = Post 컨트롤러
     return controller.obx(
       onEmpty: Center(child: Text('텅')),
       onError: (error) => Center(child: Text(error.toString())),
       (state) => RefreshIndicator(
         onRefresh: () async {
           //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
-          await controller.readPostData();
+          controller.postList.refresh();
           // return Futu  re<void>.delayed(const Duration(seconds: 3));
         },
         displacement: 0, //맨 위에 위치시키는 값
@@ -44,7 +43,6 @@ class HomePostList extends GetView<PostController> {
                         /* 프로필 */
                         CircleAvatar(
                           radius: 10,
-                          backgroundColor: Colors.white,
                           backgroundImage: NetworkImage(
                               controller.postList[index].profileUrl),
                         ),
