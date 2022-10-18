@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 final double currentAgeValue = 36.8;
 

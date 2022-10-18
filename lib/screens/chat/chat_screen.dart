@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class MessagePage extends StatefulWidget {
   MessagePage({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _MessagePageState extends State<MessagePage> {
                 index: index,
                 userName: userName,
                 profileUrl: profileUrl,
-                mannerAge : mannerAge,
+                mannerAge: mannerAge,
               ),
             ),
             NewMessage(

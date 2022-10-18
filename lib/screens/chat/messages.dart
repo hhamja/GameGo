@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class Messages extends StatefulWidget {
   /* 상대유저 이름, 프로필, 매너나이 */

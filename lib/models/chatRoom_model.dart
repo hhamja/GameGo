@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class ChatRoomModel {
   final String id; //채팅방의 id

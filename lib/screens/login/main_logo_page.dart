@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class MainLogoPage extends StatelessWidget {
   MainLogoPage({Key? key}) : super(key: key);

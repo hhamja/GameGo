@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class CreateProfilePage extends StatefulWidget {
   CreateProfilePage({Key? key}) : super(key: key);

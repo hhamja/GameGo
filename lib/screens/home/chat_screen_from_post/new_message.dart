@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class NewMessageFromPost extends StatefulWidget {
   final String uid; // 게시글 유저 uid

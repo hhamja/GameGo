@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class MessagesFromPost extends StatefulWidget {
   /* 게시글 유저의  UID, 게시물 id 값 */

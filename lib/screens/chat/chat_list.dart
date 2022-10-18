@@ -1,5 +1,5 @@
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class ChatListPage extends StatefulWidget {
   ChatListPage({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class HomePostList extends GetView<PostController> {
   HomePostList({Key? key}) : super(key: key);
