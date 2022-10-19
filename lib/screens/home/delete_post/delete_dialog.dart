@@ -8,35 +8,34 @@ class DeleteDialog extends StatefulWidget {
 }
 
 class _DeleteDialogState extends State<DeleteDialog> {
-  /* find -> PostConroller  */
   final PostController _post = Get.find<PostController>();
-  /* HomePostList Listview의 index 값을 전달받음 */
-  final index = Get.arguments;
+  /* 게시물의 index 값을 전달받음 */
+  final int index = Get.arguments['index'];
   /* 홈 드랍다운버튼 컨트롤러 */
-  final HomePageDropDownBTController _button =
+  final HomePageDropDownBTController _ =
       Get.put(HomePageDropDownBTController());
 /* 드랍다운버튼 선택한 값에 따른 페이지 새로고침 */
   Future<void> _deletePost() async {
+    Get.until((route) => Get.currentRoute == "/myapp");
     await _post.deletePost(_post.postList[index].postId); //게시물 DB에서 삭제
-    if (_button.selectedModeValue != '게임모드') {
-      await _post.filterGamemode(_button.selectedModeValue);
-    } //게임모드 버튼 값이 선택되어 있다면?
-    else if (_button.selectedPositionValue != '포지션') {
-      await _post.filterPosition(
-          _button.selectedModeValue, _button.selectedPositionValue);
-    } //포지션 버튼 값이 선택되어 있다면?
-    else if (_button.selectedTearValue != '티어') {
-      await _post.filterTear(_button.selectedModeValue,
-          _button.selectedPositionValue, _button.selectedTearValue);
-    } //티어 버튼 값이 선택되어 있다면?
+    if (_.selectedTearValue != '티어') {
+      await _post.filterTear(
+          _.selectedModeValue, _.selectedPositionValue, _.selectedTearValue);
+    } //티어 선택한 경우( = 3개 다 선택한 경우)
+    else if (_.selectedPositionValue != '포지션') {
+      await _post.filterPosition(_.selectedModeValue, _.selectedPositionValue);
+    } //티어 선택 X, 모드와 포지션을 선택한 경우
+    else if (_.selectedModeValue != '게임모드') {
+      await _post.filterGamemode(_.selectedModeValue);
+    } // 티어, 포지션 선택 X, 게임모드만 선택한 경우
     else {
       await _post.readPostData();
-    } //아무것도 선택되어 있지 않다면?
-    Get.until((route) => Get.currentRoute == 'myapp');
+    } //티어, 포지션, 게임모드 아무것도 선택하지 않은 경우
   }
 
   @override
   Widget build(BuildContext context) {
+    print('xxxxxxx' + Get.currentRoute);
     print(index);
     print(_post.postList[index].postId);
     return Container(

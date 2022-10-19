@@ -8,18 +8,17 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPageState extends State<AddPostPage> {
-  /* FireStore User Collection Instance */
+  final _auth = FirebaseAuth.instance;
+  /* 유저 DB Ref */
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  /* FirebaseAuth instance */
-  final _auth = FirebaseAuth.instance;
   /* PostController 선언 (∵ Create Post) */
   final PostController _post = Get.find<PostController>();
   /* 홈 드랍다운버튼 컨트롤러 */
-  final HomePageDropDownBTController _button =
+  final HomePageDropDownBTController _ =
       Get.find<HomePageDropDownBTController>();
   /* DropDownBTController 선언 (∵ Create Post) */
-  CreatePostDropDownBTController dropDownController =
+  CreatePostDropDownBTController _button =
       Get.put(CreatePostDropDownBTController());
   /* 제목 · 본문 Text Controller */
   final TextEditingController _titleController = TextEditingController();
@@ -28,14 +27,13 @@ class _AddPostPageState extends State<AddPostPage> {
   final ScrollController _titleScrollController = ScrollController();
   final ScrollController _maintextScrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
-
+  /* 게시글 생성 '완료'버튼 클릭 시 */
   Future<void> _createPost() async {
-    //uid로 해당유저의 data UserModel의 인스턴스의 담기
     UserModel userModel =
         await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
       return UserModel.fromDocumentSnapshot(value);
-    });
-    //postModel 인스턴스 생성
+    }); //uid로 해당유저의 data UserModel의 인스턴스의 담기
+
     final postModel = PostModel(
       postId: FirebaseFirestore.instance.collection('post').doc().id,
       uid: _auth.currentUser!.uid,
@@ -44,27 +42,28 @@ class _AddPostPageState extends State<AddPostPage> {
       profileUrl: userModel.profileUrl.toString(),
       title: _titleController.text.trim(),
       maintext: _maintextController.text.trim(),
-      gamemode: dropDownController.seledtedPostGamemodeValue,
-      position: dropDownController.seledtedPostdPositionValue,
-      tear: dropDownController.seledtedPostTearValue,
+      gamemode: _button.seledtedPostGamemodeValue,
+      position: _button.seledtedPostdPositionValue,
+      tear: _button.seledtedPostTearValue,
       createdAt: Timestamp.now(),
-    );
-    //게시물 만들기
-    await _post.createPost(postModel);
-    if (_button.selectedModeValue != '게임모드') {
-      await _post.filterGamemode(_button.selectedModeValue);
-    } //게임모드 버튼 값이 선택되어 있다면?
-    else if (_button.selectedPositionValue != '포지션') {
-      await _post.filterPosition(
-          _button.selectedModeValue, _button.selectedPositionValue);
-    } //포지션 버튼 값이 선택되어 있다면?
-    else if (_button.selectedTearValue != '티어') {
-      await _post.filterTear(_button.selectedModeValue,
-          _button.selectedPositionValue, _button.selectedTearValue);
-    } //티어 버튼 값이 선택되어 있다면?
+    ); //postModel 인스턴스 생성
+
+    await _post.createPost(postModel); //게시물 만들기
+
+    if (_.selectedTearValue != '티어') {
+      await _post.filterTear(
+          _.selectedModeValue, _.selectedPositionValue, _.selectedTearValue);
+    } //티어 선택한 경우( = 3개 다 선택한 경우)
+    else if (_.selectedPositionValue != '포지션') {
+      await _post.filterPosition(_.selectedModeValue, _.selectedPositionValue);
+    } //티어 선택 X, 모드와 포지션을 선택한 경우
+    else if (_.selectedModeValue != '게임모드') {
+      await _post.filterGamemode(_.selectedModeValue);
+    } // 티어, 포지션 선택 X, 게임모드만 선택한 경우
     else {
       await _post.readPostData();
-    } //아무것도 선택되어 있지 않다면?
+    } //티어, 포지션, 게임모드 아무것도 선택하지 않은 경우
+
     Get.back();
   }
 

@@ -11,13 +11,14 @@ class _PostDetailPageState extends State<PostDetailPage> {
   /* 게시물 컨트롤러 Find */
   PostController _post = Get.find<PostController>();
   /* 해당 게시물의 lisview에서의 index값 전달 받음 */
-  final index = Get.arguments['index'];
+  final int index = Get.arguments['index'];
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   bool _click = true;
 
   @override
   Widget build(BuildContext context) {
     print(index);
+    print(Get.currentRoute);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -245,7 +246,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
             }),
             ButtomSheetContent('삭제', Colors.redAccent, () async {
               Get.back();
-              await Get.dialog(DeleteDialog(), arguments: index);
+              await Get.dialog(DeleteDialog(), arguments: {'index': index});
             }),
             ButtomSheetContent('취소', Colors.blue, () => Get.back()),
           ],
