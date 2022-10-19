@@ -14,7 +14,10 @@ class _AddPostPageState extends State<AddPostPage> {
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
   /* PostController 선언 (∵ Create Post) */
-  final PostController _postController = Get.find<PostController>();
+  final PostController _post = Get.find<PostController>();
+  /* 홈 드랍다운버튼 컨트롤러 */
+  final HomePageDropDownBTController _button =
+      Get.find<HomePageDropDownBTController>();
   /* DropDownBTController 선언 (∵ Create Post) */
   CreatePostDropDownBTController dropDownController =
       Get.put(CreatePostDropDownBTController());
@@ -26,6 +29,45 @@ class _AddPostPageState extends State<AddPostPage> {
   final ScrollController _maintextScrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
 
+  Future<void> _createPost() async {
+    //uid로 해당유저의 data UserModel의 인스턴스의 담기
+    UserModel userModel =
+        await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
+      return UserModel.fromDocumentSnapshot(value);
+    });
+    //postModel 인스턴스 생성
+    final postModel = PostModel(
+      postId: FirebaseFirestore.instance.collection('post').doc().id,
+      uid: _auth.currentUser!.uid,
+      mannerAge: userModel.mannerAge.toString(),
+      userName: userModel.userName.toString(),
+      profileUrl: userModel.profileUrl.toString(),
+      title: _titleController.text.trim(),
+      maintext: _maintextController.text.trim(),
+      gamemode: dropDownController.seledtedPostGamemodeValue,
+      position: dropDownController.seledtedPostdPositionValue,
+      tear: dropDownController.seledtedPostTearValue,
+      createdAt: Timestamp.now(),
+    );
+    //게시물 만들기
+    await _post.createPost(postModel);
+    if (_button.selectedModeValue != '게임모드') {
+      await _post.filterGamemode(_button.selectedModeValue);
+    } //게임모드 버튼 값이 선택되어 있다면?
+    else if (_button.selectedPositionValue != '포지션') {
+      await _post.filterPosition(
+          _button.selectedModeValue, _button.selectedPositionValue);
+    } //포지션 버튼 값이 선택되어 있다면?
+    else if (_button.selectedTearValue != '티어') {
+      await _post.filterTear(_button.selectedModeValue,
+          _button.selectedPositionValue, _button.selectedTearValue);
+    } //티어 버튼 값이 선택되어 있다면?
+    else {
+      await _post.readPostData();
+    } //아무것도 선택되어 있지 않다면?
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,30 +78,7 @@ class _AddPostPageState extends State<AddPostPage> {
         actions: [
           /* 완료 버튼 */
           TextButton(
-            onPressed: () async {
-              //uid로 해당유저의 data UserModel의 인스턴스의 담기
-              UserModel userModel =
-                  await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
-                return UserModel.fromDocumentSnapshot(value);
-              });
-              //postModel 인스턴스 생성
-              final postModel = PostModel(
-                postId: FirebaseFirestore.instance.collection('post').doc().id,
-                uid: _auth.currentUser!.uid,
-                mannerAge: userModel.mannerAge.toString(),
-                userName: userModel.userName.toString(),
-                profileUrl: userModel.profileUrl.toString(),
-                title: _titleController.text.trim(),
-                maintext: _maintextController.text.trim(),
-                gamemode: dropDownController.seledtedPostGamemodeValue,
-                position: dropDownController.seledtedPostdPositionValue,
-                tear: dropDownController.seledtedPostTearValue,
-                createdAt: Timestamp.now(),
-              );
-              //게시물 만들기
-              await _postController.createPost(postModel);
-              Get.back();
-            },
+            onPressed: _createPost,
             child: Text(
               '완료',
               style: TextStyle(color: Colors.white),

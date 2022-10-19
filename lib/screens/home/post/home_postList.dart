@@ -7,7 +7,7 @@ class HomePostList extends GetView<PostController> {
       Get.put(HomePageDropDownBTController());
 
   /* 드랍다운버튼 선택한 값에 따른 페이지 새로고침 */
-  Future<void> refreshFromButtonValue() async {
+  Future<void> _refreshFromButtonValue() async {
     if (_button.selectedModeValue != '게임모드') {
       await controller.filterGamemode(_button.selectedModeValue);
     } //게임모드 버튼 값이 선택되어 있다면?
@@ -31,7 +31,7 @@ class HomePostList extends GetView<PostController> {
       onError: (error) => Center(child: Text(error.toString())),
       (state) => RefreshIndicator(
         //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
-        onRefresh: refreshFromButtonValue,
+        onRefresh: _refreshFromButtonValue,
         displacement: 0, //맨 위에 위치시키는 값
         child: ListView.separated(
           physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능

@@ -12,6 +12,28 @@ class _DeleteDialogState extends State<DeleteDialog> {
   final PostController _post = Get.find<PostController>();
   /* HomePostList Listview의 index 값을 전달받음 */
   final index = Get.arguments;
+  /* 홈 드랍다운버튼 컨트롤러 */
+  final HomePageDropDownBTController _button =
+      Get.put(HomePageDropDownBTController());
+/* 드랍다운버튼 선택한 값에 따른 페이지 새로고침 */
+  Future<void> _deletePost() async {
+    await _post.deletePost(_post.postList[index].postId); //게시물 DB에서 삭제
+    if (_button.selectedModeValue != '게임모드') {
+      await _post.filterGamemode(_button.selectedModeValue);
+    } //게임모드 버튼 값이 선택되어 있다면?
+    else if (_button.selectedPositionValue != '포지션') {
+      await _post.filterPosition(
+          _button.selectedModeValue, _button.selectedPositionValue);
+    } //포지션 버튼 값이 선택되어 있다면?
+    else if (_button.selectedTearValue != '티어') {
+      await _post.filterTear(_button.selectedModeValue,
+          _button.selectedPositionValue, _button.selectedTearValue);
+    } //티어 버튼 값이 선택되어 있다면?
+    else {
+      await _post.readPostData();
+    } //아무것도 선택되어 있지 않다면?
+    Get.until((route) => Get.currentRoute == 'myapp');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +80,7 @@ class _DeleteDialogState extends State<DeleteDialog> {
                     padding: EdgeInsets.symmetric(vertical: 18, horizontal: 0),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  onPressed: () async {
-                    await _post.deletePost(_post.postList[index].postId);
-                    await _post.readPostData();
-                    Get.offAll(() => Homepage());
-                  },
+                  onPressed: _deletePost,
                   child: Text(
                     '삭제',
                     style: TextStyle(color: Colors.black),
