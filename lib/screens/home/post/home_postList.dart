@@ -2,6 +2,27 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class HomePostList extends GetView<PostController> {
   HomePostList({Key? key}) : super(key: key);
+  /* 홈 드랍다운버튼 컨트롤러 */
+  final HomePageDropDownBTController _button =
+      Get.put(HomePageDropDownBTController());
+
+  /* 드랍다운버튼 선택한 값에 따른 페이지 새로고침 */
+  Future<void> refreshFromButtonValue() async {
+    if (_button.selectedModeValue != '게임모드') {
+      await controller.filterGamemode(_button.selectedModeValue);
+    } //게임모드 버튼 값이 선택되어 있다면?
+    else if (_button.selectedPositionValue != '포지션') {
+      await controller.filterPosition(
+          _button.selectedModeValue, _button.selectedPositionValue);
+    } //포지션 버튼 값이 선택되어 있다면?
+    else if (_button.selectedTearValue != '티어') {
+      await controller.filterTear(_button.selectedModeValue,
+          _button.selectedPositionValue, _button.selectedTearValue);
+    } //티어 버튼 값이 선택되어 있다면?
+    else {
+      await controller.readPostData();
+    } //아무것도 선택되어 있지 않다면?
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,11 +30,8 @@ class HomePostList extends GetView<PostController> {
       onEmpty: Center(child: Text('텅')),
       onError: (error) => Center(child: Text(error.toString())),
       (state) => RefreshIndicator(
-        onRefresh: () async {
-          //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
-          controller.postList.refresh();
-          // return Futu  re<void>.delayed(const Duration(seconds: 3));
-        },
+        //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
+        onRefresh: refreshFromButtonValue,
         displacement: 0, //맨 위에 위치시키는 값
         child: ListView.separated(
           physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능

@@ -9,14 +9,14 @@ class DeleteDialog extends StatefulWidget {
 
 class _DeleteDialogState extends State<DeleteDialog> {
   /* find -> PostConroller  */
-  final PostController _controller = Get.find<PostController>();
+  final PostController _post = Get.find<PostController>();
   /* HomePostList Listview의 index 값을 전달받음 */
   final index = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
     print(index);
-    print(_controller.postList[index].postId);
+    print(_post.postList[index].postId);
     return Container(
       child: AlertDialog(
         buttonPadding: EdgeInsets.zero,
@@ -59,9 +59,8 @@ class _DeleteDialogState extends State<DeleteDialog> {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   onPressed: () async {
-                    await _controller
-                        .deletePost(_controller.postList[index].postId);
-                    await _controller.readPostData();
+                    await _post.deletePost(_post.postList[index].postId);
+                    await _post.readPostData();
                     Get.offAll(() => Homepage());
                   },
                   child: Text(
