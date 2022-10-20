@@ -1,3 +1,4 @@
+import 'package:mannergamer/screens/report/user_report/report_post.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class ChatBottomSheet extends StatefulWidget {
@@ -26,14 +27,18 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
             setState(() {
               _isAlramOnOff = !_isAlramOnOff;
             });
+            Get.back();
           }),
           ButtomSheetContent(!_isBlockOnOff ? '차단하기' : '차단 해제하기', Colors.blue,
               () {
             setState(() {
               _isBlockOnOff = !_isBlockOnOff;
             });
+            Get.back();
           }),
-          ButtomSheetContent('신고하기', Colors.blue, () {}),
+          ButtomSheetContent('신고하기', Colors.blue, () {
+            Get.to(() => ReportUserPage());
+          }),
           ButtomSheetContent('채팅방 나가기', Colors.redAccent, () {}),
           ButtomSheetContent('취소', Colors.blue, () => Get.back()),
         ],

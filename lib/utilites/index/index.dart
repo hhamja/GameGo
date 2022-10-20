@@ -45,10 +45,10 @@ export 'package:mannergamer/screens/home/edit_post/edit_post_dropDownbutton.dart
 export 'package:mannergamer/screens/home/post/home_postList.dart';
 export 'package:mannergamer/screens/home/delete_post/delete_dialog.dart';
 export 'package:mannergamer/screens/home/post/post_detail.dart';
-export 'package:mannergamer/screens/home/report_post/illegal_post.dart';
-export 'package:mannergamer/screens/home/report_post/other_reasons.dart';
-export 'package:mannergamer/screens/home/report_post/report_dialog.dart';
-export 'package:mannergamer/screens/home/report_post/report_post.dart';
+export 'package:mannergamer/screens/report/post_report/illegal_post.dart';
+export 'package:mannergamer/screens/report/post_report/other_reasons.dart';
+export 'package:mannergamer/screens/report/post_report/report_dialog.dart';
+export 'package:mannergamer/screens/report/post_report/report_post.dart';
 
 export 'package:mannergamer/screens/login/phone_auth.dart';
 export 'package:mannergamer/screens/login/create_profile.dart';
