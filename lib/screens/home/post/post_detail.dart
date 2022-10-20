@@ -136,7 +136,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   onTap: () {
-                    Get.toNamed('/reportList');
+                    Get.to(ReportPostPage());
                   },
                   title: Text('이 게시물 신고하기'),
                   trailing: Icon(Icons.keyboard_arrow_right_outlined),

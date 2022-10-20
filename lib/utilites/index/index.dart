@@ -27,6 +27,7 @@ export 'package:jiffy/jiffy.dart';
 export 'package:mannergamer/screens/splashPage/myApp.dart';
 export 'package:mannergamer/screens/splashPage/splash.dart';
 
+export 'package:mannergamer/screens/chat/chat_bottomSheet.dart';
 export 'package:mannergamer/screens/chat/messages.dart';
 export 'package:mannergamer/screens/chat/new_message.dart';
 export 'package:mannergamer/screens/chat/chat_screen.dart';

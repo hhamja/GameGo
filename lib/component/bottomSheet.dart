@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 class ButtomSheetContent extends StatelessWidget {
   final String inputText;
   final Color inputColor;
-  final void Function() clickCcontent;
+  final Function() clickCcontent;
 
   const ButtomSheetContent(this.inputText, this.inputColor, this.clickCcontent);
 

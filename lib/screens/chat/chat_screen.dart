@@ -34,7 +34,7 @@ class _MessagePageState extends State<MessagePage> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () => {}, //바텀시트호출
+            onPressed: () => {Get.bottomSheet(ChatBottomSheet())}, //바텀시트호출
             icon: Icon(Icons.more_vert), //알림끄기, 차단, 신고, 나가기(red), 취소
           ),
         ],
