@@ -37,6 +37,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
             Get.back();
           }),
           ButtomSheetContent('신고하기', Colors.blue, () {
+            Get.back();
             Get.to(() => ReportUserPage());
           }),
           ButtomSheetContent('채팅방 나가기', Colors.redAccent, () {}),

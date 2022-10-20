@@ -138,15 +138,17 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   onTap: () {
                     Get.to(ReportPostPage());
                   },
-                  title: Text('이 게시물 신고하기'),
-                  trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                  title: Text(
+                    '광           고',
+                    textAlign: TextAlign.center,
+                  ),
+                  // trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 ),
                 Divider(
                   color: Colors.grey[300],
                   height: 0,
                   thickness: 1,
                 ),
-                Center(child: Text('(이자리에 광고), 신고빼고')),
               ],
             ),
           ),
@@ -212,7 +214,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
     );
   }
 
-  /** 바텀시트 호출함수 */
+  /* 나의 게시물이 아닐 경우 바텀시트 */
   openBottomSheet() {
     return Get.bottomSheet(
       Container(
@@ -220,8 +222,13 @@ class _PostDetailPageState extends State<PostDetailPage> {
         height: 180,
         child: Column(
           children: [
-            ButtomSheetContent('이 사용자의 글 보지 않기', Colors.blue, () {}),
-            ButtomSheetContent('신고', Colors.redAccent, () {}),
+            ButtomSheetContent('이 사용자의 글 보지 않기', Colors.blue, () {
+              Get.back();
+            }),
+            ButtomSheetContent('신고하기', Colors.redAccent, () {
+              Get.back();
+              Get.to(ReportPostPage());
+            }),
             ButtomSheetContent('취소', Colors.blue, () => Get.back()),
           ],
         ),
@@ -229,7 +236,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
     );
   }
 
-  /** 바텀시트 호출함수 */
+  /* 나의 게시물일 경우 바텀시트 */
   openMypostBottomSheet() {
     return Get.bottomSheet(
       Container(
