@@ -22,6 +22,7 @@ export 'package:firebase_auth/firebase_auth.dart';
 export 'package:image_picker/image_picker.dart';
 export 'package:path/path.dart';
 export 'package:jiffy/jiffy.dart';
+export 'package:grouped_list/grouped_list.dart';
 
 /* Screens */
 export 'package:mannergamer/screens/splashPage/myApp.dart';

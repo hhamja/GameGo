@@ -25,10 +25,19 @@ class _MessagePageState extends State<MessagePage> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
+          textBaseline: TextBaseline.alphabetic,
+          crossAxisAlignment: CrossAxisAlignment.baseline,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(userName), // 상대유저이름
-            Text(mannerAge), //유저 매너나이 (글씨 작게)
+            Text(
+              userName,
+              style: TextStyle(fontSize: 20),
+            ), // 상대유저이름
+            SizedBox(width: 5),
+            Text(
+              mannerAge,
+              style: TextStyle(fontSize: 12),
+            ), //유저 매너나이 (글씨 작게)
           ],
         ),
         centerTitle: true,

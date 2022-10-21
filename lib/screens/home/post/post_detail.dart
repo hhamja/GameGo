@@ -11,6 +11,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   /* 게시물 컨트롤러 Find */
   PostController _post = Get.find<PostController>();
   /* 해당 게시물의 lisview에서의 index값 전달 받음 */
+  //데이터를 아규먼트로 전달받지 않는 이유는 게시물 수정 시 변한 데이터를 받기 위해서
   final int index = Get.arguments['index'];
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   bool _click = true;

@@ -24,19 +24,25 @@ class _MessagePageFromPostState extends State<MessagePageFromPost> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
+          textBaseline: TextBaseline.alphabetic,
+          crossAxisAlignment: CrossAxisAlignment.baseline,
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text(userName), // 게시자 유저이름
-            Text(mannerAge), //유저 매너나이 (글씨 작게)
+            Text(
+              userName, // 게시자 유저이름
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(width: 5),
+            Text(
+              mannerAge, //유저 매너나이 (글씨 작게)
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
           ],
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () => {Get.bottomSheet(ChatBottomSheet())}, //바텀시트호출
-            icon: Icon(Icons.more_vert), //알림끄기, 차단, 신고, 나가기(red), 취소
-          ),
-        ],
       ),
       body: Container(
         child: Column(
