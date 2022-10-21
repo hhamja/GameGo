@@ -42,6 +42,7 @@ class _MessagePageState extends State<MessagePage> {
       body: Container(
         child: Column(
           children: [
+            /* 메시지 보여주는 부분 */
             Expanded(
               child: Messages(
                 index: index,
@@ -50,6 +51,7 @@ class _MessagePageState extends State<MessagePage> {
                 mannerAge: mannerAge,
               ),
             ),
+            /* 메시지 보내는 부분*/
             NewMessage(
               chatRoomId: chatRoomId,
               index: index,

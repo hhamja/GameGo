@@ -16,6 +16,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
   Widget build(BuildContext context) {
     return GetBuilder<HomePageDropDownBTController>(
       builder: (controller) => Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           /* 게임모드 드랍다운 버튼 */
           DropdownButtonHideUnderline(
@@ -49,7 +50,8 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                 items: postions.map(
                   (item) {
                     return DropdownMenuItem<String>(
-                      onTap: () {}, // 솔로,자유 -> 포지션과 티어 표시, 일반게임 -> 포지션만 나오게
+                      onTap: () {},
+                      // 솔로,자유 -> 포지션과 티어 표시, 일반게임 -> 포지션만 나오게
                       value: item,
                       child: Text(item),
                     );
@@ -61,13 +63,15 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
             ),
           ),
           SizedBox(width: 10),
-
           /* 티어 드랍다운 버튼*/
           Visibility(
             visible: controller.showTear,
             child: DropdownButtonHideUnderline(
               child: DropdownButton2(
-                buttonWidth: 70,
+                buttonWidth: controller.selectedTearValue == '다이아몬드' ||
+                        controller.selectedTearValue == '플래티넘'
+                    ? 100
+                    : 70,
                 dropdownWidth: 110,
                 isExpanded: true,
                 items: tears
