@@ -23,8 +23,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          /* 외부SNS로 해당 게시물 공유버튼 */
-          IconButton(onPressed: () {}, icon: Icon(Icons.ios_share)),
+          // /* 외부SNS로 해당 게시물 공유버튼 */
+          // IconButton(onPressed: () {}, icon: Icon(Icons.ios_share)),
           /* 내게시물 ? openMypostBottomSheet() : openBottomSheet() */
           IconButton(
               onPressed: openMypostBottomSheet, icon: Icon(Icons.more_vert)),
