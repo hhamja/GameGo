@@ -33,20 +33,31 @@ class _MessagesState extends State<Messages> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => ListView.builder(
-        controller: ScrollController(),
-        itemCount: _chat.messageList.length,
-        itemBuilder: (context, index) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: StickyGroupedListView<MessageModel, dynamic>(
+        elements: _chat.messageList,
+        groupBy: (MessageModel element) =>
+            Jiffy(element.timestamp.toDate()).format('yyyy년 MM월 dd일'),
+        groupSeparatorBuilder: (MessageModel element) {
+          final _time =
+              Jiffy(element.timestamp.toDate()).format('yyyy년 MM월 dd일');
+          return Text(
+            _time.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
+        itemScrollController: GroupedItemScrollController(),
+        itemBuilder: (context, MessageModel element) {
           //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
-          final bool _isMe =
-              _currentUser.uid == _chat.messageList[index].senderId;
+          final bool _isMe = _currentUser.uid == element.senderId;
           return _isMe
               ? /* 나의 메시지 */
               Container(
-                  margin: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  margin: EdgeInsets.symmetric(vertical: 1),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
@@ -58,7 +69,7 @@ class _MessagesState extends State<Messages> {
                       SizedBox(width: 5),
                       Container(
                         constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.7,
+                          maxWidth: MediaQuery.of(context).size.width * 0.6,
                         ),
                         decoration: BoxDecoration(
                             color: Colors.blue, //박스색상
@@ -67,13 +78,12 @@ class _MessagesState extends State<Messages> {
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                         child: Text(
-                          _chat.messageList[index].content
-                              .toString(), //메시지 입력 리스트
+                          element.content.toString(), //메시지 입력 리스트
                           textWidthBasis: TextWidthBasis.parent,
                           style: TextStyle(
                             fontFeatures: <FontFeature>[
-                              FontFeature
-                                  .tabularFigures(), //폰트를 모노스페이스로 만들어주는 건데 작동을 안하네..........
+                              FontFeature.tabularFigures(),
+                              //폰트를 모노스페이스로 만들어주는 건데 작동을 안하네..........
                             ],
                             color: Colors.grey[100],
                           ), //메시지 글 색상
@@ -84,10 +94,10 @@ class _MessagesState extends State<Messages> {
                 )
               : /* 상대방 메시지 */
               Container(
-                  margin: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  margin: EdgeInsets.symmetric(vertical: 1),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       CircleAvatar(
@@ -101,7 +111,7 @@ class _MessagesState extends State<Messages> {
                       ),
                       Container(
                         constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.7,
+                          maxWidth: MediaQuery.of(context).size.width * 0.6,
                         ),
                         decoration: BoxDecoration(
                             color: Colors.grey[200],
@@ -112,7 +122,7 @@ class _MessagesState extends State<Messages> {
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text(
-                            '${_chat.messageList[index].content}', //메시지 입력 리스트
+                            '${element.content}', //메시지 입력 리스트
                             textWidthBasis: TextWidthBasis.parent,
                             style: TextStyle(color: Colors.black87),
                           ),

@@ -90,12 +90,19 @@ class _ChatListPageState extends State<ChatListPage> {
                   /* 최근 대화 날짜 (며칠 전) */
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
                         _time,
                         style: TextStyle(fontSize: 10),
                       ),
-                      Text('1'), // 읽지 않은 메시지 알려주는 빨간 박스 숫자
+                      CircleAvatar(
+                          backgroundColor: Colors.red,
+                          radius: 10,
+                          child: Text(
+                            '1',
+                            style: TextStyle(fontSize: 12, color: Colors.white),
+                          )), // 읽지 않은 메시지 알려주는 빨간 박스 숫자
                     ],
                   ),
                   onTap: () {
