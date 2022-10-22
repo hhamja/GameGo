@@ -41,16 +41,14 @@ class _MessagesState extends State<Messages> {
           //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
           final bool _isMe =
               _currentUser.uid == _chat.messageList[index].senderId;
-          return Container(
-            margin: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-            child: Row(
-              //내가보냄 ? 오른쪽위치 : 왼쪽위치
-              mainAxisAlignment:
-                  _isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.max,
-              children: _isMe
-                  ? [
+          return _isMe
+              ? /* 나의 메시지 */
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
                       Text(
                         '오후 1:32',
                         textAlign: TextAlign.start,
@@ -81,8 +79,26 @@ class _MessagesState extends State<Messages> {
                           ), //메시지 글 색상
                         ),
                       ),
-                    ]
-                  : [
+                    ],
+                  ),
+                )
+              : /* 상대방 메시지 */
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: NetworkImage(
+                          widget.profileUrl,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Container(
                         constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.7,
@@ -110,8 +126,8 @@ class _MessagesState extends State<Messages> {
                             fontSize: 10, height: 3, color: Colors.grey[500]),
                       ),
                     ],
-            ),
-          );
+                  ),
+                );
         },
       ),
     );

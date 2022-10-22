@@ -28,11 +28,11 @@ export 'package:grouped_list/grouped_list.dart';
 export 'package:mannergamer/screens/splashPage/myApp.dart';
 export 'package:mannergamer/screens/splashPage/splash.dart';
 
-export 'package:mannergamer/screens/chat/chat_bottomSheet.dart';
-export 'package:mannergamer/screens/chat/messages.dart';
-export 'package:mannergamer/screens/chat/new_message.dart';
-export 'package:mannergamer/screens/chat/chat_screen.dart';
-export 'package:mannergamer/screens/chat/chat_list.dart';
+export 'package:mannergamer/screens/chat/bottomSheet/chat_bottomSheet.dart';
+export 'package:mannergamer/screens/chat/chat_screen/messages.dart';
+export 'package:mannergamer/screens/chat/chat_screen/new_message.dart';
+export 'package:mannergamer/screens/chat/chat_screen/chat_screen.dart';
+export 'package:mannergamer/screens/chat/chat_list/chat_list.dart';
 export 'package:mannergamer/screens/home/chat_screen_from_post/chat_screen.dart';
 export 'package:mannergamer/screens/home/chat_screen_from_post/messages.dart';
 export 'package:mannergamer/screens/home/chat_screen_from_post/new_message.dart';

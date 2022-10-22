@@ -2,9 +2,13 @@ import 'dart:ui';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MessagesFromPost extends StatefulWidget {
-  /* 게시글 유저의  UID, 게시물 id 값 */
-  final String uid, postId;
-  MessagesFromPost({Key? key, required this.uid, required this.postId})
+  /* 게시글 유저의  UID, 게시물 id 값, 상대프로필 */
+  final String uid, postId, profileUrl;
+  MessagesFromPost(
+      {Key? key,
+      required this.uid,
+      required this.postId,
+      required this.profileUrl})
       : super(key: key);
 
   @override
@@ -33,16 +37,14 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
           //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
           final bool _isMe =
               _currentUser.uid == _chat.messageList[index].senderId;
-          return Container(
-            margin: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-            child: Row(
-              //내가보냄 ? 오른쪽위치 : 왼쪽위치
-              mainAxisAlignment:
-                  _isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.max,
-              children: _isMe
-                  ? [
+          return _isMe
+              ? /* 나의 메시지 */
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
                       Text(
                         '오후 1:32',
                         textAlign: TextAlign.start,
@@ -73,8 +75,26 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                           ), //메시지 글 색상
                         ),
                       ),
-                    ]
-                  : [
+                    ],
+                  ),
+                )
+              : /* 상대방 메시지 */
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: NetworkImage(
+                          widget.profileUrl,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Container(
                         constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.7,
@@ -102,8 +122,8 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                             fontSize: 10, height: 3, color: Colors.grey[500]),
                       ),
                     ],
-            ),
-          );
+                  ),
+                );
         },
       ),
     );

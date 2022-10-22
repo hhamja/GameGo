@@ -41,7 +41,8 @@ class _ChatListPageState extends State<ChatListPage> {
               Map<String, dynamic> contactUser =
                   _chat.chatRoomList[index].userList.firstWhere((element) =>
                       element['id'] != FirebaseAuth.instance.currentUser!.uid);
-
+              String _time =
+                  Jiffy(_chat.chatRoomList[index].updatedAt.toDate()).fromNow();
               return Slidable(
                 endActionPane: ActionPane(
                   extentRatio: 0.4,
@@ -74,7 +75,7 @@ class _ChatListPageState extends State<ChatListPage> {
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(contactUser['profileUrl']),
                   ),
-                  /*  상대 유저 이름 */
+                  /* 이름 · 시간 */
                   title: Text(
                     contactUser['userName'],
                     maxLines: 1,
@@ -87,9 +88,15 @@ class _ChatListPageState extends State<ChatListPage> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   /* 최근 대화 날짜 (며칠 전) */
-                  trailing: Text(
-                    Jiffy(_chat.chatRoomList[index].updatedAt.toDate())
-                        .fromNow(),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        _time,
+                        style: TextStyle(fontSize: 10),
+                      ),
+                      Text('1'), // 읽지 않은 메시지 알려주는 빨간 박스 숫자
+                    ],
                   ),
                   onTap: () {
                     Get.to(

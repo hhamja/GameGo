@@ -49,8 +49,9 @@ class _MessagePageFromPostState extends State<MessagePageFromPost> {
           children: [
             Expanded(
               child: MessagesFromPost(
-                uid: uid, //게시글 유저 uid값 전달
-                postId: postId, //게시물 id값 전달
+                uid: uid, //게시글 유저 uid
+                postId: postId, //게시물 id값
+                profileUrl: profileUrl, // 상대유저 프로필
               ),
             ),
             NewMessageFromPost(
