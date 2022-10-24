@@ -20,6 +20,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   final _currentUser = FirebaseAuth.instance.currentUser!;
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
+
   @override
   void initState() {
     _chat.messageList.bindStream(

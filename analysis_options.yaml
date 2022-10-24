@@ -1,3 +1,16 @@
+#**********************************************************************************************
+# 다트 분석기 계속 꺼진다면 : 캐시 삭제 - > flutter clean - > flutter run(yaml파일에서 마우스우클릭으로 )
+# *********************************************************************************************#**********************************************************************************************
+# 다트 분석기 계속 꺼진다면 : 캐시 삭제 - > flutter clean - > flutter run(yaml파일에서 마우스우클릭으로 )
+# *********************************************************************************************#**********************************************************************************************
+# 다트 분석기 계속 꺼진다면 : 캐시 삭제 - > flutter clean - > flutter run(yaml파일에서 마우스우클릭으로 )
+# *********************************************************************************************
+
+
+
+
+
+
 # This file configures the analyzer, which statically analyzes Dart code to
 # check for errors, warnings, and lints.
 #
@@ -30,3 +43,4 @@ linter:
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+

@@ -54,7 +54,7 @@ class _MessagePageState extends State<MessagePage> {
             /* 메시지 보여주는 부분 */
             Expanded(
               child: Messages(
-                index: index,
+                chatRoomId: chatRoomId,
                 userName: userName,
                 profileUrl: profileUrl,
                 mannerAge: mannerAge,
