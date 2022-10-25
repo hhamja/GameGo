@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:mannergamer/utilites/index/index.dart';
 
 class Messages extends StatefulWidget {
@@ -7,6 +6,7 @@ class Messages extends StatefulWidget {
   final String userName, profileUrl, mannerAge;
   /* 채팅방 id 값 */
   final String chatRoomId;
+
   Messages({
     Key? key,
     required this.userName,
@@ -36,20 +36,18 @@ class _MessagesState extends State<Messages> {
     return Obx(
       () => Container(
         padding: EdgeInsets.all(16),
-        child: StickyGroupedListView<MessageModel, String>(
+        child: GroupedListView<MessageModel, String>(
           elements: _chat.messageList.value, //value 안 붙이면 에러나옴
           groupBy: (MessageModel element) => Jiffy(element.timestamp.toDate())
               .format('yyyy년 MM월 dd일'), //년,월,일로 그룹나눔
-          groupSeparatorBuilder: (MessageModel element) {
-            final _time =
-                Jiffy(element.timestamp.toDate()).format('yyyy년 MM월 dd일');
+          groupSeparatorBuilder: (value) {
+            // final _time =
+            //     Jiffy(element.timestamp.toDate()).format('yyyy년 MM월 dd일');
             return Text(
-              _time.toString(),
+              value.toString(),
               textAlign: TextAlign.center,
             );
           },
-
-          itemScrollController: GroupedItemScrollController(),
           itemBuilder: (context, MessageModel element) {
             //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
             final bool _isMe = _currentUser.uid == element.senderId;

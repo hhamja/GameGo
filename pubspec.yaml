@@ -43,15 +43,15 @@ dependencies:
   multi_select_flutter:
   settings_ui:
   syncfusion_flutter_gauges:
-  firebase_analytics: ^9.3.3
-  firebase_auth: ^3.7.0
-  firebase_app_installations: ^0.1.1+6
+  firebase_analytics: ^10.0.2
+  firebase_auth: ^4.0.2
+  firebase_app_installations: ^0.2.1+1
   image_picker: ^0.8.5+3
   sms_autofill: ^2.2.0
-  firebase_storage: ^10.3.9
+  firebase_storage: ^11.0.2
   path: ^1.8.2
   jiffy: ^5.0.0
-  sticky_grouped_list: ^3.1.0
+  grouped_list: ^5.1.2
 
 dev_dependencies:
   flutter_test:
