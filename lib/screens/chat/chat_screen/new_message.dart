@@ -1,10 +1,8 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class NewMessage extends StatefulWidget {
-  final int index;
   final String chatRoomId;
-  NewMessage({Key? key, required this.index, required this.chatRoomId})
-      : super(key: key);
+  NewMessage({Key? key, required this.chatRoomId}) : super(key: key);
 
   @override
   State<NewMessage> createState() => _NewMessageState();
@@ -39,7 +37,6 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     print('채팅방id는 ' + widget.chatRoomId);
-    print('채팅방id는 ' + _chat.chatRoomList[widget.index].id);
     return Container(
       margin: EdgeInsets.fromLTRB(10, 3, 0, 3),
       child: Row(

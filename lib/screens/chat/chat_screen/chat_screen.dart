@@ -63,7 +63,6 @@ class _MessagePageState extends State<MessagePage> {
             /* 메시지 보내는 부분*/
             NewMessage(
               chatRoomId: chatRoomId,
-              index: index,
             ),
           ],
         ),
