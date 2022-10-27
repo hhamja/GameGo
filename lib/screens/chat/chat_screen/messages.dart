@@ -1,11 +1,9 @@
-import 'package:mannergamer/utilites/index/index.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:mannergamer/utilites/index/index.dart';
 
 class Messages extends StatefulWidget {
-  /* 상대유저 이름, 프로필, 매너나이 */
-  final String userName, profileUrl, mannerAge;
-  /* 채팅방 id 값 */
-  final String chatRoomId;
+  /* 상대유저 이름, 프로필, 매너나이, 채팅방 id 값 */
+  final String userName, profileUrl, mannerAge, chatRoomId;
 
   Messages({
     Key? key,
@@ -24,10 +22,12 @@ class _MessagesState extends State<Messages> {
   final _currentUser = FirebaseAuth.instance.currentUser!;
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
+  var _list; // = _chat.messageList
 
   @override
   void initState() {
-    _chat.messageList.bindStream(_chat.readAllMessageList(widget.chatRoomId));
+    _list = _chat.messageList;
+    _list.bindStream(_chat.readAllMessageList(widget.chatRoomId));
     super.initState();
   }
 
@@ -35,59 +35,56 @@ class _MessagesState extends State<Messages> {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         /* 연,월,일로 메시지 그룹으로 묶기 */
         child: GroupedListView<MessageModel, String>(
-          elements: _chat.messageList.value, //value 안 붙이면 에러나옴
-          groupBy: (MessageModel element) => Jiffy(element.timestamp.toDate())
-              .format('yyyy년 MM월 dd일'), //년,월,일로 그룹나눔
+          elements: _list.value,
+          groupBy: (MessageModel element) => // 그룹나누는 기준
+              Jiffy(element.timestamp.toDate()).format('yyyy년 MM월 dd일'),
           groupSeparatorBuilder: (value) {
-            return Text(
-              value.toString(),
-              textAlign: TextAlign.center,
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                value.toString(),
+                textAlign: TextAlign.center,
+              ),
             );
           },
           indexedItemBuilder: (context, MessageModel element, index) {
-            // // //날짜표시 bool값 -> 다음 시간이 지금 표시되는 시간과 달라야 지금표시
+            final _time =
+                Jiffy(_list[index].timestamp.toDate()).format('HH:MM');
 
-            //     Jiffy(_chat.messageList[index].timestamp.toDate())
-            //             .format('a HH:mm') !=
-            //         Jiffy(_chat.messageList[index + 1].timestamp.toDate())
-            //             .format('a h:mm'); //다르면 true
-            // print(_isShowTime);
-            print(Jiffy(element.timestamp.toDate()).format('a HH:MM'));
-            //이전 id와 현재 id 비교하여 bool반환
-            if (index > 1 &&
-                _chat.messageList[index - 1].senderId ==
-                    _chat.messageList[index].senderId) {
+            print(_time);
+            print(_list.length);
+
+            /* 메시지 시간표시 조건문 */
+            if (index == _list.length - 1) {
+              _chat.isDisplayTime.value = true; //리스트의 마지막 메시지
+            } else if (index < _list.length - 1 &&
+                _list[index].senderId != _list[index + 1].senderId) {
+              _chat.isDisplayTime.value = true; //마지막X, 내가 보낸 메시지 그룹에서 마지막
+            } else if (index < _list.length - 1 &&
+                _time !=
+                    Jiffy(_list[index + 1].timestamp.toDate())
+                        .format('HH:MM')) {
+              _chat.isDisplayTime.value = true; //마지막X, 다음 메시지와 시간이 달라지는 경우
+            } else {
+              _chat.isDisplayTime.value = false; //나머지 경우
+            }
+            /* 상대 프로필 보여주는 조건문 */
+            if (index >= 1 &&
+                _list[index - 1].senderId == _list[index].senderId) {
               _chat.isShowProfile.value = false;
             } else {
               _chat.isShowProfile.value = true;
             }
-
             //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
-            final bool _isMe =
-                _currentUser.uid == _chat.messageList[index].senderId;
-            return Slidable(
-              endActionPane: ActionPane(
-                extentRatio: 0.2,
-                motion: DrawerMotion(),
-                children: [
-                  /* 시간표시 */
-                  SlidableAction(
-                    onPressed: null,
-                    autoClose: true,
-                    padding: EdgeInsets.zero,
-                    label: Jiffy(_chat.messageList[index].timestamp.toDate())
-                        .format('a HH:MM')
-                        .toString(),
-                  ),
-                ],
-              ),
-              child: _isMe
-                  ?
-                  /* 나의 메시지 */
-                  Container(
+            final bool _isMe = _currentUser.uid == _list[index].senderId;
+            return _isMe
+                ?
+                /* 나의 메시지 */
+                Slidable(
+                    child: Container(
                       margin: EdgeInsets.symmetric(vertical: 1),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -95,7 +92,7 @@ class _MessagesState extends State<Messages> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            '오후 12:42',
+                            _chat.isDisplayTime.value ? _time : '',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                                 fontSize: 10,
@@ -105,17 +102,17 @@ class _MessagesState extends State<Messages> {
                           SizedBox(width: 5),
                           Container(
                             constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.6,
+                              maxWidth: MediaQuery.of(context).size.width * 0.7,
                             ),
                             decoration: BoxDecoration(
                                 color: Colors.blue, //박스색상
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             padding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 16),
+                                vertical: 10, horizontal: 15),
                             child: Text(
-                              _chat.messageList[index].content
-                                  .toString(), //메시지 입력 리스트
+                              key: GlobalKey(),
+                              _list[index].content.toString(), //메시지 입력 리스트
                               textWidthBasis: TextWidthBasis.parent,
                               style: TextStyle(
                                 // fontFeatures: <FontFeature>[
@@ -128,57 +125,56 @@ class _MessagesState extends State<Messages> {
                           ),
                         ],
                       ),
-                    )
-                  :
-                  /* 상대방 메시지 */
-                  Container(
-                      margin: EdgeInsets.symmetric(vertical: 1),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          _chat.isShowProfile.value
-                              ? CircleAvatar(
-                                  radius: 15,
-                                  backgroundImage: NetworkImage(
-                                    widget.profileUrl,
-                                  ),
-                                ) //상대프로필
-                              : SizedBox(width: 30), //빈값
-                          SizedBox(width: 5),
-                          Container(
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.6,
-                            ),
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 16),
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Text(
-                                '${_chat.messageList[index].content}', //메시지 입력 리스트
-                                textWidthBasis: TextWidthBasis.parent,
-                                style: TextStyle(color: Colors.black87),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            '',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontSize: 10,
-                                height: 3,
-                                color: Colors.grey[500]),
-                          ),
-                        ],
-                      ),
                     ),
-            );
+                  )
+                :
+                /* 상대방 메시지 */
+                Container(
+                    margin: EdgeInsets.symmetric(vertical: 1),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        _chat.isShowProfile.value
+                            ? CircleAvatar(
+                                radius: 18,
+                                backgroundImage: NetworkImage(
+                                  widget.profileUrl,
+                                ),
+                              ) //상대프로필
+                            : SizedBox(width: 36), //빈값
+                        SizedBox(width: 5),
+                        Container(
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.6,
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                              '${_list[index].content}', //메시지 입력 리스트
+                              textWidthBasis: TextWidthBasis.parent,
+                              style: TextStyle(color: Colors.black87),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+
+                        Text(
+                          _chat.isDisplayTime.value ? _time : '',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 10, height: 3, color: Colors.grey[500]),
+                        ),
+                      ],
+                    ),
+                  );
           },
         ),
       ),

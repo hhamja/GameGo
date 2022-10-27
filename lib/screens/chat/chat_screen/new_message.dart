@@ -24,7 +24,7 @@ class _NewMessageState extends State<NewMessage> {
     //   updatedAt: Timestamp.now(),
     // );
     final messageModel = MessageModel(
-      timestamp: Timestamp.now(),
+      timestamp: Timestamp.now(), // FieldValue.serverTimestamp() -> DB서버시간
       content: _messageController.text.trim(),
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
