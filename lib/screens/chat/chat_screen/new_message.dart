@@ -16,21 +16,22 @@ class _NewMessageState extends State<NewMessage> {
   /* 파베 auth 인스턴스 */
   final _currentUser = FirebaseAuth.instance.currentUser!;
 
-  /* 입력한 메시지 DB에 보내기 */
+  /* 메시지 보내기 클릭 시 */
   void _sendMessage() async {
-    // //마지막 채팅내용과 시간만 업데이트
-    // final chatRoomModel = ChatRoomModel(
-    //   lastContent: _messageController.text.trim(),
-    //   updatedAt: Timestamp.now(),
-    // );
     final messageModel = MessageModel(
       timestamp: Timestamp.now(), // FieldValue.serverTimestamp() -> DB서버시간
       content: _messageController.text.trim(),
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
+    // _chat.focusOnLastMessage(); //마지막 메시지로 스크롤 이동
     await _chat.sendNewMessege(messageModel, widget.chatRoomId);
+    await _chat.updateChatRoom(
+      widget.chatRoomId, //대상이 될 채팅방 id
+      _messageController.text.trim(), //마지막 메시지 내용
+      Timestamp.now(), // 마지막 메시지의 시간
+    ); //마지막 채팅내용과 시간만 업데이트
     setState(() {
-      _messageController.clear();
+      _messageController.clear(); //입력한 메시지 클리어
     });
   }
 

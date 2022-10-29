@@ -4,9 +4,7 @@ class ChatController extends GetxController {
   /* 파이어스토어 Chat 컬렉션 참조 */
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
-  /* 파이어스토어 User 컬렉션 참조 */
-  final CollectionReference _userDB =
-      FirebaseFirestore.instance.collection('chat');
+
   /* 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수 */
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
@@ -14,9 +12,14 @@ class ChatController extends GetxController {
   /* 상대 메시지에서 프로필 보여주는 bool 값 */
   RxBool isShowProfile = false.obs;
   /* 메시지시간 표시에 대한 bool 값 */
-  RxBool isDisplayTime = false.obs;
+  RxBool isShowTime = false.obs;
+  /* 메시지시간 표시에 대한 bool 값 */
+  RxBool isShowDate = false.obs;
   /* 현재 유저의 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
+  /* 채팅페이지의 스크롤 컨트롤러 
+  채팅을 보냈을 때 보낸 메시지로 화면이 이동하도록 하기 위함*/
+  var scroll = ScrollController();
 
   @override
   void onInit() {
@@ -92,9 +95,25 @@ class ChatController extends GetxController {
     }
   }
 
-  getUserById(uid) async {
-    await _userDB.doc(uid).get().then((value) {
-      return UserModel.fromDocumentSnapshot(value);
-    });
+  /* 마지막 채팅, 최근 시간 */
+  Future updateChatRoom(chatRoomId, lastContent, updatedAt) async {
+    final res = await _chatDB.doc(chatRoomId).get();
+    //채팅방이 존재하지 않는다면? (무조건 존재함)
+    //마지막 채팅, 최근보낸 시간 업데이트
+    if (!res.exists)
+      //Chat(col) - 채팅방UID(Doc)
+      await _chatDB.doc(chatRoomId).update({
+        'lastContent': lastContent,
+        'updatedAt': updatedAt,
+      });
+  }
+
+  /* 메시지 보내면 보낸 메시지(마지막 메시지)로 스크롤 */
+  focusOnLastMessage() {
+    if (!scroll.hasClients) {
+      print('scroll down');
+      final double _end = scroll.position.maxScrollExtent;
+      scroll.jumpTo(_end); // 마지막으로 점프
+    }
   }
 }
