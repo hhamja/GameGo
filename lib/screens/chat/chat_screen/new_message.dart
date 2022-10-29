@@ -39,6 +39,7 @@ class _NewMessageState extends State<NewMessage> {
   Widget build(BuildContext context) {
     print('채팅방id는 ' + widget.chatRoomId);
     return Container(
+      
       margin: EdgeInsets.fromLTRB(10, 3, 0, 3),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

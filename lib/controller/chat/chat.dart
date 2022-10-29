@@ -17,15 +17,12 @@ class ChatController extends GetxController {
   RxBool isShowDate = false.obs;
   /* 현재 유저의 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
-  /* 채팅페이지의 스크롤 컨트롤러 
-  채팅을 보냈을 때 보낸 메시지로 화면이 이동하도록 하기 위함*/
-  var scroll = ScrollController();
 
   @override
   void onInit() {
+    super.onInit();
     //현재유저의 채팅리스트 스트림으로 받기
     chatRoomList.bindStream(readAllChatList(_currentUid));
-    super.onInit();
   }
 
 /* 새로운 채팅 입력 시 채팅방 생성하기 */
@@ -106,14 +103,5 @@ class ChatController extends GetxController {
         'lastContent': lastContent,
         'updatedAt': updatedAt,
       });
-  }
-
-  /* 메시지 보내면 보낸 메시지(마지막 메시지)로 스크롤 */
-  focusOnLastMessage() {
-    if (!scroll.hasClients) {
-      print('scroll down');
-      final double _end = scroll.position.maxScrollExtent;
-      scroll.jumpTo(_end); // 마지막으로 점프
-    }
   }
 }

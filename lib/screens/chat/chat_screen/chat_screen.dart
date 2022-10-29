@@ -48,24 +48,22 @@ class _MessagePageState extends State<MessagePage> {
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            /* 메시지 보여주는 부분 */
-            Expanded(
-              child: Messages(
-                chatRoomId: chatRoomId,
-                userName: userName,
-                profileUrl: profileUrl,
-                mannerAge: mannerAge,
-              ),
-            ),
-            /* 메시지 보내는 부분*/
-            NewMessage(
+      body: Column(
+        children: [
+          /* 메시지 보여주는 부분 */
+          Expanded(
+            child: Messages(
               chatRoomId: chatRoomId,
+              userName: userName,
+              profileUrl: profileUrl,
+              mannerAge: mannerAge,
             ),
-          ],
-        ),
+          ),
+          /* 메시지 보내는 부분*/
+          NewMessage(
+            chatRoomId: chatRoomId,
+          ),
+        ],
       ),
     );
   }
