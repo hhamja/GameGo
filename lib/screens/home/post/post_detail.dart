@@ -15,11 +15,12 @@ class _PostDetailPageState extends State<PostDetailPage> {
   final int index = Get.arguments['index'];
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   bool _click = true;
+  /* 현재 유저의 uid */
+  final String currentUid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
     print(index);
-    print(Get.currentRoute);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -27,7 +28,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
           // IconButton(onPressed: () {}, icon: Icon(Icons.ios_share)),
           /* 내게시물 ? openMypostBottomSheet() : openBottomSheet() */
           IconButton(
-              onPressed: openMypostBottomSheet, icon: Icon(Icons.more_vert)),
+              onPressed: openPostBottomSheet, icon: Icon(Icons.more_vert)),
         ],
       ),
       body: Obx(
@@ -183,21 +184,20 @@ class _PostDetailPageState extends State<PostDetailPage> {
                           ),
                   ),
                 ),
-                /* 채팅하기 버튼 -> ChatPage 이동 */
+                /* 채팅하기 버튼 -> Chat Page From Post 이동 */
                 Expanded(
                   flex: 5,
                   child: TextButton(
                     onPressed: () {
                       Get.to(
                         () => MessagePageFromPost(),
-                        //게시물 id 값 전달
                         arguments: {
                           'postId': _post.postList[index].postId,
                           'uid': _post.postList[index].uid,
                           'userName': _post.postList[index].userName,
                           'mannerAge': _post.postList[index].mannerAge,
                           'profileUrl': _post.postList[index].profileUrl,
-                        },
+                        }, //채팅페이지에 필요한 데이터 전달
                       );
                     },
                     style: TextButton.styleFrom(
@@ -215,51 +215,54 @@ class _PostDetailPageState extends State<PostDetailPage> {
     );
   }
 
-  /* 나의 게시물이 아닐 경우 바텀시트 */
-  openBottomSheet() {
-    return Get.bottomSheet(
-      Container(
-        color: Colors.white,
-        height: 180,
-        child: Column(
-          children: [
-            ButtomSheetContent('이 사용자의 글 보지 않기', Colors.blue, () {
-              Get.back();
-            }),
-            ButtomSheetContent('신고하기', Colors.redAccent, () {
-              Get.back();
-              Get.to(ReportPostPage());
-            }),
-            ButtomSheetContent('취소', Colors.blue, () => Get.back()),
-          ],
+  /* 게시물 오른쪽 상단의 아이콘 클릭 시  바텀시트 호출 */
+  openPostBottomSheet() {
+    /* 나의 게시물인 경우 */
+    if (currentUid == _post.postList[index].uid) {
+      return Get.bottomSheet(
+        Container(
+          color: Colors.white,
+          height: 180,
+          child: Column(
+            children: [
+              ButtomSheetContent('게시물 수정', Colors.blue, () async {
+                Get.back();
+                await Get.to(
+                  () => EditPostPage(),
+                  arguments: index,
+                );
+              }), //자기 게시물 수정 페이지로 이동
+              ButtomSheetContent('삭제', Colors.redAccent, () async {
+                Get.back();
+                await Get.dialog(DeleteDialog(), arguments: {'index': index});
+              }), //게시물 DB에서 삭제
+              ButtomSheetContent('취소', Colors.blue, () => Get.back()),
+              //바텀시트 내리기
+            ],
+          ),
         ),
-      ),
-    );
-  }
-
-  /* 나의 게시물일 경우 바텀시트 */
-  openMypostBottomSheet() {
-    return Get.bottomSheet(
-      Container(
-        color: Colors.white,
-        height: 180,
-        child: Column(
-          children: [
-            ButtomSheetContent('게시물 수정', Colors.blue, () async {
-              Get.back();
-              await Get.to(
-                () => EditPostPage(),
-                arguments: index,
-              );
-            }),
-            ButtomSheetContent('삭제', Colors.redAccent, () async {
-              Get.back();
-              await Get.dialog(DeleteDialog(), arguments: {'index': index});
-            }),
-            ButtomSheetContent('취소', Colors.blue, () => Get.back()),
-          ],
+      );
+    } /* 타인의 게시물인 경우 */
+    else {
+      return Get.bottomSheet(
+        Container(
+          color: Colors.white,
+          height: 180,
+          child: Column(
+            children: [
+              ButtomSheetContent('이 사용자의 글 보지 않기', Colors.blue, () {
+                Get.back();
+              }), // 글 노출 안하는 (나중)
+              ButtomSheetContent('신고하기', Colors.redAccent, () {
+                Get.back();
+                Get.to(ReportPostPage());
+              }), //게시물 신고하기 페이지로 이동
+              ButtomSheetContent('취소', Colors.blue, () => Get.back()),
+              //바텀시트 내리기
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

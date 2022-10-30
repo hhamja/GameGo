@@ -57,9 +57,7 @@ class _MessagesState extends State<Messages> {
                 WidgetsBinding.instance.addPostFrameCallback((_) => {
                       _scrollController
                           .jumpTo(_scrollController.position.maxScrollExtent)
-                    });
-
-                //채팅페이지 들어오면 마지막 메시지로 스크롤
+                    }); //채팅페이지 들어오면 마지막 메시지로 스크롤
                 final _date = Jiffy(_list[index].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[index].timestamp.toDate())
