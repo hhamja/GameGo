@@ -18,7 +18,7 @@ class Messages extends StatefulWidget {
 
 class _MessagesState extends State<Messages> {
   /* 기기의 현재 유저 */
-  final _currentUser = FirebaseAuth.instance.currentUser!;
+  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
   var _list; // = _chat.messageList
@@ -34,7 +34,7 @@ class _MessagesState extends State<Messages> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController.dispose(); //스크롤 끄기
     super.dispose();
   }
 
@@ -49,7 +49,6 @@ class _MessagesState extends State<Messages> {
           /* 채팅리스트 박스의 패딩 */
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            /* 연,월,일로 메시지 그룹으로 묶은 리스트뷰*/
             child: ListView.builder(
               controller: _scrollController,
               itemCount: _list.length,
@@ -95,7 +94,7 @@ class _MessagesState extends State<Messages> {
                   _chat.isShowProfile.value = true;
                 }
                 //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
-                final bool _isMe = _currentUser.uid == _list[index].senderId;
+                final bool _isMe = _currentUid == _list[index].senderId;
                 return _isMe
                     ?
                     /* 나의 메시지 */
