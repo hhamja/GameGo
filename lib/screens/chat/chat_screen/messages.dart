@@ -30,6 +30,10 @@ class _MessagesState extends State<Messages> {
     super.initState();
     _list = _chat.messageList;
     _list.bindStream(_chat.readAllMessageList(widget.chatRoomId));
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent),
+          
+        }); //채팅페이지 들어오면 마지막 메시지로 스크롤
   }
 
   @override
@@ -45,18 +49,16 @@ class _MessagesState extends State<Messages> {
       () => Padding(
         padding: const EdgeInsets.all(3.0),
         child: Scrollbar(
+          interactive: true,
           thickness: 3, //색상은 ThemeData()에서  highlightColor로 변경하자
           /* 채팅리스트 박스의 패딩 */
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
               controller: _scrollController,
+              shrinkWrap: true,
               itemCount: _list.length,
               itemBuilder: (context, index) {
-                WidgetsBinding.instance.addPostFrameCallback((_) => {
-                      _scrollController
-                          .jumpTo(_scrollController.position.maxScrollExtent)
-                    }); //채팅페이지 들어오면 마지막 메시지로 스크롤
                 final _date = Jiffy(_list[index].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[index].timestamp.toDate())

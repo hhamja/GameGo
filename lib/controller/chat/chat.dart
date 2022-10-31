@@ -94,14 +94,10 @@ class ChatController extends GetxController {
 
   /* 마지막 채팅, 최근 시간 */
   Future updateChatRoom(chatRoomId, lastContent, updatedAt) async {
-    final res = await _chatDB.doc(chatRoomId).get();
-    //채팅방이 존재하지 않는다면? (무조건 존재함)
-    //마지막 채팅, 최근보낸 시간 업데이트
-    if (!res.exists)
-      //Chat(col) - 채팅방UID(Doc)
-      await _chatDB.doc(chatRoomId).update({
-        'lastContent': lastContent,
-        'updatedAt': updatedAt,
-      });
+    //Chat(col) - 채팅방UID(Doc)
+    return await _chatDB.doc(chatRoomId).update({
+      'lastContent': lastContent,
+      'updatedAt': updatedAt,
+    });
   }
 }

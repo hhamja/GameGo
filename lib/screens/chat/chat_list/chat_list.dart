@@ -87,7 +87,7 @@ class _ChatListPageState extends State<ChatListPage> {
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  /* 최근 대화 날짜 (며칠 전) */
+                  /* 최근시간 · 읽지 않은 메시지 수 */
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -102,20 +102,19 @@ class _ChatListPageState extends State<ChatListPage> {
                           child: Text(
                             '1',
                             style: TextStyle(fontSize: 12, color: Colors.white),
-                          )), // 읽지 않은 메시지 알려주는 빨간 박스 숫자
+                          )), // 읽지 않은 메시지 알려주는 빨간숫자
                     ],
                   ),
                   onTap: () {
                     Get.to(
                       () => MessagePage(),
                       arguments: {
-                        //상대유저정보 전달
                         'userName': contactUser['userName'],
                         'profileUrl': contactUser['profileUrl'],
                         'mannerAge': contactUser['mannerAge'],
                         'index': index,
                         'chatRoomId': _chat.chatRoomList[index].id,
-                      },
+                      }, //상대유저정보 전달
                     );
                   },
                 ),
