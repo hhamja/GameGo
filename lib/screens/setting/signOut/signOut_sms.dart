@@ -22,7 +22,7 @@ class SignOutSmsPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () async {
-              await UserController.to.deleteUser(_smsController.text.trim());
+              await AuthController.to.deleteUser(_smsController.text.trim());
               Get.offAllNamed('/main');
             },
             child: Text('탈퇴하기'),

@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class UserController extends GetxController {
-  static UserController get to => Get.find<UserController>();
+class AuthController extends GetxController {
+  static AuthController get to => Get.find<AuthController>();
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
   /* FireStore User Collection Instance */
@@ -32,16 +32,6 @@ class UserController extends GetxController {
       print('addNewUser error = ${e}');
     }
   }
-
-  // /* Read FireStore User DB */
-  // Stream<List<UserModel>> readUserList() {
-  //   return _userDB
-  //       .orderBy('createdAt', descending: true)
-  //       .snapshots()
-  //       .map((snapshot) => snapshot.docs.map((e) {
-  //             return UserModel.fromDocumentSnapshot(e);
-  //           }).toList());
-  // }
 
   /* 폰으로 SMS 전송 */
   Future verifyPhone(String phonenumber) async {
@@ -127,35 +117,5 @@ class UserController extends GetxController {
     } catch (e) {
       print('deleteUser error : ${e}');
     }
-  }
-
-  // /* UID로 유저 정보 받고 UserModel에 담기 */
-  // Future getUserInfo(uid) async {
-  //   final ref = _userDB.doc(uid).get();
-  //   await ref.then((value) {
-  //     userModel = UserModel.fromDocumentSnapshot(value);
-  //     update();
-  //     return userModel;
-  //   });
-  //   update();
-  // }
-  /* UID로 유저 정보 받고 UserModel에 담기 */
-
-  // Stream<UserModel> getUserInfo(uid) async* {
-  //   yield* await _userDB.doc(uid).snapshots().map((snapshot) {
-  //     UserModel _userModel = UserModel.fromDocumentSnapshot(snapshot);
-  //     print(userModel);
-  //     return _userModel;
-  //   });
-  // }
-
-  /* 유저정보 스트림으로 받기 */
-  Stream<List<UserModel>> getUserInfoList(uid) {
-    return _userDB
-        .where('uid', isEqualTo: uid)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              return UserModel.fromDocumentSnapshot(e);
-            }).toList());
   }
 }

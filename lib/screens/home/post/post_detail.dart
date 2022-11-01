@@ -1,20 +1,11 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class PostDetailPage extends StatefulWidget {
-  const PostDetailPage({Key? key}) : super(key: key);
-
-  @override
-  State<PostDetailPage> createState() => _PostDetailPageState();
-}
-
-class _PostDetailPageState extends State<PostDetailPage> {
-  /* 게시물 컨트롤러 Find */
+class PostDetailPage extends StatelessWidget {
+  PostDetailPage({Key? key}) : super(key: key);
   PostController _post = Get.find<PostController>();
   /* 해당 게시물의 lisview에서의 index값 전달 받음 */
-  //데이터를 아규먼트로 전달받지 않는 이유는 게시물 수정 시 변한 데이터를 받기 위해서
   final int index = Get.arguments['index'];
-  /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
-  bool _click = true;
+  bool _isFavorite = false;
   /* 현재 유저의 uid */
   final String currentUid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -156,8 +147,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
           ),
         ),
       ),
-
-      /* 하단 좋아요, 채팅하기 버튼 */
       bottomSheet: SafeArea(
         child: Padding(
           padding:
@@ -167,22 +156,38 @@ class _PostDetailPageState extends State<PostDetailPage> {
             color: Colors.white,
             child: Row(
               children: [
-                /* 좋아요 버튼 */
-                Expanded(
-                  flex: 2,
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _click = !_click;
-                      });
-                    },
-                    icon: (_click == true)
-                        ? Icon(Icons.favorite_border_outlined)
-                        : Icon(
-                            Icons.favorite,
-                            color: Colors.blue,
-                          ),
-                  ),
+                /* 좋아요(하트) */
+                GetBuilder<FavoriteController>(
+                  init: FavoriteController(),
+                  builder: (_) => (Expanded(
+                    flex: 2,
+                    child: IconButton(
+                      ////////////////////////////////////////////////////////
+                      ///게시물 like 수 변화시키기, favorite컬렉션도 다루기///
+                      ////////////////////////////////////////////////////////
+                      onPressed: () async {
+                        if (_.isFavorite == false) {
+                          //true라면, 클릭시 false로 하고 관심목록에서 제거
+                          await _.unfavoritePost(
+                              currentUid, _post.postList[index].postId);
+                        } else {
+                          //false라면, 클릭시 true로 하고 관심목록에 추가
+                          FavoriteModel favoriteModel = FavoriteModel(
+                            id: _post.postList[index].postId,
+                            isFavorite: true,
+                            updatedAt: Timestamp.now(),
+                          );
+                          await _.favoritePost(currentUid, favoriteModel);
+                        }
+                      },
+                      icon: _.isFavorite
+                          ? Icon(Icons.favorite_border_outlined)
+                          : Icon(
+                              Icons.favorite,
+                              color: Colors.blue,
+                            ),
+                    ),
+                  )),
                 ),
                 /* 채팅하기 버튼 -> Chat Page From Post 이동 */
                 Expanded(

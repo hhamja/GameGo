@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 class LogOutDialog extends StatelessWidget {
   LogOutDialog({Key? key}) : super(key: key);
 
-  final UserController _user = Get.put(UserController());
+  final AuthController _user = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {

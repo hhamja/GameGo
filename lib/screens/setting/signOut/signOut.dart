@@ -70,9 +70,9 @@ class _SignOutPageState extends State<SignOutPage> {
             showLeaveReasonSolution(),
             TextButton(
                 onPressed: () async {
-                  // await UserController.to.deleteUser();
+                  // await AuthController.to.deleteUser();
                   // Get.offAllNamed('/main');
-                  await UserController.to
+                  await AuthController.to
                       .verifyPhone(_auth.currentUser!.phoneNumber!);
                   Get.to(() => SignOutSmsPage());
                 },

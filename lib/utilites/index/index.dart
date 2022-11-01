@@ -82,12 +82,13 @@ export 'package:mannergamer/screens/setting/user_setting/myAccount/authenticatio
 export 'package:mannergamer/screens/setting/signOut/signOut_sms.dart';
 
 /* Models */
-export 'package:mannergamer/models/data_model.dart';
-export 'package:mannergamer/models/dropDownBT_model.dart';
-export 'package:mannergamer/models/post_model.dart';
-export 'package:mannergamer/models/user_model.dart';
-export 'package:mannergamer/models/message_model.dart';
-export 'package:mannergamer/models/chatRoom_model.dart';
+export 'package:mannergamer/models/data/data_model.dart';
+export 'package:mannergamer/models/dropDownButton/dropDownBT_model.dart';
+export 'package:mannergamer/models/post/post_model.dart';
+export 'package:mannergamer/models/user/user_model.dart';
+export 'package:mannergamer/models/message/message_model.dart';
+export 'package:mannergamer/models/chatRoom/chatRoom_model.dart';
+export 'package:mannergamer/models/favorite/favorite_model.dart';
 
 /* Controller */
 export 'package:mannergamer/controller/chat/chat.dart';
@@ -96,10 +97,11 @@ export 'package:mannergamer/controller/dropDownButton/create_dropDownBT.dart';
 export 'package:mannergamer/controller/post/post.dart';
 export 'package:mannergamer/controller/dropDownButton/edit_dropDownBT.dart';
 export 'package:mannergamer/controller/dropDownButton/home_dropDownBT.dart';
-export 'package:mannergamer/controller/user/user.dart';
+export 'package:mannergamer/controller/user/auth.dart';
 export 'package:mannergamer/controller/mannerAge/mannerAge.dart';
 export 'package:mannergamer/controller/user/phoneSMS.dart';
-export 'package:mannergamer/controller/user/user_profile.dart';
+export 'package:mannergamer/controller/user/profile.dart';
+export 'package:mannergamer/controller/favorite/favorite.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';

@@ -10,7 +10,7 @@ class InitialScreenBinding implements Bindings {
 class SignOutBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserController());
+    Get.put(AuthController());
   }
 }
 
@@ -76,7 +76,7 @@ class EditPostBinding implements Bindings {
 class SignUpBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserController());
+    Get.put(AuthController());
   }
 }
 
@@ -84,13 +84,13 @@ class SignUpBinding implements Bindings {
 class SignInBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserController());
+    Get.put(AuthController());
   }
 }
 
 class PhoneAuthBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(UserController());
+    Get.put(AuthController());
   }
 }

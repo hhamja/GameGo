@@ -11,7 +11,7 @@ class CreateProfilePage extends StatefulWidget {
 class _CreateProfilePageState extends State<CreateProfilePage> {
   final TextEditingController _userNameController = TextEditingController();
   /* User GetX Controller */
-  final UserController _userAuth = Get.put(UserController());
+  final AuthController _userAuth = Get.put(AuthController());
   /* 프로필 컨트롤러 */
   final ProfileController _profile = Get.put(ProfileController());
   /* Firebase Storage instance */

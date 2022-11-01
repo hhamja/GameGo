@@ -12,7 +12,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
   ProfileController _username = Get.put(ProfileController());
 
   final PhoneSMSController _phone = Get.put(PhoneSMSController());
-  final UserController _user = Get.put(UserController());
+  final AuthController _user = Get.put(AuthController());
   /* 핸드폰 번호 입력 */
   final TextEditingController _phoneController = TextEditingController();
   /* SMS 입력 */

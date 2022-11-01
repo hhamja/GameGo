@@ -45,6 +45,7 @@ class _AddPostPageState extends State<AddPostPage> {
       gamemode: _button.seledtedPostGamemodeValue,
       position: _button.seledtedPostdPositionValue,
       tear: _button.seledtedPostTearValue,
+      like: 0,
       createdAt: Timestamp.now(),
     ); //postModel 인스턴스 생성
 

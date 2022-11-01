@@ -27,6 +27,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
       'gamemode': postModel.gamemode,
       'position': postModel.position,
       'tear': postModel.tear,
+      'like': postModel.like,
       'createdAt': postModel.createdAt,
     });
     return res;
@@ -150,6 +151,24 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
       return data;
     } catch (e) {
       print('deletePost error : ${e}');
+    }
+  }
+
+  /* 게시물 좋아요 수 +1 증가시키기 (하트 클릭 시 ) */
+  Future increaseLike(postId, likeCount) async {
+    try {
+      await _postDB.doc(postId).update({'likeCount': likeCount});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  /* 게시물 좋아요 수 -1 감소시키기 (하트 클릭 시 ) */
+  Future decreaseLike(postId, likeCount) async {
+    try {
+      await _postDB.doc(postId).update({'likeCount': likeCount});
+    } catch (e) {
+      print(e);
     }
   }
 }
