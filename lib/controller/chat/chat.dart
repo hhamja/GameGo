@@ -4,7 +4,6 @@ class ChatController extends GetxController {
   /* 파이어스토어 Chat 컬렉션 참조 */
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
-
   /* 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수 */
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
@@ -17,6 +16,8 @@ class ChatController extends GetxController {
   RxBool isShowDate = false.obs;
   /* 현재 유저의 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
+
+ 
 
   @override
   void onInit() {
