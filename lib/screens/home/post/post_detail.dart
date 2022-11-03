@@ -17,25 +17,13 @@ class _PostDetailPageState extends State<PostDetailPage> {
 
   /* 현재 유저의 uid */
   final String currentUid = FirebaseAuth.instance.currentUser!.uid;
-
-  x() async {
-    final ref = await FirebaseFirestore.instance
-        .collection('user')
-        .doc(currentUid)
-        .collection('favorite')
-        .doc(_post.postList[index].postId)
-        .get(); //게시물 존재여부를 얻기위한 변수
-    if (ref.exists) {
-      _.isFavorite.value = true;
-    } else {
-      _.isFavorite.value = false;
-    }
-  }
+  var postId;
 
   @override
   void initState() {
     super.initState();
-    x();
+    postId = _post.postList[index].postId;
+    _.isFavoritePost(currentUid, postId); //하트아이콘에 적용한 초기 bool값 반환
   }
 
   @override
@@ -176,100 +164,57 @@ class _PostDetailPageState extends State<PostDetailPage> {
           ),
         ),
       ),
-      bottomSheet: Obx(
-        () => SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Container(
-              width: double.infinity,
-              color: Colors.white,
-              child: Row(
-                children: [
-                  /* 좋아요(하트) */
-                  Expanded(
-                    flex: 2,
-                    child: IconButton(
-                      ////////////////////////////////////////////////////////
-                      ///게시물 like 수 변화시키기, favorite컬렉션도 다루기///
-                      ////////////////////////////////////////////////////////
+      bottomSheet: SafeArea(
+        child: Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            width: double.infinity,
+            color: Colors.white,
+            child: Row(
+              children: [
+                /* 좋아요(하트) */
+                Expanded(
+                  flex: 2,
+                  child: Obx(
+                    () => IconButton(
                       onPressed: () async {
-                        final ref = await FirebaseFirestore.instance
-                            .collection('user')
-                            .doc(currentUid)
-                            .collection('favorite')
-                            .doc(_post.postList[index].postId)
-                            .get(); //게시물 존재여부를 얻기위한 변수
-                        if (!ref.exists) {
-                          await FirebaseFirestore.instance
-                              .collection('user')
-                              .doc(currentUid)
-                              .collection('favorite')
-                              .doc(_post.postList[index].postId)
-                              .set({
-                            'isFavorite': true,
-                            'updatedAt': Timestamp.now()
-                          });
-                          await FirebaseFirestore.instance
-                              .collection('post')
-                              .doc(_post.postList[index].postId)
-                              .update({
-                            'like': FieldValue.increment(1)
-                          }); //게시물의 like값 +1
-                        } else {
-                          await FirebaseFirestore.instance
-                              .collection('user')
-                              .doc(currentUid)
-                              .collection('favorite')
-                              .doc(_post.postList[index]
-                                  .postId) //id는 favorited post의 id
-                              .delete();
-                          await FirebaseFirestore.instance
-                              .collection('post')
-                              .doc(_post.postList[index].postId)
-                              .update({
-                            'like': FieldValue.increment(-1)
-                          }); //게시물 like -1
-                        }
-                        _.isFavorite.value = !_.isFavorite.value;
+                        await _.favoritePost(currentUid, postId);
                       },
-
                       icon: _.isFavorite.value
                           ? Icon(
                               Icons.favorite,
                               color: Colors.blue,
-                            )
-                          : //true => 파란색 하트
-                          Icon(Icons
+                            ) //true => 파란색 하트
+                          : Icon(Icons
                               .favorite_border_outlined), //false => 빈 하트    ,
                     ),
                   ),
-                  /* 채팅하기 버튼 -> Chat Page From Post 이동 */
-                  Expanded(
-                    flex: 5,
-                    child: TextButton(
-                      onPressed: () {
-                        Get.to(
-                          () => MessagePageFromPost(),
-                          arguments: {
-                            'postId': _post.postList[index].postId,
-                            'uid': _post.postList[index].uid,
-                            'userName': _post.postList[index].userName,
-                            'mannerAge': _post.postList[index].mannerAge,
-                            'profileUrl': _post.postList[index].profileUrl,
-                          }, //채팅페이지에 필요한 데이터 전달
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        backgroundColor: Colors.blue,
-                      ),
-                      child:
-                          Text('채팅하기', style: TextStyle(color: Colors.white)),
+                ),
+                /* 채팅하기 버튼 -> Chat Page From Post 이동 */
+                Expanded(
+                  flex: 5,
+                  child: TextButton(
+                    onPressed: () {
+                      Get.to(
+                        () => MessagePageFromPost(),
+                        arguments: {
+                          'postId': _post.postList[index].postId,
+                          'uid': _post.postList[index].uid,
+                          'userName': _post.postList[index].userName,
+                          'mannerAge': _post.postList[index].mannerAge,
+                          'profileUrl': _post.postList[index].profileUrl,
+                        }, //채팅페이지에 필요한 데이터 전달
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      backgroundColor: Colors.blue,
                     ),
+                    child: Text('채팅하기', style: TextStyle(color: Colors.white)),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
