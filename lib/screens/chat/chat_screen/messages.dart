@@ -22,19 +22,19 @@ class _MessagesState extends State<Messages> {
   /* 기기의 현재 유저 */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
   var _list; // = _chat.messageList
-  ScrollController _scrollC = ScrollController(keepScrollOffset: false);
   bool isScrollEnd = false;
+
   /* 스크롤 맨 밑으로 내리기 */
   scrollEnd() {
-    if (!isScrollEnd) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => {
-            _scrollC.jumpTo(_scrollC.position.maxScrollExtent),
-          }); //채팅페이지 들어오면 마지막 메시지로 스크롤
-      setState(() {
-        isScrollEnd = true; //스크롤 다운 후 끄기
-      });
-    }
-    null;
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+          if (!isScrollEnd)
+            {
+              _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent),
+              setState(() {
+                isScrollEnd = true; //스크롤 다운 후 끄기
+              })
+            }
+        }); //채팅페이지 들어오면 마지막 메시지로 스크롤
   }
 
   @override
@@ -45,30 +45,24 @@ class _MessagesState extends State<Messages> {
   }
 
   @override
-  void dispose() {
-    _scrollC.dispose(); //스크롤 끄기
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Obx(
       /* 스크롤 바 */
       () => Padding(
         padding: const EdgeInsets.all(3.0),
         child: Scrollbar(
-          controller: _scrollC,
+          controller: _chat.scroll,
           interactive: true,
           thickness: 3, //색상은 ThemeData()에서  highlightColor로 변경하자
           /* 채팅리스트 박스의 패딩 */
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
-              controller: _scrollC,
+              controller: _chat.scroll,
               shrinkWrap: true,
               itemCount: _list.length,
               itemBuilder: (context, index) {
-                scrollEnd(); // 화면 맨 아래로
+                scrollEnd();
                 final _date = Jiffy(_list[index].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[index].timestamp.toDate())

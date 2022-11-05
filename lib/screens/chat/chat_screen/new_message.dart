@@ -30,16 +30,14 @@ class _NewMessageState extends State<NewMessage> {
       _messageController.text.trim(), //마지막 메시지 내용
       Timestamp.now(), // 마지막 메시지의 시간
     ); //마지막 채팅내용과 시간만 업데이트
-    setState(() {
-      _messageController.clear(); //입력한 메시지 클리어
-    });
+    setState(() => _messageController.clear()); //입력한 메시지 지우기
+    _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent); //맨밑으로 스크롤이동
   }
 
   @override
   Widget build(BuildContext context) {
     print('채팅방id는 ' + widget.chatRoomId);
     return Container(
-      
       margin: EdgeInsets.fromLTRB(10, 3, 0, 3),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

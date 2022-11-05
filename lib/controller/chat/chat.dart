@@ -16,14 +16,19 @@ class ChatController extends GetxController {
   RxBool isShowDate = false.obs;
   /* 현재 유저의 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
-
- 
-
+  ScrollController scroll = ScrollController(keepScrollOffset: false);
+  // ScrollController scroll = ScrollController(keepScrollOffset: false);
   @override
   void onInit() {
     super.onInit();
-    //현재유저의 채팅리스트 스트림으로 받기
-    chatRoomList.bindStream(readAllChatList(_currentUid));
+    scroll; //채팅페이지 스크롤
+    chatRoomList.bindStream(readAllChatList(_currentUid)); //채팅방리스트 스트림으로 받기
+  }
+
+  @override
+  void onClose() {
+    scroll.dispose(); //채팅페이지의 스크롤 끄기
+    super.onClose();
   }
 
 /* 새로운 채팅 입력 시 채팅방 생성하기 */

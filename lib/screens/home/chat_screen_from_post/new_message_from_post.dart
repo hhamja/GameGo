@@ -63,9 +63,8 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     );
     await _chat.createNewChatRoom(chatRoomModel); //채팅방이 이미 있다면 실행안됨
     await _chat.sendNewMessege(messageModel, chatRoomModel.id);
-    setState(() {
-      _messageController.clear();
-    });
+    setState(() => _messageController.clear()); //입력한 내용 지우기
+    _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent); //맨밑으로 스크롤이동
   }
 
   @override

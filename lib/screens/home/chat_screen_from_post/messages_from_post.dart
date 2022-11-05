@@ -20,19 +20,18 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
   var _list; // = _chat.messageList
-  ScrollController _scrollC = ScrollController(keepScrollOffset: false);
   bool isScrollEnd = false;
   /* 스크롤 맨 밑으로 내리기 */
   scrollEnd() {
-    if (!isScrollEnd) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => {
-            _scrollC.jumpTo(_scrollC.position.maxScrollExtent),
-          }); //채팅페이지 들어오면 마지막 메시지로 스크롤
-      setState(() {
-        isScrollEnd = true; //스크롤 다운 후 끄기
-      });
-    }
-    null;
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+          if (!isScrollEnd)
+            {
+              _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent),
+              setState(() {
+                isScrollEnd = true; //스크롤 다운 후 끄기
+              })
+            }
+        }); //채팅페이지 들어오면 마지막 메시지로 스크롤
   }
 
   @override
@@ -41,15 +40,6 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
     _list = _chat.messageList;
     _list.bindStream(
         _chat.readAllMessageList(widget.postId + '_' + _currentUid));
-    WidgetsBinding.instance.addPostFrameCallback((_) => {
-          _scrollC.jumpTo(_scrollC.position.maxScrollExtent)
-        }); //채팅페이지 들어오면 마지막 메시지로 스크롤
-  }
-
-  @override
-  void dispose() {
-    _scrollC.dispose(); //스크롤 끄기
-    super.dispose();
   }
 
   @override
@@ -59,13 +49,13 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
       () => Padding(
         padding: const EdgeInsets.all(3.0),
         child: Scrollbar(
-          controller: _scrollC,
+          controller: _chat.scroll,
           thickness: 3, //색상은 ThemeData()에서  highlightColor로 변경하자
           /* 채팅리스트 박스의 패딩 */
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
-              controller: _scrollC,
+              controller: _chat.scroll,
               itemCount: _list.length,
               itemBuilder: (context, index) {
                 scrollEnd();
