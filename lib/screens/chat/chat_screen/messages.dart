@@ -66,7 +66,7 @@ class _MessagesState extends State<Messages> {
               itemCount: _list.length,
               itemBuilder: (context, index) {
                 scrollEnd();
-                // int reversed = (_list.length - 1) - index;
+                int reversed = _list.length - 1 - index;
                 final _date = Jiffy(_list[index].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[index].timestamp.toDate())
