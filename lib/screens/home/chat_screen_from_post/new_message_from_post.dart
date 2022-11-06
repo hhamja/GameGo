@@ -62,10 +62,10 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
       content: _messageController.text.trim(),
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
-    await _chat.createNewChatRoom(chatRoomModel); //채팅방이 이미 있다면 실행안됨
-    await _chat.sendNewMessege(messageModel, chatRoomModel.id);
+    _chat.createNewChatRoom(chatRoomModel); //채팅방이 이미 있다면 실행안됨
+    _chat.sendNewMessege(messageModel, chatRoomModel.id);
     setState(() => _messageController.clear()); //입력한 내용 지우기
-    _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent); //맨밑으로 스크롤이동
+    _chat.scroll.jumpTo(0); //맨밑으로 스크롤이동 = scroll.position.maxScrollExtent
   }
 
   @override
@@ -94,6 +94,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
                 minHeight: 40,
               ),
               child: TextField(
+                // key: _messageKey,
                 autocorrect: false,
                 controller: _messageController,
                 keyboardType: TextInputType.text,

@@ -20,19 +20,6 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
   var _list; // = _chat.messageList
-  bool isScrollEnd = false;
-  /* 스크롤 맨 밑으로 내리기 */
-  scrollEnd() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => {
-          if (!isScrollEnd)
-            {
-              _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent),
-              setState(() {
-                isScrollEnd = true; //스크롤 다운 후 끄기
-              })
-            }
-        }); //채팅페이지 들어오면 마지막 메시지로 스크롤
-  }
 
   @override
   void initState() {
@@ -50,24 +37,27 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
         padding: const EdgeInsets.all(3.0),
         child: Scrollbar(
           controller: _chat.scroll,
+          interactive: true,
           thickness: 3, //색상은 ThemeData()에서  highlightColor로 변경하자
           /* 채팅리스트 박스의 패딩 */
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
+              reverse: true,
+              shrinkWrap: true,
               controller: _chat.scroll,
               itemCount: _list.length,
               itemBuilder: (context, index) {
-                scrollEnd();
-                final _date = Jiffy(_list[index].timestamp.toDate())
+                int reversed = _list.length - 1 - index;
+                final _date = Jiffy(_list[reversed].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
-                final _time = Jiffy(_list[index].timestamp.toDate())
+                final _time = Jiffy(_list[reversed].timestamp.toDate())
                     .format('HH:MM'); //22시간
                 /* Date표시에 대한 조건 */
-                if (index == 0) {
+                if (reversed == 0) {
                   _chat.isShowDate.value = true; //첫 메시지이면 O
-                } else if (index > 0 &&
-                    Jiffy(_list[index - 1].timestamp.toDate())
+                } else if (reversed > 0 &&
+                    Jiffy(_list[reversed - 1].timestamp.toDate())
                             .format('yyyy년 MM월 dd일') !=
                         _date) {
                   _chat.isShowDate.value = true; //날짜가 달라지면 O
@@ -75,28 +65,28 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                   _chat.isShowDate.value = false; //나머지는 X
                 }
                 /* 메시지 시간표시 조건 */
-                if (index == _list.length - 1) {
+                if (reversed == _list.length - 1) {
                   _chat.isShowTime.value = true; //리스트의 마지막 메시지
-                } else if (index < _list.length - 1 &&
-                    _list[index].senderId != _list[index + 1].senderId) {
+                } else if (reversed < _list.length - 1 &&
+                    _list[reversed].senderId != _list[reversed + 1].senderId) {
                   _chat.isShowTime.value = true; //마지막X, 내가 보낸 메시지 그룹에서 마지막
-                } else if (index < _list.length - 1 &&
+                } else if (reversed < _list.length - 1 &&
                     _time !=
-                        Jiffy(_list[index + 1].timestamp.toDate())
+                        Jiffy(_list[reversed + 1].timestamp.toDate())
                             .format('HH:MM')) {
                   _chat.isShowTime.value = true; //마지막X, 다음 메시지와 시간이 달라지는 경우
                 } else {
                   _chat.isShowTime.value = false; //나머지 경우
                 }
                 /* 상대 프로필 보여주는 조건문 */
-                if (index >= 1 &&
-                    _list[index - 1].senderId == _list[index].senderId) {
+                if (reversed >= 1 &&
+                    _list[reversed - 1].senderId == _list[reversed].senderId) {
                   _chat.isShowProfile.value = false;
                 } else {
                   _chat.isShowProfile.value = true;
                 }
-                //현재유저 == 메시지 보낸사람의 id ?  true : false
-                final bool _isMe = _currentUid == _list[index].senderId;
+                //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
+                final bool _isMe = _currentUid == _list[reversed].senderId;
                 return _isMe
                     ?
                     /* 나의 메시지 */
@@ -139,7 +129,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                   padding: EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 15),
                                   child: Text(
-                                    _list[index]
+                                    _list[reversed]
                                         .content
                                         .toString(), //메시지 입력 리스트
                                     textWidthBasis: TextWidthBasis.parent,
@@ -200,7 +190,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                   child: FittedBox(
                                     fit: BoxFit.contain,
                                     child: Text(
-                                      '${_list[index].content}', //메시지 입력 리스트
+                                      '${_list[reversed].content}', //메시지 입력 리스트
                                       textWidthBasis: TextWidthBasis.parent,
                                       style: TextStyle(color: Colors.black87),
                                     ),
@@ -222,6 +212,9 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                       );
               },
             ),
+            // Padding(
+            //     padding: EdgeInsets.all(
+            //         MediaQuery.of(context).viewInsets.bottom))
           ),
         ),
       ),

@@ -52,13 +52,18 @@ class _MessagePageState extends State<MessagePage> {
         children: [
           /* 메시지 보여주는 부분 */
           Expanded(
-            child: Messages(
-              chatRoomId: chatRoomId,
-              userName: userName,
-              profileUrl: profileUrl,
-              mannerAge: mannerAge,
+            child: Stack(
+              children: [
+                Messages(
+                  chatRoomId: chatRoomId,
+                  userName: userName,
+                  profileUrl: profileUrl,
+                  mannerAge: mannerAge,
+                ),
+              ],
             ),
           ),
+
           /* 메시지 보내는 부분*/
           NewMessage(
             chatRoomId: chatRoomId,

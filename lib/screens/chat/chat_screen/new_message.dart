@@ -25,14 +25,14 @@ class _NewMessageState extends State<NewMessage> {
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
     // _chat.focusOnLastMessage(); //마지막 메시지로 스크롤 이동
-    await _chat.sendNewMessege(messageModel, widget.chatRoomId);
-    await _chat.updateChatRoom(
-      widget.chatRoomId, //대상이 될 채팅방 id
-      _messageController.text.trim(), //마지막 메시지 내용
-      Timestamp.now(), // 마지막 메시지의 시간
-    ); //마지막 채팅내용과 시간만 업데이트
+    _chat.sendNewMessege(messageModel, widget.chatRoomId);
+    _chat.updateChatRoom(
+      widget.chatRoomId, //채팅방 id
+      _messageController.text.trim(), //마지막 메시지
+      Timestamp.now(), // 마지막 메시지 시간
+    ); //마지막 채팅내용과 시간 업데이트
     setState(() => _messageController.clear()); //입력한 메시지 지우기
-    // _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent); //맨밑으로 스크롤이동
+    _chat.scroll.jumpTo(0); //맨밑으로 스크롤이동
   }
 
   @override

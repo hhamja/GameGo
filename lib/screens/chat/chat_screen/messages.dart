@@ -22,29 +22,23 @@ class _MessagesState extends State<Messages> {
   /* 기기의 현재 유저 */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
   var _list; // = _chat.messageList
-  bool isScrollEnd = false;
 
-  /* 스크롤 맨 밑으로 내리기 */
-  scrollEnd() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => {
-          if (!isScrollEnd)
-            {
-              _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent),
-              setState(() => isScrollEnd = true) //스크롤 다운 후 끄기
-            }
-        }); //채팅페이지 들어오면 마지막 메시지로 스크롤
-  }
+  // /* 스크롤 맨 밑으로 내리기 */
+  // scrollEnd() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) => {
+  //         if (!isScrollEnd)
+  //           {
+  //             _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent),
+  //             setState(() => isScrollEnd = true) //스크롤 다운 후 끄기
+  //           }
+  //       }); //채팅페이지 들어오면 마지막 메시지로 스크롤
+  // }
 
   @override
   void initState() {
     super.initState();
     _list = _chat.messageList;
     _list.bindStream(_chat.readAllMessageList(widget.chatRoomId));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -62,11 +56,10 @@ class _MessagesState extends State<Messages> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
               reverse: true,
-              shrinkWrap: false,
+              shrinkWrap: true,
               controller: _chat.scroll,
               itemCount: _list.length,
               itemBuilder: (context, index) {
-                // scrollEnd();
                 int reversed = _list.length - 1 - index;
                 final _date = Jiffy(_list[reversed].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
