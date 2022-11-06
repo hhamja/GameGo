@@ -30,9 +30,7 @@ class _MessagesState extends State<Messages> {
           if (!isScrollEnd)
             {
               _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent),
-              setState(() {
-                isScrollEnd = true; //스크롤 다운 후 끄기
-              })
+              setState(() => isScrollEnd = true) //스크롤 다운 후 끄기
             }
         }); //채팅페이지 들어오면 마지막 메시지로 스크롤
   }
@@ -42,6 +40,11 @@ class _MessagesState extends State<Messages> {
     super.initState();
     _list = _chat.messageList;
     _list.bindStream(_chat.readAllMessageList(widget.chatRoomId));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -58,11 +61,12 @@ class _MessagesState extends State<Messages> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
-              controller: _chat.scroll,
               shrinkWrap: true,
+              controller: _chat.scroll,
               itemCount: _list.length,
               itemBuilder: (context, index) {
                 scrollEnd();
+                // int reversed = (_list.length - 1) - index;
                 final _date = Jiffy(_list[index].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[index].timestamp.toDate())
@@ -226,14 +230,12 @@ class _MessagesState extends State<Messages> {
                       );
               },
             ),
+            // Padding(
+            //     padding: EdgeInsets.all(
+            //         MediaQuery.of(context).viewInsets.bottom))
           ),
         ),
       ),
     );
   }
 }
-
-
-
-// 그룹나누는 기준
-// Jiffy(element.timestamp.toDate()).format('yyyy년 MM월 dd일')

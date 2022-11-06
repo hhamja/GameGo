@@ -58,6 +58,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     );
     final messageModel = MessageModel(
       timestamp: Timestamp.now(),
+      isRead: false,
       content: _messageController.text.trim(),
       senderId: _currentUser.uid, //보내는 유저의 UID
     );

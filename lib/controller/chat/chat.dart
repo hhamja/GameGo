@@ -52,6 +52,7 @@ class ChatController extends GetxController {
     await _chatDB.doc(chatRoomId).collection('message').add({
       'content': messageModel.content,
       'senderId': messageModel.senderId,
+      'isRead': messageModel.isRead,
       'timestamp': messageModel.timestamp,
     });
   }

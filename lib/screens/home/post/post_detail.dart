@@ -146,7 +146,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   onTap: () {
-                    Get.to(ReportPostPage());
+                    Get.to(ReportListPage());
                   },
                   title: Text(
                     '광           고',
@@ -262,7 +262,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
               }), // 글 노출 안하는 (나중)
               ButtomSheetContent('신고하기', Colors.redAccent, () {
                 Get.back();
-                Get.to(ReportPostPage());
+                Get.to(ReportListPage());
               }), //게시물 신고하기 페이지로 이동
               ButtomSheetContent('취소', Colors.blue, () => Get.back()),
               //바텀시트 내리기

@@ -75,7 +75,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Paths.Report,
-      page: () => ReportPostPage(),
+      page: () => ReportListPage(),
     ),
     GetPage(
       name: Paths.Home,
