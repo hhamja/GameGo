@@ -15,7 +15,6 @@ class _NewMessageState extends State<NewMessage> {
   final ChatController _chat = Get.put(ChatController());
   /* 파베 auth 인스턴스 */
   final _currentUser = FirebaseAuth.instance.currentUser!;
-  final _focusMode = FocusNode();
 
   /* 메시지 보내기 클릭 시 */
   void _sendMessage() async {
@@ -33,7 +32,7 @@ class _NewMessageState extends State<NewMessage> {
       Timestamp.now(), // 마지막 메시지의 시간
     ); //마지막 채팅내용과 시간만 업데이트
     setState(() => _messageController.clear()); //입력한 메시지 지우기
-    _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent); //맨밑으로 스크롤이동
+    // _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent); //맨밑으로 스크롤이동
   }
 
   @override
@@ -60,9 +59,8 @@ class _NewMessageState extends State<NewMessage> {
                 minHeight: 40,
               ),
               child: TextField(
-                onTap: () => _focusMode.hasFocus
-                    ? _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent)
-                    : null,
+                // onTap: () =>
+                // _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent),
                 autocorrect: false,
                 controller: _messageController,
                 keyboardType: TextInputType.text,
