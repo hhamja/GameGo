@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class AuthController extends GetxController {
-  static AuthController get to => Get.find<AuthController>();
+class UserController extends GetxController {
+  static UserController get to => Get.find<UserController>();
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
   /* FireStore User Collection Instance */
@@ -11,8 +11,6 @@ class AuthController extends GetxController {
   RxList<UserModel> userList = <UserModel>[].obs;
   /* UID로 받은 유저정보 */
   RxMap<String, dynamic> userInfo = Map<String, dynamic>().obs;
-  /* UserDB Data 담을 UserList */
-  RxList userInfoList = [].obs;
 
   /* 폰번호확인코드저장 */
   String verificationID = '';
@@ -117,5 +115,13 @@ class AuthController extends GetxController {
     } catch (e) {
       print('deleteUser error : ${e}');
     }
+  }
+
+  /* uid를 통해 특정 유저의 정보 받기 */
+  Future getUserInfoByUid(uid) async {
+    await _userDB.doc(uid).get().then((value) {
+      userInfo.value = value.data()! as Map<String, dynamic>;
+      print(userInfo); //유저정보 프린트
+    });
   }
 }

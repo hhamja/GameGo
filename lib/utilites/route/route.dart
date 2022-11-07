@@ -103,10 +103,10 @@ class AppRoutes {
       binding: PhoneAuthBinding(),
     ),
 
-    /* MYPAGE */
+    /* MyInfoPage */
     GetPage(
       name: Paths.My,
-      page: () => MyPage(),
+      page: () => MyInfoPage(),
     ),
     GetPage(
       name: Paths.FAQ,
@@ -123,10 +123,6 @@ class AppRoutes {
     GetPage(
       name: Paths.NoticeDetail,
       page: () => NoticeDetailPage(),
-    ),
-    GetPage(
-      name: Paths.MannerAge,
-      page: () => MannerAgePage(),
     ),
     GetPage(
       name: Paths.ReceivedReview,

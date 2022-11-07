@@ -5,9 +5,6 @@ class FavoriteController extends GetxController {
   /* 파이어스토어 user 컬렉션 참조 instance */
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  /* 파이어스토어 post 컬렉션 참조 instance */
-  final CollectionReference _postDB =
-      FirebaseFirestore.instance.collection('user');
   /* 나의 관심 게시물 리스트 */
   RxList<FavoriteModel> favoriteList = <FavoriteModel>[].obs;
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */

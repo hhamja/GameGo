@@ -1,7 +1,8 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MannerAgePage extends StatefulWidget {
-  const MannerAgePage({Key? key}) : super(key: key);
+  final String mannerAge; //현재유저 매너나이
+  const MannerAgePage({Key? key, required this.mannerAge}) : super(key: key);
 
   @override
   State<MannerAgePage> createState() => _MannerAgePageState();
@@ -22,7 +23,7 @@ class _MannerAgePageState extends State<MannerAgePage> {
       ),
       barPointers: [
         LinearBarPointer(
-          value: currentAgeValue,
+          value: double.parse(widget.mannerAge),
           color: Colors.blue,
           thickness: 20,
           edgeStyle: LinearEdgeStyle.bothCurve,

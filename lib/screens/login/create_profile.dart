@@ -11,7 +11,7 @@ class CreateProfilePage extends StatefulWidget {
 class _CreateProfilePageState extends State<CreateProfilePage> {
   final TextEditingController _userNameController = TextEditingController();
   /* User GetX Controller */
-  final AuthController _userAuth = Get.put(AuthController());
+  final UserController _userAuth = Get.put(UserController());
   /* 프로필 컨트롤러 */
   final ProfileController _profile = Get.put(ProfileController());
   /* Firebase Storage instance */
@@ -103,7 +103,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         phoneNumber: Get.arguments, //인증받은 폰번호 이전페이지에서 받기
         profileUrl: profileImageUrl ??
             _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
-        mannerAge: '20.0세',
+        mannerAge: '20.0',
         createdAt: Timestamp.now());
     if (!text.isEmpty || text.length >= 2) {
       //닉네임 2자 이상이라면?

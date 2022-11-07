@@ -9,6 +9,9 @@ class ProfileEditPage extends StatefulWidget {
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
   final TextEditingController _ProfileController = TextEditingController();
+  final profileUrl = Get.arguments['profileUrl'];
+  final userName = Get.arguments['userName'];
+
   @override
   void dispose() {
     _ProfileController.dispose();

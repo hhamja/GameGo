@@ -28,7 +28,7 @@ abstract class Paths {
   static const Main = '/main';
   static const PhoneAuth = '/phone';
   static const UserName = '/username';
-  /* MYPAGE */
+  /* MyInfoPage */
   static const My = '/my';
   static const FAQ = '/faq';
   static const Feedback = '/feedback';

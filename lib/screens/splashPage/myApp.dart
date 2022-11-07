@@ -15,7 +15,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  List _bodylist = [Homepage(), ChatListPage(), MyPage()];
+  List _bodylist = [Homepage(), ChatListPage(), MyInfoPage()];
 
   _chatBottomBarItem() {
     int chatNumber = 1;
