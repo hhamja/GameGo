@@ -6,7 +6,7 @@ abstract class Paths {
 
   /* CHAT */
   static const ChatList = '/chatlist';
-  static const Chatting = '/chatting';
+  static const Chatscreen = '/chatscreen';
 
   /* HOME */
   static const HomeDropDownBT = '/homedropdown';
@@ -20,7 +20,7 @@ abstract class Paths {
   static const EditPost = '/editpost';
   static const Illegal = '/illegal';
   static const OtherReason = '/otherReason';
-  static const ReportDialog = '/reportdialog';
+  static const ReportDialog = '/ReportDialog';
   static const Report = '/report';
   static const Home = '/home';
 

@@ -15,6 +15,10 @@ class AppRoutes {
       name: Paths.ChatList,
       page: () => ChatListPage(),
     ),
+    GetPage(
+      name: Paths.Chatscreen,
+      page: () => ChatScreenPage(),
+    ),
 
     /* HOME */
     GetPage(

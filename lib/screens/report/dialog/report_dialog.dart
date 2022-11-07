@@ -21,6 +21,7 @@ class ReportDialog extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              /* 취소 */
               Expanded(
                 flex: 1,
                 child: TextButton(
@@ -38,6 +39,7 @@ class ReportDialog extends StatelessWidget {
                   ),
                 ),
               ),
+              /* 신고하기 */
               Expanded(
                 flex: 1,
                 child: TextButton(
@@ -49,13 +51,15 @@ class ReportDialog extends StatelessWidget {
                   onPressed: () {
                     Get.back();
                     Timer _timer = Timer(Duration(milliseconds: 2000), () {
-                      Get.until((route) => Get.currentRoute == '/postDetail' );
+                      Get.until((route) =>
+                          Get.currentRoute == '/chatscreen' ||
+                          Get.currentRoute == '/postdetail');
                     });
                     Get.dialog(
                         barrierDismissible: true,
                         AlertDialog(
                           title: Text(
-                            '따뜻한 매너게이머를 위한 신고 감사합니다.',
+                            '따뜻한 매너게이머를 위한\n신고 감사합니다.',
                             textAlign: TextAlign.center,
                           ),
                         )).then((value) {

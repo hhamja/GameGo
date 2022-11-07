@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class MessagePage extends StatefulWidget {
-  MessagePage({Key? key}) : super(key: key);
+class ChatScreenPage extends StatefulWidget {
+  ChatScreenPage({Key? key}) : super(key: key);
 
   @override
-  State<MessagePage> createState() => _MessagePageState();
+  State<ChatScreenPage> createState() => _ChatScreenPageState();
 }
 
-class _MessagePageState extends State<MessagePage> {
+class _ChatScreenPageState extends State<ChatScreenPage> {
   final String userName = Get.arguments['userName'];
   final String profileUrl = Get.arguments['profileUrl'];
   final String mannerAge = Get.arguments['mannerAge'];

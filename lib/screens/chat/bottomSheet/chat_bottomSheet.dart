@@ -33,7 +33,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
           }),
           ButtomSheetContent('신고하기', Colors.blue, () {
             Get.back();
-            Get.to(() => ReportListPage()); //신고목록 페이지로 이동
+            Get.toNamed('/report'); //신고목록 페이지로 이동
           }),
           ButtomSheetContent('채팅방 나가기', Colors.redAccent, () {}),
           ButtomSheetContent('취소', Colors.blue, () => Get.back()),

@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class MessagePageFromPost extends StatefulWidget {
-  MessagePageFromPost({Key? key}) : super(key: key);
+class ChatScreenPageFromPost extends StatefulWidget {
+  ChatScreenPageFromPost({Key? key}) : super(key: key);
 
   @override
-  State<MessagePageFromPost> createState() => _MessagePageFromPostState();
+  State<ChatScreenPageFromPost> createState() => _ChatScreenPageFromPostState();
 }
 
-class _MessagePageFromPostState extends State<MessagePageFromPost> {
+class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
   /* PostDetailPage에서 받은 게시자 uid, 이름, 프로필, 매너나이 */
   final String uid = Get.arguments['uid'];
   final String userName = Get.arguments['userName'];

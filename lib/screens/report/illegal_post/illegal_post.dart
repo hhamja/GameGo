@@ -15,33 +15,36 @@ class _IllegallyPostedPageState extends State<IllegallyPostedPage> {
         title: Text('신고'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 5),
-            ListTile(
-              title: Text('이 게시물을 신고하는 이유'),
-            ),
-            Divider(thickness: 1),
-            ListView.separated(
-                controller: ScrollController(),
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text('${illegalProduct[index]}'),
-                    trailing: Icon(Icons.keyboard_arrow_right_sharp),
-                    onTap: () {
-                      Get.dialog(ReportDialog());
-                    },
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(thickness: 1);
-                },
-                itemCount: illegalProduct.length),
-            Divider(thickness: 1),
-          ],
-        ),
+      body: ListView(
+        padding: EdgeInsets.all(15),
+        shrinkWrap: true,
+        children: [
+          ListTile(
+            title: Text('불법 또는 규제 상품 판매'),
+            contentPadding: EdgeInsets.zero,
+            subtitle: Text('해당하는 판매 품목을 아래에서 선택해주세요.'),
+          ),
+          Divider(thickness: 1),
+          ListView.separated(
+              padding: EdgeInsets.zero,
+              controller: ScrollController(),
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text('${illegalProduct[index]}'),
+                  trailing: Icon(Icons.keyboard_arrow_right_sharp),
+                  onTap: () {
+                    Get.dialog(ReportDialog());
+                  },
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(thickness: 1);
+              },
+              itemCount: illegalProduct.length),
+          Divider(thickness: 1),
+        ],
       ),
     );
   }

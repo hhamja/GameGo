@@ -106,8 +106,8 @@ class _ChatListPageState extends State<ChatListPage> {
                     ],
                   ),
                   onTap: () {
-                    Get.to(
-                      () => MessagePage(),
+                    Get.toNamed(
+                      '/chatscreen',
                       arguments: {
                         'userName': contactUser['userName'],
                         'profileUrl': contactUser['profileUrl'],
