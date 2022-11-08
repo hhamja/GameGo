@@ -85,12 +85,12 @@ class _SettingPageState extends State<SettingPage> {
                   Get.to(() => BlockUserManagement());
                 },
               ),
-              SettingsTile.navigation(
-                title: Text('게시글 미노출 유저 관리'),
-                onPressed: (_) {
-                  Get.to(() => UnexposeUserManagementPage());
-                },
-              ),
+              // SettingsTile.navigation(
+              //   title: Text('게시글 미노출 유저 관리'),
+              //   onPressed: (_) {
+              //     Get.to(() => UnexposeUserManagementPage());
+              //   },
+              // ),
             ],
           ),
           SettingsSection(

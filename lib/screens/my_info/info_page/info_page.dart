@@ -32,7 +32,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () async {}, //내정보 새로고침
+        onRefresh: () async {
+          await _user.getUserInfoByUid(_currentUid); //내정보 새로고침
+        },
         displacement: 0,
         child: Obx(
           () => SettingsList(
@@ -159,6 +161,13 @@ class _MyInfoPageState extends State<MyInfoPage> {
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     onPressed: (_) {
                       Get.to(() => MyPostListPage());
+                    },
+                  ),
+                  SettingsTile.navigation(
+                    title: Text('관심 게시글'),
+                    trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                    onPressed: (_) {
+                      Get.to(() => MyFavoriteList());
                     },
                   ),
                   SettingsTile.navigation(

@@ -257,7 +257,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
           height: 180,
           child: Column(
             children: [
-              ButtomSheetContent('이 사용자의 글 보지 않기', Colors.blue, () {
+              ButtomSheetContent('차단하기', Colors.blue, () {
                 Get.back();
               }), // 글 노출 안하는 (나중)
               ButtomSheetContent('신고하기', Colors.redAccent, () {
