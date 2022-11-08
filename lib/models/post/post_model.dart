@@ -11,7 +11,7 @@ class PostModel {
   final String gamemode; //게임모드
   final String? position; //포지션, 솔로·자유·일반게임만 값을 가짐
   final String? tear; //티어, 솔로·자유만 값을 가짐
-  final int? like; //게시물 하트 버튼 누룬 개수
+  final int like; //게시물 하트 버튼 누룬 개수
   final Timestamp createdAt; //만든 시간, 수정 시 이 값은 업데이트 되므로 updatedAt도 됨
 
   PostModel({
@@ -25,7 +25,7 @@ class PostModel {
     required this.gamemode,
     this.position,
     this.tear,
-    this.like,
+    required this.like,
     required this.createdAt,
   });
 
@@ -34,18 +34,18 @@ class PostModel {
     //Post DB의 문서 데이터로 변환
     var snapshot = doc.data() as Map<String, dynamic>;
     return PostModel(
-      postId: snapshot['postId'],
-      uid: snapshot['uid'],
-      userName: snapshot['userName'],
-      profileUrl: snapshot['profileUrl'],
-      mannerAge: snapshot['mannerAge'],
-      title: snapshot['title'],
-      maintext: snapshot['maintext'],
-      gamemode: snapshot['gamemode'],
-      position: snapshot['position'],
-      tear: snapshot['tear'],
-      like: snapshot['like'],
-      createdAt: snapshot['createdAt'],
+      postId: snapshot['postId'] ?? '',
+      uid: snapshot['uid'] ?? '',
+      userName: snapshot['userName'] ?? '',
+      profileUrl: snapshot['profileUrl'] ?? '',
+      mannerAge: snapshot['mannerAge'] ?? '',
+      title: snapshot['title'] ?? '',
+      maintext: snapshot['maintext'] ?? '',
+      gamemode: snapshot['gamemode'] ?? '',
+      position: snapshot['position'] ?? '',
+      tear: snapshot['tear'] ?? '',
+      like: snapshot['like'] ?? '',
+      createdAt: snapshot['createdAt'] ?? '',
     );
   }
 }

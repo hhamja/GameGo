@@ -7,7 +7,7 @@ class FavoriteController extends GetxController {
       FirebaseFirestore.instance.collection('user');
   /* 파이어스토어 post 컬렉션 참조 instance */
   final CollectionReference _postDB =
-      FirebaseFirestore.instance.collection('user');
+      FirebaseFirestore.instance.collection('post');
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   RxBool isFavorite = false.obs;
   /* 나의 관심 게시물 리스트 */
@@ -64,15 +64,16 @@ class FavoriteController extends GetxController {
 
   /* DB에서 관심 게시글 받기 */
   Future getFavoriteList(uid) async {
-    List postIdList = [];
+    List postIdList = []; //관심 게시물 id 리스트
     final ref = _userDB.doc(uid).collection('favorite');
-    await ref.orderBy('updatedAt', descending: true).get().then(
-        (value) => postIdList.assignAll(value.docs.map((e) => e.reference.id)));
-    print(postIdList);
+    await ref.orderBy('updatedAt', descending: true).get().then((value) {
+      postIdList.assignAll(value.docs.map((e) => e.reference.id));
+    });
+    /* 반복문 돌려서 postId를 넣어 PostModel에 넣기 */
     for (var id in postIdList) {
-      final doc = _postDB.doc(id).get();
-      print(doc);
+      await _postDB.doc(id).get().then(
+          (value) => favoriteList.add(PostModel.fromDocumentSnapshot(value)));
     }
+    print(favoriteList);
   }
 }
-  

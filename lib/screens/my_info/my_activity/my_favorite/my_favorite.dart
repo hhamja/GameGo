@@ -23,7 +23,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
       appBar: AppBar(
         title: Text('관심 게시글'),
         centerTitle: true,
-      ), 
+      ),
       body: Obx(
         () => RefreshIndicator(
           //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
@@ -39,9 +39,6 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
             },
             itemCount: _favorite.favoriteList.length,
             itemBuilder: (BuildContext context, int index) {
-              String time =
-                  Jiffy(_favorite.favoriteList[index].createdAt.toDate())
-                      .fromNow();
               return ListTile(
                 onTap: () {
                   Get.toNamed('/postdetail', arguments: {
@@ -68,13 +65,6 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
                             style: TextStyle(height: 1.2),
                           ),
                           /* 날짜 */
-                          Expanded(
-                            child: Text(
-                              time,
-                              style: TextStyle(height: 1.2, fontSize: 10),
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
                         ],
                       ),
                       SizedBox(height: 10),
