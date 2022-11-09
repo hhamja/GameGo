@@ -10,14 +10,14 @@ class DeleteDialog extends StatefulWidget {
 class _DeleteDialogState extends State<DeleteDialog> {
   final PostController _post = Get.find<PostController>();
   /* 게시물의 index 값을 전달받음 */
-  final int index = Get.arguments['index'];
+  final int postId = Get.arguments['postId'];
   /* 홈 드랍다운버튼 컨트롤러 */
   final HomePageDropDownBTController _ =
       Get.put(HomePageDropDownBTController());
 /* 드랍다운버튼 선택한 값에 따른 페이지 새로고침 */
   Future<void> _deletePost() async {
     Get.until((route) => Get.currentRoute == "/myapp");
-    await _post.deletePost(_post.postList[index].postId); //게시물 DB에서 삭제
+    await _post.deletePost(postId); //게시물 DB에서 삭제
     if (_.selectedTearValue != '티어') {
       await _post.filterTear(
           _.selectedModeValue, _.selectedPositionValue, _.selectedTearValue);
@@ -36,8 +36,7 @@ class _DeleteDialogState extends State<DeleteDialog> {
   @override
   Widget build(BuildContext context) {
     print('xxxxxxx' + Get.currentRoute);
-    print(index);
-    print(_post.postList[index].postId);
+    print(postId);
     return Container(
       child: AlertDialog(
         buttonPadding: EdgeInsets.zero,

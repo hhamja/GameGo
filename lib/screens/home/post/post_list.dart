@@ -50,6 +50,7 @@ class HomePostList extends GetView<PostController> {
               onTap: () {
                 Get.toNamed('/postdetail', arguments: {
                   'index': index,
+                  'postId' : controller.postList[index].postId
                 });
               },
               title: Padding(

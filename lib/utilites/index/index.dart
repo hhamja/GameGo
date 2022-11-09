@@ -63,7 +63,7 @@ export 'package:mannergamer/screens/my_info/etc/notice/notice_detail.dart';
 export 'package:mannergamer/screens/my_info/my_profile/mannerAge.dart';
 export 'package:mannergamer/screens/my_info/my_activity/received_review/received_review.dart';
 export 'package:mannergamer/screens/my_info/my_activity/received_evaluation/received_evaluation.dart';
-export 'package:mannergamer/screens/my_info/my_activity/my_favorite/my_favorite.dart';
+export 'package:mannergamer/screens/my_info/my_activity/my_favorite/favorite_list.dart';
 export 'package:mannergamer/screens/my_info/my_activity/my_post/bottomSheets.dart';
 export 'package:mannergamer/screens/my_info/my_activity/my_post/my_postList.dart';
 export 'package:mannergamer/screens/my_info/my_activity/my_post/received_review.dart';

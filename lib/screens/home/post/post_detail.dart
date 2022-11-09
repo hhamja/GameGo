@@ -9,26 +9,24 @@ class PostDetailPage extends StatefulWidget {
 
 class _PostDetailPageState extends State<PostDetailPage> {
   final PostController _post = Get.find<PostController>();
-
-  final FavoriteController _ = Get.put(FavoriteController());
+  final FavoriteController _favorite = Get.put(FavoriteController());
 
   /* 해당 게시물의 lisview에서의 index값 전달 받음 */
-  final int index = Get.arguments['index'];
+  final String postId = Get.arguments['postId'];
 
   /* 현재 유저의 uid */
   final String currentUid = FirebaseAuth.instance.currentUser!.uid;
-  var postId;
 
   @override
   void initState() {
     super.initState();
-    postId = _post.postList[index].postId;
-    _.isFavoritePost(currentUid, postId); //하트아이콘에 적용한 초기 bool값 반환
+    _post.getPostInfoByid(postId); //postInfo에 게시글 데이터 담기
+    _favorite.isFavoritePost(currentUid, postId); //하트아이콘에 적용한 초기 bool값 반환
   }
 
   @override
   Widget build(BuildContext context) {
-    print(index);
+    print(postId);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -49,11 +47,10 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   contentPadding: EdgeInsets.all(16),
                   onTap: () {},
                   leading: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(_post.postList[index].profileUrl),
+                    backgroundImage: NetworkImage(_post.postInfo['profileUrl']),
                   ),
                   title: Text(
-                    _post.postList[index].userName,
+                    _post.postInfo['userName'],
                   ),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +60,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(_post.postList[index].mannerAge),
+                          Text(_post.postInfo['mannerAge']),
                           Icon(Icons.child_care),
                         ],
                       ),
@@ -86,7 +83,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     children: [
                       /* 제목 */
                       Text(
-                        _post.postList[index].title,
+                        _post.postInfo['title'],
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
@@ -95,20 +92,20 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         children: [
                           Text(
-                            '${_post.postList[index].gamemode}',
+                            '${_post.postInfo['gamemode']}',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
                           ),
                           Text(
-                            _post.postList[index].position != null
-                                ? ' · ${_post.postList[index].position}'
+                            _post.postInfo['position'] != null
+                                ? ' · ${_post.postInfo['position']}'
                                 : '',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
                           ),
                           Text(
-                            _post.postList[index].tear != null
-                                ? ' · ${_post.postList[index].tear}'
+                            _post.postInfo['tear'] != null
+                                ? ' · ${_post.postInfo['tear']}'
                                 : '',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
@@ -119,7 +116,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 50),
                         child: Text(
-                          '${_post.postList[index].maintext}',
+                          '${_post.postInfo['maintext']}',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 18,
@@ -179,9 +176,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   child: Obx(
                     () => IconButton(
                       onPressed: () async {
-                        await _.favoritePost(currentUid, postId);
+                        await _favorite.favoritePost(currentUid, postId);
                       },
-                      icon: _.isFavorite.value
+                      icon: _favorite.isFavorite.value
                           ? Icon(
                               Icons.favorite,
                               color: Colors.blue,
@@ -199,11 +196,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Get.to(
                         () => ChatScreenPageFromPost(),
                         arguments: {
-                          'postId': _post.postList[index].postId,
-                          'uid': _post.postList[index].uid,
-                          'userName': _post.postList[index].userName,
-                          'mannerAge': _post.postList[index].mannerAge,
-                          'profileUrl': _post.postList[index].profileUrl,
+                          'postId': _post.postInfo['postId'],
+                          'uid': _post.postInfo['uid'],
+                          'userName': _post.postInfo['userName'],
+                          'mannerAge': _post.postInfo['mannerAge'],
+                          'profileUrl': _post.postInfo['profileUrl'],
                         }, //채팅페이지에 필요한 데이터 전달
                       );
                     },
@@ -225,7 +222,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   /* 게시물 오른쪽 상단의 아이콘 클릭 시  바텀시트 호출 */
   openPostBottomSheet() {
     /* 나의 게시물인 경우 */
-    if (currentUid == _post.postList[index].uid) {
+    if (currentUid == _post.postInfo['uid']) {
       return Get.bottomSheet(
         Container(
           color: Colors.white,
@@ -234,14 +231,15 @@ class _PostDetailPageState extends State<PostDetailPage> {
             children: [
               ButtomSheetContent('게시물 수정', Colors.blue, () async {
                 Get.back();
-                await Get.to(
-                  () => EditPostPage(),
-                  arguments: index,
-                );
+                await Get.to(() => EditPostPage(), arguments: {
+                  'postId': postId,
+                  'mainText': _post.postInfo['mainText'],
+                  'title': _post.postInfo['title'],
+                });
               }), //자기 게시물 수정 페이지로 이동
               ButtomSheetContent('삭제', Colors.redAccent, () async {
                 Get.back();
-                await Get.dialog(DeleteDialog(), arguments: {'index': index});
+                await Get.dialog(DeleteDialog(), arguments: {'postId': postId});
               }), //게시물 DB에서 삭제
               ButtomSheetContent('취소', Colors.blue, () => Get.back()),
               //바텀시트 내리기

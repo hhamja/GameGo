@@ -7,6 +7,10 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
       FirebaseFirestore.instance.collection('post');
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
+  /* Post Id로 받은 게시글정보 */
+  RxMap<String, dynamic> postInfo = Map<String, dynamic>().obs;
+  /* Post Id로 받은 게시글정보 */
+  // Rx<PostModel> postInfo = <PostModel>().obs;
 
   @override
   void onInit() {
@@ -122,7 +126,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  /* 게시물 수정하기 */
+  /* 게시글 수정하기 */
   Future updatePost(
     postid,
     String title,
@@ -144,7 +148,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  /* 게시물 삭제하기 */
+  /* 게시글 삭제하기 */
   Future deletePost(postid) async {
     try {
       final data = await _postDB.doc(postid).delete();
@@ -152,5 +156,13 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     } catch (e) {
       print('deletePost error : ${e}');
     }
+  }
+
+  /* postId을 통해서 특정 게시글의 데이터 받기 */
+  Future getPostInfoByid(postId) async {
+    await _postDB.doc(postId).get().then((value) {
+      postInfo.value = value.data()! as Map<String, dynamic>;
+      print(postInfo); //게시글 데이터 프린트
+    });
   }
 }

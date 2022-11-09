@@ -13,8 +13,11 @@ class _EditPostPageState extends State<EditPostPage> {
   /* Put -> Edit DropDownBTController */
   EditDropDownController _editDropDownController =
       Get.put(EditDropDownController());
-  /* HomePostList Listview의 index 값을 전달받음 */
-  final index = Get.arguments;
+
+  final postId = Get.arguments['postId'];
+  final mainText = Get.arguments['mainText']; //본문
+  final title = Get.arguments['title']; //제목
+
   /* 제목 · 본문 Text Controller */
   TextEditingController _titleController = TextEditingController();
   TextEditingController _maintextController = TextEditingController();
@@ -28,15 +31,14 @@ class _EditPostPageState extends State<EditPostPage> {
   @override
   void initState() {
     setState(() {
-      _titleController.text = _postController.postList[index].title;
-      _maintextController.text = _postController.postList[index].maintext;
+      _titleController.text = title;
+      _maintextController.text = mainText;
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(index);
     print(_titleController.text);
     print(_maintextController.text);
 
@@ -52,7 +54,7 @@ class _EditPostPageState extends State<EditPostPage> {
           TextButton(
             onPressed: () async {
               await _postController.updatePost(
-                _postController.postList[index].postId,
+                postId,
                 _titleController.text,
                 _maintextController.text,
                 _editDropDownController.seledtedPostGamemodeValue,
