@@ -28,6 +28,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
         () => RefreshIndicator(
           //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
           onRefresh: () async {
+            _favorite.favoriteList.clear();
             await _favorite.getFavoriteList(currentUid);
           },
           displacement: 0, //맨 위에 위치시키는 값
