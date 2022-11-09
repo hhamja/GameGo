@@ -10,6 +10,12 @@ class AppRoutes {
       page: () => MyApp(),
     ),
 
+    /* UserProfile */
+    GetPage(
+      name: Paths.UserProfile,
+      page: () => UserProfilePage(),
+    ),
+
     /* CHAT */
     GetPage(
       name: Paths.ChatList,
@@ -147,6 +153,10 @@ class AppRoutes {
     GetPage(
       name: Paths.ProfileEdit,
       page: () => ProfileEditPage(),
+    ),
+    GetPage(
+      name: Paths.Favorite,
+      page: () => MyFavoriteList(),
     ),
 
     /* SETTING */

@@ -48,10 +48,8 @@ class HomePostList extends GetView<PostController> {
                 Jiffy(controller.postList[index].createdAt.toDate()).fromNow();
             return ListTile(
               onTap: () {
-                Get.toNamed('/postdetail', arguments: {
-                  'index': index,
-                  'postId' : controller.postList[index].postId
-                });
+                Get.toNamed('/postdetail',
+                    arguments: {'postId': controller.postList[index].postId});
               },
               title: Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),

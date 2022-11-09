@@ -231,7 +231,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       color: Colors.white, //투염도 설정(나중)
       child: Column(
         children: [
-          ButtomSheetContent(
+          CustomButtomSheet(
             '갤러리에서 사진 선택', // ★★★★★갤러리 권한 요청
             Colors.blue,
             () async {
@@ -240,7 +240,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               Get.back();
             },
           ),
-          ButtomSheetContent(
+          CustomButtomSheet(
             '기본 카메라로 사진 찍기', // ★★★★★카메라 권한 요청
             Colors.blue,
             () async {
@@ -249,7 +249,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               Get.back();
             },
           ),
-          ButtomSheetContent(
+          CustomButtomSheet(
             '기본 이미지로 설정',
             Colors.blue,
             () {
@@ -260,7 +260,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               Get.back();
             },
           ),
-          ButtomSheetContent(
+          CustomButtomSheet(
             '취소',
             Colors.black,
             () {

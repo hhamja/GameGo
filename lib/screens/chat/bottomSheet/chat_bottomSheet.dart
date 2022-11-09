@@ -22,21 +22,21 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
       child: Column(
         //알림끄기, 차단, 신고, 나가기(red), 취소
         children: [
-          ButtomSheetContent(_isAlramOnOff ? '알림끄기' : '알림켜기', Colors.blue, () {
+          CustomButtomSheet(_isAlramOnOff ? '알림끄기' : '알림켜기', Colors.blue, () {
             setState(() => _isAlramOnOff = !_isAlramOnOff); //토글버튼
             Get.back();
           }),
-          ButtomSheetContent(!_isBlockOnOff ? '차단하기' : '차단 해제하기', Colors.blue,
+          CustomButtomSheet(!_isBlockOnOff ? '차단하기' : '차단 해제하기', Colors.blue,
               () {
             setState(() => _isBlockOnOff = !_isBlockOnOff); //토글버튼
             Get.back();
           }),
-          ButtomSheetContent('신고하기', Colors.blue, () {
+          CustomButtomSheet('신고하기', Colors.blue, () {
             Get.back();
             Get.toNamed('/report'); //신고목록 페이지로 이동
           }),
-          ButtomSheetContent('채팅방 나가기', Colors.redAccent, () {}),
-          ButtomSheetContent('취소', Colors.blue, () => Get.back()),
+          CustomButtomSheet('채팅방 나가기', Colors.redAccent, () {}),
+          CustomButtomSheet('취소', Colors.blue, () => Get.back()),
         ],
       ),
     );

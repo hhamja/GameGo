@@ -10,10 +10,8 @@ class PostDetailPage extends StatefulWidget {
 class _PostDetailPageState extends State<PostDetailPage> {
   final PostController _post = Get.find<PostController>();
   final FavoriteController _favorite = Get.put(FavoriteController());
-
-  /* 해당 게시물의 lisview에서의 index값 전달 받음 */
+  /* PostList Page 와 Favorite 에서 PostId값 전달 받음 */
   final String postId = Get.arguments['postId'];
-
   /* 현재 유저의 uid */
   final String currentUid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -45,7 +43,15 @@ class _PostDetailPageState extends State<PostDetailPage> {
               children: [
                 ListTile(
                   contentPadding: EdgeInsets.all(16),
-                  onTap: () {},
+                  onTap: currentUid == _post.postInfo['uid']
+                      ? null //나의게시물? 프로필 이동 X
+                      : () {
+                          Get.toNamed('/userProfile', arguments: {
+                            'profileUrl': _post.postInfo['profileUrl'],
+                            'userName': _post.postInfo['userName'],
+                            'mannerAge': _post.postInfo['mannerAge']
+                          }); //다른유저 게시물 ? 해당 유저 프로필로 이동
+                        },
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(_post.postInfo['profileUrl']),
                   ),
@@ -161,61 +167,67 @@ class _PostDetailPageState extends State<PostDetailPage> {
           ),
         ),
       ),
-      bottomSheet: SafeArea(
-        child: Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Container(
-            width: double.infinity,
-            color: Colors.white,
-            child: Row(
-              children: [
-                /* 좋아요(하트) */
-                Expanded(
-                  flex: 2,
-                  child: Obx(
-                    () => IconButton(
-                      onPressed: () async {
-                        await _favorite.favoritePost(currentUid, postId);
-                      },
-                      icon: _favorite.isFavorite.value
-                          ? Icon(
-                              Icons.favorite,
-                              color: Colors.blue,
-                            ) //true => 파란색 하트
-                          : Icon(Icons
-                              .favorite_border_outlined), //false => 빈 하트    ,
+      bottomSheet:
+          /* 나의 게시글 이라면? */
+          currentUid == _post.postInfo['uid']
+              ? SizedBox.shrink()
+              : SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Container(
+                      width: double.infinity,
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          /* 좋아요(하트) */
+                          Expanded(
+                            flex: 2,
+                            child: Obx(
+                              () => IconButton(
+                                onPressed: () async {
+                                  await _favorite.favoritePost(
+                                      currentUid, postId);
+                                },
+                                icon: _favorite.isFavorite.value
+                                    ? Icon(
+                                        Icons.favorite,
+                                        color: Colors.blue,
+                                      ) //true => 파란색 하트
+                                    : Icon(Icons
+                                        .favorite_border_outlined), //false => 빈 하트    ,
+                              ),
+                            ),
+                          ),
+                          /* 채팅하기 버튼 -> Chat Page From Post 이동 */
+                          Expanded(
+                            flex: 5,
+                            child: TextButton(
+                              onPressed: () {
+                                Get.to(
+                                  () => ChatScreenPageFromPost(),
+                                  arguments: {
+                                    'postId': _post.postInfo['postId'],
+                                    'uid': _post.postInfo['uid'],
+                                    'userName': _post.postInfo['userName'],
+                                    'mannerAge': _post.postInfo['mannerAge'],
+                                    'profileUrl': _post.postInfo['profileUrl'],
+                                  }, //채팅페이지에 필요한 데이터 전달
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                backgroundColor: Colors.blue,
+                              ),
+                              child: Text('채팅하기',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                /* 채팅하기 버튼 -> Chat Page From Post 이동 */
-                Expanded(
-                  flex: 5,
-                  child: TextButton(
-                    onPressed: () {
-                      Get.to(
-                        () => ChatScreenPageFromPost(),
-                        arguments: {
-                          'postId': _post.postInfo['postId'],
-                          'uid': _post.postInfo['uid'],
-                          'userName': _post.postInfo['userName'],
-                          'mannerAge': _post.postInfo['mannerAge'],
-                          'profileUrl': _post.postInfo['profileUrl'],
-                        }, //채팅페이지에 필요한 데이터 전달
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      backgroundColor: Colors.blue,
-                    ),
-                    child: Text('채팅하기', style: TextStyle(color: Colors.white)),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -229,7 +241,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
           height: 180,
           child: Column(
             children: [
-              ButtomSheetContent('게시물 수정', Colors.blue, () async {
+              CustomButtomSheet('게시물 수정', Colors.blue, () async {
                 Get.back();
                 await Get.to(() => EditPostPage(), arguments: {
                   'postId': postId,
@@ -237,11 +249,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   'title': _post.postInfo['title'],
                 });
               }), //자기 게시물 수정 페이지로 이동
-              ButtomSheetContent('삭제', Colors.redAccent, () async {
+              CustomButtomSheet('삭제', Colors.redAccent, () async {
                 Get.back();
                 await Get.dialog(DeleteDialog(), arguments: {'postId': postId});
               }), //게시물 DB에서 삭제
-              ButtomSheetContent('취소', Colors.blue, () => Get.back()),
+              CustomButtomSheet('취소', Colors.blue, () => Get.back()),
               //바텀시트 내리기
             ],
           ),
@@ -255,14 +267,15 @@ class _PostDetailPageState extends State<PostDetailPage> {
           height: 180,
           child: Column(
             children: [
-              ButtomSheetContent('차단하기', Colors.blue, () {
-                Get.back();
-              }), // 글 노출 안하는 (나중)
-              ButtomSheetContent('신고하기', Colors.redAccent, () {
+              CustomButtomSheet('신고하기', Colors.blue, () {
                 Get.back();
                 Get.toNamed('/report');
-              }), //게시물 신고하기 페이지로 이동
-              ButtomSheetContent('취소', Colors.blue, () => Get.back()),
+              }), //신고하기 페이지로 이동
+              CustomButtomSheet(
+                  "'${_post.postInfo['userName']}' 차단하기", Colors.redAccent, () {
+                Get.back();
+              }), // 사용자 차단 (나중)
+              CustomButtomSheet('취소', Colors.blue, () => Get.back()),
               //바텀시트 내리기
             ],
           ),

@@ -4,6 +4,9 @@ abstract class Paths {
   /* MyApp */
   static const MyApp = '/myapp';
 
+  /* User Profile */
+  static const UserProfile = '/userProfile';
+
   /* CHAT */
   static const ChatList = '/chatlist';
   static const Chatscreen = '/chatscreen';
@@ -28,6 +31,7 @@ abstract class Paths {
   static const Main = '/main';
   static const PhoneAuth = '/phone';
   static const UserName = '/username';
+
   /* MyInfoPage */
   static const My = '/my';
   static const FAQ = '/faq';
@@ -41,6 +45,7 @@ abstract class Paths {
   static const ViewReceivedReviews = '/viewreceivedreviews';
   static const ViewSentReviews = '/viewsentreviews';
   static const ProfileEdit = '/profileedit';
+  static const Favorite = '/favorite';
 
   /* SETTING */
   static const Setting = '/setting';

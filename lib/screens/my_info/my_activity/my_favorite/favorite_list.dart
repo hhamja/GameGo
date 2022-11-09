@@ -9,12 +9,12 @@ class MyFavoriteList extends StatefulWidget {
 
 class _MyFavoriteListState extends State<MyFavoriteList> {
   final FavoriteController _favorite = Get.put(FavoriteController());
-  final currentUid = FirebaseAuth.instance.currentUser!.uid;
+  final currentUid = FirebaseAuth.instance.currentUser!.uid; //현재 유저 UId
 
   @override
   void initState() {
     super.initState();
-    _favorite.getFavoriteList(currentUid);
+    _favorite.getFavoriteList(currentUid); //현재 유저의 관심 게시글 목록 받기
   }
 
   @override

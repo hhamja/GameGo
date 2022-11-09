@@ -1,11 +1,11 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class ButtomSheetContent extends StatelessWidget {
+class CustomButtomSheet extends StatelessWidget {
   final String inputText;
   final Color inputColor;
   final Function() clickCcontent;
 
-  const ButtomSheetContent(this.inputText, this.inputColor, this.clickCcontent);
+  const CustomButtomSheet(this.inputText, this.inputColor, this.clickCcontent);
 
   @override
   Widget build(BuildContext context) {

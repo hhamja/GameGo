@@ -25,6 +25,8 @@ export 'package:jiffy/jiffy.dart';
 export 'package:grouped_list/grouped_list.dart';
 
 /* Screens */
+export 'package:mannergamer/screens/user_profile/user_profile.dart';
+
 export 'package:mannergamer/screens/splashPage/myApp.dart';
 export 'package:mannergamer/screens/splashPage/splash.dart';
 
@@ -68,7 +70,7 @@ export 'package:mannergamer/screens/my_info/my_activity/my_post/bottomSheets.dar
 export 'package:mannergamer/screens/my_info/my_activity/my_post/my_postList.dart';
 export 'package:mannergamer/screens/my_info/my_activity/my_post/received_review.dart';
 export 'package:mannergamer/screens/my_info/my_activity/my_post/sent_reviews.dart';
-export 'package:mannergamer/screens/my_info/my_profile/profile.dart';
+export 'package:mannergamer/screens/my_info/my_profile/edit_profile.dart';
 export 'package:mannergamer/screens/my_info/setting/setting.dart';
 export 'package:mannergamer/screens/my_info/setting/alert_setting/alert_setting.dart';
 export 'package:mannergamer/screens/my_info/setting/signOut/signOut.dart';
@@ -106,6 +108,7 @@ export 'package:mannergamer/controller/favorite/favorite.dart';
 
 /* Components */
 export 'package:mannergamer/component/bottomSheet.dart';
+export 'package:mannergamer/component/mannerAge.dart';
 
 /* Utilities */
 export 'package:mannergamer/utilites/route/route.dart';
