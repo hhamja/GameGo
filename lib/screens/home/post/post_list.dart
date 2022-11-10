@@ -36,7 +36,7 @@ class HomePostList extends GetView<PostController> {
         displacement: 0, //맨 위에 위치시키는 값
         child: ListView.separated(
           physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능
-          padding: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           separatorBuilder: (BuildContext context, int index) {
             return Divider(
               thickness: 1,
@@ -47,6 +47,7 @@ class HomePostList extends GetView<PostController> {
             String time =
                 Jiffy(controller.postList[index].createdAt.toDate()).fromNow();
             return ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 5),
               onTap: () {
                 Get.toNamed('/postdetail',
                     arguments: {'postId': controller.postList[index].postId});

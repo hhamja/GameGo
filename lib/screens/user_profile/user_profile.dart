@@ -31,7 +31,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               backgroundImage: NetworkImage(profileUrl),
               radius: 70,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 15),
             Text(
               userName,
               style: TextStyle(fontSize: 20),
@@ -43,15 +43,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0), // radius you want
+                  side: BorderSide(
+                    color: Colors.transparent, //color
+                  ),
+                ),
 
                 padding:
-                    EdgeInsets.symmetric(vertical: 5, horizontal: 50), //버튼크기결정
+                    EdgeInsets.symmetric(vertical: 0, horizontal: 45), //버튼크기결정
               ),
               child: Text('팔로우',
-                  style: TextStyle(color: Colors.white, fontSize: 10)),
+                  style: TextStyle(color: Colors.white, fontSize: 13)),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             CustomMannerAge(mannerAge),
+            SizedBox(height: 20),
             Divider(thickness: 1),
             ListTile(
               contentPadding: EdgeInsets.zero,
