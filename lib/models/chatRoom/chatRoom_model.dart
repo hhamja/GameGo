@@ -2,6 +2,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class ChatRoomModel {
   final String id; //채팅방의 id
+  final String postId;
   final List userIdList; //채팅대상 유저 리스트 -> 채팅리스트 불러오는 쿼리에 쓰임
   final List userList; //uid, 이름, 매너나이, 프로필url을 Map형식으로 담음
   final String lastContent; //마지막 채팅내용
@@ -9,6 +10,7 @@ class ChatRoomModel {
 
   ChatRoomModel({
     required this.id,
+    required this.postId,
     required this.userIdList,
     required this.userList,
     required this.lastContent,
@@ -20,6 +22,7 @@ class ChatRoomModel {
     var snapshot = doc.data() as Map<String, dynamic>;
     return ChatRoomModel(
       id: snapshot['id'],
+      postId: snapshot['postId'],
       userIdList: snapshot['userIdList'],
       userList: snapshot['userList'],
       lastContent: snapshot['lastContent'],

@@ -39,6 +39,7 @@ class ChatController extends GetxController {
       //Chat(col) - 채팅방UID(Doc)
       await _chatDB.doc(chatRoomModel.id).set({
         'id': chatRoomModel.id,
+        'postId': chatRoomModel.postId,
         'userIdList': chatRoomModel.userIdList,
         'userList': chatRoomModel.userList,
         'lastContent': chatRoomModel.lastContent,

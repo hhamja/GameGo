@@ -37,6 +37,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
 
     final chatRoomModel = ChatRoomModel(
       id: widget.postId + '_' + _currentUser.uid, //채팅방 id = postId_현재유저ID
+      postId: widget.postId,
       userIdList: [widget.uid, _currentUser.uid], //게시자, 현재유저 순서
       userList: [
         //게시자, 현재유저 순서

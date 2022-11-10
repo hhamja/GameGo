@@ -22,8 +22,8 @@ class _ChatListPageState extends State<ChatListPage> {
         actions: [
           IconButton(
             onPressed: () => {Get.toNamed('/notification')},
-            icon: Icon(Icons
-                .notifications_none_outlined), //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
+            icon: Icon(Icons.notifications_none_outlined),
+            //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
           ),
         ],
       ),
@@ -112,8 +112,8 @@ class _ChatListPageState extends State<ChatListPage> {
                         'userName': contactUser['userName'],
                         'profileUrl': contactUser['profileUrl'],
                         'mannerAge': contactUser['mannerAge'],
-                        'index': index,
                         'chatRoomId': _chat.chatRoomList[index].id,
+                        'postId': _chat.chatRoomList[index].postId,
                       }, //상대유저정보 전달
                     );
                   },

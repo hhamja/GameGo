@@ -107,6 +107,7 @@ export 'package:mannergamer/controller/user/profile.dart';
 export 'package:mannergamer/controller/favorite/favorite.dart';
 
 /* Components */
+export 'package:mannergamer/component/post_info.dart';
 export 'package:mannergamer/component/bottomSheet.dart';
 export 'package:mannergamer/component/mannerAge.dart';
 
