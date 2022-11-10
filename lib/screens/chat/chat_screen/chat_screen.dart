@@ -72,8 +72,10 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
             InkWell(
               onTap: () {},
               child: Container(
+                padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  border: Border.all(),
+                  border: Border.all(width: 1, color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 width: double.infinity,
                 child: Row(
