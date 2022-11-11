@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:mannergamer/utilites/index/index.dart';
 
 class UserModel {

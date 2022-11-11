@@ -5,6 +5,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Jiffy.locale('ko'); //시간표시 한국어로 변환
+
   Get.put(InitialScreenCntroller());
   runApp(
     GetMaterialApp(

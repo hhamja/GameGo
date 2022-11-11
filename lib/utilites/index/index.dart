@@ -8,6 +8,8 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 /* Packages */
+
+export 'package:table_calendar/table_calendar.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:get/get.dart';
@@ -31,6 +33,8 @@ export 'package:mannergamer/screens/splashPage/myApp.dart';
 export 'package:mannergamer/screens/splashPage/splash.dart';
 
 export 'package:mannergamer/screens/chat/bottomSheet/chat_bottomSheet.dart';
+export 'package:mannergamer/screens/chat/chat_screen/appointment/alarm_bottomSheet.dart';
+export 'package:mannergamer/screens/chat/chat_screen/appointment/appointment.dart';
 export 'package:mannergamer/screens/chat/chat_screen/messages.dart';
 export 'package:mannergamer/screens/chat/chat_screen/new_message.dart';
 export 'package:mannergamer/screens/chat/chat_screen/chat_screen.dart';

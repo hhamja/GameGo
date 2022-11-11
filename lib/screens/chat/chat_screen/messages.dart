@@ -53,7 +53,7 @@ class _MessagesState extends State<Messages> {
           thickness: 3, //색상은 ThemeData()에서  highlightColor로 변경하자
           /* 채팅리스트 박스의 패딩 */
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
               reverse: true,
               shrinkWrap: true,
