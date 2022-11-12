@@ -34,18 +34,18 @@ class PostModel {
     //Post DB의 문서 데이터로 변환
     var snapshot = doc.data() as Map<String, dynamic>;
     return PostModel(
-      postId: snapshot['postId'] ?? '',
-      uid: snapshot['uid'] ?? '',
-      userName: snapshot['userName'] ?? '',
-      profileUrl: snapshot['profileUrl'] ?? '',
-      mannerAge: snapshot['mannerAge'] ?? '',
-      title: snapshot['title'] ?? '',
-      maintext: snapshot['maintext'] ?? '',
-      gamemode: snapshot['gamemode'] ?? '',
-      position: snapshot['position'] ?? '',
-      tear: snapshot['tear'] ?? '',
-      like: snapshot['like'] ?? '',
-      createdAt: snapshot['createdAt'] ?? '',
+      postId: snapshot['postId'],
+      uid: snapshot['uid'],
+      userName: snapshot['userName'],
+      profileUrl: snapshot['profileUrl'],
+      mannerAge: snapshot['mannerAge'],
+      title: snapshot['title'],
+      maintext: snapshot['maintext'],
+      gamemode: snapshot['gamemode'],
+      position: snapshot['position'],
+      tear: snapshot['tear'],
+      like: snapshot['like'],
+      createdAt: snapshot['createdAt'],
     );
   }
 }

@@ -6,9 +6,6 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
-  Duration initialtimer = new Duration();
-  var time;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,39 +47,33 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ),
               ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '시간',
-                  style: TextStyle(
-                    fontSize: 15,
-                    //  fontWeight: FontWeight.w700,
-                  ),
+
+            /* 시간 지정 버튼 */
+            SizedBox(
+              width: double.infinity,
+
+              // height: 50,
+              child: TextButton(
+                onPressed: () {
+                  Get.dialog(
+                    TimePickerDialog(
+                      initialTime: TimeOfDay.now(),
+                    ),
+                  );
+                },
+                child: Text(
+                  '오후 08:00',
+                  style: TextStyle(color: Colors.black, fontSize: 15),
                 ),
-                /* 시간 지정 버튼 */
-                TextButton(
-                  onPressed: () {
-                    Get.dialog(
-                      TimePickerDialog(
-                        initialTime: TimeOfDay.now(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    '오후 08:00',
-                    style: TextStyle(color: Colors.black, fontSize: 15),
-                  ),
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    backgroundColor: Colors.black12,
-                    // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  backgroundColor: Colors.black12,
+                  tapTargetSize: MaterialTapTargetSize.padded,
+                  // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
-              ],
+              ),
             ),
-            Divider(thickness: 1, height: 30),
+            SizedBox(height: 20),
             /* 알림 설정 */
             Text(
               '알림',
@@ -100,7 +91,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               }, //알림 '~전' 시간선택하는 다이어로그 띄우기
               trailing: Icon(Icons.arrow_drop_down_sharp),
             ),
-            Divider(thickness: 1, height: 30),
+            SizedBox(height: 20),
             /* 완료버튼 */
             SizedBox(
               height: 50,

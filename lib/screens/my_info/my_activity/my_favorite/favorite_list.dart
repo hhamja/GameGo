@@ -14,6 +14,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
   @override
   void initState() {
     super.initState();
+    print(_favorite.yxxy);
     _favorite.getFavoriteList(currentUid); //현재 유저의 관심 게시글 목록 받기
   }
 
@@ -34,7 +35,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
           displacement: 0, //맨 위에 위치시키는 값
           child: ListView.separated(
             physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.all(20),
             separatorBuilder: (BuildContext context, int index) {
               return Divider(
                 thickness: 1,
@@ -42,7 +43,15 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
             },
             itemCount: _favorite.favoriteList.length,
             itemBuilder: (BuildContext context, int index) {
+              // List _isFavoriteList = List.generate(
+              //   _favorite.favoriteList.length,
+              //   (_) => true, //bool 변수
+              // );
+              // _isFavoriteList[0] = false;
+              // print(_isFavoriteList);
               return ListTile(
+                horizontalTitleGap: 0,
+                contentPadding: EdgeInsets.zero,
                 onTap: () {
                   Get.toNamed('/postdetail', arguments: {
                     'postId': _favorite.favoriteList[index].postId,
@@ -67,7 +76,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
                             _favorite.favoriteList[index].userName,
                             style: TextStyle(height: 1.2),
                           ),
-                          /* 날짜 */
+                          /* 하트버튼 */
                         ],
                       ),
                       SizedBox(height: 10),
@@ -105,17 +114,31 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
                               : '',
                           style: TextStyle(fontSize: 12),
                         ),
-                        // Expanded(child: SizedBox()),
-                        // /* 체팅 수 */
-                        // Icon(Icons.chat_bubble_outline, size: 15),
-                        // Text('1'),
-                        // /* 좋아요 수 */
-                        // Icon(Icons.favorite_border_outlined, size: 15),
-                        // Text('1'),
                       ],
                     ),
                   ],
                 ),
+                // trailing: IconButton(
+                //   onPressed: () async {
+                //     await _favorite.favoritePost(
+                //         currentUid, _favorite.favoriteList[index].postId);
+                //     setState(() {
+                //       _favorite.favoriteList[index].isFavorite =
+                //           !_favorite.favoriteList[index].isFavorite;
+                //     });
+                //   },
+                //   padding: EdgeInsets.zero,
+                //   style: IconButton.styleFrom(
+                //       padding: EdgeInsets.zero,
+                //       tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                //   icon: _favorite.favoriteList[index].isFavorite
+                //       ? Icon(
+                //           Icons.favorite,
+                //           color: Colors.blue,
+                //         ) //true => 파란색 하트
+                //       : Icon(
+                //           Icons.favorite_border_outlined), //false => 빈 하트    ,
+                // ),
               );
             },
           ),

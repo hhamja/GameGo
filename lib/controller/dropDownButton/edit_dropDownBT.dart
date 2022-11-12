@@ -3,10 +3,6 @@ import 'package:mannergamer/utilites/index/index.dart';
 /*------------------- 수정페이지 드랍다운버튼 컨트롤러 ----------------------*/
 
 class EditDropDownController extends GetxController {
-  static EditDropDownController get to => Get.find<EditDropDownController>();
-
-  /* find -> PostController */
-  PostController _controller = Get.find<PostController>();
   /* 포지션 · 티어의 드랍다운버튼 보여주는 bool 값 */
   bool showPosition = true;
   bool showTear = true;
@@ -14,15 +10,18 @@ class EditDropDownController extends GetxController {
   var seledtedPostGamemodeValue;
   var seledtedPostdPositionValue;
   var seledtedPostTearValue;
-  /* HomePostList Listview의 index 값을 전달받음 */
-  final index = Get.arguments;
+  /* Post detail Page에서 게임모드, 포지션, 티어 값 전달 받음 */
+  final gamemode = Get.arguments['gamemode'];
+  final position = Get.arguments['position'];
+  final tear = Get.arguments['tear'];
+
   /* 드랍다운버튼 선택 값 = Get.Argument로 전달한 값 */
   @override
   void onInit() {
     super.onInit();
-    seledtedPostGamemodeValue = _controller.postList[index].gamemode;
-    seledtedPostdPositionValue = _controller.postList[index].position;
-    seledtedPostTearValue = _controller.postList[index].tear;
+    seledtedPostGamemodeValue = Get.arguments['gamemode'];
+    seledtedPostdPositionValue = Get.arguments['position'];
+    seledtedPostTearValue = Get.arguments['tear'];
   }
 
   /* 게임모드가 

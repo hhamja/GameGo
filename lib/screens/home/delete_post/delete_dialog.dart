@@ -10,7 +10,7 @@ class DeleteDialog extends StatefulWidget {
 class _DeleteDialogState extends State<DeleteDialog> {
   final PostController _post = Get.find<PostController>();
   /* 게시물의 index 값을 전달받음 */
-  final int postId = Get.arguments['postId'];
+  final String postId = Get.arguments['postId'];
   /* 홈 드랍다운버튼 컨트롤러 */
   final HomePageDropDownBTController _ =
       Get.put(HomePageDropDownBTController());

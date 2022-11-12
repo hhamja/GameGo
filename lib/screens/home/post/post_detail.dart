@@ -245,8 +245,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 Get.back();
                 await Get.to(() => EditPostPage(), arguments: {
                   'postId': postId,
-                  'mainText': _post.postInfo['mainText'],
+                  'maintext': _post.postInfo['maintext'],
                   'title': _post.postInfo['title'],
+                  'gamemode': _post.postInfo['gamemode'],
+                  'position': _post.postInfo['position'],
+                  'tear': _post.postInfo['tear'],
                 });
               }), //자기 게시물 수정 페이지로 이동
               CustomButtomSheet('삭제', Colors.redAccent, () async {

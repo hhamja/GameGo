@@ -14,8 +14,8 @@ class _EditPostPageState extends State<EditPostPage> {
   EditDropDownController _editDropDownController =
       Get.put(EditDropDownController());
 
-  final postId = Get.arguments['postId'];
-  final mainText = Get.arguments['mainText']; //본문
+  final postId = Get.arguments['postId']; //게시글 ID
+  final maintext = Get.arguments['maintext']; //본문
   final title = Get.arguments['title']; //제목
 
   /* 제목 · 본문 Text Controller */
@@ -30,15 +30,16 @@ class _EditPostPageState extends State<EditPostPage> {
   * 기존 제목과 본문 수정페이지에 불러오기 */
   @override
   void initState() {
+    super.initState();
     setState(() {
       _titleController.text = title;
-      _maintextController.text = mainText;
+      _maintextController.text = maintext;
     });
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(postId);
     print(_titleController.text);
     print(_maintextController.text);
 
@@ -61,10 +62,8 @@ class _EditPostPageState extends State<EditPostPage> {
                 _editDropDownController.seledtedPostdPositionValue,
                 _editDropDownController.seledtedPostTearValue,
               );
-              await _postController.readPostData();
-              // _postController.postList.refresh();
-              _postController.update();
-              Get.back();
+              await _postController.getPostInfoByid(postId); //게시글 세부 페이지 새로고침
+              Get.back(); //Post detail Page로 이동
             },
             child: Text(
               '완료',
