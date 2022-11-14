@@ -53,6 +53,7 @@ dependencies:
   jiffy: ^5.0.0
   grouped_list: ^5.1.2
   table_calendar: ^3.0.8
+  flutter_time_picker_spinner: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -8,7 +8,7 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 /* Packages */
-
+export 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 export 'package:table_calendar/table_calendar.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
