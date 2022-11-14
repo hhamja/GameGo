@@ -33,8 +33,8 @@ export 'package:mannergamer/screens/splashPage/myApp.dart';
 export 'package:mannergamer/screens/splashPage/splash.dart';
 
 export 'package:mannergamer/screens/chat/bottomSheet/chat_bottomSheet.dart';
-export 'package:mannergamer/screens/chat/chat_screen/appointment/alarm_bottomSheet.dart';
-export 'package:mannergamer/screens/chat/chat_screen/appointment/appointment.dart';
+export 'package:mannergamer/screens/chat/appointment/alarm_bottomSheet.dart';
+export 'package:mannergamer/screens/chat/appointment/appointment.dart';
 export 'package:mannergamer/screens/chat/chat_screen/messages.dart';
 export 'package:mannergamer/screens/chat/chat_screen/new_message.dart';
 export 'package:mannergamer/screens/chat/chat_screen/chat_screen.dart';
