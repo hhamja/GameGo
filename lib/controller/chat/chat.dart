@@ -43,6 +43,7 @@ class ChatController extends GetxController {
         'userIdList': chatRoomModel.userIdList,
         'userList': chatRoomModel.userList,
         'lastContent': chatRoomModel.lastContent,
+        'appointment': chatRoomModel.appointment,
         'updatedAt': chatRoomModel.updatedAt,
       });
   }

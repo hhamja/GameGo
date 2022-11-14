@@ -6,6 +6,7 @@ class ChatRoomModel {
   final List userIdList; //채팅대상 유저 리스트 -> 채팅리스트 불러오는 쿼리에 쓰임
   final List userList; //uid, 이름, 매너나이, 프로필url을 Map형식으로 담음
   final String lastContent; //마지막 채팅내용
+  final appointment; //약속 날짜 (타임스탬프로 할지? 스트링으로 넣을지?)
   final Timestamp updatedAt; //가장 최근 주고받은 일시
 
   ChatRoomModel({
@@ -14,6 +15,7 @@ class ChatRoomModel {
     required this.userIdList,
     required this.userList,
     required this.lastContent,
+    this.appointment, //약속설정을 하는 경우도 있고 아닌경우도 있으므로 nullable
     required this.updatedAt,
   });
 
@@ -26,6 +28,7 @@ class ChatRoomModel {
       userIdList: snapshot['userIdList'],
       userList: snapshot['userList'],
       lastContent: snapshot['lastContent'],
+      appointment: snapshot['appointment'],
       updatedAt: snapshot['updatedAt'],
     );
   }
