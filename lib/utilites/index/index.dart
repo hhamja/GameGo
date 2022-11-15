@@ -114,6 +114,7 @@ export 'package:mannergamer/controller/favorite/favorite.dart';
 export 'package:mannergamer/component/post_info.dart';
 export 'package:mannergamer/component/bottomSheet.dart';
 export 'package:mannergamer/component/mannerAge.dart';
+export 'package:mannergamer/component/small_dialog.dart';
 
 /* Utilities */
 export 'package:mannergamer/utilites/route/route.dart';
