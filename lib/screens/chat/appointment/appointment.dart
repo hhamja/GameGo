@@ -15,6 +15,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     DateTime.now().month,
     DateTime.now().day,
   );
+  /*  */
   DateTime _dateTime = DateTime.now();
   DateTime focusedDay = DateTime(2022, 11, 16);
 
@@ -36,7 +37,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               '날짜',
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 15,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
@@ -112,33 +113,38 @@ class _AppointmentPageState extends State<AppointmentPage> {
               // height: 35,
               child: TextButton(
                 onPressed: () {
-                  Get.bottomSheet(
-                    Container(
-                      color: Colors.white,
-                      child: TimePickerSpinner(
-                        alignment: Alignment.center,
-                        is24HourMode: false,
-                        normalTextStyle:
-                            TextStyle(fontSize: 20, color: Colors.grey[300]),
-                        highlightedTextStyle: TextStyle(
-                          fontSize: 23,
-                          color: Colors.black,
+                  Get.dialog(
+                    Dialog(
+                      child: Container(
+                        color: Colors.white,
+                        child: TimePickerSpinner(
+                          alignment: Alignment.center,
+                          is24HourMode: false,
+                          normalTextStyle: TextStyle(
+                            fontSize: 20,
+                            color: Colors.grey[300],
+                          ),
+                          time: _dateTime,
+                          highlightedTextStyle: TextStyle(
+                            fontSize: 21,
+                            color: Colors.black,
+                          ),
+                          spacing: 20,
+                          itemHeight: 50,
+                          isForce2Digits: true,
+                          minutesInterval: 1,
+                          onTimeChange: (time) {
+                            setState(() {
+                              _dateTime = time;
+                            });
+                          },
                         ),
-                        spacing: 30,
-                        itemHeight: 50,
-                        isForce2Digits: false,
-                        minutesInterval: 1,
-                        onTimeChange: (time) {
-                          setState(() {
-                            _dateTime = time;
-                          });
-                        },
                       ),
                     ),
                   );
                 },
                 child: Text(
-                  '오후 08:00',
+                  Jiffy(_dateTime).format('a hh시 mm분'),
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
@@ -160,7 +166,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               '알림',
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 15,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
             Container(
