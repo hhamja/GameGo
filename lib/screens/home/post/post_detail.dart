@@ -241,7 +241,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
           height: 180,
           child: Column(
             children: [
-              CustomButtomSheet('게시물 수정', Colors.blue, () async {
+              CustomButtomSheet('게시글 수정', Colors.blue, () async {
                 Get.back();
                 await Get.to(() => EditPostPage(), arguments: {
                   'postId': postId,
@@ -267,17 +267,17 @@ class _PostDetailPageState extends State<PostDetailPage> {
       return Get.bottomSheet(
         Container(
           color: Colors.white,
-          height: 180,
+          height: 120,
           child: Column(
             children: [
               CustomButtomSheet('신고하기', Colors.blue, () {
                 Get.back();
                 Get.toNamed('/report');
               }), //신고하기 페이지로 이동
-              CustomButtomSheet(
-                  "'${_post.postInfo['userName']}' 차단하기", Colors.redAccent, () {
-                Get.back();
-              }), // 사용자 차단 (나중)
+              // CustomButtomSheet(
+              //     "'${_post.postInfo['userName']}' 차단하기", Colors.redAccent, () {
+              //   Get.back();
+              // }), // 사용자 차단 (나중)
               CustomButtomSheet('취소', Colors.blue, () => Get.back()),
               //바텀시트 내리기
             ],

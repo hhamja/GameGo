@@ -45,7 +45,7 @@ class _ChatListPageState extends State<ChatListPage> {
                   Jiffy(_chat.chatRoomList[index].updatedAt.toDate()).fromNow();
               return Slidable(
                 endActionPane: ActionPane(
-                  extentRatio: 0.4,
+                  extentRatio: 0.2, //한개당 0.2, 삭제버튼 추가시 0.4로 수정할 것
                   motion: DrawerMotion(),
                   children: [
                     /* 알림 on/off */
@@ -61,13 +61,13 @@ class _ChatListPageState extends State<ChatListPage> {
                         });
                       },
                     ),
-                    /* 채팅 나가기 (DB에서 삭제 X)*/
-                    SlidableAction(
-                      onPressed: (_) {},
-                      backgroundColor: Color(0xFFFE4A49),
-                      foregroundColor: Colors.white,
-                      icon: Icons.delete,
-                    ),
+                    // /* 채팅 나가기 (DB에서 삭제 X)*/
+                    // SlidableAction(
+                    //   onPressed: (_) {},
+                    //   backgroundColor: Color(0xFFFE4A49),
+                    //   foregroundColor: Colors.white,
+                    //   icon: Icons.delete,
+                    // ),
                   ],
                 ),
                 child: ListTile(

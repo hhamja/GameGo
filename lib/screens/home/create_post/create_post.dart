@@ -27,6 +27,7 @@ class _AddPostPageState extends State<AddPostPage> {
   final ScrollController _titleScrollController = ScrollController();
   final ScrollController _maintextScrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
+
   /* 게시글 생성 '완료'버튼 클릭 시 */
   Future<void> _createPost() async {
     UserModel userModel =
@@ -51,6 +52,7 @@ class _AddPostPageState extends State<AddPostPage> {
 
     await _post.createPost(postModel); //게시물 만들기
 
+    /* 드랍다운버튼 선택의 대한 IF문 */
     if (_.selectedTearValue != '티어') {
       await _post.filterTear(
           _.selectedModeValue, _.selectedPositionValue, _.selectedTearValue);

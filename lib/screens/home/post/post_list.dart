@@ -40,6 +40,7 @@ class HomePostList extends GetView<PostController> {
           separatorBuilder: (BuildContext context, int index) {
             return Divider(
               thickness: 1,
+              color: Colors.grey[200],
             );
           },
           itemCount: controller.postList.length,

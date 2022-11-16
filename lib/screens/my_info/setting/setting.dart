@@ -64,53 +64,53 @@ class _SettingPageState extends State<SettingPage> {
                   description: Text('마케징 정보 수신 동의 1995-01-26')),
             ],
           ),
-          SettingsSection(
-            title: Text('사용자 설정'),
-            tiles: <SettingsTile>[
-              SettingsTile.navigation(
-                title: Text('계정/정보 관리'),
-                onPressed: (_) {
-                  Get.to(() => AccountManagementPage());
-                },
-              ),
-              SettingsTile.navigation(
-                title: Text('팔로우 유저 관리'),
-                onPressed: (_) {
-                  Get.to(() => FavoriteUserManagementPage());
-                },
-              ),
-              SettingsTile.navigation(
-                title: Text('차단 유저 관리'),
-                onPressed: (_) {
-                  Get.to(() => BlockUserManagement());
-                },
-              ),
-              // SettingsTile.navigation(
-              //   title: Text('게시글 미노출 유저 관리'),
-              //   onPressed: (_) {
-              //     Get.to(() => UnexposeUserManagementPage());
-              //   },
-              // ),
-            ],
-          ),
+          // SettingsSection(
+          //   title: Text('사용자 설정'),
+          //   tiles: <SettingsTile>[
+          //     SettingsTile.navigation(
+          //       title: Text('계정/정보 관리'),
+          //       onPressed: (_) {
+          //         Get.to(() => AccountManagementPage());
+          //       },
+          //     ),
+          //     SettingsTile.navigation(
+          //       title: Text('팔로우 유저 관리'),
+          //       onPressed: (_) {
+          //         Get.to(() => FavoriteUserManagementPage());
+          //       },
+          //     ),
+          //     SettingsTile.navigation(
+          //       title: Text('차단 유저 관리'),
+          //       onPressed: (_) {
+          //         Get.to(() => BlockUserManagement());
+          //       },
+          //     ),
+          //     SettingsTile.navigation(
+          //       title: Text('게시글 미노출 유저 관리'),
+          //       onPressed: (_) {
+          //         Get.to(() => UnexposeUserManagementPage());
+          //       },
+          //     ),
+          //   ],
+          // ),
           SettingsSection(
             title: Text('기타'),
             tiles: <SettingsTile>[
-              SettingsTile.navigation(
-                title: Text('버전 정보'),
-                description: Text('최신버전 1.0.0'),
-                trailing: Text('1.0.0'), //사용자의 현재정보 표시
-                onPressed: (_) {
-                  return Get.dialog(
-                    AlertDialog(
-                      title: Text(
-                        '최신버전입니다',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  );
-                },
-              ),
+              // SettingsTile.navigation(
+              //   title: Text('버전 정보'),
+              //   description: Text('최신버전 1.0.0'),
+              //   trailing: Text('1.0.0'), //사용자의 현재정보 표시
+              //   onPressed: (_) {
+              //     return Get.dialog(
+              //       AlertDialog(
+              //         title: Text(
+              //           '최신버전입니다',
+              //           textAlign: TextAlign.center,
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
               SettingsTile.navigation(
                 title: Text('로그아웃'),
                 onPressed: (_) {

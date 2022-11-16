@@ -8,16 +8,15 @@ class AppointmentPage extends StatefulWidget {
 class _AppointmentPageState extends State<AppointmentPage> {
   /* 캘린더 날짜 텍스트 크기 */
   final double _dateFontsize = 18;
-  /* 캘린더에서 선택한 날짜, 파란색 원으로 강조표시 됨
-  * 여기서 선택한 변수를 DB appointment에 저장 */
-  DateTime selectedDay = DateTime(
+  /* 캘린더에서 선택한 약속날짜 년,월,일만(시, 분 X) 담는 변수 
+  * 캘린더 클릭 시 파란색 원으로 강조표시 */
+  DateTime _date = DateTime(
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
   );
-  /*  */
+  /* 약속시간의 시, 분(년, 월, 일)을 담는 변수 */
   DateTime _dateTime = DateTime.now();
-  DateTime focusedDay = DateTime(2022, 11, 16);
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +46,20 @@ class _AppointmentPageState extends State<AppointmentPage> {
               onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
                 // 선택된 날짜의 상태를 갱신합니다.
                 setState(() {
-                  this.selectedDay = selectedDay;
-                  this.focusedDay = focusedDay;
+                  this._date = selectedDay;
+                  this._date = focusedDay;
                 });
               },
               selectedDayPredicate: (DateTime day) {
                 // selectedDay 와 동일한 날짜의 모양을 바꿔줍니다.
-                return isSameDay(selectedDay, day);
+                return isSameDay(_date, day);
               },
 
               daysOfWeekHeight: 20, //월~금 글씨가 가려져서 높이주기
               locale: 'ko_KR', //한국어로 바꾸기
               firstDay: DateTime.now(), //처음날짜
               lastDay: DateTime.utc(3000, 12, 31), //달력의 마지막 날짜
-              focusedDay: focusedDay, //선택 된 날짜
+              focusedDay: _date, //선택 된 날짜
               calendarStyle: CalendarStyle(
                 // cellPadding: EdgeInsets.zero,
                 canMarkersOverflow: false, //마커 여러개이면 셀 영역을 벗어날지 여부
@@ -124,7 +123,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                             fontSize: 20,
                             color: Colors.grey[300],
                           ),
-                          time: _dateTime,
+                          // time: _dateTime,
                           highlightedTextStyle: TextStyle(
                             fontSize: 21,
                             color: Colors.black,
@@ -188,6 +187,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ),
               ),
             ),
+            Text(
+              Jiffy(_date).format('yyyy-MM-dd') +
+                  ' ' +
+                  Jiffy(_dateTime).format('HH:mm:00.000'),
+            ), //선택한 약속시간 확인하는 텍스트 용도
           ],
         ),
       ),

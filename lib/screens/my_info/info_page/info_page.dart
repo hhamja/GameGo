@@ -107,24 +107,24 @@ class _MyInfoPageState extends State<MyInfoPage> {
               SettingsSection(
                 title: Text('기타'),
                 tiles: <SettingsTile>[
-                  SettingsTile.navigation(
-                    title: Text('공지사항'),
-                    onPressed: (_) {
-                      Get.to(() => AppNoticeListPage());
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    title: Text('1:1 문의 및 피드백'),
-                    onPressed: (_) {
-                      Get.to(() => FeedbackPage());
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    title: Text('FAQ'),
-                    onPressed: (_) {
-                      Get.to(() => FAQPage());
-                    },
-                  ),
+                  // SettingsTile.navigation(
+                  //   title: Text('공지사항'),
+                  //   onPressed: (_) {
+                  //     Get.to(() => AppNoticeListPage());
+                  //   },
+                  // ),
+                  // SettingsTile.navigation(
+                  //   title: Text('1:1 문의 및 피드백'),
+                  //   onPressed: (_) {
+                  //     Get.to(() => FeedbackPage());
+                  //   },
+                  // ),
+                  // SettingsTile.navigation(
+                  //   title: Text('FAQ'),
+                  //   onPressed: (_) {
+                  //     Get.to(() => FAQPage());
+                  //   },
+                  // ),
                   SettingsTile.navigation(
                     title: Text('설정'),
                     onPressed: (_) => {Get.to(() => SettingPage())},

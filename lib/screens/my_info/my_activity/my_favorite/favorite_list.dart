@@ -39,6 +39,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
             separatorBuilder: (BuildContext context, int index) {
               return Divider(
                 thickness: 1,
+                height: 20,
               );
             },
             itemCount: _favorite.favoriteList.length,

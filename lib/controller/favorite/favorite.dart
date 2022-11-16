@@ -103,13 +103,13 @@ class FavoriteController extends GetxController {
     });
 
     // /* 반복문 돌려서 postId를 넣어 PostModel에 넣기 */
-    // for (var id in postIdList) {
-    //   Map<String, dynamic> _favoriteModel; //데이터 담을 빈 map변수
-    //   await ref.doc(id).get().then((value) => _favoriteModel =
-    //       FavoriteModel.fromDocumentSnapshot(value) as Map<String, dynamic>);
-    //   await _postDB.doc(id).get().then((value) => favoriteList
-    //       .add(FavoriteListModel.fromDocumentSnapshot(value, _favoriteModel)));
-    // }
+    for (var id in postIdList) {
+      // Map<String, dynamic> _favoriteModel; //데이터 담을 빈 map변수
+      // await ref.doc(id).get().then((value) => _favoriteModel =
+      //     FavoriteModel.fromDocumentSnapshot(value) as Map<String, dynamic>);
+      await _postDB.doc(id).get().then((value) =>
+          favoriteList.add(FavoriteListModel.fromDocumentSnapshot(value)));
+    }
   }
 
   /* 관심게시글 목록에서 관심버튼에 대한 */
