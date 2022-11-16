@@ -10,7 +10,7 @@ class CustomPostInfo extends StatelessWidget {
     return ListTile(
       dense: true,
       minVerticalPadding: 0,
-      contentPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.symmetric(horizontal: 15),
       onTap: () {
         Get.toNamed('/postdetail', arguments: {'postId': postId});
       },

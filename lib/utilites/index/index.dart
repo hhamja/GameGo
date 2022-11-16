@@ -115,6 +115,8 @@ export 'package:mannergamer/component/post_info.dart';
 export 'package:mannergamer/component/bottomSheet.dart';
 export 'package:mannergamer/component/mannerAge.dart';
 export 'package:mannergamer/component/small_dialog.dart';
+export 'package:mannergamer/component/divider.dart';
+export 'package:mannergamer/component/post_listtile.dart';
 
 /* Utilities */
 export 'package:mannergamer/utilites/route/route.dart';

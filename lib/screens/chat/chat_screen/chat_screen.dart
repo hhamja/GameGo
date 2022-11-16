@@ -59,19 +59,17 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           /* 채팅에 해당하는 게시글 정보 */
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: CustomPostInfo(
-              postId,
-              _post.postInfo['title'], //제목
-              _post.postInfo['gamemode'], //게임모드
-              _post.postInfo['position'], //포지션
-              _post.postInfo['tear'], //티어
-            ),
+          CustomPostInfo(
+            postId,
+            _post.postInfo['title'], //제목
+            _post.postInfo['gamemode'], //게임모드
+            _post.postInfo['position'], //포지션
+            _post.postInfo['tear'], //티어
           ),
+
           /* 약속 잡는 버튼 */
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: InkWell(
               onTap: () {
                 Get.to(() => AppointmentPage()); //약속시간 정하는 페이지로 이동

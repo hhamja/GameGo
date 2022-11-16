@@ -47,7 +47,7 @@ class _ReportListPageState extends State<ReportListPage> {
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
-                return Divider(thickness: 1);
+                return CustomDivider();
               },
               itemCount: reportPostReason.length),
           Divider(thickness: 1),

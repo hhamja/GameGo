@@ -33,11 +33,12 @@ class _ChatListPageState extends State<ChatListPage> {
             await _chat.chatRoomList; //채팅리스트 새로고침
           },
           displacement: 0,
-          child: ListView.builder(
+          child: ListView.separated(
             itemCount: _chat.chatRoomList.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return CustomDivider();
+            },
             itemBuilder: (BuildContext context, int index) {
-              //상대유저 정보(프로필, 이름, 매너나이)
-              // == 를 != 로 수정해야한다
               Map<String, dynamic> contactUser =
                   _chat.chatRoomList[index].userList.firstWhere((element) =>
                       element['id'] != FirebaseAuth.instance.currentUser!.uid);
