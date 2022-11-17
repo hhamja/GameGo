@@ -17,8 +17,6 @@ class FavoriteController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // yxxy.bindStream(heartListen());
-    // print(yxxy);
   }
 
   /* 하트버튼 리스너 스트림 함수 */
@@ -102,14 +100,12 @@ class FavoriteController extends GetxController {
       postIdList.assignAll(value.docs.map((e) => e.reference.id));
     });
 
-    // /* 반복문 돌려서 postId를 넣어 PostModel에 넣기 */
+    /* 반복문 돌려서 postId를 넣어 PostModel에 넣기 */
     for (var id in postIdList) {
-      // Map<String, dynamic> _favoriteModel; //데이터 담을 빈 map변수
-      // await ref.doc(id).get().then((value) => _favoriteModel =
-      //     FavoriteModel.fromDocumentSnapshot(value) as Map<String, dynamic>);
       await _postDB.doc(id).get().then((value) =>
           favoriteList.add(FavoriteListModel.fromDocumentSnapshot(value)));
     }
+    return favoriteList; //리턴해주지 않으면 순서가 뒤죽박죽으로 출력
   }
 
   /* 관심게시글 목록에서 관심버튼에 대한 */

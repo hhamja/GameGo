@@ -23,51 +23,6 @@ class ReceivedReviewPage extends StatelessWidget {
                 '1일 전',
                 () {},
               );
-
-              // return ListTile(
-              //   minLeadingWidth: 0,
-              //   isThreeLine: true,
-              //   minVerticalPadding: 15,
-              //   onTap: () {},
-              //   leading: CircleAvatar(
-              //     radius: 20,
-              //   ),
-              //   title: Padding(
-              //     padding: const EdgeInsets.only(bottom: 3),
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         Text(
-              //           '닉네임',
-              //           style: TextStyle(fontSize: 15),
-              //         ),
-              //         Text(
-              //           '같이 할 골드 듀오 구합니다.',
-              //           style: TextStyle(fontSize: 18),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              //   subtitle: Text(
-              //     '솔로랭크 · 정글 · 아이언',
-              //     style: TextStyle(fontSize: 15),
-              //   ),
-              //   trailing: Column(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     crossAxisAlignment: CrossAxisAlignment.end,
-              //     children: [
-              //       Text(
-              //         '1일 전',
-              //         style: TextStyle(
-              //           fontSize: 12,
-              //         ),
-              //       ),
-              //       Expanded(
-              //         child: SizedBox(),
-              //       ),
-              //     ],
-              //   ),
-              // );
             },
             separatorBuilder: (BuildContext context, int index) {
               return CustomDivider();
