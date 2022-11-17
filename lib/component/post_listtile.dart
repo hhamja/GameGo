@@ -43,7 +43,7 @@ class CustomPostListTile extends StatelessWidget {
             SizedBox(height: 5),
             Text(
               content,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 16),
             ),
           ],
         ),

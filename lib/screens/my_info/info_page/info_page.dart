@@ -45,7 +45,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
                 tiles: <SettingsTile>[
                   SettingsTile.navigation(
                     leading: CircleAvatar(
-                      backgroundColor: Color.fromRGBO(96, 125, 139, 1),
                       radius: 30,
                       backgroundImage:
                           NetworkImage(_user.userInfo['profileUrl']),
@@ -75,7 +74,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   //
                   // ),
                   SettingsTile.navigation(
-                    title: Text('나의 글 0개'), //나의 글 $state
+                    title: Text('나의 글'), //나의 글 $state
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     onPressed: (_) {
                       Get.to(() => MyPostListPage());

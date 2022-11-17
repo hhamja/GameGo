@@ -46,7 +46,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
               final _gamemode = _favorite.favoriteList[index].gamemode;
               final _position = _favorite.favoriteList[index].position;
               final _tear = _favorite.favoriteList[index].tear;
-              onTap() {
+              _onTap() {
                 Get.toNamed('/postdetail', arguments: {
                   'postId': _favorite.favoriteList[index].postId,
                 });
@@ -60,7 +60,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
                 _position,
                 _tear,
                 '', //시간표시 X
-                onTap,
+                _onTap,
               );
             },
           ),
