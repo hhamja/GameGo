@@ -11,6 +11,8 @@ class ChatListPage extends StatefulWidget {
 class _ChatListPageState extends State<ChatListPage> {
   /* Chat Controller */
   final ChatController _chat = Get.put(ChatController());
+  /* 현재유저 uid */
+  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
   /*  */
   bool _click = true;
 
@@ -39,11 +41,14 @@ class _ChatListPageState extends State<ChatListPage> {
               return CustomDivider();
             },
             itemBuilder: (BuildContext context, int index) {
+              final String chatId = _chat.chatRoomList[index].id; //채팅방 id
+              /* 스트림으로 안읽은 메시지 수 받기 */
+              // _chat.unReadCount.bindStream(_chat.unReadMessageCount(chatId));
               Map<String, dynamic> contactUser =
-                  _chat.chatRoomList[index].userList.firstWhere((element) =>
-                      element['id'] != FirebaseAuth.instance.currentUser!.uid);
-              String _time =
-                  Jiffy(_chat.chatRoomList[index].updatedAt.toDate()).fromNow();
+                  _chat.chatRoomList[index].userList.firstWhere(
+                      (element) => element['uid'] != _currentUid); //상대유저 정보
+              String _time = Jiffy(_chat.chatRoomList[index].updatedAt.toDate())
+                  .fromNow(); //'-전'시간표시
               return Slidable(
                 endActionPane: ActionPane(
                   extentRatio: 0.2, //한개당 0.2, 삭제버튼 추가시 0.4로 수정할 것
@@ -101,7 +106,7 @@ class _ChatListPageState extends State<ChatListPage> {
                           backgroundColor: Colors.red,
                           radius: 10,
                           child: Text(
-                            '1',
+                            _chat.chatRoomList[index].unReadCount.toString(),
                             style: TextStyle(fontSize: 12, color: Colors.white),
                           )), // 읽지 않은 메시지 알려주는 빨간숫자
                     ],

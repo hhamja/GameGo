@@ -18,6 +18,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   @override
   void initState() {
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
+
     super.initState();
   }
 
@@ -42,8 +43,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
             ), // 상대유저이름
             SizedBox(width: 5),
             Text(
-              mannerAge,
-              style: TextStyle(fontSize: 12),
+              mannerAge + '세',
+              style: TextStyle(fontSize: 15),
             ), //유저 매너나이 (글씨 작게)
           ],
         ),

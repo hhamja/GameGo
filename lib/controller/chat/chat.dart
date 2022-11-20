@@ -8,6 +8,8 @@ class ChatController extends GetxController {
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
+  /* 안읽은 메시지 개수 */
+  RxList<Map> unReadCount = <Map>[].obs;
   /* 상대 메시지에서 프로필 보여주는 bool 값 */
   RxBool isShowProfile = false.obs;
   /* 메시지시간 표시에 대한 bool 값 */
@@ -22,7 +24,7 @@ class ChatController extends GetxController {
   void onInit() {
     super.onInit();
     scroll; //채팅페이지 스크롤
-    chatRoomList.bindStream(readAllChatList(_currentUid)); //채팅방리스트 스트림으로 받기
+    chatRoomList.bindStream(readAllChatList()); //채팅방리스트 스트림으로 받기
   }
 
   @override
@@ -40,10 +42,10 @@ class ChatController extends GetxController {
       await _chatDB.doc(chatRoomModel.id).set({
         'id': chatRoomModel.id,
         'postId': chatRoomModel.postId,
-        'userIdList': chatRoomModel.userIdList,
+        'members': chatRoomModel.members,
         'userList': chatRoomModel.userList,
+        'unReadCount': chatRoomModel.unReadCount,
         'lastContent': chatRoomModel.lastContent,
-        'appointment': chatRoomModel.appointment,
         'updatedAt': chatRoomModel.updatedAt,
       });
   }
@@ -56,13 +58,16 @@ class ChatController extends GetxController {
       'senderId': messageModel.senderId,
       'isRead': messageModel.isRead,
       'timestamp': messageModel.timestamp,
-    });
+    }); //메시지 컬렉션에 추가
+    await _chatDB.doc(chatRoomId).update({
+      'unReadCount.${_currentUid}': FieldValue.increment(1),
+    }); //ChatRoom의 unReadCount +1
   }
 
   /* 모든 '채팅' 리스트 스트림으로 받기 */
-  Stream<List<ChatRoomModel>> readAllChatList(currentUid) {
+  Stream<List<ChatRoomModel>> readAllChatList() {
     return _chatDB
-        .where('userIdList', arrayContains: currentUid)
+        .where('members', arrayContains: _currentUid)
         .orderBy('updatedAt', descending: true) //최신이 맨 위
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
@@ -108,5 +113,40 @@ class ChatController extends GetxController {
       'lastContent': lastContent,
       'updatedAt': updatedAt,
     });
+  }
+
+  /* 메시지를 읽은 것에 대한 파이어스토어 값 업데이트 하기
+  * 채팅메시지 페이지를 나가는 순간(dispose) 
+  현재 메시지들의 isRead값을 true로 업데이트 */
+  Future isReadMessage(chatRoomId) async {
+    await _chatDB
+        .doc(chatRoomId)
+        .collection('message')
+        .doc()
+        .update({'isRead': 'true'});
+
+    // final messageRef = _chatDB.doc(chatRoomId).collection('message').doc().update({'isRead': isRead});
+    // await messageRef
+    //     .where('senderId', isNotEqualTo: _currentUid) //상대가 보낸 메시지만 쿼리
+    //     .where('isRead', isEqualTo: false).; //그 중 내가 인읽은 메시지만 쿼리
+  }
+
+  /* 안읽은 메시지 개수 스트림으로 받기 */
+  Stream unReadMessageCount(chatRoomId) {
+    // final ref = _chatDB
+    //     .doc(chatRoomId)
+    //     .collection('message')
+    //     .where('senderId', isEqualTo: _currentUid)
+    //     .where('isRead', isEqualTo: 'false');
+    // print(ref.snapshots().length.toString());
+    // print(ref.count());
+    return _chatDB
+        .doc(chatRoomId)
+        .collection('message')
+        .where('senderId', isEqualTo: _currentUid)
+        .where('isRead', isEqualTo: 'false')
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.docs.map((e) => e.data() as Map<String, dynamic>));
   }
 }

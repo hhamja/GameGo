@@ -25,48 +25,61 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
-    //현재폰유저
+    /* 현재유저정보 인스턴스 생성 */
     UserModel peerUser =
         await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
       return UserModel.fromDocumentSnapshot(value);
     });
-    //게시글의 유저
+    /* 게시자정보 인스턴스 생성 */
     UserModel postingUser = await _userDB.doc(widget.uid).get().then((value) {
       return UserModel.fromDocumentSnapshot(value);
     });
-
+    /* 채팅방 인스턴스 생성 */
     final chatRoomModel = ChatRoomModel(
       id: widget.postId + '_' + _currentUser.uid, //채팅방 id = postId_현재유저ID
       postId: widget.postId,
-      userIdList: [widget.uid, _currentUser.uid], //게시자, 현재유저 순서
+      members: [
+        widget.uid, //게시자
+        _currentUser.uid, //상대유저
+      ],
       userList: [
-        //게시자, 현재유저 순서
         {
-          'id': postingUser.uid,
+          'uid': postingUser.uid,
           'userName': postingUser.userName,
           'profileUrl': postingUser.profileUrl,
           'mannerAge': postingUser.mannerAge,
         },
         {
-          'id': peerUser.uid,
+          'uid': peerUser.uid,
           'userName': peerUser.userName,
           'profileUrl': peerUser.profileUrl,
           'mannerAge': peerUser.mannerAge,
         },
-      ],
+      ], //게시자, 상대유저 순서
+      unReadCount: {
+        widget.uid: 0, //게시자
+        _currentUser.uid: 0, //상대유저
+      },
       lastContent: _messageController.text.trim(),
       updatedAt: Timestamp.now(),
     );
+    /* 메시지 인스턴스 생성 */
     final messageModel = MessageModel(
       timestamp: Timestamp.now(),
       isRead: false,
       content: _messageController.text.trim(),
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
-    _chat.createNewChatRoom(chatRoomModel); //채팅방이 이미 있다면 실행안됨
+    /* 채팅방 만들기
+    * 채팅방이 이미 있다면 실행안됨 */
+    _chat.createNewChatRoom(chatRoomModel);
+    /* 보낸 메시지 파이어스토어 message 컬렉션에 저장하기 */
     _chat.sendNewMessege(messageModel, chatRoomModel.id);
-    setState(() => _messageController.clear()); //입력한 내용 지우기
-    _chat.scroll.jumpTo(0); //맨밑으로 스크롤이동 = scroll.position.maxScrollExtent
+    /* 메시지 텍스트필드 초기화 */
+    setState(() => _messageController.clear());
+    /* 보낸 메시지로 화면이동
+    * 0인이유 : Listview.builder의 reverse가 true이므로 Top과 Bottom이 반전됨 */
+    _chat.scroll.jumpTo(0);
   }
 
   @override

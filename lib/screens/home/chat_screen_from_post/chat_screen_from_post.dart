@@ -35,9 +35,9 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
             ),
             SizedBox(width: 5),
             Text(
-              mannerAge, //유저 매너나이 (글씨 작게)
+              mannerAge + '세', //유저 매너나이 (글씨 작게)
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 15,
               ),
             ),
           ],

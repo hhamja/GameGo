@@ -109,7 +109,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             /* 시간 지정 */
             SizedBox(
               width: double.infinity,
-              // height: 35,
+              // height: 40,
               child: TextButton(
                 onPressed: () {
                   Get.dialog(
