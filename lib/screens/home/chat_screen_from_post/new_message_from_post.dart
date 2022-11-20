@@ -26,7 +26,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
     /* 현재유저정보 인스턴스 생성 */
-    UserModel peerUser =
+    UserModel contactUser =
         await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
       return UserModel.fromDocumentSnapshot(value);
     });
@@ -36,30 +36,29 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     });
     /* 채팅방 인스턴스 생성 */
     final chatRoomModel = ChatRoomModel(
-      id: widget.postId + '_' + _currentUser.uid, //채팅방 id = postId_현재유저ID
+      chatRoomId:
+          widget.postId + '_' + _currentUser.uid, //채팅방 id = postId_현재유저ID
       postId: widget.postId,
       members: [
-        widget.uid, //게시자
-        _currentUser.uid, //상대유저
-      ],
-      userList: [
-        {
-          'uid': postingUser.uid,
-          'userName': postingUser.userName,
-          'profileUrl': postingUser.profileUrl,
-          'mannerAge': postingUser.mannerAge,
-        },
-        {
-          'uid': peerUser.uid,
-          'userName': peerUser.userName,
-          'profileUrl': peerUser.profileUrl,
-          'mannerAge': peerUser.mannerAge,
-        },
-      ], //게시자, 상대유저 순서
+        widget.uid,
+        _currentUser.uid,
+      ], //채팅방에 들어와 있는 uid List [게시자uid, 상대Uid]
+      postingUser: [
+        postingUser.uid,
+        postingUser.profileUrl,
+        postingUser.userName,
+        postingUser.mannerAge,
+      ], //게시자 정보 List[uid, 프로필, 이름, 매너나이]
+      contactUser: [
+        contactUser.uid,
+        contactUser.profileUrl,
+        contactUser.userName,
+        contactUser.mannerAge,
+      ], //상대유저 정보 List[uid, 프로필, 이름, 매너나이]
       unReadCount: {
-        widget.uid: 0, //게시자
-        _currentUser.uid: 0, //상대유저
-      },
+        widget.uid: 0,
+        _currentUser.uid: 0,
+      }, //읽지않은 메시지를 '보낸'Uid와 그 수 {게시자 : 0, 상대유저 : 0}
       lastContent: _messageController.text.trim(),
       updatedAt: Timestamp.now(),
     );
@@ -68,13 +67,12 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
       timestamp: Timestamp.now(),
       isRead: false,
       content: _messageController.text.trim(),
-      senderId: _currentUser.uid, //보내는 유저의 UID
+      senderId: _currentUser.uid,
     );
-    /* 채팅방 만들기
-    * 채팅방이 이미 있다면 실행안됨 */
+    /* 채팅방 만들기, 채팅방이 이미 있다면 실행안됨 */
     _chat.createNewChatRoom(chatRoomModel);
     /* 보낸 메시지 파이어스토어 message 컬렉션에 저장하기 */
-    _chat.sendNewMessege(messageModel, chatRoomModel.id);
+    _chat.sendNewMessege(messageModel, chatRoomModel.chatRoomId);
     /* 메시지 텍스트필드 초기화 */
     setState(() => _messageController.clear());
     /* 보낸 메시지로 화면이동

@@ -13,6 +13,7 @@ class _ChatListPageState extends State<ChatListPage> {
   final ChatController _chat = Get.put(ChatController());
   /* 현재유저 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
+  List contactUser = [];
   /*  */
   bool _click = true;
 
@@ -41,12 +42,17 @@ class _ChatListPageState extends State<ChatListPage> {
               return CustomDivider();
             },
             itemBuilder: (BuildContext context, int index) {
-              final String chatId = _chat.chatRoomList[index].id; //채팅방 id
-              /* 스트림으로 안읽은 메시지 수 받기 */
-              // _chat.unReadCount.bindStream(_chat.unReadMessageCount(chatId));
-              Map<String, dynamic> contactUser =
-                  _chat.chatRoomList[index].userList.firstWhere(
-                      (element) => element['uid'] != _currentUid); //상대유저 정보
+              /* 상대유저 정보 */
+              if (_chat.chatRoomList[index].postingUser[0] != _currentUid) {
+                contactUser = _chat.chatRoomList[index].postingUser;
+              } else if (_chat.chatRoomList[index].contactUser[0] !=
+                  _currentUid) {
+                contactUser = _chat.chatRoomList[index].contactUser;
+              }
+              // List contactUser = _chat.chatRoomList[index].postingUser
+              //         .firstWhere((element) => element != _currentUid) ??
+              //     _chat.chatRoomList[index].contactUser.firstWhere(
+              //         (element) => element != _currentUid); //상대유저 정보
               String _time = Jiffy(_chat.chatRoomList[index].updatedAt.toDate())
                   .fromNow(); //'-전'시간표시
               return Slidable(
@@ -79,11 +85,11 @@ class _ChatListPageState extends State<ChatListPage> {
                 child: ListTile(
                   /* 상대 유저 프로필 사진 */
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(contactUser['profileUrl']),
+                    backgroundImage: NetworkImage(contactUser[1]),
                   ),
                   /* 이름 · 시간 */
                   title: Text(
-                    contactUser['userName'],
+                    contactUser[2],
                     maxLines: 1,
                   ),
                   /* 마지막 대화 내용 */
@@ -115,10 +121,10 @@ class _ChatListPageState extends State<ChatListPage> {
                     Get.toNamed(
                       '/chatscreen',
                       arguments: {
-                        'userName': contactUser['userName'],
-                        'profileUrl': contactUser['profileUrl'],
-                        'mannerAge': contactUser['mannerAge'],
-                        'chatRoomId': _chat.chatRoomList[index].id,
+                        'profileUrl': contactUser[1],
+                        'userName': contactUser[2],
+                        'mannerAge': contactUser[3],
+                        'chatRoomId': _chat.chatRoomList[index].chatRoomId,
                         'postId': _chat.chatRoomList[index].postId,
                       }, //상대유저정보 전달
                     );

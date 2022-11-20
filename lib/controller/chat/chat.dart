@@ -8,8 +8,6 @@ class ChatController extends GetxController {
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
-  /* 안읽은 메시지 개수 */
-  RxList<Map> unReadCount = <Map>[].obs;
   /* 상대 메시지에서 프로필 보여주는 bool 값 */
   RxBool isShowProfile = false.obs;
   /* 메시지시간 표시에 대한 bool 값 */
@@ -35,15 +33,16 @@ class ChatController extends GetxController {
 
 /* 새로운 채팅 입력 시 채팅방 생성하기 */
   Future createNewChatRoom(ChatRoomModel chatRoomModel) async {
-    final res = await _chatDB.doc(chatRoomModel.id).get();
+    final res = await _chatDB.doc(chatRoomModel.chatRoomId).get();
     //채팅방이 존재하지 않는다면? 새로운 채팅방 만듬
     if (!res.exists)
       //Chat(col) - 채팅방UID(Doc)
-      await _chatDB.doc(chatRoomModel.id).set({
-        'id': chatRoomModel.id,
+      await _chatDB.doc(chatRoomModel.chatRoomId).set({
+        'chatRoomId': chatRoomModel.chatRoomId,
         'postId': chatRoomModel.postId,
         'members': chatRoomModel.members,
-        'userList': chatRoomModel.userList,
+        'postingUser': chatRoomModel.postingUser,
+        'contactUser': chatRoomModel.contactUser,
         'unReadCount': chatRoomModel.unReadCount,
         'lastContent': chatRoomModel.lastContent,
         'updatedAt': chatRoomModel.updatedAt,
