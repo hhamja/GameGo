@@ -13,7 +13,8 @@ class _ChatListPageState extends State<ChatListPage> {
   final ChatController _chat = Get.put(ChatController());
   /* 현재유저 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
-  List contactUser = [];
+  List _contactUser = [];
+  String _unReadCount = '';
   /*  */
   bool _click = true;
 
@@ -42,19 +43,18 @@ class _ChatListPageState extends State<ChatListPage> {
               return CustomDivider();
             },
             itemBuilder: (BuildContext context, int index) {
-              /* 상대유저 정보 */
-              if (_chat.chatRoomList[index].postingUser[0] != _currentUid) {
-                contactUser = _chat.chatRoomList[index].postingUser;
-              } else if (_chat.chatRoomList[index].contactUser[0] !=
-                  _currentUid) {
-                contactUser = _chat.chatRoomList[index].contactUser;
+              final _chatList = _chat.chatRoomList[index];
+              /* 상대유저 정보 
+              * 두개의 List에서 Uid값이 현재uid랑 다르면 상대유저정보의 List */
+              if (_chatList.postingUser[0] != _currentUid) {
+                _contactUser = _chatList.postingUser;
               }
-              // List contactUser = _chat.chatRoomList[index].postingUser
-              //         .firstWhere((element) => element != _currentUid) ??
-              //     _chat.chatRoomList[index].contactUser.firstWhere(
-              //         (element) => element != _currentUid); //상대유저 정보
-              String _time = Jiffy(_chat.chatRoomList[index].updatedAt.toDate())
-                  .fromNow(); //'-전'시간표시
+              if (_chatList.contactUser[0] != _currentUid) {
+                _contactUser = _chatList.contactUser;
+              }
+
+              String _time =
+                  Jiffy(_chatList.updatedAt.toDate()).fromNow(); //'-전'시간표시
               return Slidable(
                 endActionPane: ActionPane(
                   extentRatio: 0.2, //한개당 0.2, 삭제버튼 추가시 0.4로 수정할 것
@@ -85,16 +85,16 @@ class _ChatListPageState extends State<ChatListPage> {
                 child: ListTile(
                   /* 상대 유저 프로필 사진 */
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(contactUser[1]),
+                    backgroundImage: NetworkImage(_contactUser[1]),
                   ),
                   /* 이름 · 시간 */
                   title: Text(
-                    contactUser[2],
+                    _contactUser[2],
                     maxLines: 1,
                   ),
                   /* 마지막 대화 내용 */
                   subtitle: Text(
-                    _chat.chatRoomList[index].lastContent,
+                    _chatList.lastContent,
                     maxLines: 1,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
@@ -112,7 +112,9 @@ class _ChatListPageState extends State<ChatListPage> {
                           backgroundColor: Colors.red,
                           radius: 10,
                           child: Text(
-                            _chat.chatRoomList[index].unReadCount.toString(),
+                            /* 위에서 뽑은 상대유저의 uid 넣어서 안읽은 메시지 수 받음 */
+                            _chatList.unReadCount['${_contactUser[0]}']
+                                .toString(),
                             style: TextStyle(fontSize: 12, color: Colors.white),
                           )), // 읽지 않은 메시지 알려주는 빨간숫자
                     ],
@@ -121,11 +123,11 @@ class _ChatListPageState extends State<ChatListPage> {
                     Get.toNamed(
                       '/chatscreen',
                       arguments: {
-                        'profileUrl': contactUser[1],
-                        'userName': contactUser[2],
-                        'mannerAge': contactUser[3],
-                        'chatRoomId': _chat.chatRoomList[index].chatRoomId,
-                        'postId': _chat.chatRoomList[index].postId,
+                        'profileUrl': _contactUser[1],
+                        'userName': _contactUser[2],
+                        'mannerAge': _contactUser[3],
+                        'chatRoomId': _chatList.chatRoomId,
+                        'postId': _chatList.postId,
                       }, //상대유저정보 전달
                     );
                   },
