@@ -39,7 +39,6 @@ class _MessagesState extends State<Messages> {
     super.initState();
     _list = _chat.messageList;
     _list.bindStream(_chat.readAllMessageList(widget.chatRoomId));
-    _chat.isReadMessage(widget.chatRoomId);
   }
 
   @override

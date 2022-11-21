@@ -8,18 +8,26 @@ class ChatScreenPage extends StatefulWidget {
 }
 
 class _ChatScreenPageState extends State<ChatScreenPage> {
+  /* 상대유저정보 (이름, 프로필, 매너나이, uid) */
   final String userName = Get.arguments['userName'];
   final String profileUrl = Get.arguments['profileUrl'];
   final String mannerAge = Get.arguments['mannerAge'];
+  final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
+  final ChatController _chat = Get.find<ChatController>();
 
   @override
   void initState() {
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _chat.clearUnReadCount(chatRoomId, uid);
+    super.dispose();
   }
 
   @override

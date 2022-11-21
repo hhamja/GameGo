@@ -105,12 +105,18 @@ class ChatController extends GetxController {
     }
   }
 
-  /* 마지막 채팅, 최근 시간 */
+  /* 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트 */
   Future updateChatRoom(chatRoomId, lastContent, updatedAt) async {
-    //Chat(col) - 채팅방UID(Doc)
     return await _chatDB.doc(chatRoomId).update({
       'lastContent': lastContent,
       'updatedAt': updatedAt,
+    });
+  }
+
+  /* 메시지페이지를 나갔을 때 안읽은 메시지 수 0으로 업데이트 */
+  Future clearUnReadCount(chatRoomId, uid) async {
+    return await _chatDB.doc(chatRoomId).update({
+      'unReadCount.$uid': 0,
     });
   }
 
@@ -130,22 +136,23 @@ class ChatController extends GetxController {
     //     .where('isRead', isEqualTo: false).; //그 중 내가 인읽은 메시지만 쿼리
   }
 
-  /* 안읽은 메시지 개수 스트림으로 받기 */
-  Stream unReadMessageCount(chatRoomId) {
-    // final ref = _chatDB
-    //     .doc(chatRoomId)
-    //     .collection('message')
-    //     .where('senderId', isEqualTo: _currentUid)
-    //     .where('isRead', isEqualTo: 'false');
-    // print(ref.snapshots().length.toString());
-    // print(ref.count());
-    return _chatDB
-        .doc(chatRoomId)
-        .collection('message')
-        .where('senderId', isEqualTo: _currentUid)
-        .where('isRead', isEqualTo: 'false')
-        .snapshots()
-        .map((snapshot) =>
-            snapshot.docs.map((e) => e.data() as Map<String, dynamic>));
-  }
+  // /* 안읽은 메시지 개수 스트림으로 받기 */
+  // Stream unReadMessageCount(chatRoomId) {
+  //   // final ref = _chatDB
+  //   //     .doc(chatRoomId)
+  //   //     .collection('message')
+  //   //     .where('senderId', isEqualTo: _currentUid)
+  //   //     .where('isRead', isEqualTo: 'false');
+  //   // print(ref.snapshots().length.toString());
+  //   // print(ref.count());
+  //   return _chatDB
+  //       .doc(chatRoomId)
+  //       .collection('message')
+  //       .where('senderId', isEqualTo: _currentUid)
+  //       .where('isRead', isEqualTo: 'false')
+  //       .snapshots()
+  //       .map((snapshot) =>
+  //           snapshot.docs.map((e) => e.data() as Map<String, dynamic>));
+  // }
+
 }

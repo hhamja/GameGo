@@ -13,8 +13,8 @@ class _ChatListPageState extends State<ChatListPage> {
   final ChatController _chat = Get.put(ChatController());
   /* 현재유저 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
-  List _contactUser = [];
-  String _unReadCount = '';
+  /* 상대유저 정보 담는 List */
+
   /*  */
   bool _click = true;
 
@@ -44,6 +44,9 @@ class _ChatListPageState extends State<ChatListPage> {
             },
             itemBuilder: (BuildContext context, int index) {
               final _chatList = _chat.chatRoomList[index];
+              var _contactUser;
+              String _time =
+                  Jiffy(_chatList.updatedAt.toDate()).fromNow(); //'-전'시간표시
               /* 상대유저 정보 
               * 두개의 List에서 Uid값이 현재uid랑 다르면 상대유저정보의 List */
               if (_chatList.postingUser[0] != _currentUid) {
@@ -52,9 +55,6 @@ class _ChatListPageState extends State<ChatListPage> {
               if (_chatList.contactUser[0] != _currentUid) {
                 _contactUser = _chatList.contactUser;
               }
-
-              String _time =
-                  Jiffy(_chatList.updatedAt.toDate()).fromNow(); //'-전'시간표시
               return Slidable(
                 endActionPane: ActionPane(
                   extentRatio: 0.2, //한개당 0.2, 삭제버튼 추가시 0.4로 수정할 것
@@ -108,26 +108,32 @@ class _ChatListPageState extends State<ChatListPage> {
                         _time,
                         style: TextStyle(fontSize: 10),
                       ),
-                      CircleAvatar(
-                          backgroundColor: Colors.red,
-                          radius: 10,
-                          child: Text(
-                            /* 위에서 뽑은 상대유저의 uid 넣어서 안읽은 메시지 수 받음 */
-                            _chatList.unReadCount['${_contactUser[0]}']
-                                .toString(),
-                            style: TextStyle(fontSize: 12, color: Colors.white),
-                          )), // 읽지 않은 메시지 알려주는 빨간숫자
+                      /* 안읽은 메시지 수
+                      * 0개가 아닐때만 표시 */
+                      _chatList.unReadCount['${_contactUser[0]}'] != 0
+                          ? CircleAvatar(
+                              backgroundColor: Colors.red,
+                              radius: 10,
+                              child: Text(
+                                /* 상대유저의 uid 넣어서 안읽은 메시지 수 받음 */
+                                _chatList.unReadCount['${_contactUser[0]}']
+                                    .toString(),
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.white),
+                              ))
+                          : SizedBox.shrink(), // 읽지 않은 메시지 알려주는 빨간숫자
                     ],
                   ),
                   onTap: () {
                     Get.toNamed(
                       '/chatscreen',
                       arguments: {
-                        'profileUrl': _contactUser[1],
-                        'userName': _contactUser[2],
-                        'mannerAge': _contactUser[3],
                         'chatRoomId': _chatList.chatRoomId,
                         'postId': _chatList.postId,
+                        'uid': _contactUser[0], //상대유저 uid
+                        'profileUrl': _contactUser[1], //상대유저 프로필
+                        'userName': _contactUser[2], //상대유저 이름
+                        'mannerAge': _contactUser[3], //상대유저 매너나이
                       }, //상대유저정보 전달
                     );
                   },
