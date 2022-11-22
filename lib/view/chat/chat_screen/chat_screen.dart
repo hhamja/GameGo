@@ -17,6 +17,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
   final ChatController _chat = Get.find<ChatController>();
+  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
@@ -26,7 +27,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
 
   @override
   void dispose() {
-    _chat.clearUnReadCount(chatRoomId, uid);
+    _chat.clearUnReadCount(chatRoomId); //나의 안읽은 메시지 수 0으로 업데이트
     super.dispose();
   }
 
@@ -65,6 +66,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
         ],
       ),
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           /* 채팅에 해당하는 게시글 정보 */
@@ -128,6 +130,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
           /* 메시지 보내는 부분*/
           NewMessage(
             chatRoomId: chatRoomId,
+            uid: uid,
           ),
         ],
       ),

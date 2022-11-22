@@ -1,13 +1,14 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class ChatController extends GetxController {
-  /* 파이어스토어 Chat 컬렉션 참조 */
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
   /* 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수 */
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
+  RxList unReadList = [].obs;
+  var unList = [].obs;
   /* 상대 메시지에서 프로필 보여주는 bool 값 */
   RxBool isShowProfile = false.obs;
   /* 메시지시간 표시에 대한 bool 값 */
@@ -17,12 +18,14 @@ class ChatController extends GetxController {
   /* 현재 유저의 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
   ScrollController scroll = ScrollController(keepScrollOffset: false);
-  // ScrollController scroll = ScrollController(keepScrollOffset: false);
+
   @override
   void onInit() {
     super.onInit();
     scroll; //채팅페이지 스크롤
+
     chatRoomList.bindStream(readAllChatList()); //채팅방리스트 스트림으로 받기
+    unList.bindStream(getUnReadCountList()); //채팅방리스트 스트림으로 받기
   }
 
   @override
@@ -50,17 +53,17 @@ class ChatController extends GetxController {
   }
 
   /* 새로운 채팅 입력 시 메시지DB 추가하기 */
-  Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
-    //채팅(col) - 그룹UID(Doc) - 메시지(Col) - 메시지내용()
+  Future sendNewMessege(MessageModel messageModel, chatRoomId, uid) async {
     await _chatDB.doc(chatRoomId).collection('message').add({
       'content': messageModel.content,
       'senderId': messageModel.senderId,
       'isRead': messageModel.isRead,
       'timestamp': messageModel.timestamp,
     }); //메시지 컬렉션에 추가
+
     await _chatDB.doc(chatRoomId).update({
-      'unReadCount.${_currentUid}': FieldValue.increment(1),
-    }); //ChatRoom의 unReadCount +1
+      'unReadCount.${uid}': FieldValue.increment(1),
+    }); //상대 uid의 unReadCount +1
   }
 
   /* 모든 '채팅' 리스트 스트림으로 받기 */
@@ -71,6 +74,20 @@ class ChatController extends GetxController {
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
               return ChatRoomModel.fromDocumentSnapshot(e);
+            }).toList());
+  }
+
+  /* 모든 '채팅' 리스트 스트림으로 받기 */
+  Stream<List> getUnReadCountList() {
+    return _chatDB
+        .where('members', arrayContains: _currentUid)
+        .orderBy('updatedAt', descending: true) //최신이 맨 위
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((e) {
+              var snapshot = e.data() as Map<String, dynamic>;
+              var unReadCount = snapshot['unReadCount'];
+              print(unReadCount);
+              return unReadCount;
             }).toList());
   }
 
@@ -113,11 +130,11 @@ class ChatController extends GetxController {
     });
   }
 
-  /* 메시지페이지를 나갔을 때 안읽은 메시지 수 0으로 업데이트 */
-  Future clearUnReadCount(chatRoomId, uid) async {
-    return await _chatDB.doc(chatRoomId).update({
-      'unReadCount.$uid': 0,
-    });
+  /* 메시지페이지를 나갔을 때 나의 안읽은 메시지 수 0으로 업데이트 */
+  Future clearUnReadCount(chatRoomId) async {
+    _chatDB.doc(chatRoomId).update({
+      'unReadCount.${_currentUid}': 0,
+    }); //나의 안읽은메시지 수 0으로 업데이트
   }
 
   /* 메시지를 읽은 것에 대한 파이어스토어 값 업데이트 하기

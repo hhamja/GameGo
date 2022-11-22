@@ -13,7 +13,9 @@ class _ChatListPageState extends State<ChatListPage> {
   final ChatController _chat = Get.put(ChatController());
   /* 현재유저 uid */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
-  /* 상대유저 정보 담는 List */
+
+  /* 안읽은 채팅 메시지 수 표시하는 위젯 key 변수 */
+  GlobalKey<FormState> countKey = GlobalKey<FormState>();
 
   /*  */
   bool _click = true;
@@ -44,15 +46,16 @@ class _ChatListPageState extends State<ChatListPage> {
             },
             itemBuilder: (BuildContext context, int index) {
               final _chatList = _chat.chatRoomList[index];
-              var _contactUser;
               String _time =
                   Jiffy(_chatList.updatedAt.toDate()).fromNow(); //'-전'시간표시
-              /* 상대유저 정보 
+              /* 상대유저 정보 담기
               * 두개의 List에서 Uid값이 현재uid랑 다르면 상대유저정보의 List */
-              if (_chatList.postingUser[0] != _currentUid) {
+              var _contactUser;
+              if (_chatList.postingUser[0] != _currentUid &&
+                  _chatList.contactUser[0] == _currentUid) {
                 _contactUser = _chatList.postingUser;
-              }
-              if (_chatList.contactUser[0] != _currentUid) {
+              } else if (_chatList.postingUser[0] == _currentUid &&
+                  _chatList.contactUser[0] != _currentUid) {
                 _contactUser = _chatList.contactUser;
               }
               return Slidable(
@@ -110,17 +113,18 @@ class _ChatListPageState extends State<ChatListPage> {
                       ),
                       /* 안읽은 메시지 수
                       * 0개가 아닐때만 표시 */
-                      _chatList.unReadCount['${_contactUser[0]}'] != 0
+                      _chatList.unReadCount['$_currentUid'] != 0
                           ? CircleAvatar(
                               backgroundColor: Colors.red,
                               radius: 10,
                               child: Text(
-                                /* 상대유저의 uid 넣어서 안읽은 메시지 수 받음 */
-                                _chatList.unReadCount['${_contactUser[0]}']
+                                /* 나의 uid에 해당하는 안읽은 메시지 수 받음 */
+                                _chatList.unReadCount['$_currentUid']
                                     .toString(),
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.white),
-                              ))
+                              ),
+                            )
                           : SizedBox.shrink(), // 읽지 않은 메시지 알려주는 빨간숫자
                     ],
                   ),

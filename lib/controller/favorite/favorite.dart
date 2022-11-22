@@ -1,4 +1,4 @@
-import 'package:mannergamer/models/favorite/favoriteList.model.dart';
+import 'package:mannergamer/model/favorite/favoriteList.model.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class FavoriteController extends GetxController {

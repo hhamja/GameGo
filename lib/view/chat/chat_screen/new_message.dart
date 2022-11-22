@@ -2,7 +2,9 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class NewMessage extends StatefulWidget {
   final String chatRoomId;
-  NewMessage({Key? key, required this.chatRoomId}) : super(key: key);
+  final String uid; //상대유저uid
+  NewMessage({Key? key, required this.chatRoomId, required this.uid})
+      : super(key: key);
 
   @override
   State<NewMessage> createState() => _NewMessageState();
@@ -25,7 +27,7 @@ class _NewMessageState extends State<NewMessage> {
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
     // _chat.focusOnLastMessage(); //마지막 메시지로 스크롤 이동
-    _chat.sendNewMessege(messageModel, widget.chatRoomId);
+    _chat.sendNewMessege(messageModel, widget.chatRoomId, widget.uid);
     _chat.updateChatRoom(
       widget.chatRoomId, //채팅방 id
       _messageController.text.trim(), //마지막 메시지

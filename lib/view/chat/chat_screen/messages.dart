@@ -1,32 +1,33 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class MessagesFromPost extends StatefulWidget {
-  /* 게시글 유저의  UID, 게시물 id 값, 상대프로필 */
-  final String uid, postId, profileUrl;
-  MessagesFromPost(
-      {Key? key,
-      required this.uid,
-      required this.postId,
-      required this.profileUrl})
-      : super(key: key);
+class Messages extends StatefulWidget {
+  /* 상대유저 이름, 프로필, 매너나이, 채팅방 id 값 */
+  final String userName, profileUrl, mannerAge, chatRoomId;
+
+  Messages({
+    Key? key,
+    required this.userName,
+    required this.profileUrl,
+    required this.mannerAge,
+    required this.chatRoomId,
+  }) : super(key: key);
 
   @override
-  State<MessagesFromPost> createState() => _MessagesFromPostState();
+  State<Messages> createState() => _MessagesState();
 }
 
-class _MessagesFromPostState extends State<MessagesFromPost> {
-  /* 기기의 현재 유저 */
-  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
+class _MessagesState extends State<Messages> {
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
+  /* 기기의 현재 유저 */
+  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
   var _list; // = _chat.messageList
 
   @override
   void initState() {
     super.initState();
     _list = _chat.messageList;
-    _list.bindStream(
-        _chat.readAllMessageList(widget.postId + '_' + _currentUid));
+    _list.bindStream(_chat.readAllMessageList(widget.chatRoomId));
   }
 
   @override
@@ -41,7 +42,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
           thickness: 3, //색상은 ThemeData()에서  highlightColor로 변경하자
           /* 채팅리스트 박스의 패딩 */
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: ListView.builder(
               reverse: true,
               shrinkWrap: true,
@@ -178,6 +179,8 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                 SizedBox(width: 5),
                                 Container(
                                   constraints: BoxConstraints(
+                                    minWidth: 0,
+                                    minHeight: 0,
                                     maxWidth:
                                         MediaQuery.of(context).size.width * 0.6,
                                   ),

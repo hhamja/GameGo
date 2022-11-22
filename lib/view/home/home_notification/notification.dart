@@ -18,10 +18,10 @@ class _NotificationPageState extends State<NotificationPage> {
   ];
 
   final List<Icon> entryIcons = <Icon>[
-    Icon(Icons.favorite_border_outlined),
-    Icon(Icons.chat_bubble_outline),
-    Icon(Icons.rate_review_outlined),
-    Icon(Icons.badge_outlined),
+    Icon(Icons.favorite_border_outlined), //유저가 나의 게시글에 하트를 눌렀을 때
+    Icon(Icons.chat_bubble_outline), //채팅이 왔을 때
+    Icon(Icons.rate_review_outlined), 
+    Icon(Icons.badge_outlined), 
     Icon(Icons.mic_none_outlined),
   ];
 

@@ -15,10 +15,11 @@ class ChatRoomModel {
   final List contactUser; //게시자가 아닌 상대유저
 
   /* 안읽은 메시지의 수
-  * 데이터 구조 -> {user1 : <int>, user2 : <int>}
+  * 데이터 구조 -> 
+  {postingUser의 uid : 받은 수(보낸 수 X), contact유저의 uid : 받은 수(보낸 수 X)}
+  * 메시지 보내면 -> 받는 uid의 값 +1  
   * Get할 때 -> currentUid로 안읽은 메시지 수 받기 
-  * 메시지 보내면 -> 보낸 유저의 값 +1 (★주의★ 메시지 읽는 유저X, 보내는 유저의 uid에 저장) 
-  * 유저가 메시지 페이지에 들어간다면? -> 상대유저의 값을 0으로 스트림 업데이트 */
+  * 유저가 메시지 페이지에 들어간다면? -> 나의 uid에 해당하는 값 '0'으로 업데이트 */
   final Map unReadCount;
   final String lastContent; //마지막 채팅 내용, 메시지 보낼 때 마다 업데이트
   final Timestamp updatedAt; //가장 최근 주고받은 일시, 메시지 보낼 때 마다 업데이트

@@ -1,44 +1,40 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class Messages extends StatefulWidget {
-  /* 상대유저 이름, 프로필, 매너나이, 채팅방 id 값 */
-  final String userName, profileUrl, mannerAge, chatRoomId;
-
-  Messages({
-    Key? key,
-    required this.userName,
-    required this.profileUrl,
-    required this.mannerAge,
-    required this.chatRoomId,
-  }) : super(key: key);
+class MessagesFromPost extends StatefulWidget {
+  /* 게시글 유저의  UID, 게시물 id 값, 상대프로필 */
+  final String uid, postId, profileUrl;
+  MessagesFromPost(
+      {Key? key,
+      required this.uid,
+      required this.postId,
+      required this.profileUrl})
+      : super(key: key);
 
   @override
-  State<Messages> createState() => _MessagesState();
+  State<MessagesFromPost> createState() => _MessagesFromPostState();
 }
 
-class _MessagesState extends State<Messages> {
-  /* 채팅 GetX 컨트롤러 */
-  final ChatController _chat = Get.put(ChatController());
+class _MessagesFromPostState extends State<MessagesFromPost> {
   /* 기기의 현재 유저 */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
+  /* 채팅방 id */
+  var chatRoomId;
+  /* 채팅 GetX 컨트롤러 */
+  final ChatController _chat = Get.put(ChatController());
   var _list; // = _chat.messageList
-
-  // /* 스크롤 맨 밑으로 내리기 */
-  // scrollEnd() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) => {
-  //         if (!isScrollEnd)
-  //           {
-  //             _chat.scroll.jumpTo(_chat.scroll.position.maxScrollExtent),
-  //             setState(() => isScrollEnd = true) //스크롤 다운 후 끄기
-  //           }
-  //       }); //채팅페이지 들어오면 마지막 메시지로 스크롤
-  // }
 
   @override
   void initState() {
     super.initState();
     _list = _chat.messageList;
-    _list.bindStream(_chat.readAllMessageList(widget.chatRoomId));
+    chatRoomId = widget.postId + '_' + _currentUid;
+    _list.bindStream(_chat.readAllMessageList(chatRoomId));
+  }
+
+  @override
+  void dispose() {
+    _chat.clearUnReadCount(chatRoomId); //나의 안읽은 메시지 수 0으로 업데이트
+    super.dispose();
   }
 
   @override
@@ -53,7 +49,7 @@ class _MessagesState extends State<Messages> {
           thickness: 3, //색상은 ThemeData()에서  highlightColor로 변경하자
           /* 채팅리스트 박스의 패딩 */
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
               reverse: true,
               shrinkWrap: true,
