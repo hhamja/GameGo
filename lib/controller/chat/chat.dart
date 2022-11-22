@@ -7,8 +7,7 @@ class ChatController extends GetxController {
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
-  RxList unReadList = [].obs;
-  var unList = [].obs;
+
   /* 상대 메시지에서 프로필 보여주는 bool 값 */
   RxBool isShowProfile = false.obs;
   /* 메시지시간 표시에 대한 bool 값 */
@@ -23,9 +22,7 @@ class ChatController extends GetxController {
   void onInit() {
     super.onInit();
     scroll; //채팅페이지 스크롤
-
     chatRoomList.bindStream(readAllChatList()); //채팅방리스트 스트림으로 받기
-    unList.bindStream(getUnReadCountList()); //채팅방리스트 스트림으로 받기
   }
 
   @override
@@ -74,20 +71,6 @@ class ChatController extends GetxController {
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
               return ChatRoomModel.fromDocumentSnapshot(e);
-            }).toList());
-  }
-
-  /* 모든 '채팅' 리스트 스트림으로 받기 */
-  Stream<List> getUnReadCountList() {
-    return _chatDB
-        .where('members', arrayContains: _currentUid)
-        .orderBy('updatedAt', descending: true) //최신이 맨 위
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              var snapshot = e.data() as Map<String, dynamic>;
-              var unReadCount = snapshot['unReadCount'];
-              print(unReadCount);
-              return unReadCount;
             }).toList());
   }
 

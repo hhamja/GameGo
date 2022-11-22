@@ -98,6 +98,7 @@ export 'package:mannergamer/model/chatRoom/chatRoom_model.dart';
 export 'package:mannergamer/model/favorite/favorite_model.dart';
 
 /* Controller */
+export 'package:mannergamer/controller/chat/badge.dart';
 export 'package:mannergamer/controller/my_post/my_post_list.dart';
 export 'package:mannergamer/controller/chat/chat.dart';
 export 'package:mannergamer/controller/initialScreen/initialScreen.dart';

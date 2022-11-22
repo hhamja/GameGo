@@ -21,6 +21,7 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
     print('유저 UID 값은 ${uid}');
     print('PostId 값은 ${postId}');
 
+  
     return Scaffold(
       appBar: AppBar(
         title: Row(

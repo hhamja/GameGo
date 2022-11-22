@@ -179,8 +179,6 @@ class _MessagesState extends State<Messages> {
                                 SizedBox(width: 5),
                                 Container(
                                   constraints: BoxConstraints(
-                                    minWidth: 0,
-                                    minHeight: 0,
                                     maxWidth:
                                         MediaQuery.of(context).size.width * 0.6,
                                   ),

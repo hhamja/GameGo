@@ -17,7 +17,6 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
   final ChatController _chat = Get.find<ChatController>();
-  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
