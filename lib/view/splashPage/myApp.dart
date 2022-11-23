@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
           currentIndex: tabIndex,
           items: [
             _BottomBarItem(Icon(Icons.home_outlined), Icon(Icons.home), '홈'),
-            _badge.unReadList.value == 0
+            _badge.unReadList.where((p0) => p0 > 0).length == 0
                 ? _BottomBarItem(
                     Icon(Icons.question_answer_outlined),
                     Icon(Icons.question_answer),

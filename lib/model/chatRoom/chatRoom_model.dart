@@ -9,7 +9,11 @@ import 'package:mannergamer/utilites/index/index.dart';
 class ChatRoomModel {
   final String chatRoomId;
   final String postId;
+  /* {uid1 : 'in', UID2 : 'in'}의 구조
+  * 채팅방 나가기 또는 회원탈퇴? 'out'로 업데이트
+  * 둘다 'out'이면? DB의 데이터 삭제 */
   final List members;
+
   /* <List>[uid, profileUrl, userName,  mannerAge]의 유저정보 */
   final List postingUser; //게시자
   final List contactUser; //게시자가 아닌 상대유저

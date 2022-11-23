@@ -86,24 +86,21 @@ class ChatController extends GetxController {
             }).toList());
   }
 
-  /* 채팅방 나가기, 삭제는 상대유저랑 내가 둘다 나가기를 햇을 경우 삭제하기 */
-  Future deleteChat(chatRoomId) async {
-    //손봐야함
-    try {
-      await _chatDB.doc(chatRoomId).delete();
-    } catch (e) {
-      print('deleteChat error');
-    }
-  }
+  // /* 채팅방 나가기, 삭제는 상대유저랑 내가 둘다 나가기를 햇을 경우 삭제하기 */
+  // Future deleteChat(chatRoomId) async {
+  //   return await _chatDB.doc(chatRoomId).update({
+  //     'members.${_currentUid}': 'out',
+  //   }); //현재유저 UID : false로 업데이트
+  // }
 
-  /* 해당 메시지 삭제하기 */
-  Future deleteMessage(messageId) async {
-    try {
-      await _chatDB.doc(messageId).delete();
-    } catch (e) {
-      print('deleteChat error');
-    }
-  }
+  // /* 해당 메시지 삭제하기 */
+  // Future deleteMessage(messageId) async {
+  //   try {
+  //     await _chatDB.doc(messageId).delete();
+  //   } catch (e) {
+  //     print('deleteChat error');
+  //   }
+  // }
 
   /* 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트 */
   Future updateChatRoom(chatRoomId, lastContent, updatedAt) async {

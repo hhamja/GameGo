@@ -7,28 +7,23 @@ class BadgeController extends GetxController {
   final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
   /* 내가 인읽은 메시지가 있는 채팅방 리스트
   * 채팅 탭 아이콘의 빨간배지 표시할 때 사용 */
-  var unReadList = 0.obs;
-
+  RxList unReadList = [].obs;
   @override
   void onInit() {
     unReadList.bindStream(getUnReadCountList()); //채팅방리스트 스트림으로 받기
-    print(unReadList);
+    print('unReadLis : $unReadList');
     super.onInit();
   }
 
   /* 모든 '채팅' 리스트 스트림으로 받기 */
-  Stream<int> getUnReadCountList() {
+  Stream<List> getUnReadCountList() {
     return _chatDB
-        .where('unReadCount.${_currentUid}', isNotEqualTo: 0)
+        .where('members', arrayContains: _currentUid)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((e) {
+        .map((snapshot) => snapshot.docs.map((e) {
               var snapshot = e.data() as Map<String, dynamic>;
               var unReadCount = snapshot['unReadCount']['$_currentUid'];
-              print(unReadCount);
               return unReadCount;
-            })
-            .toList()
-            .length);
+            }).toList()); //값을 받는데 0이 아닌 값들만 받아서 List에 넣기
   }
 }

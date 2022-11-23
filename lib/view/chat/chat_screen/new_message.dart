@@ -27,7 +27,7 @@ class _NewMessageState extends State<NewMessage> {
       senderId: _currentUser.uid, //보내는 유저의 UID
     );
     // _chat.focusOnLastMessage(); //마지막 메시지로 스크롤 이동
-    _chat.sendNewMessege(messageModel, widget.chatRoomId, widget.uid);
+    await _chat.sendNewMessege(messageModel, widget.chatRoomId, widget.uid);
     _chat.updateChatRoom(
       widget.chatRoomId, //채팅방 id
       _messageController.text.trim(), //마지막 메시지

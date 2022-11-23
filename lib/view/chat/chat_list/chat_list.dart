@@ -78,7 +78,10 @@ class _ChatListPageState extends State<ChatListPage> {
                     ),
                     // /* 채팅 나가기 (DB에서 삭제 X)*/
                     // SlidableAction(
-                    //   onPressed: (_) {},
+                    //   onPressed: (_) async {
+                    //     await _chat.chatRoomList.removeAt(index);
+                    //     await _chat.deleteChat(_chatList.chatRoomId);
+                    //   },
                     //   backgroundColor: Color(0xFFFE4A49),
                     //   foregroundColor: Colors.white,
                     //   icon: Icons.delete,

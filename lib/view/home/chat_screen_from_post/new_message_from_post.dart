@@ -39,10 +39,8 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
       chatRoomId:
           widget.postId + '_' + _currentUser.uid, //채팅방 id = postId_현재유저ID
       postId: widget.postId,
-      members: [
-        widget.uid,
-        _currentUser.uid,
-      ], //채팅방에 들어와 있는 uid List [게시자uid, 상대Uid]
+
+      members: [widget.uid, _currentUser.uid],
       postingUser: [
         postingUser.uid,
         postingUser.profileUrl,
@@ -70,9 +68,10 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
       senderId: _currentUser.uid,
     );
     /* 채팅방 만들기, 채팅방이 이미 있다면 실행안됨 */
-    _chat.createNewChatRoom(chatRoomModel);
+    await _chat.createNewChatRoom(chatRoomModel);
     /* 보낸 메시지 파이어스토어 message 컬렉션에 저장하기 */
-    _chat.sendNewMessege(messageModel, chatRoomModel.chatRoomId, widget.uid);
+    await _chat.sendNewMessege(
+        messageModel, chatRoomModel.chatRoomId, widget.uid);
     /* 메시지 텍스트필드 초기화 */
     setState(() => _messageController.clear());
     /* 보낸 메시지로 화면이동
