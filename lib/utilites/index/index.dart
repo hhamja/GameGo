@@ -8,6 +8,7 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 /* Packages */
+export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
 export 'package:firebase_analytics/firebase_analytics.dart';
 export 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
@@ -100,6 +101,7 @@ export 'package:mannergamer/model/chatRoom/chatRoom_model.dart';
 export 'package:mannergamer/model/favorite/favorite_model.dart';
 
 /* Controller */
+export 'package:mannergamer/controller/notification/notification.dart';
 export 'package:mannergamer/controller/chat/badge.dart';
 export 'package:mannergamer/controller/my_post/my_post_list.dart';
 export 'package:mannergamer/controller/chat/chat.dart';

@@ -11,7 +11,6 @@ class BadgeController extends GetxController {
   @override
   void onInit() {
     unReadList.bindStream(getUnReadCountList()); //채팅방리스트 스트림으로 받기
-    print('unReadLis : $unReadList');
     super.onInit();
   }
 
