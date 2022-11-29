@@ -3,15 +3,15 @@ import 'package:mannergamer/utilites/index/index.dart';
 class MessageModel {
   final id; // 메시지 id
   final String content; // 메시지내용
-  final String senderId; // 메시지 보내는 사람 id
-  final bool isRead; //메시지 읽었는지의 여부 읽었다면? true, 안읽었다면? false
+  final String idFrom; // 메시지 보내는 사람 id
+  final String idTo; // 메시지 받는 사람 id
   final Timestamp timestamp; // 메시지 보낸 시간
 
   MessageModel({
     this.id,
     required this.content,
-    required this.senderId,
-    required this.isRead,
+    required this.idFrom,
+    required this.idTo,
     required this.timestamp,
   });
 
@@ -21,8 +21,8 @@ class MessageModel {
     return MessageModel(
       id: doc.id,
       content: snapshot['content'],
-      senderId: snapshot['senderId'],
-      isRead: snapshot['isRead'],
+      idFrom: snapshot['idFrom'],
+      idTo: snapshot['idTo'],
       timestamp: snapshot['timestamp'],
     );
   }

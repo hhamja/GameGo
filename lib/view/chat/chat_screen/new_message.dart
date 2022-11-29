@@ -22,9 +22,9 @@ class _NewMessageState extends State<NewMessage> {
   void _sendMessage() async {
     final messageModel = MessageModel(
       timestamp: Timestamp.now(), // FieldValue.serverTimestamp() -> DB서버시간
-      isRead: false,
       content: _messageController.text.trim(),
-      senderId: _currentUser.uid, //보내는 유저의 UID
+      idFrom: _currentUser.uid, //보내는 유저의 uid
+      idTo: widget.uid, //받는 유저의 uid
     );
     // _chat.focusOnLastMessage(); //마지막 메시지로 스크롤 이동
     await _chat.sendNewMessege(messageModel, widget.chatRoomId, widget.uid);

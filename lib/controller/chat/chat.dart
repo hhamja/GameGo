@@ -53,8 +53,8 @@ class ChatController extends GetxController {
   Future sendNewMessege(MessageModel messageModel, chatRoomId, uid) async {
     await _chatDB.doc(chatRoomId).collection('message').add({
       'content': messageModel.content,
-      'senderId': messageModel.senderId,
-      'isRead': messageModel.isRead,
+      'idFrom': messageModel.idFrom,
+      'idTo': messageModel.idTo,
       'timestamp': messageModel.timestamp,
     }); //메시지 컬렉션에 추가
 
@@ -86,22 +86,6 @@ class ChatController extends GetxController {
             }).toList());
   }
 
-  // /* 채팅방 나가기, 삭제는 상대유저랑 내가 둘다 나가기를 햇을 경우 삭제하기 */
-  // Future deleteChat(chatRoomId) async {
-  //   return await _chatDB.doc(chatRoomId).update({
-  //     'members.${_currentUid}': 'out',
-  //   }); //현재유저 UID : false로 업데이트
-  // }
-
-  // /* 해당 메시지 삭제하기 */
-  // Future deleteMessage(messageId) async {
-  //   try {
-  //     await _chatDB.doc(messageId).delete();
-  //   } catch (e) {
-  //     print('deleteChat error');
-  //   }
-  // }
-
   /* 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트 */
   Future updateChatRoom(chatRoomId, lastContent, updatedAt) async {
     return await _chatDB.doc(chatRoomId).update({
@@ -132,24 +116,4 @@ class ChatController extends GetxController {
     //     .where('senderId', isNotEqualTo: _currentUid) //상대가 보낸 메시지만 쿼리
     //     .where('isRead', isEqualTo: false).; //그 중 내가 인읽은 메시지만 쿼리
   }
-
-  // /* 안읽은 메시지 개수 스트림으로 받기 */
-  // Stream unReadMessageCount(chatRoomId) {
-  //   // final ref = _chatDB
-  //   //     .doc(chatRoomId)
-  //   //     .collection('message')
-  //   //     .where('senderId', isEqualTo: _currentUid)
-  //   //     .where('isRead', isEqualTo: 'false');
-  //   // print(ref.snapshots().length.toString());
-  //   // print(ref.count());
-  //   return _chatDB
-  //       .doc(chatRoomId)
-  //       .collection('message')
-  //       .where('senderId', isEqualTo: _currentUid)
-  //       .where('isRead', isEqualTo: 'false')
-  //       .snapshots()
-  //       .map((snapshot) =>
-  //           snapshot.docs.map((e) => e.data() as Map<String, dynamic>));
-  // }
-
 }

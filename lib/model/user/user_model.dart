@@ -6,6 +6,8 @@ class UserModel {
   final String phoneNumber;
   final String profileUrl;
   final String mannerAge; //초기값 20.0세
+  final String? chattingWith; //현재 채팅하고 있는 유저 uid
+  final String? pushToken; //fcm의 장치 토큰
   final Timestamp createdAt;
 
   UserModel({
@@ -14,6 +16,8 @@ class UserModel {
     required this.phoneNumber,
     required this.profileUrl,
     required this.mannerAge,
+    this.chattingWith,
+    this.pushToken,
     required this.createdAt,
   });
 
@@ -25,6 +29,8 @@ class UserModel {
       userName: snapshot['userName'],
       profileUrl: snapshot['profileUrl'],
       mannerAge: snapshot['mannerAge'],
+      chattingWith: snapshot['chattingWith'],
+      pushToken: snapshot['pushToken'],
       createdAt: snapshot['createdAt'],
     );
   }
