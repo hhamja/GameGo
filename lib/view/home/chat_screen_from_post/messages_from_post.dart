@@ -76,7 +76,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                 if (reversed == _list.length - 1) {
                   _chat.isShowTime.value = true; //리스트의 마지막 메시지
                 } else if (reversed < _list.length - 1 &&
-                    _list[reversed].senderId != _list[reversed + 1].senderId) {
+                    _list[reversed].idFrom != _list[reversed + 1].idFrom) {
                   _chat.isShowTime.value = true; //마지막X, 내가 보낸 메시지 그룹에서 마지막
                 } else if (reversed < _list.length - 1 &&
                     _time !=
@@ -88,13 +88,13 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                 }
                 /* 상대 프로필 보여주는 조건문 */
                 if (reversed >= 1 &&
-                    _list[reversed - 1].senderId == _list[reversed].senderId) {
+                    _list[reversed - 1].idFrom == _list[reversed].idFrom) {
                   _chat.isShowProfile.value = false;
                 } else {
                   _chat.isShowProfile.value = true;
                 }
                 //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
-                final bool _isMe = _currentUid == _list[reversed].senderId;
+                final bool _isMe = _currentUid == _list[reversed].idFrom;
                 return _isMe
                     ?
                     /* 나의 메시지 */

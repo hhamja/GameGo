@@ -11,8 +11,8 @@ exports.sendNotification = functions.firestore
     const doc = snap.data();
     console.log(doc);
 
-    const idFrom = doc.idFrom //보낸 사람 uid
-    const idTo = doc.idTo //받은 사람 uid
+    const idFrom = doc.idFrom; //보낸 사람 uid
+    const idTo = doc.idTo; //받은 사람 uid
     const contentMessage = doc.content; //메시지 내용
 
     // Get push token user to (receive)
@@ -23,7 +23,7 @@ exports.sendNotification = functions.firestore
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((userTo) => {
-          console.log(`Found user to: ${userTo.data().nickname}`);
+          console.log(`Found user to: ${userTo.data().userName}`);
           if (
             userTo.data().pushToken &&
             userTo.data().chattingWith !== idFrom
@@ -36,11 +36,11 @@ exports.sendNotification = functions.firestore
               .get()
               .then((querySnapshot2) => {
                 querySnapshot2.forEach((userFrom) => {
-                  console.log(`Found user from: ${userFrom.data().nickname}`);
+                  console.log(`Found user from: ${userFrom.data().userName}`);
                   const payload = {
                     notification: {
                       title: `You have a message from "${
-                        userFrom.data().nickname
+                        userFrom.data().userName
                       }"`,
                       body: contentMessage,
                       badge: "1",

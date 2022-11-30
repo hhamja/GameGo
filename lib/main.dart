@@ -6,14 +6,15 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Jiffy.locale('ko'); //시간표시 한국어로 변환
 
-  Get.put(InitialScreenCntroller());
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes,
       title: 'MannerGamer',
       initialBinding: BindingsBuilder(
-        () => Get.put(NotificationController()),
+        () => Get.put(
+          InitialScreenCntroller(),
+        ), //유저 가입 상태에서 따라 첫페이지 다르게 하기
       ),
       theme: ThemeData(primarySwatch: Colors.blue), //
       home: MyApp(),

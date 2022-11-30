@@ -1,6 +1,10 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class NotificationController extends GetxController {
+  final CollectionReference _userDB =
+      FirebaseFirestore.instance.collection('user');
+  /* 현재유저 uid */
+  final String _currentUid = FirebaseAuth.instance.currentUser!.uid;
   /* fcm 인스턴스 */
   FirebaseMessaging _fcm = FirebaseMessaging.instance;
   /* Local Notification */
@@ -28,10 +32,11 @@ class NotificationController extends GetxController {
     _initialize();
   }
 
-  /* fcm 토큰 받기 */
+  /* fcm 토큰 받고 현재 유저정보에 업데이트하여 넣기 */
   Future<void> _getToken() async {
     final String? token = await _fcm.getToken();
     print(token);
+    await _userDB.doc(_currentUid).update({'pushToken': token}); //
   }
 
   /* FCM관련 초기 세팅 

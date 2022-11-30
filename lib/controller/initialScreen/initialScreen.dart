@@ -2,7 +2,8 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class InitialScreenCntroller extends GetxController {
   static InitialScreenCntroller get to => Get.find<InitialScreenCntroller>();
-
+  final CollectionReference _userDB =
+      FirebaseFirestore.instance.collection('user');
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
 
@@ -21,16 +22,21 @@ class InitialScreenCntroller extends GetxController {
     print('현재유저정보 ${_auth.currentUser}');
   }
 
-  /* 유저에 따라 다르게 첫화면 띄우기 */
-  _setInitialScreen(User? user) {
+  /* 유저가입 상태에 따라 다르게 첫화면 띄우기 
+  * 신규회원? 메인로고 페이지
+  * Auth에만 유저정보 있고 DB에 유저정보 없는 유저? 프로필 생성 페이지
+  * 둘다 있는 유저? MyApp()으로 이동 */
+  _setInitialScreen(User? user) async {
+    final doc = await _userDB.doc(_auth.currentUser?.uid).get();
     if (user == null) {
-      /* 유저정보 X , 첫화면 : 사용자등록페이지  */
-      print('유저null ${user}');
-      Get.offAllNamed('/main');
+      print('신규유저');
+      return Get.offAll(MainLogoPage());
+    } else if (!doc.exists) {
+      print('Auth에만 있고 DB에는 없는 유저');
+      return Get.offAll(CreateProfilePage());
     } else {
-      /* 유저정보 O , 첫화면 : HomePage()  */
-      print('유저정보 O : ${user}');
-      Get.offAllNamed('/myapp');
+      print('Auth에도 있고 DB에도 등록되어 있는 유저 : $user');
+      return Get.offAll(MyApp());
     }
   }
 }

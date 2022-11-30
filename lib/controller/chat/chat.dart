@@ -3,6 +3,8 @@ import 'package:mannergamer/utilites/index/index.dart';
 class ChatController extends GetxController {
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
+  final CollectionReference _userDB =
+      FirebaseFirestore.instance.collection('user');
   /* 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수 */
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
@@ -115,5 +117,10 @@ class ChatController extends GetxController {
     // await messageRef
     //     .where('senderId', isNotEqualTo: _currentUid) //상대가 보낸 메시지만 쿼리
     //     .where('isRead', isEqualTo: false).; //그 중 내가 인읽은 메시지만 쿼리
+  }
+
+  /* 채팅페이지 들어가면, User DB의 chattingWith 업데이트 */
+  Future updateChattingWith() async {
+    await _userDB.doc(_currentUid).update({'isRead': 'true'});
   }
 }
