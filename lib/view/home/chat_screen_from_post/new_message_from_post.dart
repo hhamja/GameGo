@@ -19,7 +19,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
   /* 메시지 입력 칸 */
   final TextEditingController _messageController = TextEditingController();
   /* 채팅 GetX 컨트롤러 */
-  final ChatController _chat = Get.put(ChatController());
+  final ChatController _chat = Get.find<ChatController>();
   /* 파베 auth 인스턴스 */
   final _currentUser = FirebaseAuth.instance.currentUser!;
 

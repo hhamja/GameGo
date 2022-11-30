@@ -21,12 +21,14 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   @override
   void initState() {
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
+    _chat.updateChattingWith(uid);
     super.initState();
   }
 
   @override
   void dispose() {
     _chat.clearUnReadCount(chatRoomId); //나의 안읽은 메시지 수 0으로 업데이트
+    _chat.clearChattingWith();
     super.dispose();
   }
 

@@ -8,6 +8,7 @@ class ChatScreenPageFromPost extends StatefulWidget {
 }
 
 class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
+  final ChatController _chat = Get.put(ChatController());
   /* PostDetailPage에서 받은 게시자 uid, 이름, 프로필, 매너나이 */
   final String uid = Get.arguments['uid'];
   final String userName = Get.arguments['userName'];
@@ -17,11 +18,22 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
   final String postId = Get.arguments['postId'];
 
   @override
+  void initState() {
+    super.initState();
+    _chat.updateChattingWith(uid); //chatrringWith 상대유저로 업데이트
+  }
+
+  @override
+  void dispose() {
+    _chat.clearChattingWith(); //chatrringWith null로 초기화
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print('유저 UID 값은 ${uid}');
     print('PostId 값은 ${postId}');
 
-  
     return Scaffold(
       appBar: AppBar(
         title: Row(

@@ -119,8 +119,13 @@ class ChatController extends GetxController {
     //     .where('isRead', isEqualTo: false).; //그 중 내가 인읽은 메시지만 쿼리
   }
 
-  /* 채팅페이지 들어가면, User DB의 chattingWith 업데이트 */
-  Future updateChattingWith() async {
-    await _userDB.doc(_currentUid).update({'isRead': 'true'});
+  /* 채팅페이지 들어가면, chattingWith 상대 uid로 업데이트 */
+  Future updateChattingWith(uid) async {
+    await _userDB.doc(_currentUid).update({'chattingWith': uid});
+  }
+
+  /* 채팅페이지에서 나가면, chattingWith 빈값으로 업데이트 */
+  Future clearChattingWith() async {
+    await _userDB.doc(_currentUid).update({'chattingWith': null});
   }
 }

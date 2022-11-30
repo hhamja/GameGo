@@ -20,7 +20,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   /* 채팅방 id */
   var chatRoomId;
   /* 채팅 GetX 컨트롤러 */
-  final ChatController _chat = Get.put(ChatController());
+  final ChatController _chat = Get.find<ChatController>();
   var _list; // = _chat.messageList
 
   @override
@@ -34,6 +34,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   @override
   void dispose() {
     _chat.clearUnReadCount(chatRoomId); //나의 안읽은 메시지 수 0으로 업데이트
+
     super.dispose();
   }
 
