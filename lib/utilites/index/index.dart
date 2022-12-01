@@ -101,6 +101,8 @@ export 'package:mannergamer/model/chatRoom/chatRoom_model.dart';
 export 'package:mannergamer/model/favorite/favorite_model.dart';
 
 /* Controller */
+export 'package:mannergamer/controller/splash/splash.dart';
+export 'package:mannergamer/controller/notification/get_token.dart';
 export 'package:mannergamer/controller/notification/notification.dart';
 export 'package:mannergamer/controller/chat/badge.dart';
 export 'package:mannergamer/controller/my_post/my_post_list.dart';

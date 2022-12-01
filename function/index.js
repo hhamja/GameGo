@@ -64,10 +64,11 @@ exports.sendNotification = functions
                 });
               });
           } else {
-            console.log("Can not find pushToken target user");
+            console.log("유저 찾을 수가 없어요");
           }
         });
       });
+    console.log('null');
     return null;
   });
 // // Create and deploy your first functions

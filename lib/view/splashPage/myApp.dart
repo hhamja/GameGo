@@ -8,6 +8,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  /* fcm 토큰에 대한 컨트롤럴 */
+  final FcmTokenController _token = Get.put(FcmTokenController());
   /* 배지 컨트롤러 인스턴스 생성
   * 채팅리스트의 안읽은 메시지가 하나라도 있다면 채팅아이콘위에 표시하기 위해 */
   final BadgeController _badge = Get.put(BadgeController());
@@ -23,6 +25,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _token.getToken();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _bodylist[tabIndex], //하단 탭바를 이용한 홈-게시글올리기-채팅-나의정보 페이지
@@ -32,7 +40,7 @@ class _MyAppState extends State<MyApp> {
           currentIndex: tabIndex,
           items: [
             _BottomBarItem(Icon(Icons.home_outlined), Icon(Icons.home), '홈'),
-            _badge.unReadList.where((e) => e > 0).isEmpty
+            _badge.unReadList.where((e) => e != 0).length == 0
                 ? _BottomBarItem(
                     Icon(Icons.question_answer_outlined),
                     Icon(Icons.question_answer),

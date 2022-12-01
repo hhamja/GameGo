@@ -6,20 +6,21 @@ class InitialScreenCntroller extends GetxController {
       FirebaseFirestore.instance.collection('user');
   /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
-
   /* 모든유저정보 */
   late Rx<User?> firebaseUser;
 
+  /* spalsh 화면을 몇 초동안 보여주고 유저가입상태에서 따라 페이지 이동구현 */
   @override
-  void onReady() {
-    super.onReady();
-    /* 파이베이스 auth User목록 */
-    firebaseUser = Rx<User?>(_auth.currentUser);
-    /* AUTH의 유저변화 반응형으로 감지 */
-    firebaseUser.bindStream(_auth.userChanges());
-    /* firebaseUser변화 감지해서 _setInitialScreen함수 실행 */
-    ever(firebaseUser, _setInitialScreen);
-    print('현재유저정보 ${_auth.currentUser}');
+  void onInit() {
+    super.onInit();
+    Timer(Duration(milliseconds: 1500), () {
+      /* 파이베이스 auth User목록 */
+      firebaseUser = Rx<User?>(_auth.currentUser);
+      /* AUTH의 유저변화 반응형으로 감지 */
+      firebaseUser.bindStream(_auth.userChanges());
+      /* firebaseUser변화 감지해서 _setInitialScreen함수 실행 */
+      ever(firebaseUser, _setInitialScreen);
+    });
   }
 
   /* 유저가입 상태에 따라 다르게 첫화면 띄우기 

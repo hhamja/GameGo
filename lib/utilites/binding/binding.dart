@@ -7,6 +7,13 @@ class InitialScreenBinding implements Bindings {
   }
 }
 
+class MyAppBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(FcmTokenController());
+  }
+}
+
 class SignOutBinding implements Bindings {
   @override
   void dependencies() {

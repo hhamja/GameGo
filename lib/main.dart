@@ -11,13 +11,11 @@ Future<void> main() async {
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes,
       title: 'MannerGamer',
-      initialBinding: BindingsBuilder(
-        () => Get.put(
-          InitialScreenCntroller(),
-        ), //유저 가입 상태에서 따라 첫페이지 다르게 하기
-      ),
+      initialBinding: BindingsBuilder(() {
+        Get.put(NotificationController()); //푸시알림 초기 설정
+      }),
       theme: ThemeData(primarySwatch: Colors.blue), //
-      home: MyApp(),
+      home: SplashPage(),
     ),
   );
 }

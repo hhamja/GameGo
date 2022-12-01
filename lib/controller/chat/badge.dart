@@ -4,7 +4,7 @@ class BadgeController extends GetxController {
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
   /* 현재 유저의 uid */
-  final _currentUid = FirebaseAuth.instance.currentUser?.uid.toString();
+  final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
   /* 내가 인읽은 메시지가 있는 채팅방 리스트
   * 채팅 탭 아이콘의 빨간배지 표시할 때 사용 */
   RxList unReadList = [].obs;
