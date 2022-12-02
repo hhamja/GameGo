@@ -52,7 +52,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
                 });
               }
 
-              return CustomPostListTile(
+              return CustomThreeLineListTile(
                 _profileUrl,
                 _userName,
                 _title,

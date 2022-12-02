@@ -119,12 +119,13 @@ export 'package:mannergamer/controller/user/profile.dart';
 export 'package:mannergamer/controller/favorite/favorite.dart';
 
 /* Components */
+export 'package:mannergamer/component/two_line_listTile.dart';
 export 'package:mannergamer/component/post_info.dart';
 export 'package:mannergamer/component/bottomSheet.dart';
 export 'package:mannergamer/component/mannerAge.dart';
 export 'package:mannergamer/component/small_dialog.dart';
 export 'package:mannergamer/component/divider.dart';
-export 'package:mannergamer/component/post_listtile.dart';
+export 'package:mannergamer/component/three_line_listTile.dart';
 
 /* Utilities */
 export 'package:mannergamer/utilites/route/route.dart';

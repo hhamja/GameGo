@@ -1,4 +1,3 @@
-
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MyPostListPage extends StatelessWidget {
@@ -23,7 +22,6 @@ class MyPostListPage extends StatelessWidget {
               physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능
               itemBuilder: (BuildContext context, int index) {
                 final _profileUrl = _controller.myPostList[index].profileUrl;
-                final _userName = _controller.myPostList[index].userName;
                 final _title = _controller.myPostList[index].title;
                 final _gamemode = _controller.myPostList[index].gamemode;
                 final _position = _controller.myPostList[index].position;
@@ -37,9 +35,8 @@ class MyPostListPage extends StatelessWidget {
                   });
                 }
 
-                return CustomPostListTile(
+                return CustomTwoLineListTile(
                   _profileUrl,
-                  _userName,
                   _title,
                   _gamemode,
                   _position,

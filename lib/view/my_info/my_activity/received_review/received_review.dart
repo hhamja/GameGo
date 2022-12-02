@@ -13,7 +13,7 @@ class ReceivedReviewPage extends StatelessWidget {
       body: ListView.separated(
           physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능
           itemBuilder: (BuildContext context, int index) {
-            return CustomPostListTile(
+            return CustomThreeLineListTile(
               '',
               '김통깡',
               '같이 할 듀오 구합니다.',

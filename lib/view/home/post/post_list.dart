@@ -54,7 +54,7 @@ class HomePostList extends GetView<PostController> {
                   arguments: {'postId': controller.postList[index].postId});
             } //onTap 함수
 
-            return CustomPostListTile(
+            return CustomThreeLineListTile(
               _profileUrl,
               _userName,
               _title,

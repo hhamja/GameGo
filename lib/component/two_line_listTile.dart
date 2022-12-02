@@ -1,9 +1,8 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class CustomPostListTile extends StatelessWidget {
-  CustomPostListTile(
+class CustomTwoLineListTile extends StatelessWidget {
+  CustomTwoLineListTile(
     this.profileUrl,
-    this.userName,
     this.content,
     this.gamemode,
     this.position,
@@ -12,7 +11,6 @@ class CustomPostListTile extends StatelessWidget {
     this.onTap,
   );
   final String profileUrl; //프로필 (Leading 위치)
-  final String userName; //유저이름 (title 위치)
   final String content; //ListTile 내용 (title 위치)
   final String gamemode; //게임모드
   final String? position; //포지션
@@ -33,19 +31,9 @@ class CustomPostListTile extends StatelessWidget {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              userName,
-              style: TextStyle(fontSize: 15),
-            ),
-            SizedBox(height: 5),
-            Text(
-              content,
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
+        child: Text(
+          content,
+          style: TextStyle(fontSize: 16),
         ),
       ),
       subtitle: Row(
