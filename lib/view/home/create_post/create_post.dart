@@ -92,87 +92,92 @@ class _AddPostPageState extends State<AddPostPage> {
         controller: _scrollController,
         reverse: true,
         child: Padding(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(0),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: AddPostDropDownButton(),
               ),
-              SizedBox(height: 10),
-              Divider(
-                thickness: 1,
-                color: Colors.grey,
-              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  children: [
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
+                    /* 제목 입력 란 */
+                    TextField(
+                      scrollController: _titleScrollController,
+                      maxLines: null,
+                      minLines: 1,
+                      showCursor: true,
+                      cursorColor: Colors.blue,
+                      controller: _titleController,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '글 제목',
+                        suffixIcon: _titleController.text.isEmpty
+                            ? null
+                            : IconButton(
+                                icon: const Icon(
+                                  Icons.clear,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  _titleController.clear();
+                                  setState(() {});
+                                },
+                              ),
+                      ),
+                      onSubmitted: (value) {
+                        setState(() {});
+                      },
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
 
-              /* 제목 입력 란 */
-              TextField(
-                scrollController: _titleScrollController,
-                maxLines: null,
-                minLines: 1,
-                showCursor: true,
-                cursorColor: Colors.blue,
-                controller: _titleController,
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: '글 제목',
-                  suffixIcon: _titleController.text.isEmpty
-                      ? null
-                      : IconButton(
-                          icon: const Icon(
-                            Icons.clear,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            _titleController.clear();
-                            setState(() {});
-                          },
-                        ),
+                    /* 본문 입력 란 */
+                    TextField(
+                      maxLines: null,
+                      minLines: 1,
+                      scrollController: _maintextScrollController,
+                      showCursor: true,
+                      cursorColor: Colors.blue,
+                      controller: _maintextController,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '자세하게 작성하면 매칭확률이 올라가요 :)',
+                        suffixIcon: _maintextController.text.isEmpty
+                            ? null
+                            : IconButton(
+                                icon: const Icon(
+                                  Icons.clear,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  _maintextController.clear();
+                                  setState(() {});
+                                },
+                              ),
+                      ),
+                      onSubmitted: (value) {
+                        setState(() {});
+                      },
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                    ),
+                  ],
                 ),
-                onSubmitted: (value) {
-                  setState(() {});
-                },
-                onChanged: (value) {
-                  setState(() {});
-                },
-              ),
-              Divider(
-                thickness: 1,
-                color: Colors.grey,
-              ),
-
-              /* 본문 입력 란 */
-              TextField(
-                maxLines: null,
-                minLines: 1,
-                scrollController: _maintextScrollController,
-                showCursor: true,
-                cursorColor: Colors.blue,
-                controller: _maintextController,
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: '자세하게 작성하면 매칭확률이 올라가요 :)',
-                  suffixIcon: _maintextController.text.isEmpty
-                      ? null
-                      : IconButton(
-                          icon: const Icon(
-                            Icons.clear,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            _maintextController.clear();
-                            setState(() {});
-                          },
-                        ),
-                ),
-                onSubmitted: (value) {
-                  setState(() {});
-                },
-                onChanged: (value) {
-                  setState(() {});
-                },
               ),
               Padding(
                 padding:

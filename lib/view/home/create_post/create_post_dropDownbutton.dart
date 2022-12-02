@@ -12,6 +12,8 @@ class AddPostDropDownButton extends StatelessWidget {
           /* 게임모드 드랍다운버튼 */
           DropdownButtonHideUnderline(
             child: DropdownButton2(
+              buttonPadding: EdgeInsets.only(right: 15),
+              itemPadding: EdgeInsets.symmetric(horizontal: 15),
               isExpanded: true,
               hint: Text(
                 '게임모드',
@@ -37,6 +39,8 @@ class AddPostDropDownButton extends StatelessWidget {
             visible: controller.showPosition,
             child: DropdownButtonHideUnderline(
               child: DropdownButton2(
+                buttonPadding: EdgeInsets.only(right: 15),
+                itemPadding: EdgeInsets.symmetric(horizontal: 15),
                 isExpanded: true,
                 hint: Text(
                   '포지션',
@@ -67,6 +71,8 @@ class AddPostDropDownButton extends StatelessWidget {
             visible: controller.showTear,
             child: DropdownButtonHideUnderline(
               child: DropdownButton2(
+                buttonPadding: EdgeInsets.only(right: 15),
+                itemPadding: EdgeInsets.symmetric(horizontal: 15),
                 isExpanded: true,
                 hint: Text(
                   '티어',

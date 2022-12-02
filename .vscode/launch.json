@@ -8,13 +8,15 @@
       "name": "mannergamer",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "debug"
+      "flutterMode": "debug",
+      "deviceId": "emulator-5556"
     },
     {
       "name": "mannergamer2",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "debug"
+      "flutterMode": "debug",
+      "deviceId": "emulator-5554"
     },
     
   ],
