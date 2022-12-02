@@ -1,6 +1,6 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class SplashPage extends GetView<InitialScreenCntroller> {
+class SplashPage extends StatelessWidget {
   //initial 컨트롤러 바인딩 -> 1.5초뒤 유저정보에 따라 페이지 이동
   const SplashPage({Key? key}) : super(key: key);
 

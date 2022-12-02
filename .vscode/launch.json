@@ -5,47 +5,24 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "mannergamer(debug mode)",
+      "name": "mannergamer",
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug"
     },
     {
-      "name": "mannergamer(profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "mannergamer(release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
-    },
-    {
-      "name": "flutter(debug mode)",
+      "name": "mannergamer2",
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug"
     },
-    {
-      "name": "flutter(profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "flutter(release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
-    }
+    
   ],
   /* vsc에서 지원하는 다중 장치 설정 */
   "compounds": [
 		{
 			"name": "All Devices",
-			"configurations": ["mannergamer(debug mode)", "flutter(debug mode)"],
+			"configurations": ["mannergamer", "mannergamer2"],
 		}
 	]
 }

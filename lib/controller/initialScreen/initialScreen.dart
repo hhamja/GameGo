@@ -11,8 +11,8 @@ class InitialScreenCntroller extends GetxController {
 
   /* spalsh 화면을 몇 초동안 보여주고 유저가입상태에서 따라 페이지 이동구현 */
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     Timer(Duration(milliseconds: 1500), () {
       /* 파이베이스 auth User목록 */
       firebaseUser = Rx<User?>(_auth.currentUser);

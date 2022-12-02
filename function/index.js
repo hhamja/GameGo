@@ -1,6 +1,8 @@
 const functions = require("firebase-functions");
-const admin = require("firebase-admin"); //admin은 auth를 서버에서 처리하게 도와주는 SDK
+const admin = require("firebase-admin"); //auth를 서버에서 처리하게 도와주는 SDK
+
 admin.initializeApp();
+
 
 exports.sendNotification = functions
   .region("asia-northeast3")
@@ -56,6 +58,7 @@ exports.sendNotification = functions
                     .messaging()
                     .sendToDevice(userTo.data().pushToken, payload)
                     .then((response) => {
+                      console.log(userTo.data().pushToken);
                       console.log("Successfully sent message:", response);
                     })
                     .catch((error) => {

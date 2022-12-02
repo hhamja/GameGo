@@ -97,7 +97,6 @@ class AppRoutes {
     GetPage(
       name: Paths.Main,
       page: () => MainLogoPage(),
-      binding: InitialScreenBinding(),
     ),
     GetPage(
       name: Paths.UserName,
