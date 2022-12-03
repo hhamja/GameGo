@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:mannergamer/component/textButton/textButton.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class CreateProfilePage extends StatefulWidget {
@@ -211,13 +212,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           child: Container(
             width: double.infinity,
             color: _bottomButtonColorChange,
-            child: TextButton(
-              onPressed: validateButton,
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 20),
-              ),
-              child: Text('완료', style: TextStyle(color: Colors.white)),
-            ),
+            child: CustomTextButton('완료', validateButton),
           ),
         ),
       ),

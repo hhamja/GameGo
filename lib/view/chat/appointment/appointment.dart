@@ -1,3 +1,4 @@
+import 'package:mannergamer/component/textButton/textButton.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class AppointmentPage extends StatefulWidget {
@@ -110,6 +111,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             SizedBox(
               width: double.infinity,
               // height: 40,
+
               child: TextButton(
                 onPressed: () {
                   Get.dialog(
@@ -196,26 +198,37 @@ class _AppointmentPageState extends State<AppointmentPage> {
         ),
       ),
       /* 완료버튼 */
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(shape: BoxShape.circle),
-        height: 40,
-        width: double.infinity,
-        child: TextButton(
-            onPressed: () {},
-            child: Text(
-              '완료',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                // fontWeight: FontWeight.bold,
-              ),
-            ),
-            style: TextButton.styleFrom(
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.zero)),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: CustomTextButton(
+          '완료',
+          () {},
+        ),
       ),
+      // bottomNavigationBar: Container(
+      //   padding: EdgeInsets.symmetric(horizontal: 20),
+      //   decoration: BoxDecoration(
+      //       shape: BoxShape.rectangle,
+      //       borderRadius: BorderRadius.all(Radius.circular(80))),
+      //   height: 50,
+      //   width: double.infinity,
+      //   child: TextButton(
+      //     onPressed: () {},
+      //     child: Text(
+      //       '완료',
+      //       style: TextStyle(
+      //         color: Colors.white,
+      //         fontSize: 15,
+      //         // fontWeight: FontWeight.bold,
+      //       ),
+      //     ),
+      //     style: TextButton.styleFrom(
+      //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      //       backgroundColor: Colors.blue,
+      //       // padding: EdgeInsets.zero,
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

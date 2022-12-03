@@ -1,3 +1,4 @@
+import 'package:mannergamer/component/textButton/textButton.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class OtherReasonsPage extends StatefulWidget {
@@ -77,18 +78,11 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
                 },
               ),
               SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
+              CustomTextButton(
+                '신고사유 제출하기',
+                () {
                   Get.dialog(ReportDialog());
                 },
-                child: Text(
-                  '신고사유 제출하기',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  minimumSize: Size.fromHeight(50),
-                ),
               ),
             ],
           ),

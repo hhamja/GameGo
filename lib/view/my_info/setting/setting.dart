@@ -27,41 +27,52 @@ class _SettingPageState extends State<SettingPage> {
             tiles: <SettingsTile>[
               SettingsTile.switchTile(
                 onToggle: (value) {
-                  setState(() {
-                    isSwitched1 = value;
-                  });
+                  setState(
+                    () {
+                      isSwitched1 = value;
+                    },
+                  );
                 },
                 initialValue: isSwitched1,
                 title: Text('채팅 알림'),
                 description: Text('메시지 알림'),
               ),
               SettingsTile.switchTile(
-                  onToggle: (value) {
-                    setState(() {
+                onToggle: (value) {
+                  setState(
+                    () {
                       isSwitched2 = value;
-                    });
-                  },
-                  initialValue: isSwitched2,
-                  title: Text('공지 알림'),
-                  description: Text('DuoDuo 소식 알림')),
+                    },
+                  );
+                },
+                initialValue: isSwitched2,
+                title: Text('공지 알림'),
+                description: Text('매너게이머 소식 알림'),
+              ),
               SettingsTile.switchTile(
-                  onToggle: (value) {
-                    setState(() {
+                onToggle: (value) {
+                  setState(
+                    () {
                       isSwitched3 = value;
-                    });
-                  },
-                  initialValue: isSwitched3,
-                  title: Text('활동 알림'),
-                  description: Text('관심, 공감, 매너평가 등 알림')),
+                    },
+                  );
+                },
+                initialValue: isSwitched3,
+                title: Text('활동 알림'),
+                description: Text('관심, 약속설정, 매너평가 등 알림'),
+              ),
               SettingsTile.switchTile(
-                  onToggle: (value) {
-                    setState(() {
+                onToggle: (value) {
+                  setState(
+                    () {
                       isSwitched4 = value;
-                    });
-                  },
-                  initialValue: isSwitched4,
-                  title: Text('마케팅 알림'),
-                  description: Text('마케징 정보 수신 동의 1995-01-26')),
+                    },
+                  );
+                },
+                initialValue: isSwitched4,
+                title: Text('마케팅 알림'),
+                description: Text('마케징 정보 수신 동의/비동의'),
+              ),
             ],
           ),
           // SettingsSection(

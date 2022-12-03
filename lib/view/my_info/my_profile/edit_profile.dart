@@ -1,3 +1,4 @@
+import 'package:mannergamer/component/textButton/textButton.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class ProfileEditPage extends StatefulWidget {
@@ -108,23 +109,16 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           )
         ],
       ),
-      bottomSheet: SafeArea(
+      bottomNavigationBar: SafeArea(
         child: Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Container(
-            width: double.infinity,
-            color: _bottomButtonColorChange,
-            child: TextButton(
-              onPressed: () {
-                Get.back();
-                setState(() {});
-              },
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 20),
-              ),
-              child: Text('완료', style: TextStyle(color: Colors.white)),
-            ),
+          padding: EdgeInsets.fromLTRB(
+              15, 0, 15, MediaQuery.of(context).viewInsets.bottom),
+          child: CustomTextButton(
+            '완료',
+            () {
+              Get.back();
+              setState(() {});
+            },
           ),
         ),
       ),
