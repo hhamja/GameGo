@@ -9,14 +9,14 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
-      "deviceId": "emulator-5556"
+      "deviceId": "emulator-5554"
     },
     {
       "name": "mannergamer2",
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
-      "deviceId": "emulator-5554"
+      "deviceId": "emulator-5556"
     },
     
   ],

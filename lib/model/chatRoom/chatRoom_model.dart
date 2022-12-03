@@ -26,6 +26,7 @@ class ChatRoomModel {
   * 유저가 메시지 페이지에 들어간다면? -> 나의 uid에 해당하는 값 '0'으로 업데이트 */
   final Map unReadCount;
   final String lastContent; //마지막 채팅 내용, 메시지 보낼 때 마다 업데이트
+  /* 게임 같이 하는 약속 잡을 경우  */
   final Timestamp updatedAt; //가장 최근 주고받은 일시, 메시지 보낼 때 마다 업데이트
 
   ChatRoomModel({

@@ -3,9 +3,9 @@ import 'package:mannergamer/utilites/index/index.dart';
 class CustomButtomSheet extends StatelessWidget {
   final String inputText;
   final Color inputColor;   
-  final Function() clickCcontent;
+  final Function() onPressed;
 
-  const CustomButtomSheet(this.inputText, this.inputColor, this.clickCcontent);
+  const CustomButtomSheet(this.inputText, this.inputColor, this.onPressed);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class CustomButtomSheet extends StatelessWidget {
       child: Container(
         height: 60,
         child: TextButton(
-            onPressed: clickCcontent,
+            onPressed: onPressed,
             child: Text(
               inputText,
               style: TextStyle(color: inputColor),
