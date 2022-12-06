@@ -31,6 +31,7 @@ export 'package:grouped_list/grouped_list.dart';
 
 /* Screens */
 export 'package:mannergamer/view/user_profile/user_profile.dart';
+export 'package:mannergamer/view/manner_review/send_review.dart';
 
 export 'package:mannergamer/view/splashPage/myApp.dart';
 export 'package:mannergamer/view/splashPage/splash.dart';
@@ -99,8 +100,10 @@ export 'package:mannergamer/model/user/user_model.dart';
 export 'package:mannergamer/model/message/message_model.dart';
 export 'package:mannergamer/model/chatRoom/chatRoom_model.dart';
 export 'package:mannergamer/model/favorite/favorite_model.dart';
+export 'package:mannergamer/model/appointment/appointment.dart';
 
 /* Controller */
+export 'package:mannergamer/controller/appointment/appointment.dart';
 export 'package:mannergamer/controller/splash/splash.dart';
 export 'package:mannergamer/controller/notification/get_token.dart';
 export 'package:mannergamer/controller/notification/notification.dart';
@@ -119,6 +122,8 @@ export 'package:mannergamer/controller/user/profile.dart';
 export 'package:mannergamer/controller/favorite/favorite.dart';
 
 /* Components */
+export 'package:mannergamer/component/dialog/big_dialog%20copy.dart';
+export 'package:mannergamer/component/textButton/textButton.dart';
 export 'package:mannergamer/component/listtile/two_line_listTile.dart';
 export 'package:mannergamer/component/post_info/post_info.dart';
 export 'package:mannergamer/component/bottomSheet/bottomSheet.dart';

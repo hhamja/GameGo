@@ -1,4 +1,3 @@
-import 'package:mannergamer/component/textButton/textButton.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class OtherReasonsPage extends StatefulWidget {

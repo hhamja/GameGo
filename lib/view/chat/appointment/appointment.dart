@@ -1,4 +1,3 @@
-import 'package:mannergamer/component/textButton/textButton.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class AppointmentPage extends StatefulWidget {
@@ -7,8 +6,13 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
+  /* 약속 컨트롤러 */
+  final AppointmentController _controller = Get.find<AppointmentController>();
+  /* 채팅방 id 값 */
+  final String chatRoomId = Get.arguments['chatRoomId'];
   /* 캘린더 날짜 텍스트 크기 */
   final double _dateFontsize = 18;
+
   /* 캘린더에서 선택한 약속날짜 년,월,일만(시, 분 X) 담는 변수 
   * 캘린더 클릭 시 파란색 원으로 강조표시 */
   DateTime _date = DateTime(
@@ -17,7 +21,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     DateTime.now().day,
   );
   /* 약속시간의 시, 분(년, 월, 일)을 담는 변수 */
-  DateTime _dateTime = DateTime.now();
+  DateTime _time = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +32,19 @@ class _AppointmentPageState extends State<AppointmentPage> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /* 알림 설정 */
-            Text(
-              '날짜',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
+            /* 날짜 설정 */
+            // Text(
+            //   '날짜',
+            //   style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 18,
+            //       fontWeight: FontWeight.bold),
+            // ),
+            // SizedBox(height: 20),
             /* 약속 날짜 정하기 */
             TableCalendar(
               daysOfWeekVisible: false, //요일 표시 여부
@@ -106,94 +110,98 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ), //오른쪽 화살표 아이콘 버튼
               ),
             ),
-
-            /* 시간 지정 */
             SizedBox(
-              width: double.infinity,
-              // height: 40,
-
-              child: TextButton(
-                onPressed: () {
-                  Get.dialog(
-                    Dialog(
-                      child: Container(
-                        color: Colors.white,
-                        child: TimePickerSpinner(
-                          alignment: Alignment.center,
-                          is24HourMode: false,
-                          normalTextStyle: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[300],
+              height: 10,
+            ),
+            /* 시간 지정 */
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  '시간  :  ',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.dialog(
+                      Dialog(
+                        child: Container(
+                          color: Colors.white,
+                          child: TimePickerSpinner(
+                            alignment: Alignment.center,
+                            is24HourMode: false,
+                            normalTextStyle: TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey[300],
+                            ),
+                            // time: _dateTime,
+                            highlightedTextStyle: TextStyle(
+                              fontSize: 21,
+                              color: Colors.black,
+                            ),
+                            spacing: 20,
+                            itemHeight: 50,
+                            isForce2Digits: true,
+                            minutesInterval: 1,
+                            onTimeChange: (time) {
+                              setState(() {
+                                _time = time;
+                              });
+                            },
                           ),
-                          // time: _dateTime,
-                          highlightedTextStyle: TextStyle(
-                            fontSize: 21,
-                            color: Colors.black,
-                          ),
-                          spacing: 20,
-                          itemHeight: 50,
-                          isForce2Digits: true,
-                          minutesInterval: 1,
-                          onTimeChange: (time) {
-                            setState(() {
-                              _dateTime = time;
-                            });
-                          },
                         ),
                       ),
-                    ),
-                  );
-                },
-                child: Text(
-                  Jiffy(_dateTime).format('a hh시 mm분'),
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      height: 1.2,
-                      fontWeight: FontWeight.normal),
+                    );
+                  },
+                  child: Text(
+                    Jiffy(_time).format('a hh시 mm분'),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        height: 1.2,
+                        fontWeight: FontWeight.normal),
+                  ),
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    backgroundColor: Colors.grey[200],
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
                 ),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  backgroundColor: Colors.grey[200],
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-              ),
+              ],
             ),
-            SizedBox(height: 40),
 
-            /* 알림 설정 */
-            Text(
-              '알림',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 5),
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  '없음',
-                  style: TextStyle(fontSize: 18, height: 1.2),
-                ),
-                onTap: () {
-                  Get.bottomSheet(
-                    AlarmBottomSheet(),
-                  );
-                }, //알림 '~전' 시간선택하는 다이어로그 띄우기
-                trailing: Icon(
-                  Icons.arrow_drop_down_sharp,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Text(
-              Jiffy(_date).format('yyyy-MM-dd') +
-                  ' ' +
-                  Jiffy(_dateTime).format('HH:mm:00.000'),
-            ), //선택한 약속시간 확인하는 텍스트 용도
+            //선택한 약속시간 확인하는 텍스트 용도
+            // /* 알림 설정 */
+            // Text(
+            //   '알림',
+            //   style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 18,
+            //       fontWeight: FontWeight.bold),
+            // ),
+            // Container(
+            //   margin: EdgeInsets.symmetric(vertical: 5),
+            //   child: ListTile(
+            //     contentPadding: EdgeInsets.zero,
+            //     title: Text(
+            //       '없음',
+            //       style: TextStyle(fontSize: 18, height: 1.2),
+            //     ),
+            //     onTap: () {
+            //       Get.bottomSheet(
+            //         AlarmBottomSheet(),
+            //       );
+            //     }, //알림 '~전' 시간선택하는 다이어로그 띄우기
+            //     trailing: Icon(
+            //       Icons.arrow_drop_down_sharp,
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -202,33 +210,39 @@ class _AppointmentPageState extends State<AppointmentPage> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: CustomTextButton(
           '완료',
-          () {},
+          () async {
+            //<String>약속날짜와 시간
+            String _dateTime = Jiffy(_date).format('yyyy-MM-dd') +
+                ' ' +
+                Jiffy(_time).format('HH:mm');
+            //<DateTime> 약속날짜와 시간
+            DateTime dateTime = DateTime.parse(_dateTime);
+            //<Timestamp> 약속날짜와 시간
+            Timestamp _timeStamp = Timestamp.fromDate(dateTime);
+            //약속 인스턴스 생성
+            AppointmentModel _appointment = AppointmentModel(
+              timestamp: _timeStamp,
+              createdAt: Timestamp.now(),
+            );
+            Get.dialog(CustomBigDialog(
+              '약속 설정',
+              '${Jiffy(_timeStamp.toDate()).format('MM월 dd일. a hh시 MM분')}',
+              '취소',
+              '완료',
+              () => Get.back(),
+              () async {
+                //DB에 설정한 약속 날짜와 시간 넣기
+                await _controller.setAppointment(chatRoomId, _appointment);
+                await _controller.getAppointment(chatRoomId); //업데이트가 안됨
+                Get.back();
+                Get.back();
+              },
+              1,
+              1,
+            ));
+          },
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   padding: EdgeInsets.symmetric(horizontal: 20),
-      //   decoration: BoxDecoration(
-      //       shape: BoxShape.rectangle,
-      //       borderRadius: BorderRadius.all(Radius.circular(80))),
-      //   height: 50,
-      //   width: double.infinity,
-      //   child: TextButton(
-      //     onPressed: () {},
-      //     child: Text(
-      //       '완료',
-      //       style: TextStyle(
-      //         color: Colors.white,
-      //         fontSize: 15,
-      //         // fontWeight: FontWeight.bold,
-      //       ),
-      //     ),
-      //     style: TextButton.styleFrom(
-      //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      //       backgroundColor: Colors.blue,
-      //       // padding: EdgeInsets.zero,
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

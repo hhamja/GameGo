@@ -57,7 +57,7 @@ class _MessagesState extends State<Messages> {
                 /* Date표시에 대한 조건 */
                 if (reversed == 0) {
                   _chat.isShowDate.value = true; //첫 메시지이면 O
-                } else if (reversed > 0 &&
+                } else if (reversed != 0 &&
                     Jiffy(_list[reversed - 1].timestamp.toDate())
                             .format('yyyy년 MM월 dd일') !=
                         _date) {
@@ -79,9 +79,16 @@ class _MessagesState extends State<Messages> {
                 } else {
                   _chat.isShowTime.value = false; //나머지 경우
                 }
-                /* 상대 프로필 보여주는 조건문 */
-                if (reversed >= 1 &&
-                    _list[reversed - 1].idFrom == _list[reversed].idFrom) {
+                /* 상대 프로필 보여주는 조건문 
+                * 첫번째 메시지라면? 프로필 표시 O
+                * 첫번째 메시지가 아니고 이전 메시지와 현재메시지의 사람이 같고 날짜(시간X)도 같다면? 프로필 표시 X */
+                if (reversed == 0) {
+                  _chat.isShowProfile.value = true;
+                } else if (_list[reversed - 1].idFrom ==
+                        _list[reversed].idFrom &&
+                    Jiffy(_list[reversed - 1].timestamp.toDate())
+                            .format('yyyy년 MM월 dd일') ==
+                        _date) {
                   _chat.isShowProfile.value = false;
                 } else {
                   _chat.isShowProfile.value = true;
@@ -188,13 +195,10 @@ class _MessagesState extends State<Messages> {
                                           Radius.circular(15))),
                                   padding: EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 15),
-                                  child: FittedBox(
-                                    fit: BoxFit.contain,
-                                    child: Text(
-                                      '${_list[reversed].content}', //메시지 입력 리스트
-                                      textWidthBasis: TextWidthBasis.parent,
-                                      style: TextStyle(color: Colors.black87),
-                                    ),
+                                  child: Text(
+                                    '${_list[reversed].content}', //메시지 입력 리스트
+                                    textWidthBasis: TextWidthBasis.parent,
+                                    style: TextStyle(color: Colors.black87),
                                   ),
                                 ),
                                 SizedBox(width: 5),
