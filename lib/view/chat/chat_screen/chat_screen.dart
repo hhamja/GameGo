@@ -92,94 +92,108 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
                 children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        Get.to(() => AppointmentPage(),
-                            arguments: {'chatRoomId': chatRoomId});
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              size: 15,
-                              Icons.calendar_month,
-                              color: Colors.black,
-                            ),
-                            SizedBox(width: 5),
-                            /* 약속시간 > 현재 ? 약속시간 표시
+                  _appoint.isSetAppointment.value &&
+                          _appoint.toDatetime.value.isBefore(DateTime.now())
+                      ? SizedBox.shrink()
+                      : Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Get.to(() => AppointmentPage(),
+                                  arguments: {'chatRoomId': chatRoomId});
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    size: 15,
+                                    Icons.calendar_month,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(width: 5),
+                                  /* 약속시간 > 현재 ? 약속시간 표시
                             * 약속시간 <= 현재 ?  */
-                            Text(
-                              _appoint.appointmentDate.toString(),
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 15),
+                                  Text(
+                                    _appoint.isSetAppointment.value
+                                        ? _appoint.appointmentDate.toString()
+                                        : '약속 잡기',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 15),
+                                  ),
+                                  // Text('약속설정')
+                                ],
+                              ),
                             ),
-                            // Text('약속설정')
-                          ],
-                        ),
-                      ),
-                    ),
-                  ), //나중에 서비스가 커지게 되면 알림 기능 넣자
-                  Expanded(
-                    child: InkWell(
-                      onTap: () => Get.dialog(
-                        CustomSmallDialog(
-                          '$userName님과 게임을 하셨나요?', '취소',
-                          '네, 게임했어요',
-                          () => Get.back(),
-                          () {
-                            Get.back();
-                            Get.to(
-                              () => SendReviewPage(),
-                              arguments: {
-                                'postId': postId, // post doc id
-                                'title': _post.postInfo['title'], //제목
-                                'gamemode': _post.postInfo['gamemode'], //게임모드
-                                'position': _post.postInfo['position'], //포지션
-                                'tear': _post.postInfo['tear'], //티어
-                                'userName': userName, //상대유저이름
-                              },
-                            );
-                          }, //매너평가 페이지로 이동
-                          1,
-                          1,
-                        ),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              size: 15,
-                              Icons.sticky_note_2_outlined,
-                              color: Colors.black,
+                          ),
+                        ), //나중에 서비스가 커지게 되면 알림 기능 넣자
+
+                  _appoint.isSetAppointment.value &&
+                          _appoint.toDatetime.value.isBefore(DateTime.now())
+                      //약속시간이 현재보다 과거 ? '후기보내기'도 표시 : 약속시간만 표시
+                      ? Expanded(
+                          child: InkWell(
+                            onTap: () => Get.dialog(
+                              CustomSmallDialog(
+                                '$userName님과 게임을 하셨나요?', '취소',
+                                '네, 게임했어요',
+                                () => Get.back(),
+                                () {
+                                  Get.back();
+                                  Get.to(
+                                    () => SendReviewPage(),
+                                    arguments: {
+                                      'postId': postId, // post doc id
+                                      'title': _post.postInfo['title'], //제목
+                                      'gamemode':
+                                          _post.postInfo['gamemode'], //게임모드
+                                      'position':
+                                          _post.postInfo['position'], //포지션
+                                      'tear': _post.postInfo['tear'], //티어
+                                      'userName': userName, //상대유저이름
+                                    },
+                                  );
+                                }, //매너평가 페이지로 이동
+                                1,
+                                1,
+                              ),
                             ),
-                            SizedBox(width: 5),
-                            Text(
-                              '후기 보내기',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 15),
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    size: 15,
+                                    Icons.sticky_note_2_outlined,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    '후기 보내기',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 15),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                          ),
+                        )
+                      : SizedBox.shrink(),
                 ],
               ),
             ),

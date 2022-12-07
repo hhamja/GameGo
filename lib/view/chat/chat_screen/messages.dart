@@ -19,6 +19,7 @@ class Messages extends StatefulWidget {
 class _MessagesState extends State<Messages> {
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
+  final AppointmentController _appoint = Get.put(AppointmentController());
   /* 기기의 현재 유저 */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
   var _list; // = _chat.messageList
