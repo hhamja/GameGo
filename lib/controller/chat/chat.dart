@@ -57,6 +57,7 @@ class ChatController extends GetxController {
       'content': messageModel.content,
       'idFrom': messageModel.idFrom,
       'idTo': messageModel.idTo,
+      'type': messageModel.type,
       'timestamp': messageModel.timestamp,
     }); //메시지 컬렉션에 추가
 

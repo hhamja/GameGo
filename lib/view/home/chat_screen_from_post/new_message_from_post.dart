@@ -66,6 +66,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
       content: _messageController.text.trim(),
       idFrom: _currentUser.uid,
       idTo: widget.uid,
+      type: 'message',
     );
     /* 채팅방 만들기, 채팅방이 이미 있다면 실행안됨 */
     await _chat.createNewChatRoom(chatRoomModel);

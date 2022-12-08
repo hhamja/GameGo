@@ -19,11 +19,9 @@ class Messages extends StatefulWidget {
 class _MessagesState extends State<Messages> {
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
-  final AppointmentController _appoint = Get.put(AppointmentController());
   /* 기기의 현재 유저 */
   final _currentUid = FirebaseAuth.instance.currentUser!.uid;
   var _list; // = _chat.messageList
-
   @override
   void initState() {
     super.initState();
@@ -51,6 +49,7 @@ class _MessagesState extends State<Messages> {
               itemCount: _list.length,
               itemBuilder: (context, index) {
                 int reversed = _list.length - 1 - index;
+
                 final _date = Jiffy(_list[reversed].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[reversed].timestamp.toDate())
@@ -94,11 +93,13 @@ class _MessagesState extends State<Messages> {
                 } else {
                   _chat.isShowProfile.value = true;
                 }
-                //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
-                final bool _isMe = _currentUid == _list[reversed].idFrom;
+                /* 내가 보낸 메시지인지에 대한 bool 값 */
+                final bool _isMe = _list[index].idFrom == _currentUid;
+                /* 메시지 타입에 대한 bool값 */
+                final bool _appointType = _list[reversed].type == 'appoint';
+
                 return _isMe
-                    ?
-                    /* 나의 메시지 */
+                    ? /* 나의 메시지 */
                     Column(
                         children: [
                           _chat.isShowDate.value
@@ -110,50 +111,62 @@ class _MessagesState extends State<Messages> {
                                   ),
                                 )
                               : SizedBox.shrink(),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 1),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  _chat.isShowTime.value ? _time : '',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      height: 3,
-                                      color: Colors.grey[500]),
-                                ),
-                                SizedBox(width: 5),
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                        MediaQuery.of(context).size.width * 0.7,
+                          !_appointType
+                              ?
+                              //메시지 타입인 경우
+                              Container(
+                                  margin: EdgeInsets.symmetric(vertical: 1),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        _chat.isShowTime.value ? _time : '',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            height: 3,
+                                            color: Colors.grey[500]),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7,
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue, //박스색상
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 15),
+                                        child: Text(
+                                          _list[reversed]
+                                              .content
+                                              .toString(), //메시지 입력 리스트
+                                          textWidthBasis: TextWidthBasis.parent,
+                                          style: TextStyle(
+                                            // fontFeatures: <FontFeature>[
+                                            //   FontFeature.tabularFigures(),
+                                            //   //폰트를 모노스페이스로 만들어주는 건데 작동을 안하네..........
+                                            // ],
+                                            color: Colors.grey[100],
+                                          ), //메시지 글 색상
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.blue, //박스색상
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 15),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(15.0),
                                   child: Text(
-                                    _list[reversed]
-                                        .content
-                                        .toString(), //메시지 입력 리스트
-                                    textWidthBasis: TextWidthBasis.parent,
-                                    style: TextStyle(
-                                      // fontFeatures: <FontFeature>[
-                                      //   FontFeature.tabularFigures(),
-                                      //   //폰트를 모노스페이스로 만들어주는 건데 작동을 안하네..........
-                                      // ],
-                                      color: Colors.grey[100],
-                                    ), //메시지 글 색상
+                                    _list[reversed].content.toString(),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
                         ],
                       )
                     :
@@ -169,51 +182,62 @@ class _MessagesState extends State<Messages> {
                                   ),
                                 )
                               : SizedBox.shrink(),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 1),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                _chat.isShowProfile.value
-                                    ? CircleAvatar(
-                                        radius: 18,
-                                        backgroundImage: NetworkImage(
-                                          widget.profileUrl,
+                          !_appointType
+                              ? Container(
+                                  margin: EdgeInsets.symmetric(vertical: 1),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      _chat.isShowProfile.value
+                                          ? CircleAvatar(
+                                              radius: 18,
+                                              backgroundImage: NetworkImage(
+                                                widget.profileUrl,
+                                              ),
+                                            ) //상대프로필
+                                          : SizedBox(width: 36), //빈값
+                                      SizedBox(width: 5),
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
                                         ),
-                                      ) //상대프로필
-                                    : SizedBox(width: 36), //빈값
-                                SizedBox(width: 5),
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                        MediaQuery.of(context).size.width * 0.6,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 15),
+                                        child: Text(
+                                          '${_list[reversed].content}', //메시지 입력 리스트
+                                          textWidthBasis: TextWidthBasis.parent,
+                                          style:
+                                              TextStyle(color: Colors.black87),
+                                        ),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        _chat.isShowTime.value ? _time : '',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            height: 3,
+                                            color: Colors.grey[500]),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 15),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(15.0),
                                   child: Text(
-                                    '${_list[reversed].content}', //메시지 입력 리스트
-                                    textWidthBasis: TextWidthBasis.parent,
-                                    style: TextStyle(color: Colors.black87),
+                                    _list[reversed].content.toString(),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
-                                SizedBox(width: 5),
-                                Text(
-                                  _chat.isShowTime.value ? _time : '',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      height: 3,
-                                      color: Colors.grey[500]),
-                                ),
-                              ],
-                            ),
-                          ),
                         ],
                       );
               },

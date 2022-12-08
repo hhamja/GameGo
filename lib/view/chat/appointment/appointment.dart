@@ -6,10 +6,14 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
+  /* 현재 유저 uid */
+  final String _currentUid = FirebaseAuth.instance.currentUser!.uid;
   /* 약속 컨트롤러 */
   final AppointmentController _controller = Get.find<AppointmentController>();
   /* 채팅방 id 값 */
   final String chatRoomId = Get.arguments['chatRoomId'];
+  /* 채팅 상대 uid */
+  final String uid = Get.arguments['uid'];
   /* 캘린더 날짜 텍스트 크기 */
   final double _dateFontsize = 18;
 
@@ -219,7 +223,17 @@ class _AppointmentPageState extends State<AppointmentPage> {
             DateTime dateTime = DateTime.parse(_dateTime);
             //<Timestamp> 약속날짜와 시간
             Timestamp _timeStamp = Timestamp.fromDate(dateTime);
+            final String _formatedTimeStamp =
+                Jiffy(_timeStamp.toDate()).format('yyyy년 MM월 dd일 · a hh시 MM분');
             //약속 인스턴스 생성
+            MessageModel _messageModel = MessageModel(
+              timestamp:
+                  Timestamp.now(), // FieldValue.serverTimestamp() -> DB서버시간
+              content: '$_formatedTimeStamp에\n약속을 설정했어요. 약속은 꼭 지켜주세요 !',
+              idFrom: _currentUid, //약속설정 유저의 uid
+              idTo: uid, //약속설정을 당하는(?) 유저의 uid
+              type: 'appoint', //약속설정에 대한 메시지
+            );
             AppointmentModel _appointment = AppointmentModel(
               timestamp: _timeStamp,
               createdAt: Timestamp.now(),
@@ -231,9 +245,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
               '완료',
               () => Get.back(),
               () async {
-                //DB에 설정한 약속 날짜와 시간 넣기
-                await _controller.setAppointment(chatRoomId, _appointment);
-                await _controller.getAppointment(chatRoomId); //업데이트가 안됨
+                //약속설정
+                await _controller.setAppointment(
+                    chatRoomId, _appointment, _messageModel, uid);
+                //채팅페이지 설정한 약속시간이 업데이트 되기 위해서 호출
+                await _controller.getAppointment(chatRoomId);
                 Get.back();
                 Get.back();
               },

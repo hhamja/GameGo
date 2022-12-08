@@ -7,12 +7,6 @@ class ChatScreenPage extends StatefulWidget {
   State<ChatScreenPage> createState() => _ChatScreenPageState();
 }
 
-// Timestamp.now().compareTo(
-//                                       _appoint.appointment['timestamp']) <
-//                                   0
-//                               ? _appoint.appointment['timestamp']
-//                               :
-
 class _ChatScreenPageState extends State<ChatScreenPage> {
   /* 상대유저정보 (이름, 프로필, 매너나이, uid) */
   final String userName = Get.arguments['userName'];
@@ -98,8 +92,10 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                       : Expanded(
                           child: InkWell(
                             onTap: () {
-                              Get.to(() => AppointmentPage(),
-                                  arguments: {'chatRoomId': chatRoomId});
+                              Get.to(() => AppointmentPage(), arguments: {
+                                'chatRoomId': chatRoomId,
+                                'uid': uid
+                              });
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.3,

@@ -10,11 +10,15 @@ class AppointmentController extends GetxController {
   var toDatetime = DateTime.now().obs;
   /* 약속설정이 되어있는지를 나타내는 bool변수 */
   RxBool isSetAppointment = false.obs;
+  /* 약속설정했다는 메시지를 채팅 페이지 보여주기 위한 bool변수 */
+  RxBool isShowMessage = false.obs;
 
   /* 약속설정하기 
   * 문서하나만 만들어서 약속 설정 시 계속 업데이트할 것 */
-  Future setAppointment(chatRoomId, AppointmentModel appointmentModel) async {
-    await _chatDB
+  Future setAppointment(chatRoomId, AppointmentModel appointmentModel,
+      MessageModel messageModel, uid) async {
+    //해당 채팅의 약속 하위 컬렉션에 데이터 추가
+    _chatDB
         .doc(chatRoomId)
         .collection('appointment')
         .doc('appointmentDate')
@@ -22,6 +26,17 @@ class AppointmentController extends GetxController {
       'timestamp': appointmentModel.timestamp,
       'createdAt': appointmentModel.createdAt,
     });
+    //메시지로 표시하기 메시지 하위 컬렉션에 메시지 추가
+    _chatDB.doc(chatRoomId).collection('message').add({
+      'content': messageModel.content,
+      'idFrom': messageModel.idFrom,
+      'idTo': messageModel.idTo,
+      'type': messageModel.type,
+      'timestamp': messageModel.timestamp,
+    }); //메시지 컬렉션에 추가
+    _chatDB.doc(chatRoomId).update({
+      'unReadCount.${uid}': FieldValue.increment(1),
+    }); //상대 uid의 unReadCount +1
   }
 
   /* 약속시간 받기 + 약속설정 여부 bool변수에 담기 */
