@@ -12,10 +12,9 @@ exports.sendNotification = functions
     console.log("----------------start function--------------------");
 
     const doc = snap.data();
-    console.log(doc);
+
     console.log(doc.idFrom);
     console.log(doc.idTo);
-    console.log(doc.content);
 
     const idFrom = doc.idFrom; //보낸 사람 uid
     const idTo = doc.idTo; //받은 사람 uid
@@ -45,12 +44,13 @@ exports.sendNotification = functions
                   console.log(`Found user from: ${userFrom.data().userName}`);
                   const payload = {
                     notification: {
-                      title: `You have a message from "${
+                      title: `매너게이머 "${
                         userFrom.data().userName
                       }"`,
                       body: contentMessage,
                       badge: "1",
                       sound: "default",
+
                     },
                   };
                   // 메시지 받은 유저의 디바이스에 push 채팅 알림 보내기

@@ -224,12 +224,13 @@ class _AppointmentPageState extends State<AppointmentPage> {
             //<Timestamp> 약속날짜와 시간
             Timestamp _timeStamp = Timestamp.fromDate(dateTime);
             final String _formatedTimeStamp =
-                Jiffy(_timeStamp.toDate()).format('yyyy년 MM월 dd일 · a hh시 MM분');
+                Jiffy(_timeStamp.toDate()).format('MM월 dd일 · a hh시 MM분');
             //약속 인스턴스 생성
             MessageModel _messageModel = MessageModel(
               timestamp:
                   Timestamp.now(), // FieldValue.serverTimestamp() -> DB서버시간
-              content: '$_formatedTimeStamp에\n약속을 설정했어요. 약속은 꼭 지켜주세요 !',
+              // content: '$_formatedTimeStamp에\n약속을 설정했어요. 약속은 꼭 지켜주세요 !',
+              content: '약속 설정 알림\n$_formatedTimeStamp',
               idFrom: _currentUid, //약속설정 유저의 uid
               idTo: uid, //약속설정을 당하는(?) 유저의 uid
               type: 'appoint', //약속설정에 대한 메시지
@@ -240,7 +241,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             );
             Get.dialog(CustomBigDialog(
               '약속 설정',
-              '${Jiffy(_timeStamp.toDate()).format('MM월 dd일. a hh시 MM분')}',
+              '${Jiffy(_timeStamp.toDate()).format('MM월 dd일 · a hh시 MM분')}',
               '취소',
               '완료',
               () => Get.back(),

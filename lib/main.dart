@@ -17,8 +17,8 @@ Future<void> main() async {
       }),
       theme: ThemeData(
         colorScheme: ColorScheme.light().copyWith(
-          primary: Colors.blue[800],
-          onPrimary: Colors.blue[800],
+          primary: Colors.blue,
+          onPrimary: Colors.blue,
         ),
         primarySwatch: Colors.red,
         primaryColor: Colors.red,
