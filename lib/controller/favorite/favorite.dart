@@ -12,7 +12,7 @@ class FavoriteController extends GetxController {
   /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
   RxBool isFavorite = false.obs;
 
-  Rx<bool> yxxy = true.obs;
+
 
   @override
   void onInit() {
@@ -41,7 +41,7 @@ class FavoriteController extends GetxController {
 
   /* 나의 관심 게시물 리스트 */
   // RxList<PostModel> favoriteList = <PostModel>[].obs;
-/* 나의 관심 게시물 리스트 */
+  /* 나의 관심 게시물 리스트 */
   RxList<FavoriteListModel> favoriteList = <FavoriteListModel>[].obs;
   /* 해당 게시물이 관심 게시물인지 여부를 bool값으로 리턴하기 */
   isFavoritePost(uid, postId) async {

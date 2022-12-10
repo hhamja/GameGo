@@ -8,6 +8,7 @@ class BadgeController extends GetxController {
   /* 내가 인읽은 메시지가 있는 채팅방 리스트
   * 채팅 탭 아이콘의 빨간배지 표시할 때 사용 */
   RxList unReadList = [].obs;
+  
   @override
   void onInit() {
     unReadList.bindStream(getUnReadCountList()); //채팅방리스트 스트림으로 받기

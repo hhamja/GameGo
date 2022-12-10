@@ -16,6 +16,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
+  final MannerReviewController _review = Get.put(MannerReviewController());
   final AppointmentController _appoint = Get.put(AppointmentController());
   final ChatController _chat = Get.find<ChatController>();
 
@@ -25,6 +26,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
     _getAppointment();
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
     _chat.updateChattingWith(uid);
+    _review.checkExistReview(uid, chatRoomId);
   }
 
   /* 약속날자 비동기로 받기 */
@@ -136,58 +138,101 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                           _appoint.toDatetime.value.isBefore(DateTime.now())
                       //약속시간이 현재보다 과거 ? '후기보내기'도 표시 : 약속시간만 표시
                       ? Expanded(
-                          child: InkWell(
-                            onTap: () => Get.dialog(
-                              CustomSmallDialog(
-                                '$userName님과 게임을 하셨나요?', '취소',
-                                '네, 게임했어요',
-                                () => Get.back(),
-                                () {
-                                  Get.back();
-                                  Get.to(
-                                    () => SendReviewPage(),
-                                    arguments: {
-                                      'postId': postId, // post doc id
-                                      'title': _post.postInfo['title'], //제목
-                                      'gamemode':
-                                          _post.postInfo['gamemode'], //게임모드
-                                      'position':
-                                          _post.postInfo['position'], //포지션
-                                      'tear': _post.postInfo['tear'], //티어
-                                      'userName': userName, //상대유저이름
-                                    },
-                                  );
-                                }, //매너평가 페이지로 이동
-                                1,
-                                1,
-                              ),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1, color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    size: 15,
-                                    Icons.sticky_note_2_outlined,
-                                    color: Colors.black,
+                          child: _review.isExistReview.value
+                              ?
+                              //이미 보낸 후기가 있는 경우
+                              InkWell(
+                                  onTap: () {
+                                    Get.to(
+                                      () => MySentReviewPage(),
+                                      arguments: {
+                                        'uid': uid, //상대 uid
+                                        'chatRoomId': chatRoomId, //현재 채팅방의 id
+                                        'userName': userName, //상대유저이름
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          size: 15,
+                                          Icons.sticky_note_2_outlined,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          '보낸 후기 확인하기',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    '후기 보내기',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 15),
+                                )
+                              :
+                              //이미 보낸 후기가 없는 경우
+                              InkWell(
+                                  onTap: () => Get.dialog(
+                                    CustomSmallDialog(
+                                      '$userName님과 게임을 하셨나요?', '취소',
+                                      '네, 게임했어요',
+                                      () => Get.back(),
+                                      () {
+                                        Get.back();
+                                        Get.to(
+                                          () => SendReviewPage(),
+                                          arguments: {
+                                            'uid': uid, //상대 uid
+                                            'chatRoomId': chatRoomId, //채팅방 id
+                                            'userName': userName, //상대유저이름
+                                          },
+                                        );
+                                      }, //매너평가 페이지로 이동
+                                      1,
+                                      1,
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
+                                  child: Container(
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          size: 15,
+                                          Icons.sticky_note_2_outlined,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          '후기 보내기',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                         )
                       : SizedBox.shrink(),
                 ],

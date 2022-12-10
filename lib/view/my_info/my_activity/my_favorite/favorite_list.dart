@@ -14,7 +14,6 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
   @override
   void initState() {
     super.initState();
-    print(_favorite.yxxy);
     _favorite.getFavoriteList(currentUid); //현재 유저의 관심 게시글 목록 받기
   }
 

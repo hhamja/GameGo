@@ -9,13 +9,13 @@ class SendReviewPage extends StatefulWidget {
 }
 
 class _SendReviewPageState extends State<SendReviewPage> {
-  /* 게시글 정보와 상대유저이름 채팅페이지에서 받기 */
+  final MannerReviewController _review = Get.find<MannerReviewController>();
+  /* 상대유저 이름, uid, 채팅방 id */
   final String userName = Get.arguments['userName'];
-  final String postId = Get.arguments['postId'];
-  final String title = Get.arguments['title'];
-  final String gamemode = Get.arguments['gamemode'];
-  final String? position = Get.arguments['position'];
-  final String? tear = Get.arguments['tear'];
+  final String uid = Get.arguments['uid'];
+  final String chatRoomId = Get.arguments['chatRoomId'];
+
+  String _feeling = '';
   bool isBad = false;
   bool isGood = false;
   bool isShowReviewForm = false;
@@ -55,23 +55,22 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     onPressed: () {
                       setState(() {
                         isShowReviewForm = true;
-                        isBad = true;
-                        isGood = false;
+                        _feeling = 'bad';
                       });
                     },
                     style: ButtonStyle(
                         padding: MaterialStateProperty.all(EdgeInsets.all(20))),
                     child: Column(
                       children: [
-                        !isBad
+                        _feeling == 'bad'
                             ? Icon(
-                                CupertinoIcons.hand_thumbsdown,
+                                CupertinoIcons.hand_thumbsdown_fill,
                                 size: 50,
                                 color: Colors.black87,
                               )
                             : Icon(
-                                CupertinoIcons.hand_thumbsdown_fill,
-                                size: 50,
+                                CupertinoIcons.hand_thumbsdown,
+                                size: 40,
                                 color: Colors.black87,
                               ),
                         SizedBox(height: 10),
@@ -86,23 +85,22 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     onPressed: () {
                       setState(() {
                         isShowReviewForm = true;
-                        isGood = true;
-                        isBad = false;
+                        _feeling = 'good';
                       });
                     },
                     style: ButtonStyle(
                         padding: MaterialStateProperty.all(EdgeInsets.all(20))),
                     child: Column(
                       children: [
-                        !isGood
+                        _feeling == 'good'
                             ? Icon(
-                                CupertinoIcons.hand_thumbsup,
-                                size: 50,
-                                color: Colors.black87,
-                              )
-                            : Icon(
                                 CupertinoIcons.hand_thumbsup_fill,
                                 size: 50,
+                                color: Colors.blue,
+                              )
+                            : Icon(
+                                CupertinoIcons.hand_thumbsup,
+                                size: 40,
                                 color: Colors.black87,
                               ),
                         SizedBox(height: 10),
@@ -143,7 +141,9 @@ class _SendReviewPageState extends State<SendReviewPage> {
                         minLines: 8,
                         maxLines: null,
                         showCursor: true,
+                        keyboardType: TextInputType.text,
                         controller: _reviewText,
+                        textInputAction: TextInputAction.done,
                         textAlignVertical: TextAlignVertical.center,
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         // onChanged: (value) {
@@ -159,7 +159,33 @@ class _SendReviewPageState extends State<SendReviewPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: CustomTextButton('후기 보내기', () {
-          Get.back();
+          Get.dialog(
+            CustomSmallDialog(
+              '$userName에게 보낸 후기는\n수정 및 삭제가 불가합니다',
+              '취소',
+              '보내기',
+              () {
+                Get.back();
+              },
+              () async {
+                final ReviewModel _reviewModel = ReviewModel(
+                    feeling: _feeling,
+                    content: _reviewText.text.trim(),
+                    createdAt: Timestamp.now());
+                await _review.addMannerReview(
+                  uid,
+                  chatRoomId,
+                  _reviewModel,
+                );
+                await _review.checkExistReview(uid, chatRoomId);
+                _reviewText.clear();
+                Get.back();
+                Get.back();
+              },
+              2,
+              3,
+            ),
+          );
         }),
       ),
     );

@@ -9,8 +9,6 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
   RxList<PostModel> postList = <PostModel>[].obs;
   /* Post Id로 받은 게시글정보 */
   RxMap<String, dynamic> postInfo = Map<String, dynamic>().obs;
-  /* Post Id로 받은 게시글정보 */
-  // Rx<PostModel> postInfo = <PostModel>().obs;
 
   @override
   void onInit() {
