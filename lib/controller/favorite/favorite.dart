@@ -9,10 +9,8 @@ class FavoriteController extends GetxController {
   /* 파이어스토어 post 컬렉션 참조 instance */
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
-  /* 게시물 좋아요 버튼 클릭하면 on/off 되는 bool 값 */
+  /* 게시물 관심 버튼 클릭하면 on/off 되는 bool 값 */
   RxBool isFavorite = false.obs;
-
-
 
   @override
   void onInit() {

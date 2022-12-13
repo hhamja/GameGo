@@ -180,7 +180,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       color: Colors.white,
                       child: Row(
                         children: [
-                          /* 좋아요(하트) */
+                          /* 관심(하트) */
                           Expanded(
                             flex: 2,
                             child: Obx(

@@ -87,18 +87,25 @@ class _MyInfoPageState extends State<MyInfoPage> {
                       Get.toNamed('/favorite');
                     },
                   ),
+                  // SettingsTile.navigation(
+                  //   title: Text('받은 매너 평가'),
+                  //   trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                  //   onPressed: (_) {
+                  //     Get.to(() => ReceivedMannerEvaluationPage());
+                  //   },
+                  // ),
                   SettingsTile.navigation(
-                    title: Text('받은 매너 평가'),
+                    title: Text('받은 매너 후기'),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     onPressed: (_) {
-                      Get.to(() => ReceivedMannerEvaluationPage());
+                      Get.to(() => GoodReviewListPage());
                     },
                   ),
                   SettingsTile.navigation(
-                    title: Text('받은 듀오 후기'),
+                    title: Text('받은 비매너 후기'),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     onPressed: (_) {
-                      Get.to(() => ReceivedReviewPage());
+                      Get.to(() => BadReviewListPage());
                     },
                   ),
                 ],

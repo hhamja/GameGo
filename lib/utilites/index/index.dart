@@ -30,14 +30,12 @@ export 'package:jiffy/jiffy.dart';
 export 'package:grouped_list/grouped_list.dart';
 
 /* Screens */
+export 'package:mannergamer/view/my_info/my_activity/received_review/bad_review.dart';
 export 'package:mannergamer/view/manner_review/my_sent_review.dart';
-
 export 'package:mannergamer/view/user_profile/user_profile.dart';
 export 'package:mannergamer/view/manner_review/send_review.dart';
-
 export 'package:mannergamer/view/splashPage/myApp.dart';
 export 'package:mannergamer/view/splashPage/splash.dart';
-
 export 'package:mannergamer/view/chat/bottomSheet/chat_bottomSheet.dart';
 export 'package:mannergamer/view/chat/appointment/alarm_bottomSheet.dart';
 export 'package:mannergamer/view/chat/appointment/appointment.dart';
@@ -62,18 +60,16 @@ export 'package:mannergamer/view/report/illegal_post/illegal_post.dart';
 export 'package:mannergamer/view/report/other_reasons/other_reasons.dart';
 export 'package:mannergamer/view/report/dialog/report_dialog.dart';
 export 'package:mannergamer/view/report/report_list/report_list.dart';
-
 export 'package:mannergamer/view/login/phone_auth.dart';
 export 'package:mannergamer/view/login/create_profile.dart';
 export 'package:mannergamer/view/login/main_logo_page.dart';
-
 export 'package:mannergamer/view/my_info/info_page/info_page.dart';
 export 'package:mannergamer/view/my_info/etc/faq/faq.dart';
 export 'package:mannergamer/view/my_info/etc/feedBack/feedback.dart';
 export 'package:mannergamer/view/my_info/etc/notice/notice_list.dart';
 export 'package:mannergamer/view/my_info/etc/notice/notice_detail.dart';
 export 'package:mannergamer/view/my_info/my_profile/mannerAge.dart';
-export 'package:mannergamer/view/my_info/my_activity/received_review/received_review.dart';
+export 'package:mannergamer/view/my_info/my_activity/received_review/good_review.dart';
 export 'package:mannergamer/view/my_info/my_activity/received_evaluation/received_evaluation.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_favorite/favorite_list.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_post/bottomSheets.dart';
@@ -143,5 +139,4 @@ export 'package:mannergamer/utilites/route/route_path.dart';
 
 /* Themes */
 export 'package:mannergamer/theme/theme.dart';
-
 export 'package:mannergamer/main.dart';

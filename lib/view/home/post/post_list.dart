@@ -5,6 +5,8 @@ class HomePostList extends GetView<PostController> {
   /* 홈 드랍다운버튼 컨트롤러 */
   final HomePageDropDownBTController _ =
       Get.put(HomePageDropDownBTController());
+  /* 홈 드랍다운버튼 컨트롤러 */
+  final PostController _post = Get.put(PostController());
 
   /* 드랍다운버튼 선택한 값에 따른 페이지 새로고침 */
   Future<void> _refreshFromButtonValue() async {

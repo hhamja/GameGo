@@ -10,6 +10,8 @@ class SendReviewPage extends StatefulWidget {
 
 class _SendReviewPageState extends State<SendReviewPage> {
   final MannerReviewController _review = Get.find<MannerReviewController>();
+  /* 현재유저의 uid */
+  final String _currentUid = FirebaseAuth.instance.currentUser!.uid;
   /* 상대유저 이름, uid, 채팅방 id */
   final String userName = Get.arguments['userName'];
   final String uid = Get.arguments['uid'];
@@ -75,7 +77,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               ),
                         SizedBox(height: 10),
                         Text(
-                          '싫어요',
+                          '별로에요',
                           style: TextStyle(color: Colors.black87),
                         ),
                       ],
@@ -105,7 +107,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               ),
                         SizedBox(height: 10),
                         Text(
-                          '좋아요',
+                          '최고에요',
                           style: TextStyle(color: Colors.black87),
                         ),
                       ],
@@ -169,9 +171,13 @@ class _SendReviewPageState extends State<SendReviewPage> {
               },
               () async {
                 final ReviewModel _reviewModel = ReviewModel(
-                    feeling: _feeling,
-                    content: _reviewText.text.trim(),
-                    createdAt: Timestamp.now());
+                  userName: FirebaseAuth.instance.currentUser!.displayName ??
+                      '(이름없음)',
+                  profileUrl: FirebaseAuth.instance.currentUser!.photoURL ?? '',
+                  feeling: _feeling,
+                  content: _reviewText.text.trim(),
+                  createdAt: Timestamp.now(),
+                );
                 await _review.addMannerReview(
                   uid,
                   chatRoomId,

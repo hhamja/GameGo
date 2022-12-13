@@ -131,7 +131,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Paths.ReceivedReview,
-      page: () => ReceivedReviewPage(),
+      page: () => GoodReviewListPage(),
     ),
     GetPage(
       name: Paths.ReceivedMannerEvaluation,

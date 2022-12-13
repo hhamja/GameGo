@@ -40,7 +40,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: _review.myReview['feeling'] == 'good'
                     ?
-                    /* 좋아요 */
+                    /* 최고에요 */
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -51,7 +51,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                           ),
                         ],
                       )
-                    : /* 싫어요 */
+                    : /* 별로에요 */
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -63,7 +63,6 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                         ],
                       ),
               ),
-
               Text(
                 'To. $userName',
               ),
@@ -72,17 +71,12 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                 color: Colors.black,
                 height: 20,
               ),
-
               Text(
                 _review.myReview['content'] == ''
                     ? '(내용없음)'
                     : _review.myReview['content'],
                 textAlign: TextAlign.left,
               ),
-              // Divider(
-              //   thickness: 0.5,
-              //   color: Colors.black,
-              // ),
             ],
           ),
         ),

@@ -101,7 +101,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     UserModel userModel = UserModel(
         uid: _auth.currentUser!.uid,
         userName: text,
-        phoneNumber: Get.arguments, //인증받은 폰번호 이전페이지에서 받기
+        phoneNumber: Get.arguments ??
+            _auth.currentUser!.phoneNumber, //인증받은 폰번호 이전페이지에서 받기
         profileUrl: profileImageUrl ??
             _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
         mannerAge: '20.0',
@@ -109,6 +110,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     if (!text.isEmpty || text.length >= 2) {
       //닉네임 2자 이상이라면?
       await _userAuth.addNewUser(userModel); //userDB에 저장
+      await _auth.currentUser!.updatePhotoURL(
+          profileImageUrl ?? _profile.defaultProfile); //userInfo에 프로필 URL저장
       await _auth.currentUser!.updateDisplayName(text); //userInfo에 닉네임저장
       Get.offAllNamed('/myapp'); //홈으로 이동
     }
@@ -169,7 +172,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             ],
           ),
           SizedBox(height: 40),
-
           /* 닉네임 입력란 */
           TextFormField(
             decoration: InputDecoration(
