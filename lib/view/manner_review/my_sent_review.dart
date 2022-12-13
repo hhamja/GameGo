@@ -10,7 +10,7 @@ class MySentReviewPage extends StatefulWidget {
 
 class _MySentReviewPageState extends State<MySentReviewPage> {
   final MannerReviewController _review = Get.find<MannerReviewController>();
-// /* 상대유저 이름, uid, 채팅방 id */
+  /* 상대유저 이름, uid, 채팅방 id */
   final String userName = Get.arguments['userName']!;
   final String uid = Get.arguments['uid']!;
   final String chatRoomId = Get.arguments['chatRoomId']!;
@@ -31,71 +31,58 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  /* 싫어요 */
-                  TextButton(
-                    onPressed: null,
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.all(20))),
-                    child: Column(
-                      children: [
-                        _review.myReview['feeling'] == 'bad'
-                            ? Icon(
-                                CupertinoIcons.hand_thumbsdown_fill,
-                                size: 50,
-                                color: Colors.black87,
-                              )
-                            : Icon(
-                                CupertinoIcons.hand_thumbsdown,
-                                size: 40,
-                                color: Colors.black87,
-                              ),
-                        SizedBox(height: 10),
-                        Text(
-                          '싫어요',
-                          style: TextStyle(color: Colors.black87),
-                        ),
-                      ],
-                    ),
-                  ),
-                  /* 좋아요 */
-                  TextButton(
-                    onPressed: null,
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.all(20))),
-                    child: Column(
-                      children: [
-                        _review.myReview['feeling'] == 'good'
-                            ? Icon(
-                                CupertinoIcons.hand_thumbsup_fill,
-                                size: 50,
-                                color: Colors.blue,
-                              )
-                            : Icon(
-                                CupertinoIcons.hand_thumbsup,
-                                size: 40,
-                                color: Colors.black87,
-                              ),
-                        SizedBox(height: 10),
-                        Text(
-                          '좋아요',
-                          style: TextStyle(color: Colors.black87),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: _review.myReview['feeling'] == 'good'
+                    ?
+                    /* 좋아요 */
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            CupertinoIcons.hand_thumbsup_fill,
+                            size: 180,
+                            color: Colors.blue[800],
+                          ),
+                        ],
+                      )
+                    : /* 싫어요 */
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            CupertinoIcons.hand_thumbsdown_fill,
+                            size: 180,
+                            color: Colors.grey[400],
+                          ),
+                        ],
+                      ),
               ),
-              Text('$userName 에게 보낸 후기'),
-              Text(_review.myReview['content']),
+
+              Text(
+                'To. $userName',
+              ),
+              Divider(
+                thickness: 0.5,
+                color: Colors.black,
+                height: 20,
+              ),
+
+              Text(
+                _review.myReview['content'] == ''
+                    ? '(내용없음)'
+                    : _review.myReview['content'],
+                textAlign: TextAlign.left,
+              ),
+              // Divider(
+              //   thickness: 0.5,
+              //   color: Colors.black,
+              // ),
             ],
           ),
         ),
