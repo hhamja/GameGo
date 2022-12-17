@@ -93,12 +93,24 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                       ? SizedBox.shrink()
                       : Expanded(
                           child: InkWell(
-                            onTap:_chat.messageList.contains(_chat.messageList.where((e) => e.idFrom != CurrentUser.uid)) ?  () {
-                              Get.to(() => AppointmentPage(), arguments: {
-                                'chatRoomId': chatRoomId,
-                                'uid': uid
-                              });
-                            },
+                            //상대방이 보낸 메시지
+                            onTap: _chat.messageList.contains(_chat.messageList
+                                    .where((e) => e.idFrom != CurrentUser.uid))
+                                ?
+                                //있다면? 약속설정 가능 O
+                                () {
+                                    Get.to(() => AppointmentPage(), arguments: {
+                                      'chatRoomId': chatRoomId,
+                                      'uid': uid
+                                    });
+                                  }
+                                //없다면? 약속설정 X , 토스트 사용자에게 알림
+                                : () {
+                                    Get.snackbar(
+                                      '약속설정불가',
+                                      '상대방도 메시지를 보내면 약속을 잡을 수 있어요.',
+                                    );
+                                  },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.3,
                               padding: EdgeInsets.symmetric(

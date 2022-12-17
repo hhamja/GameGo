@@ -109,13 +109,13 @@ class _ChatListPageState extends State<ChatListPage> {
                     ),
                     /* 안읽은 메시지 수
                       * 0개가 아닐때만 표시 */
-                    _chatList.unReadCount['$CurrentUser.uid'] != 0
+                    _chatList.unReadCount['${CurrentUser.uid}'] != 0
                         ? CircleAvatar(
                             backgroundColor: Colors.red,
                             radius: 10,
                             child: Text(
                               /* 나의 uid에 해당하는 안읽은 메시지 수 받음 */
-                              _chatList.unReadCount['$CurrentUser.uid']
+                              _chatList.unReadCount['${CurrentUser.uid}']
                                   .toString(),
                               style:
                                   TextStyle(fontSize: 12, color: Colors.white),

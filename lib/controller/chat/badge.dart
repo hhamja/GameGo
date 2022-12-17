@@ -20,7 +20,7 @@ class BadgeController extends GetxController {
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
               var snapshot = e.data() as Map<String, dynamic>;
-              var unReadCount = snapshot['unReadCount']['$CurrentUser.uid'];
+              var unReadCount = snapshot['unReadCount']['${CurrentUser.uid}'];
               return unReadCount;
             }).toList());
   }
