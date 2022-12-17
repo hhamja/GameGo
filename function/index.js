@@ -19,6 +19,7 @@ exports.sendNotification = functions
     const idFrom = doc.idFrom; //보낸 사람 uid
     const idTo = doc.idTo; //받은 사람 uid
     const contentMessage = doc.content; //메시지 내용
+    const messageType = doc.type;  //메시지 타입(appoint, message 두개 존재함)
 
     /* 메시지 받은 유저정보 받기
     * pushToken값이 존재, chattringWith와 보낸사람 uid가 다르다면? 채팅 push 알림 보내기   
@@ -31,8 +32,13 @@ exports.sendNotification = functions
       .then((querySnapshot) => {
         querySnapshot.forEach((userTo) => {
           console.log(`Found user to: ${userTo.data().userName}`);
-          //받은유저가 push 토큰이 있고 현재 채팅하고 있는 유저와 메시지 보낸 유저의 id랑 다르다면?
-          if (userTo.data().pushToken && userTo.data().chattingWith !== idFrom) {
+
+          //받은유저 push 토큰 존재, 메시지 타입이 message, 받은 유저가 보낸사람의 채팅방 화면을 보고 있지 않은 경우
+          if (
+            userTo.data().pushToken !== "" &&
+            userTo.data().chattingWith !== idFrom &&
+            messageType === "message"
+          ) {
             /* 메시지 보낸 유저 정보 가져오기 */
             admin
               .firestore()
@@ -44,13 +50,10 @@ exports.sendNotification = functions
                   console.log(`Found user from: ${userFrom.data().userName}`);
                   const payload = {
                     notification: {
-                      title: `매너게이머 "${
-                        userFrom.data().userName
-                      }"`,
+                      title: `매너게이머 "${userFrom.data().userName}"`,
                       body: contentMessage,
                       badge: "1",
                       sound: "default",
-
                     },
                   };
                   // 메시지 받은 유저의 디바이스에 push 채팅 알림 보내기
@@ -66,6 +69,10 @@ exports.sendNotification = functions
                     });
                 });
               });
+          } else if (messageType === "appoint") {
+            console.log("messageType == appoint");
+          } else if (userTo.data().pushToken === "") {
+            console.log("pushToken가 null임");
           } else {
             console.log("유저 찾을 수가 없어요");
           }
@@ -74,6 +81,8 @@ exports.sendNotification = functions
     console.log('null');
     return null;
   });
+
+
 // // Create and deploy your first functions
 // // https://firebase.google.com/docs/functions/get-started
 //
