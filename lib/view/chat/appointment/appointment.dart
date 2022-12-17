@@ -6,8 +6,6 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
-  /* 현재 유저 uid */
-  final String _currentUid = FirebaseAuth.instance.currentUser!.uid;
   /* 약속 컨트롤러 */
   final AppointmentController _controller = Get.find<AppointmentController>();
   /* 채팅방 id 값 */
@@ -231,7 +229,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                   Timestamp.now(), // FieldValue.serverTimestamp() -> DB서버시간
               // content: '$_formatedTimeStamp에\n약속을 설정했어요. 약속은 꼭 지켜주세요 !',
               content: '약속 설정 알림\n$_formatedTimeStamp',
-              idFrom: _currentUid, //약속설정 유저의 uid
+              idFrom: CurrentUser.uid, //약속설정 유저의 uid
               idTo: uid, //약속설정을 당하는(?) 유저의 uid
               type: 'appoint', //약속설정에 대한 메시지
             );

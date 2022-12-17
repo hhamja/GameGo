@@ -46,7 +46,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                         children: [
                           Icon(
                             CupertinoIcons.hand_thumbsup_fill,
-                            size: 180,
+                            size: 150,
                             color: Colors.blue[800],
                           ),
                         ],
@@ -57,7 +57,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                         children: [
                           Icon(
                             CupertinoIcons.hand_thumbsdown_fill,
-                            size: 180,
+                            size: 150,
                             color: Colors.grey[400],
                           ),
                         ],

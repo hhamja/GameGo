@@ -15,8 +15,6 @@ class MessagesFromPost extends StatefulWidget {
 }
 
 class _MessagesFromPostState extends State<MessagesFromPost> {
-  /* 기기의 현재 유저 */
-  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
   /* 채팅방 id */
   var chatRoomId;
   /* 채팅 GetX 컨트롤러 */
@@ -27,7 +25,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   void initState() {
     super.initState();
     _list = _chat.messageList;
-    chatRoomId = widget.postId + '_' + _currentUid;
+    chatRoomId = widget.postId + '_' + CurrentUser.uid;
     _list.bindStream(_chat.readAllMessageList(chatRoomId));
   }
 
@@ -95,7 +93,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                   _chat.isShowProfile.value = true;
                 }
                 //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
-                final bool _isMe = _currentUid == _list[reversed].idFrom;
+                final bool _isMe = CurrentUser.uid == _list[reversed].idFrom;
                 return _isMe
                     ?
                     /* 나의 메시지 */

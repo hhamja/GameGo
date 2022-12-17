@@ -136,6 +136,7 @@ export 'package:mannergamer/component/listtile/three_line_listTile.dart';
 export 'package:mannergamer/utilites/route/route.dart';
 export 'package:mannergamer/utilites/binding/binding.dart';
 export 'package:mannergamer/utilites/route/route_path.dart';
+export 'package:mannergamer/utilites/currentUser/currentUser.dart';
 
 /* Themes */
 export 'package:mannergamer/theme/theme.dart';

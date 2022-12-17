@@ -1,9 +1,6 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MannerReviewController extends GetxController {
-  /* 나의 uid */
-  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
-
   /* 유저 Collection 경로 */
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');

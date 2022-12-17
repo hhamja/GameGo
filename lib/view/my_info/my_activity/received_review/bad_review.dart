@@ -8,14 +8,13 @@ class BadReviewListPage extends StatefulWidget {
 }
 
 class _BadReviewListPageState extends State<BadReviewListPage> {
-  final String _currentUid = FirebaseAuth.instance.currentUser!.uid;
   final MannerReviewController _review = Get.put(MannerReviewController());
 
   @override
   void initState() {
     super.initState();
     //내가 받은 매너 후기 리스트 받기
-    _review.getBadReviewList(_currentUid);
+    _review.getBadReviewList(CurrentUser.uid);
   }
 
   @override

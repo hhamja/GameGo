@@ -4,6 +4,7 @@ class AppointmentController extends GetxController {
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
 
+
   /* 약속 날짜 담는  Rx String 변수 */
   RxString appointmentDate = ''.obs;
   /* DateTime 변수 */
@@ -12,6 +13,7 @@ class AppointmentController extends GetxController {
   RxBool isSetAppointment = false.obs;
   /* 약속설정했다는 메시지를 채팅 페이지 보여주기 위한 bool변수 */
   RxBool isShowMessage = false.obs;
+ 
 
   /* 약속설정하기 
   * 문서하나만 만들어서 약속 설정 시 계속 업데이트할 것 */
@@ -73,4 +75,6 @@ class AppointmentController extends GetxController {
       isSetAppointment.value = false;
     }
   }
+
+  
 }

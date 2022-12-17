@@ -12,14 +12,12 @@ class _PostDetailPageState extends State<PostDetailPage> {
   final FavoriteController _favorite = Get.put(FavoriteController());
   /* PostList Page 와 Favorite 에서 PostId값 전달 받음 */
   final String postId = Get.arguments['postId'];
-  /* 현재 유저의 uid */
-  final String currentUid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
     super.initState();
     _post.getPostInfoByid(postId); //postInfo에 게시글 데이터 담기
-    _favorite.isFavoritePost(currentUid, postId); //하트아이콘에 적용한 초기 bool값 반환
+    _favorite.isFavoritePost(CurrentUser.uid, postId); //하트아이콘에 적용한 초기 bool값 반환
   }
 
   @override
@@ -43,7 +41,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
               children: [
                 ListTile(
                   contentPadding: EdgeInsets.all(16),
-                  onTap: currentUid == _post.postInfo['uid']
+                  onTap: CurrentUser.uid == _post.postInfo['uid']
                       ? null //나의게시물? 프로필 이동 X
                       : () {
                           Get.toNamed('/userProfile', arguments: {
@@ -169,7 +167,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
       ),
       bottomSheet:
           /* 나의 게시글 이라면? */
-          currentUid == _post.postInfo['uid']
+          CurrentUser.uid == _post.postInfo['uid']
               ? SizedBox.shrink()
               : SafeArea(
                   child: Padding(
@@ -187,7 +185,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                               () => IconButton(
                                 onPressed: () async {
                                   await _favorite.favoritePost(
-                                      currentUid, postId);
+                                      CurrentUser.uid, postId);
                                 },
                                 icon: _favorite.isFavorite.value
                                     ? Icon(
@@ -234,7 +232,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   /* 게시물 오른쪽 상단의 아이콘 클릭 시  바텀시트 호출 */
   openPostBottomSheet() {
     /* 나의 게시물인 경우 */
-    if (currentUid == _post.postInfo['uid']) {
+    if (CurrentUser.uid == _post.postInfo['uid']) {
       return Get.bottomSheet(
         Container(
           color: Colors.white,

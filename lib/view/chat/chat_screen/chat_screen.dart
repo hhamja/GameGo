@@ -25,8 +25,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
     super.initState();
     _getAppointment();
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
-    _chat.updateChattingWith(uid);
-    _review.checkExistReview(uid, chatRoomId);
+    _chat.updateChattingWith(uid); //현재 채팅하는 상대가 누군지 업데이트
+    _review.checkExistReview(uid, chatRoomId); //보낸 리뷰가 존재하는지 여부
   }
 
   /* 약속날자 비동기로 받기 */
@@ -37,7 +37,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   @override
   void dispose() {
     _chat.clearUnReadCount(chatRoomId); //나의 안읽은 메시지 수 0으로 업데이트
-    _chat.clearChattingWith();
+    _chat.clearChattingWith(); //채방하는 상대에 대한 정보 지우기
     super.dispose();
   }
 
@@ -93,7 +93,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                       ? SizedBox.shrink()
                       : Expanded(
                           child: InkWell(
-                            onTap: () {
+                            onTap:_chat.messageList.contains(_chat.messageList.where((e) => e.idFrom != CurrentUser.uid)) ?  () {
                               Get.to(() => AppointmentPage(), arguments: {
                                 'chatRoomId': chatRoomId,
                                 'uid': uid

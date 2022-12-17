@@ -19,8 +19,7 @@ class Messages extends StatefulWidget {
 class _MessagesState extends State<Messages> {
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
-  /* 기기의 현재 유저 */
-  final _currentUid = FirebaseAuth.instance.currentUser!.uid;
+
   var _list; // = _chat.messageList
   @override
   void initState() {
@@ -94,7 +93,7 @@ class _MessagesState extends State<Messages> {
                   _chat.isShowProfile.value = true;
                 }
                 /* 내가 보낸 메시지인지에 대한 bool 값 */
-                final bool _isMe = _list[index].idFrom == _currentUid;
+                final bool _isMe = _list[index].idFrom == CurrentUser.uid;
                 /* 메시지 타입에 대한 bool값 */
                 final bool _appointType = _list[reversed].type == 'appoint';
 

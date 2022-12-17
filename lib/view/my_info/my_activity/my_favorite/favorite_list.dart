@@ -9,12 +9,11 @@ class MyFavoriteList extends StatefulWidget {
 
 class _MyFavoriteListState extends State<MyFavoriteList> {
   final FavoriteController _favorite = Get.put(FavoriteController());
-  final currentUid = FirebaseAuth.instance.currentUser!.uid; //현재 유저 UId
 
   @override
   void initState() {
     super.initState();
-    _favorite.getFavoriteList(currentUid); //현재 유저의 관심 게시글 목록 받기
+    _favorite.getFavoriteList(CurrentUser.uid); //현재 유저의 관심 게시글 목록 받기
   }
 
   @override
@@ -29,7 +28,7 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
           //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
           onRefresh: () async {
             _favorite.favoriteList.clear();
-            await _favorite.getFavoriteList(currentUid);
+            await _favorite.getFavoriteList(CurrentUser.uid);
           },
           displacement: 0, //맨 위에 위치시키는 값
           child: ListView.separated(

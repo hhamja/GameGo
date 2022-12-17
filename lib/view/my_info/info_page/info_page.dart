@@ -8,13 +8,12 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class _MyInfoPageState extends State<MyInfoPage> {
-  final _currentUid = FirebaseAuth.instance.currentUser!.uid; //햔재유저 Uid
   final UserController _user = Get.put(UserController());
 
   @override
   void initState() {
     super.initState();
-    _user.getUserInfoByUid(_currentUid); //현재유저 정보 받기
+    _user.getUserInfoByUid(CurrentUser.uid); //현재유저 정보 받기
   }
 
   @override
@@ -33,7 +32,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await _user.getUserInfoByUid(_currentUid); //내정보 새로고침
+          await _user.getUserInfoByUid(CurrentUser.uid); //내정보 새로고침
         },
         displacement: 0,
         child: Obx(

@@ -5,20 +5,19 @@ class ChatController extends GetxController {
       FirebaseFirestore.instance.collection('chat');
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
+  ScrollController scroll = ScrollController(keepScrollOffset: false);
   /* 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수 */
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
   /* 채팅방안의 모든 메시지 담는 RxList 변수 */
   RxList<MessageModel> messageList = <MessageModel>[].obs;
-
   /* 상대 메시지에서 프로필 보여주는 bool 값 */
   RxBool isShowProfile = false.obs;
   /* 메시지시간 표시에 대한 bool 값 */
   RxBool isShowTime = false.obs;
   /* 메시지시간 표시에 대한 bool 값 */
   RxBool isShowDate = false.obs;
-  /* 현재 유저의 uid */
-  final _currentUid = FirebaseAuth.instance.currentUser!.uid.toString();
-  ScrollController scroll = ScrollController(keepScrollOffset: false);
+  /* 서로서로 보낸 메시지가 1개 이상인지; 약속설정 가능 여부 */
+  RxBool isOkAppoint = false.obs;
 
   @override
   void onInit() {
@@ -69,7 +68,7 @@ class ChatController extends GetxController {
   /* 모든 '채팅' 리스트 스트림으로 받기 */
   Stream<List<ChatRoomModel>> readAllChatList() {
     return _chatDB
-        .where('members', arrayContains: _currentUid)
+        .where('members', arrayContains: CurrentUser.uid)
         .orderBy('updatedAt', descending: true) //최신이 맨 위
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) {
@@ -100,7 +99,7 @@ class ChatController extends GetxController {
   /* 메시지페이지를 나갔을 때 나의 안읽은 메시지 수 0으로 업데이트 */
   Future clearUnReadCount(chatRoomId) async {
     _chatDB.doc(chatRoomId).update({
-      'unReadCount.${_currentUid}': 0,
+      'unReadCount.${CurrentUser.uid}': 0,
     }); //나의 안읽은메시지 수 0으로 업데이트
   }
 
@@ -116,17 +115,28 @@ class ChatController extends GetxController {
 
     // final messageRef = _chatDB.doc(chatRoomId).collection('message').doc().update({'isRead': isRead});
     // await messageRef
-    //     .where('senderId', isNotEqualTo: _currentUid) //상대가 보낸 메시지만 쿼리
+    //     .where('senderId', isNotEqualTo: CurrentUser.uid) //상대가 보낸 메시지만 쿼리
     //     .where('isRead', isEqualTo: false).; //그 중 내가 인읽은 메시지만 쿼리
   }
 
   /* 채팅페이지 들어가면, chattingWith 상대 uid로 업데이트 */
   Future updateChattingWith(uid) async {
-    await _userDB.doc(_currentUid).update({'chattingWith': uid});
+    await _userDB.doc(CurrentUser.uid).update({'chattingWith': uid});
   }
 
   /* 채팅페이지에서 나가면, chattingWith 빈값으로 업데이트 */
   Future clearChattingWith() async {
-    await _userDB.doc(_currentUid).update({'chattingWith': null});
+    await _userDB.doc(CurrentUser.uid).update({'chattingWith': null});
+  }
+
+  /* 상대방의 메시지 만 받기 */
+  Stream isContactUserMessage(chatRoomId) {
+    return _chatDB
+        .doc(chatRoomId)
+        .collection('message')
+        .where('idFrom', isEqualTo: CurrentUser.uid)
+        .snapshots()
+        .map((event) =>
+            event.docs.map((e) => MessageModel.fromDocumentSnapshot(e)));
   }
 }
