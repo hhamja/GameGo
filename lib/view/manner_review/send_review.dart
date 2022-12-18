@@ -170,12 +170,15 @@ class _SendReviewPageState extends State<SendReviewPage> {
               },
               () async {
                 final ReviewModel _reviewModel = ReviewModel(
+                  idTo: uid, //리뷰 받는 유저
+                  idFrom: CurrentUser.uid, //리뷰보내는 유저
                   userName: FirebaseAuth.instance.currentUser!.displayName ??
-                      '(이름없음)',
-                  profileUrl: FirebaseAuth.instance.currentUser!.photoURL ?? '',
-                  feeling: _feeling,
-                  content: _reviewText.text.trim(),
-                  createdAt: Timestamp.now(),
+                      '(이름없음)', //리뷰보내는 유저 이름
+                  profileUrl: FirebaseAuth.instance.currentUser!.photoURL ??
+                      '', //리뷰보내는 유저 프로필
+                  feeling: _feeling, //"good" or "bad"
+                  content: _reviewText.text.trim(), //작성한 후기 내용
+                  createdAt: Timestamp.now(), //보낸시간
                 );
                 await _review.addMannerReview(
                   uid,

@@ -21,6 +21,8 @@ class MannerReviewController extends GetxController {
     //유저 하위 컬렉션으로 리뷰 저장하기
     await _userDB.doc(uid).collection('review').doc(chatRoomId).set(
       {
+        'idFrom': reviewModel.idFrom,
+        'idTo': reviewModel.idTo,
         'profileUrl': reviewModel.profileUrl,
         'userName': reviewModel.userName,
         'feeling': reviewModel.feeling,

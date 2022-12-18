@@ -1,6 +1,8 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class ReviewModel {
+  final String idFrom; //리뷰 보낸 uid
+  final String idTo; //리뷰 받은 uid
   final String profileUrl; //리뷰 보낸 사람의 프로필
   final String userName; //리뷰 보낸 사람의 이름
   final String feeling; //좋다고 선택 시 'good', 싫다고 선택 시 'bad'
@@ -9,6 +11,8 @@ class ReviewModel {
   final Timestamp createdAt; //후기 보낸 시간
 
   ReviewModel({
+    required this.idFrom,
+    required this.idTo,
     required this.profileUrl,
     required this.userName,
     required this.feeling,
@@ -20,6 +24,8 @@ class ReviewModel {
   factory ReviewModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     var snapshot = doc.data() as Map<String, dynamic>;
     return ReviewModel(
+      idFrom: snapshot['idFrom'],
+      idTo: snapshot['idTo'],
       profileUrl: snapshot['profileUrl'],
       userName: snapshot['userName'],
       feeling: snapshot['feeling'],
