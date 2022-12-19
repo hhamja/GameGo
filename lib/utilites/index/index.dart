@@ -122,6 +122,7 @@ export 'package:mannergamer/controller/user/profile.dart';
 export 'package:mannergamer/controller/favorite/favorite.dart';
 
 /* Components */
+export 'package:mannergamer/component/icon/circle_fill_icon.dart';
 export 'package:mannergamer/component/dialog/big_dialog%20copy.dart';
 export 'package:mannergamer/component/textButton/textButton.dart';
 export 'package:mannergamer/component/listtile/two_line_listTile.dart';

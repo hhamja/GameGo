@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mannergamer/model/notification/notification_model.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class SendReviewPage extends StatefulWidget {
@@ -162,30 +163,44 @@ class _SendReviewPageState extends State<SendReviewPage> {
         child: CustomTextButton('후기 보내기', () {
           Get.dialog(
             CustomSmallDialog(
+              /* 다이어로그 내용 */
               '$userName에게 보낸 후기는\n수정 및 삭제가 불가합니다',
+              /* 왼쪽 버튼 텍스트 */
               '취소',
+              /* 오른쪽 버튼 텍스트 */
               '보내기',
+              /* 왼쪽버튼 클릭 시 */
               () {
                 Get.back();
               },
+              /* 오른쪽 버튼 클릭 시 */
               () async {
+                //ReviewModel 인스턴스
                 final ReviewModel _reviewModel = ReviewModel(
-                  idTo: uid, //리뷰 받는 유저
-                  idFrom: CurrentUser.uid, //리뷰보내는 유저
+                  idTo: uid,
+                  idFrom: CurrentUser.uid,
                   userName: FirebaseAuth.instance.currentUser!.displayName ??
-                      '(이름없음)', //리뷰보내는 유저 이름
-                  profileUrl: FirebaseAuth.instance.currentUser!.photoURL ??
-                      '', //리뷰보내는 유저 프로필
-                  feeling: _feeling, //"good" or "bad"
-                  content: _reviewText.text.trim(), //작성한 후기 내용
-                  createdAt: Timestamp.now(), //보낸시간
+                      '(이름없음)',
+                  profileUrl: FirebaseAuth.instance.currentUser!.photoURL ?? '',
+                  feeling: _feeling,
+                  content: _reviewText.text.trim(),
+                  createdAt: Timestamp.now(),
                 );
+                //NotificationModel 인스턴스
+                final NotificationModel _ntfModel = NotificationModel(
+                  idTo: uid,
+                  idFrom: CurrentUser.uid,
+                  userName: FirebaseAuth.instance.currentUser!.displayName ??
+                      '(이름없음)',
+                  type: 'review',
+                  createdAt: Timestamp.now(),
+                );
+                //보낸 매너후기 파이어스토어에 반영
                 await _review.addMannerReview(
-                  uid,
-                  chatRoomId,
-                  _reviewModel,
-                );
+                    uid, chatRoomId, _reviewModel, _ntfModel);
+                //보낸 매너후기에 대한 bool값을 채팅화면으로 가기 전 업데이트
                 await _review.checkExistReview(uid, chatRoomId);
+                //작성한 리뷰 텍스트 전부 삭제
                 _reviewText.clear();
                 Get.back();
                 Get.back();

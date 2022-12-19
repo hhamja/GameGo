@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
@@ -17,12 +18,11 @@ class _NotificationPageState extends State<NotificationPage> {
     '5번 글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글글',
   ];
 
-  final List<Icon> entryIcons = <Icon>[
-    Icon(Icons.favorite_border_outlined), //유저가 나의 게시글에 하트를 눌렀을 때
-    Icon(Icons.chat_bubble_outline), //채팅이 왔을 때
-    Icon(Icons.rate_review_outlined), 
-    Icon(Icons.badge_outlined), 
-    Icon(Icons.mic_none_outlined),
+  final List<CustomCircleFilledIcon> entryIcons = <CustomCircleFilledIcon>[
+    CustomCircleFilledIcon(Colors.red, CupertinoIcons.heart), //관심 게시글
+    CustomCircleFilledIcon(Colors.yellow, CupertinoIcons.pen), //매너후기
+    CustomCircleFilledIcon(Colors.green, CupertinoIcons.calendar), //약속설정
+    CustomCircleFilledIcon(Colors.blueAccent, CupertinoIcons.mic), //앱 공지
   ];
 
   @override
@@ -52,7 +52,9 @@ class _NotificationPageState extends State<NotificationPage> {
               ],
             ),
             child: ListTile(
-              leading: CircleAvatar(child: entryIcons[1]),
+              leading: CircleAvatar(
+                  child: Center(child: entryIcons[2]),
+                  backgroundColor: Colors.blue),
               title: Text('${entryText[1]}', maxLines: 2),
               subtitle: Text('1일 전', maxLines: 1),
             ),

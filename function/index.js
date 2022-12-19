@@ -3,8 +3,8 @@ const admin = require("firebase-admin"); //auth를 서버에서 처리하게 도
 
 admin.initializeApp();
 
-/* 메시지 푸시알림에 대한 함수 */
-exports.sendNotification = functions
+/* 채팅 메시지 푸시 알림에 대한 함수 */
+exports.chatNotification = functions
   .region("asia-northeast3")
   .firestore.document("chat/{chatRoomId}/message/{messageId}") //메시지 문서경로로 지정
   .onCreate((snap, context) => {
@@ -82,7 +82,7 @@ exports.sendNotification = functions
     return null;
   });
 
-/* 내가 받은 매너후기에 대한 알림 */
+/* 매너후기에 대한 푸시 알림 함수 */
 exports.reviewNotification = functions
   .region("asia-northeast3")
   .firestore.document("user/{uid}/review/{reviewId}")

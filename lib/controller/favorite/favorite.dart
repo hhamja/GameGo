@@ -65,27 +65,39 @@ class FavoriteController extends GetxController {
         .get(); //게시물 존재여부를 얻기위한 변수
     /* 관심 게시물이 아니라면? */
     if (!ref.exists) {
+      //나의 관심에 추가
       FirebaseFirestore.instance
           .collection('user')
           .doc(uid)
           .collection('favorite')
           .doc(postId)
-          .set({'isFavorite': true, 'updatedAt': Timestamp.now()}); //나의 관심에 추가
-      FirebaseFirestore.instance
-          .collection('post')
-          .doc(postId)
-          .update({'like': FieldValue.increment(1)}); //해당 게시물의 like값 +1
-    } else {
+          .set(
+        {
+          'isFavorite': true,
+          'updatedAt': Timestamp.now(),
+        },
+      );
+      //해당 게시물의 like값 +1
+      FirebaseFirestore.instance.collection('post').doc(postId).update(
+        {
+          'like': FieldValue.increment(1),
+        },
+      );
+    }
+    /* 이미 관심 게시글이라면 ? */
+    else {
+      //나의 관심목록에서 제거
       FirebaseFirestore.instance
           .collection('user')
           .doc(uid)
           .collection('favorite')
           .doc(postId)
-          .delete(); //나의 관심목록에서 제거
+          .delete();
+      //해당 게시물 like값 -1
       FirebaseFirestore.instance
           .collection('post')
           .doc(postId)
-          .update({'like': FieldValue.increment(-1)}); //해당 게시물 like값 -1
+          .update({'like': FieldValue.increment(-1)});
     }
     isFavorite.value = !isFavorite.value; //토글버튼
   }

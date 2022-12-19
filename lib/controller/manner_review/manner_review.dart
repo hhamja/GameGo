@@ -1,9 +1,11 @@
+import 'package:mannergamer/model/notification/notification_model.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MannerReviewController extends GetxController {
-  /* 유저 Collection 경로 */
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
+  final CollectionReference _ntfDB =
+      FirebaseFirestore.instance.collection('notification');
   /* 내가 보낸 매너후기 담는 Map 자료 형태 */
   RxMap<String, dynamic> myReview = Map<String, dynamic>().obs;
   /* 매너 후기 리스트 */
@@ -15,9 +17,8 @@ class MannerReviewController extends GetxController {
 
   /* 매너후기를 유저의 하위 컬렉션 'review'에 추가하기
   * 매너후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기 */
-  Future addMannerReview(uid, chatRoomId, ReviewModel reviewModel) async {
-    //나의 프로필, 유저이름 받기
-
+  Future addMannerReview(uid, chatRoomId, ReviewModel reviewModel,
+      NotificationModel ntfModel) async {
     //유저 하위 컬렉션으로 리뷰 저장하기
     await _userDB.doc(uid).collection('review').doc(chatRoomId).set(
       {
@@ -29,6 +30,20 @@ class MannerReviewController extends GetxController {
         'content': reviewModel.content,
         'reviewType': reviewModel.reviewType,
         'createdAt': reviewModel.createdAt,
+      },
+    );
+
+    //매너후기를 notification에 추가
+    await _ntfDB.add(
+      {
+        'idFrom': ntfModel.idFrom,
+        'idTo': ntfModel.idTo,
+        'postId': ntfModel.postId,
+        'userName': ntfModel.userName,
+        'postTitle': ntfModel.postTitle,
+        'content': ntfModel.content,
+        'type': ntfModel.type,
+        'createdAt': ntfModel.createdAt,
       },
     );
   }
