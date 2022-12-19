@@ -9,7 +9,7 @@ exports.sendNotification = functions
   .firestore.document("chat/{chatRoomId}/message/{messageId}") //메시지 문서경로로 지정
   .onCreate((snap, context) => {
     //문서가 처음 작성될 때(새 메시지가 생성될 때) 트리거
-    console.log("----------------START MESSAGE FUNCTION--------------------");
+    console.log("----------------START : MESSAGE FUNCTION--------------------");
 
     const doc = snap.data();
 
@@ -83,12 +83,12 @@ exports.sendNotification = functions
   });
 
 /* 내가 받은 매너후기에 대한 알림 */
-exports.sendNotification = functions
+exports.reviewNotification = functions
   .region("asia-northeast3")
   .firestore.document("user/{uid}/review/{reviewId}")
   .onCreate((snap, context) => {
     //리뷰를 받으면(새로운 리뷰 문서가 생성되면) 트리거
-    console.log("----------------START REVIEW FUNCTION--------------------");
+    console.log("----------------START : REVIEW FUNCTION--------------------");
 
     const doc = snap.data();
     

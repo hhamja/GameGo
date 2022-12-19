@@ -234,6 +234,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
               type: 'appoint', //약속설정에 대한 메시지
             );
             AppointmentModel _appointment = AppointmentModel(
+              idFrom: CurrentUser.uid, //약속설정 유저의 uid
+              idTo: uid, //약속설정을 당하는(?) 유저의 uid
               timestamp: _timeStamp,
               createdAt: Timestamp.now(),
             );
