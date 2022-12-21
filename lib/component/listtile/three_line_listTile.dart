@@ -8,6 +8,7 @@ class CustomThreeLineListTile extends StatelessWidget {
     this.gamemode,
     this.position,
     this.tear,
+    this.isTrailing,
     this.time,
     this.onTap,
   );
@@ -17,6 +18,7 @@ class CustomThreeLineListTile extends StatelessWidget {
   final String gamemode; //게임모드
   final String? position; //포지션
   final String? tear; //티어
+  final bool isTrailing; //trailing을 표시할지 여부의 bool변수
   final String time; // ~전'으로 시간표시 (박스의 오른쪽 위 끝에 위치)
   final Function() onTap; //ListTile 클릭 시
 
@@ -66,19 +68,21 @@ class CustomThreeLineListTile extends StatelessWidget {
           ),
         ],
       ),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            time,
-            style: TextStyle(fontSize: 12),
-          ),
-          Expanded(
-            child: SizedBox(),
-          ),
-        ],
-      ),
+      trailing: isTrailing
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  time,
+                  style: TextStyle(fontSize: 12),
+                ),
+                Expanded(
+                  child: SizedBox(),
+                ),
+              ],
+            )
+          : null,
     );
   }
 }

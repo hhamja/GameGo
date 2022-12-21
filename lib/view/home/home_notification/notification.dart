@@ -29,15 +29,13 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('알림'), //채팅, 관심회원등록된 우저, 소식, 이벤트 알림
+        title: const Text('알림'),
         centerTitle: true,
       ),
-
-      //공지는 앞에 확성기 아이콘, 활동알림은 앞에 아이콘을 다르게 해서
-      // 종류를 파악할 수 있게 처리할 것.
-      body: ListView(
-        children: [
-          Slidable(
+      body: ListView.separated(
+        physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능
+        itemBuilder: (BuildContext context, int index) {
+          return Slidable(
             endActionPane: ActionPane(
               motion: DrawerMotion(),
               extentRatio: 0.2,
@@ -52,14 +50,40 @@ class _NotificationPageState extends State<NotificationPage> {
               ],
             ),
             child: ListTile(
+              minLeadingWidth: 0,
+              isThreeLine: true,
+              minVerticalPadding: 15,
+              onTap: () {},
               leading: CircleAvatar(
-                  child: Center(child: entryIcons[2]),
+                  child: Center(
+                    child: CustomCircleFilledIcon(
+                        Colors.red, CupertinoIcons.heart),
+                  ),
                   backgroundColor: Colors.blue),
-              title: Text('${entryText[1]}', maxLines: 2),
-              subtitle: Text('1일 전', maxLines: 1),
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Text(
+                  '제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목',
+                  style: TextStyle(
+                    fontSize: 16,
+                    // overflow: TextOverflow.ellipsis,
+                  ),
+                  // maxLines: 2, //멕스라인은 정하지 않기로 함
+                ),
+              ),
+              /* 날짜표시 */
+              subtitle: Text(
+                '날짜',
+                style: TextStyle(fontSize: 15),
+                maxLines: 1,
+              ),
             ),
-          ),
-        ],
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return CustomDivider();
+        },
+        itemCount: 1,
       ),
     );
   }

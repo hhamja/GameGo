@@ -34,6 +34,7 @@ class _BadReviewListPageState extends State<BadReviewListPage> {
                 badList.content == '' ? '(내용없음)' : badList.content,
                 null,
                 null,
+                false,
                 '',
                 () {},
               );

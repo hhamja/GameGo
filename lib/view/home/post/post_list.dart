@@ -5,6 +5,7 @@ class HomePostList extends GetView<PostController> {
   /* 홈 드랍다운버튼 컨트롤러 */
   final HomePageDropDownBTController _ =
       Get.put(HomePageDropDownBTController());
+
   /* 홈 드랍다운버튼 컨트롤러 */
   final PostController _post = Get.put(PostController());
 
@@ -63,6 +64,7 @@ class HomePostList extends GetView<PostController> {
               _gamemode,
               _position,
               _tear,
+              true,
               time,
               _onTap,
             );
