@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
@@ -26,7 +27,10 @@ class _ChatListPageState extends State<ChatListPage> {
         actions: [
           IconButton(
             onPressed: () => {Get.toNamed('/notification')},
-            icon: Icon(Icons.notifications_none_outlined),
+            icon: Icon(
+              CupertinoIcons.bell,
+              color: Colors.black,
+            ),
             //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
           ),
         ],
@@ -61,8 +65,8 @@ class _ChatListPageState extends State<ChatListPage> {
                     backgroundColor: Colors.grey,
                     foregroundColor: Colors.white,
                     icon: (_click == true)
-                        ? Icons.notifications
-                        : Icons.notifications_off,
+                        ? CupertinoIcons.bell_solid
+                        : CupertinoIcons.bell_slash_fill,
                     onPressed: (_) {
                       setState(() {
                         _click = !_click;

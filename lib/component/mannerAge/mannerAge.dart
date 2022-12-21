@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class CustomMannerAge extends StatelessWidget {
@@ -26,7 +27,7 @@ class CustomMannerAge extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     onPressed: () {},
                     icon: Icon(
-                      Icons.info_outline_rounded,
+                      CupertinoIcons.info_circle,
                       size: 18,
                     )),
               ],

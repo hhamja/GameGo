@@ -16,6 +16,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
   final String userName = Get.arguments['userName'];
   final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];
+  final String postId = Get.arguments['postId'];
+  final String postTitle = Get.arguments['postTitle'];
 
   String _feeling = '';
   bool isBad = false;
@@ -193,6 +195,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   userName: FirebaseAuth.instance.currentUser!.displayName ??
                       '(이름없음)',
                   type: 'review',
+                  postId: postId,
+                  postTitle: postTitle,
                   createdAt: Timestamp.now(),
                 );
                 //보낸 매너후기 파이어스토어에 반영

@@ -56,15 +56,15 @@ class CustomThreeLineListTile extends StatelessWidget {
           /* 게임모드 · 포지션 · 티어 */
           Text(
             gamemode,
-            style: TextStyle(fontSize: 15),
+            style: TextStyle(fontSize: 14),
           ),
           Text(
             position != null ? ' · ${position}' : '',
-            style: TextStyle(fontSize: 15),
+            style: TextStyle(fontSize: 14),
           ),
           Text(
             tear != null ? ' · ${tear}' : '',
-            style: TextStyle(fontSize: 15),
+            style: TextStyle(fontSize: 14),
           ),
         ],
       ),

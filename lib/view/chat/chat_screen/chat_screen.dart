@@ -208,6 +208,9 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                           arguments: {
                                             'uid': uid, //상대 uid
                                             'chatRoomId': chatRoomId, //채팅방 id
+                                            'postTitle': _post
+                                                .postInfo['title'], //게시글 제목
+                                            'postId': postId, //게시글 id
                                             'userName': userName, //상대유저이름
                                           },
                                         );

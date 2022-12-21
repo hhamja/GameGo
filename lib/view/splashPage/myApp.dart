@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MyApp extends StatefulWidget {
@@ -39,24 +40,26 @@ class _MyAppState extends State<MyApp> {
           onTap: (value) => setState(() => tabIndex = value),
           currentIndex: tabIndex,
           items: [
-            _BottomBarItem(Icon(Icons.home_outlined), Icon(Icons.home), '홈'),
+            _BottomBarItem(
+              Icon(CupertinoIcons.house),
+              Icon(CupertinoIcons.house_fill),
+              '홈',
+            ),
             _badge.unReadList.where((e) => e != 0).length == 0
                 ? _BottomBarItem(
-                    Icon(Icons.question_answer_outlined),
-                    Icon(Icons.question_answer),
+                    Icon(CupertinoIcons.chat_bubble_2),
+                    Icon(CupertinoIcons.chat_bubble_2_fill),
                     '채팅',
                   )
                 : _BottomBarItem(
                     Badge(
-                      child: Icon(Icons.question_answer_outlined),
+                      child: Icon(CupertinoIcons.chat_bubble_2),
                       position: BadgePosition.topEnd(end: -10, top: 0),
                       padding: EdgeInsets.all(3),
                     ),
                     Badge(
                       position: BadgePosition.topEnd(end: -10, top: 0),
-                      child: Icon(
-                        Icons.question_answer,
-                      ),
+                      child: Icon(CupertinoIcons.chat_bubble_2_fill),
                       padding: EdgeInsets.all(3),
                     ),
                     '채팅',
@@ -76,8 +79,8 @@ class _MyAppState extends State<MyApp> {
             //     ),
             //     label: '채팅',
             //   ),
-            _BottomBarItem(
-                Icon(Icons.face_outlined), Icon(Icons.face), '나의 정보'),
+            _BottomBarItem(Icon(CupertinoIcons.person),
+                Icon(CupertinoIcons.person_fill), 'My'),
           ],
         ),
       ),

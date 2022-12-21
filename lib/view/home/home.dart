@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class Homepage extends StatefulWidget {
@@ -20,8 +21,10 @@ class _HomepageState extends State<Homepage> {
         actions: [
           IconButton(
             onPressed: () => {Get.toNamed('/notification')},
-            icon: Icon(Icons
-                .notifications_none_outlined), //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
+            icon: Icon(
+              CupertinoIcons.bell,
+              color: Colors.black,
+            ), //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
           ),
         ],
       ),
