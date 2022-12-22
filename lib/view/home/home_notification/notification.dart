@@ -38,15 +38,15 @@ class _NotificationPageState extends State<NotificationPage> {
   String contentByType(ntfType, userName, postTitle, content) {
     // 1. 매너후기
     if (ntfType == 'review') {
-      return '"$userName님"이 "$postTitle"의 매너 후기를 남겼어요.';
+      return '"$userName"님이 "$postTitle"의 매너 후기를 남겼어요.';
     }
     // 2. 약속설정
     else if (ntfType == 'appoint') {
-      return '"$userName님"이 "$postTitle"의 약속을 설정했어요.';
+      return '"$userName"님이 "$postTitle"의 약속을 설정했어요.';
     }
     // 3. 게시글 관심
     else if (ntfType == 'favorite') {
-      return '$userName님이 "$postTitle"을 관심게시글로 등록했어요.';
+      return '"$userName"님이 "$postTitle"을 관심게시글로 등록했어요.';
     }
     // 4. 앱 공지 및 마케팅
     else {
