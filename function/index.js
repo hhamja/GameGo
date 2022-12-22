@@ -146,6 +146,7 @@ exports.reviewNotification = functions
                   };
                 }
                 // 3. 관심 게시글 알림?
+                //
                 // 유저정보에서 해당하는 알림 bool변수가 true일 떄만 보내지게 수정
                 else if (ntfType == "favorite") {
                   payload = {
