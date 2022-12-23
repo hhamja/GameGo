@@ -91,6 +91,7 @@ export 'package:mannergamer/view/my_info/setting/user_setting/myAccount/authenti
 export 'package:mannergamer/view/my_info/setting/signOut/signOut_sms.dart';
 
 /* Models */
+export 'package:mannergamer/model/user/notificationSetting_model.dart';
 export 'package:mannergamer/model/review/review_model.dart';
 export 'package:mannergamer/model/data/data_model.dart';
 export 'package:mannergamer/model/dropDownButton/dropDownBT_model.dart';
@@ -102,6 +103,7 @@ export 'package:mannergamer/model/favorite/favorite_model.dart';
 export 'package:mannergamer/model/appointment/appointment.dart';
 
 /* Controller */
+export 'package:mannergamer/controller/user/notification_setting.dart';
 export 'package:mannergamer/controller/manner_review/manner_review.dart';
 export 'package:mannergamer/controller/appointment/appointment.dart';
 export 'package:mannergamer/controller/splash/splash.dart';

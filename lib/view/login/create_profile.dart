@@ -106,6 +106,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         profileUrl: profileImageUrl ??
             _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
         mannerAge: '20.0',
+        chatPushNtf: true,
+        activityPushNtf: true,
+        noticePushNtf: true,
+        marketingConsent: true, //이거는 동의 창 띄우고 동의하면 true, 비동의 하면 false로
         createdAt: Timestamp.now());
     if (!text.isEmpty || text.length >= 2) {
       //닉네임 2자 이상이라면?

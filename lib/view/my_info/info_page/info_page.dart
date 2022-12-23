@@ -37,6 +37,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
         displacement: 0,
         child: Obx(
           () => SettingsList(
+            lightTheme: SettingsThemeData(
+              settingsListBackground: Colors.white,
+            ),
             sections: [
               SettingsSection(
                 margin: EdgeInsetsDirectional.only(bottom: 10),
