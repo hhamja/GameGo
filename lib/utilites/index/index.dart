@@ -91,6 +91,7 @@ export 'package:mannergamer/view/my_info/setting/user_setting/myAccount/authenti
 export 'package:mannergamer/view/my_info/setting/signOut/signOut_sms.dart';
 
 /* Models */
+export 'package:mannergamer/model/notification/notification_model.dart';
 export 'package:mannergamer/model/user/notificationSetting_model.dart';
 export 'package:mannergamer/model/review/review_model.dart';
 export 'package:mannergamer/model/data/data_model.dart';

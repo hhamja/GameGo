@@ -3,6 +3,8 @@ import 'package:mannergamer/utilites/index/index.dart';
 class AppointmentController extends GetxController {
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
+  final CollectionReference _ntfDB =
+      FirebaseFirestore.instance.collection('notification');
 
   /* 약속 날짜 담는  Rx String 변수 */
   RxString appointmentDate = ''.obs;
@@ -16,9 +18,9 @@ class AppointmentController extends GetxController {
   /* 약속설정하기 
   * 문서하나만 만들어서 약속 설정 시 계속 업데이트할 것 */
   Future setAppointment(chatRoomId, AppointmentModel appointmentModel,
-      MessageModel messageModel, uid) async {
+      MessageModel messageModel, uid, NotificationModel ntfModel) async {
     //해당 채팅의 약속 하위 컬렉션에 데이터 추가
-    _chatDB
+    await _chatDB
         .doc(chatRoomId)
         .collection('appointment')
         .doc('appointmentDate')
@@ -31,7 +33,7 @@ class AppointmentController extends GetxController {
       },
     );
     //메시지로 표시하기 메시지 하위 컬렉션에 메시지 추가
-    _chatDB.doc(chatRoomId).collection('message').add({
+    await _chatDB.doc(chatRoomId).collection('message').add({
       'content': messageModel.content,
       'idFrom': messageModel.idFrom,
       'idTo': messageModel.idTo,
@@ -41,6 +43,19 @@ class AppointmentController extends GetxController {
     _chatDB.doc(chatRoomId).update({
       'unReadCount.${uid}': FieldValue.increment(1),
     }); //상대 uid의 unReadCount +1
+    //약속설정 notification에 추가
+    await _ntfDB.add(
+      {
+        'idFrom': ntfModel.idFrom,
+        'idTo': ntfModel.idTo,
+        'postId': ntfModel.postId,
+        'userName': ntfModel.userName,
+        'postTitle': ntfModel.postTitle,
+        'content': ntfModel.content,
+        'type': ntfModel.type,
+        'createdAt': ntfModel.createdAt,
+      },
+    );
   }
 
   /* 약속시간 받기 + 약속설정 여부 bool변수에 담기 */

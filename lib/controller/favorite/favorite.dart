@@ -3,10 +3,10 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class FavoriteController extends GetxController {
   static FavoriteController get to => Get.find<FavoriteController>();
-  /* 파이어스토어 user 컬렉션 참조 instance */
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  /* 파이어스토어 post 컬렉션 참조 instance */
+  final CollectionReference _ntfDB =
+      FirebaseFirestore.instance.collection('notification');
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
   /* 게시물 관심 버튼 클릭하면 on/off 되는 bool 값 */
@@ -56,7 +56,7 @@ class FavoriteController extends GetxController {
   }
 
   /* 관심게시물 추가/제거하기 */
-  favoritePost(uid, postId) async {
+  Future favoritePost(uid, postId, NotificationModel ntfModel) async {
     final ref = await FirebaseFirestore.instance
         .collection('user')
         .doc(uid)
@@ -75,6 +75,19 @@ class FavoriteController extends GetxController {
         {
           'isFavorite': true,
           'updatedAt': Timestamp.now(),
+        },
+      );
+      // 관심게시글 설정 notification에 추가
+      _ntfDB.add(
+        {
+          'idFrom': ntfModel.idFrom,
+          'idTo': ntfModel.idTo,
+          'postId': ntfModel.postId,
+          'userName': ntfModel.userName,
+          'postTitle': ntfModel.postTitle,
+          'content': ntfModel.content,
+          'type': ntfModel.type,
+          'createdAt': ntfModel.createdAt,
         },
       );
       //해당 게시물의 like값 +1

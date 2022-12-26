@@ -7,7 +7,7 @@ admin.initializeApp();
 exports.chatNotification = functions
   .region("asia-northeast3")
   .firestore.document("chat/{chatRoomId}/message/{messageId}") //메시지 문서경로로 지정
-  .onCreate((snap, context) => {
+  .onCreate(async (snap, context) => {
     //문서가 처음 작성될 때(새 메시지가 생성될 때) 트리거
     console.log("------ START : CHAT PUSH NOTIFICATION ------");
 
@@ -24,7 +24,7 @@ exports.chatNotification = functions
     /* 메시지 받은 유저정보 받기
      * pushToken값이 존재, chattringWith와 보낸사람 uid가 다르다면? 채팅 push 알림 보내기
      * uid말고 chatRoomId로 할지 고민되었지만, 메시지 model에 chatRoomId를 추가해줘야하므로 일단을 알림이 제대로 작동하는지 확인하기 위해서 그냥 하기로 결정 */
-    admin
+    return await admin
       .firestore()
       .collection("user")
       .where("uid", "==", idTo)
@@ -78,18 +78,17 @@ exports.chatNotification = functions
             console.log("유저 찾을 수가 없어요");
           }
         });
+      })
+      .catch((error) => {
+        console.log("UserTo의 정보를 얻는 admin 에러 :", error);
       });
-    console.log("null");
-    return null;
   });
-
-
 
 /* 매너후기, 관심게시글, 약속설정, 앱 공지 및 마케팅 푸시알림 함수 */
 exports.activityAndNoticeNotification = functions
   .region("asia-northeast3")
   .firestore.document("notification/{notificationId}")
-  .onCreate((snap, context) => {
+  .onCreate(async (snap, context) => {
     console.log("------ START : ACTIVITY & NOTICE NOTIFICATION ------");
 
     const doc = snap.data();
@@ -104,7 +103,7 @@ exports.activityAndNoticeNotification = functions
     const ntfType = doc.type; //알림 타입(appoint, review, notice, favorite)
 
     /* 알림받은 유저의 fcm토큰 정보 받아서 푸시 알림 보내기 */
-    admin
+    return await admin
       .firestore()
       .collection("user")
       .where("uid", "==", idTo)
@@ -119,11 +118,15 @@ exports.activityAndNoticeNotification = functions
           const noticeNtf = userTo.data().noticePushNtf;
           // 마케팅 수신 동의에 대한 bool 값
           const marketingConsent = userTo.data().marketingConsent;
-
+          console.log(activityNtf);
+          console.log(noticeNtf);
+          console.log(marketingConsent);
+          console.log(ntfType);
           /* User From의 이름을 받고 푸시알림에 대한 설정하기 */
           /* 1. 매너 후기 */
           if (ntfType == "review" && activityNtf == true) {
-            admin
+            console.log("review 알림 조건식 통과");
+            return admin
               .firestore()
               .collection("user")
               .where("uid", "==", idFrom)
@@ -141,8 +144,9 @@ exports.activityAndNoticeNotification = functions
                       sound: "default",
                     },
                   };
+                  console.log(`payload: ${payload}`);
                   // 푸시 알림 보내기
-                  admin
+                  return admin
                     .messaging()
                     .sendToDevice(userTo.data().pushToken, payload)
                     .then((response) => {
@@ -155,8 +159,9 @@ exports.activityAndNoticeNotification = functions
                 });
               });
           } else if (ntfType == "appoint" && activityNtf == true) {
-          /*  2. 약속 설정 */
-            admin
+            console.log("약속 알림 조건식 통과");
+            /*  2. 약속 설정 */
+            return admin
               .firestore()
               .collection("user")
               .where("uid", "==", idFrom)
@@ -175,7 +180,7 @@ exports.activityAndNoticeNotification = functions
                     },
                   };
                   // 푸시 알림 보내기
-                  admin
+                  return admin
                     .messaging()
                     .sendToDevice(userTo.data().pushToken, payload)
                     .then((response) => {
@@ -189,7 +194,8 @@ exports.activityAndNoticeNotification = functions
               });
           } else if (ntfType == "favorite" && activityNtf == true) {
             /*  3. 관심 게시글 */
-            admin
+            console.log("관심게시글 알림 조건식 통과");
+            return admin
               .firestore()
               .collection("user")
               .where("uid", "==", idFrom)
@@ -208,7 +214,7 @@ exports.activityAndNoticeNotification = functions
                     },
                   };
                   // 푸시 알림 보내기
-                  admin
+                  return admin
                     .messaging()
                     .sendToDevice(userTo.data().pushToken, payload)
                     .then((response) => {
@@ -226,7 +232,8 @@ exports.activityAndNoticeNotification = functions
             noticeNtf == true &&
             marketingConsent == true
           ) {
-            admin
+            console.log("앱 소식 알림 조건식 통과");
+            return admin
               .firestore()
               .collection("user")
               .where("uid", "==", idFrom)
@@ -245,7 +252,7 @@ exports.activityAndNoticeNotification = functions
                     },
                   };
                   // 푸시 알림 보내기
-                  admin
+                  return admin
                     .messaging()
                     .sendToDevice(userTo.data().pushToken, payload)
                     .then((response) => {
@@ -258,12 +265,14 @@ exports.activityAndNoticeNotification = functions
                 });
               });
           }
-          console.log("알림설정이 전부 OFF여서 푸시알림 불가한 경우");
+          console.log("IF문의 else 결과 값");
           return null;
         });
-      });
-    console.log("PushNotification Function null");
-    return null;
+      })
+      .catch((error) => {
+        console.log("UserTo의 정보를 얻는 admin 에러 :", error);
+      });;
+   
   });
 
 // // Create and deploy your first functions

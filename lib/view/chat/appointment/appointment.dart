@@ -223,8 +223,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
             Timestamp _timeStamp = Timestamp.fromDate(dateTime);
             final String _formatedTimeStamp =
                 Jiffy(_timeStamp.toDate()).format('MM월 dd일 · a hh시 MM분');
-            //약속 인스턴스 생성
-            MessageModel _messageModel = MessageModel(
+            //약속에 대한 메시지 인스턴스
+            final MessageModel _messageModel = MessageModel(
               timestamp:
                   Timestamp.now(), // FieldValue.serverTimestamp() -> DB서버시간
               // content: '$_formatedTimeStamp에\n약속을 설정했어요. 약속은 꼭 지켜주세요 !',
@@ -233,10 +233,20 @@ class _AppointmentPageState extends State<AppointmentPage> {
               idTo: uid, //약속설정을 당하는(?) 유저의 uid
               type: 'appoint', //약속설정에 대한 메시지
             );
-            AppointmentModel _appointment = AppointmentModel(
+            //약속 인스턴스
+            final AppointmentModel _appointment = AppointmentModel(
               idFrom: CurrentUser.uid, //약속설정 유저의 uid
               idTo: uid, //약속설정을 당하는(?) 유저의 uid
               timestamp: _timeStamp,
+              createdAt: Timestamp.now(),
+            );
+            //NotificationModel 인스턴스
+            final NotificationModel _ntfModel = NotificationModel(
+              idTo: uid,
+              idFrom: CurrentUser.uid,
+              userName:
+                  FirebaseAuth.instance.currentUser!.displayName ?? '(이름없음)',
+              type: 'appoint', //약속설정알림
               createdAt: Timestamp.now(),
             );
             Get.dialog(CustomBigDialog(
@@ -248,7 +258,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               () async {
                 //약속설정
                 await _controller.setAppointment(
-                    chatRoomId, _appointment, _messageModel, uid);
+                    chatRoomId, _appointment, _messageModel, uid, _ntfModel);
                 //채팅페이지 설정한 약속시간이 업데이트 되기 위해서 호출
                 await _controller.getAppointment(chatRoomId);
                 Get.back();

@@ -34,17 +34,16 @@ class FCMController extends GetxController {
     await Firebase.initializeApp();
     // Android 에서 requestPermission()을 호출하지 않으면 수신되지 않는다.
     await _fcm.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: true,
+      alert: true, //유저의 디바이스에 알림을 보여줄 것이냐
+      badge: true, //읽지 않은 알림을 앱아이콘에 띄울 것이냐
+      carPlay: true, //기기가 CarPlay와 연결되어있을 때 알림을 띄울 것이냐
       criticalAlert: true,
-      provisional: true,
-      sound: true,
+      sound: true, // 알림이 보여질 때 소리를 낼 것이냐
+      announcement: false, //블루투스 스피커와 연동되어 있을 때, 알림을 읽어줄 수 있느냐
+      provisional: false, // provisional 권한을 부여할 것이냐
     );
 
     /* FCM 포그라운드 수신 */
-
     // Notification Channel을 디바이스에 생성
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<

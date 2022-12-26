@@ -1,4 +1,3 @@
-import 'package:mannergamer/model/notification/notification_model.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MannerReviewController extends GetxController {
@@ -32,20 +31,21 @@ class MannerReviewController extends GetxController {
         'createdAt': reviewModel.createdAt,
       },
     );
-
-    //매너후기를 notification에 추가
-    await _ntfDB.add(
-      {
-        'idFrom': ntfModel.idFrom,
-        'idTo': ntfModel.idTo,
-        'postId': ntfModel.postId,
-        'userName': ntfModel.userName,
-        'postTitle': ntfModel.postTitle,
-        'content': ntfModel.content,
-        'type': ntfModel.type,
-        'createdAt': ntfModel.createdAt,
-      },
-    );
+    //비매너 후기가 아닌 매너후기인 경우에만 notification에 추가
+    reviewModel.feeling == 'good'
+        ? await _ntfDB.add(
+            {
+              'idFrom': ntfModel.idFrom,
+              'idTo': ntfModel.idTo,
+              'postId': ntfModel.postId,
+              'userName': ntfModel.userName,
+              'postTitle': ntfModel.postTitle,
+              'content': ntfModel.content,
+              'type': ntfModel.type,
+              'createdAt': ntfModel.createdAt,
+            },
+          )
+        : null;
   }
 
   /* 해당 유저가 받은 매너 후기 리스트 받기 */

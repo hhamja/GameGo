@@ -184,8 +184,22 @@ class _PostDetailPageState extends State<PostDetailPage> {
                             child: Obx(
                               () => IconButton(
                                 onPressed: () async {
+                                  //NotificationModel 인스턴스
+                                  final NotificationModel _ntfModel =
+                                      NotificationModel(
+                                    idTo: _post.postInfo['uid'], //게시자 uid
+                                    idFrom: CurrentUser.uid, //관심버튼 누른 uid
+                                    userName: FirebaseAuth.instance.currentUser!
+                                            .displayName ??
+                                        '(이름없음)',
+                                    type: 'favorite',
+                                    postId: postId,
+                                    postTitle: _post.postInfo['title'], //게시글 제목
+                                    createdAt: Timestamp.now(),
+                                  );
+                                  //관심게시글 등록
                                   await _favorite.favoritePost(
-                                      CurrentUser.uid, postId);
+                                      CurrentUser.uid, postId, _ntfModel);
                                 },
                                 icon: _favorite.isFavorite.value
                                     ? Icon(
