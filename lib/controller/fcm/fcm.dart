@@ -35,7 +35,7 @@ class FCMController extends GetxController {
     // Android 에서 requestPermission()을 호출하지 않으면 수신되지 않는다.
     await _fcm.requestPermission(
       alert: true,
-      announcement: true,
+      announcement: false,
       badge: true,
       carPlay: true,
       criticalAlert: true,

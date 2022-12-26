@@ -9,7 +9,7 @@ exports.chatNotification = functions
   .firestore.document("chat/{chatRoomId}/message/{messageId}") //메시지 문서경로로 지정
   .onCreate((snap, context) => {
     //문서가 처음 작성될 때(새 메시지가 생성될 때) 트리거
-    console.log("----------------START : MESSAGE FUNCTION--------------------");
+    console.log("------ START : CHAT PUSH NOTIFICATION ------");
 
     const doc = snap.data();
 
@@ -31,11 +31,12 @@ exports.chatNotification = functions
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((userTo) => {
+          const userToChatNtf = userTo.data().chatPushNtf;
           console.log(`Found user to: ${userTo.data().userName}`);
 
           //받은유저 push 토큰 존재, 메시지 타입이 message, 받은 유저가 보낸사람의 채팅방 화면을 보고 있지 않은 경우
           if (
-            userTo.data().pushToken !== "" &&
+            userToChatNtf == true &&
             userTo.data().chattingWith !== idFrom &&
             messageType === "message"
           ) {
@@ -82,12 +83,14 @@ exports.chatNotification = functions
     return null;
   });
 
+
+
 /* 매너후기, 관심게시글, 약속설정, 앱 공지 및 마케팅 푸시알림 함수 */
-exports.reviewNotification = functions
+exports.activityAndNoticeNotification = functions
   .region("asia-northeast3")
   .firestore.document("notification/{notificationId}")
   .onCreate((snap, context) => {
-    console.log("----------------START : FUNCTION--------------------");
+    console.log("------ START : ACTIVITY & NOTICE NOTIFICATION ------");
 
     const doc = snap.data();
 
@@ -109,22 +112,28 @@ exports.reviewNotification = functions
       .then((querySnapshot) => {
         querySnapshot.forEach((userTo) => {
           console.log(`Found user to: ${userTo.data().userName}`);
+
+          // 후기, 관심게시글, 약속설정 알림에 대한 bool 값
+          const activityNtf = userTo.data().activityPushNtf;
+          // 앱 공지 알림에 대한 bool 값
+          const noticeNtf = userTo.data().noticePushNtf;
+          // 마케팅 수신 동의에 대한 bool 값
+          const marketingConsent = userTo.data().marketingConsent;
+
           /* User From의 이름을 받고 푸시알림에 대한 설정하기 */
-          //하단의 if문을 여기 상단으로 빼서 하기 왜냐햐면 그래야 쿼리를 한뱐이라도 안하게 된다.
-          admin
-            .firestore()
-            .collection("user")
-            .where("uid", "==", idFrom)
-            .get()
-            .then((querySnapshot2) => {
-              querySnapshot2.forEach((userFrom) => {
-                const userName = userFrom.data().userName;
-                var payload;
-                console.log(`Found user from: ${userName}`);
-                // 1. 매너 후기 알림?
-                // 유저정보에서 해당하는 알림 bool변수가 true일 떄만 보내지게 수정
-                if (ntfType == "review") {
-                  payload = {
+          /* 1. 매너 후기 */
+          if (ntfType == "review" && activityNtf == true) {
+            admin
+              .firestore()
+              .collection("user")
+              .where("uid", "==", idFrom)
+              .get()
+              .then((querySnapshot2) => {
+                querySnapshot2.forEach((userFrom) => {
+                  const userName = userFrom.data().userName;
+                  console.log(`Found user from: ${userName}`);
+                  // 매너 후기 알림을 푸시할 메시지에 대한 설정
+                  const payload = {
                     notification: {
                       title: "매너 후기 알림",
                       body: `"${userName}"님이 매너 후기를 보냈어요.`,
@@ -132,11 +141,32 @@ exports.reviewNotification = functions
                       sound: "default",
                     },
                   };
-                }
-                // 2. 약속 설정 알림?
-                // 유저정보에서 해당하는 알림 bool변수가 true일 떄만 보내지게 수정
-                else if (ntfType == "appoint") {
-                  payload = {
+                  // 푸시 알림 보내기
+                  admin
+                    .messaging()
+                    .sendToDevice(userTo.data().pushToken, payload)
+                    .then((response) => {
+                      console.log(userTo.data().pushToken);
+                      console.log("Successfully sent :", response);
+                    })
+                    .catch((error) => {
+                      console.log("Error sending :", error);
+                    });
+                });
+              });
+          } else if (ntfType == "appoint" && activityNtf == true) {
+          /*  2. 약속 설정 */
+            admin
+              .firestore()
+              .collection("user")
+              .where("uid", "==", idFrom)
+              .get()
+              .then((querySnapshot2) => {
+                querySnapshot2.forEach((userFrom) => {
+                  const userName = userFrom.data().userName;
+                  console.log(`Found user from: ${userName}`);
+                  // 약속설정 알림을 푸시할 메시지에 대한 설정
+                  const payload = {
                     notification: {
                       title: "약속 설정 알림",
                       body: `"${userName}"님이 약속을 잡았어요. 날짜와 시간을 확인하세요.`,
@@ -144,24 +174,69 @@ exports.reviewNotification = functions
                       sound: "default",
                     },
                   };
-                }
-                // 3. 관심 게시글 알림?
-                //
-                // 유저정보에서 해당하는 알림 bool변수가 true일 떄만 보내지게 수정
-                else if (ntfType == "favorite") {
-                  payload = {
+                  // 푸시 알림 보내기
+                  admin
+                    .messaging()
+                    .sendToDevice(userTo.data().pushToken, payload)
+                    .then((response) => {
+                      console.log(userTo.data().pushToken);
+                      console.log("Successfully sent :", response);
+                    })
+                    .catch((error) => {
+                      console.log("Error sending :", error);
+                    });
+                });
+              });
+          } else if (ntfType == "favorite" && activityNtf == true) {
+            /*  3. 관심 게시글 */
+            admin
+              .firestore()
+              .collection("user")
+              .where("uid", "==", idFrom)
+              .get()
+              .then((querySnapshot2) => {
+                querySnapshot2.forEach((userFrom) => {
+                  const userName = userFrom.data().userName;
+                  console.log(`Found user from: ${userName}`);
+                  // 관심 게시글 알림을 푸시할 메시지에 대한 설정
+                  const payload = {
                     notification: {
-                      title: "약속 설정 알림",
-                      body: `"${userName}님이 약속을 잡았어요. 날짜와 시간을 확인하세요.`,
+                      title: "게시글 관심 알림",
+                      body: `"${userName}님이 "${postTitle}"를 관심 게시글로 등록했어요.`,
                       badge: "1",
                       sound: "default",
                     },
                   };
-                }
-                // 4. 앱 공지 알림?
-                // 유저정보에서 해당하는 알림 bool변수가 true일 떄만 보내지게 수정
-                else if (ntfType == "notice") {
-                  payload = {
+                  // 푸시 알림 보내기
+                  admin
+                    .messaging()
+                    .sendToDevice(userTo.data().pushToken, payload)
+                    .then((response) => {
+                      console.log(userTo.data().pushToken);
+                      console.log("Successfully sent :", response);
+                    })
+                    .catch((error) => {
+                      console.log("Error sending :", error);
+                    });
+                });
+              });
+          } else if (
+            /* 4. 앱 공지 */
+            ntfType == "notice" &&
+            noticeNtf == true &&
+            marketingConsent == true
+          ) {
+            admin
+              .firestore()
+              .collection("user")
+              .where("uid", "==", idFrom)
+              .get()
+              .then((querySnapshot2) => {
+                querySnapshot2.forEach((userFrom) => {
+                  const userName = userFrom.data().userName;
+                  console.log(`Found user from: ${userName}`);
+                  // 앱 공지 알림을 푸시할 메시지에 대한 설정
+                  const payload = {
                     notification: {
                       title: "매너게이머 새소식",
                       body: `${ntfContent}`,
@@ -169,23 +244,25 @@ exports.reviewNotification = functions
                       sound: "default",
                     },
                   };
-                } null;
-                // 푸시 알림 보내기
-                admin
-                  .messaging()
-                  .sendToDevice(userTo.data().pushToken, payload)
-                  .then((response) => {
-                    console.log(userTo.data().pushToken);
-                    console.log("Successfully sent :", response);
-                  })
-                  .catch((error) => {
-                    console.log("Error sending :", error);
-                  });
+                  // 푸시 알림 보내기
+                  admin
+                    .messaging()
+                    .sendToDevice(userTo.data().pushToken, payload)
+                    .then((response) => {
+                      console.log(userTo.data().pushToken);
+                      console.log("Successfully sent :", response);
+                    })
+                    .catch((error) => {
+                      console.log("Error sending :", error);
+                    });
+                });
               });
-            });
+          }
+          console.log("알림설정이 전부 OFF여서 푸시알림 불가한 경우");
+          return null;
         });
       });
-    console.log("null");
+    console.log("PushNotification Function null");
     return null;
   });
 

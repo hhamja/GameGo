@@ -10,11 +10,11 @@ class NtfSettingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getUserPushNtfBool();
+    getUserPushNtf();
     print(userNtfBool);
   }
 
-  Future getUserPushNtfBool() async {
+  Future getUserPushNtf() async {
     await _userDB.doc(CurrentUser.uid).get().then(
           (value) => userNtfBool.value =
               NotificationSettingModel.fromDocumentSnapshot(value)
@@ -22,5 +22,9 @@ class NtfSettingController extends GetxController {
         );
   }
 
-  Future update() {}
+  Future updateUserPushNtf() async {
+    await _userDB.doc(CurrentUser.uid).update(
+      {},
+    );
+  }
 }

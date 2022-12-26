@@ -129,7 +129,7 @@ class ChatController extends GetxController {
     await _userDB.doc(CurrentUser.uid).update({'chattingWith': null});
   }
 
-  /* 상대방의 메시지 만 받기 */
+  /* 상대방의 메시지만 받기 */
   Stream isContactUserMessage(chatRoomId) {
     return _chatDB
         .doc(chatRoomId)
