@@ -9,6 +9,7 @@ class MyInfoPage extends StatefulWidget {
 
 class _MyInfoPageState extends State<MyInfoPage> {
   final UserController _user = Get.put(UserController());
+  // final NtfSettingController _ntf = Get.put(NtfSettingController());
 
   @override
   void initState() {
@@ -26,7 +27,13 @@ class _MyInfoPageState extends State<MyInfoPage> {
         title: Text('나의 정보'),
         actions: [
           IconButton(
-              onPressed: () => {Get.to(() => SettingPage())},
+              onPressed: () async {
+                // await _ntf.getUserPushNtf(); //페이지 이동 전 알림on/off에 대한 데이터 받기
+                // print(_ntf.userNtfBool['chatPushNtf']);
+                Get.to(
+                  () => SettingPage(),
+                );
+              },
               icon: Icon(Icons.settings_outlined))
         ],
       ),

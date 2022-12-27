@@ -10,11 +10,6 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   final NtfSettingController _c = Get.put(NtfSettingController());
 
-  bool isSwitched1 = true;
-  bool isSwitched2 = true;
-  bool isSwitched3 = true;
-  bool isSwitched4 = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,25 +28,25 @@ class _SettingPageState extends State<SettingPage> {
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
                   onToggle: (value) {
-                    _c.userNtfBool['chatPushNtf'] = value;
+                    _c.isChatNtf.value = value;
                   },
-                  initialValue: _c.userNtfBool['chatPushNtf'],
+                  initialValue: _c.isChatNtf.value,
                   title: Text('채팅 알림'),
                   description: Text('메시지 알림'),
                 ),
                 SettingsTile.switchTile(
                   onToggle: (value) {
-                    _c.userNtfBool['activityPushNtf'] = value;
+                    _c.isActivitNtf.value = value;
                   },
-                  initialValue: _c.userNtfBool['activityPushNtf'],
+                  initialValue: _c.isActivitNtf.value,
                   title: Text('활동 알림'),
                   description: Text('관심, 약속설정, 매너평가 등 알림'),
                 ),
                 SettingsTile.switchTile(
                   onToggle: (value) {
-                    _c.userNtfBool['noticePushNtf'] = value;
+                    _c.isNoticeNtf.value = value;
                   },
-                  initialValue: _c.userNtfBool['noticePushNtf'],
+                  initialValue: _c.isActivitNtf.value,
                   title: Text('공지 알림'),
                   description: Text('매너게이머 소식 알림'),
                 ),
@@ -106,9 +101,9 @@ class _SettingPageState extends State<SettingPage> {
                 // ),
                 SettingsTile.switchTile(
                   onToggle: (value) {
-                    _c.userNtfBool['marketingConsent'] = value;
+                    _c.isMarketingConsent.value = value;
                   },
-                  initialValue: _c.userNtfBool['marketingConsent'],
+                  initialValue: _c.isMarketingConsent.value,
                   title: Text('마케팅 정보 수신 동의'),
                 ),
                 SettingsTile.navigation(

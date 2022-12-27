@@ -1,4 +1,8 @@
 class NotificationSettingModel {
+  var chatPushNtf; //채팅 메시지 알림
+  var activityPushNtf; //활동 알림(관심게시글, 약속설정, 매너후기)
+  var noticePushNtf; //앱 공지 알림
+  var marketingConsent; //마케팅 정보 수집 동의
   // final String uid; //문서의 id도 uid 필드랑 같게하기
   // final String userName;
   // final String phoneNumber;
@@ -7,10 +11,6 @@ class NotificationSettingModel {
   // final String? chattingWith; //현재 채팅하고 있는 유저 uid
   // final String? pushToken; //fcm의 장치 토큰
   // final Timestamp createdAt;
-  final bool chatPushNtf; //채팅 메시지 알림
-  final bool activityPushNtf; //활동 알림(관심게시글, 약속설정, 매너후기)
-  final bool noticePushNtf; //앱 공지 알림
-  final bool marketingConsent; //마케팅 정보 수집 동의
 
   NotificationSettingModel({
     // required this.uid,
@@ -21,10 +21,10 @@ class NotificationSettingModel {
     // this.chattingWith,
     // this.pushToken,
     // required this.createdAt,
-    required this.chatPushNtf,
-    required this.activityPushNtf,
-    required this.noticePushNtf,
-    required this.marketingConsent,
+    this.chatPushNtf,
+    this.activityPushNtf,
+    this.noticePushNtf,
+    this.marketingConsent,
   });
 
   factory NotificationSettingModel.fromDocumentSnapshot(doc) {

@@ -10,7 +10,6 @@ exports.chatNotification = functions
   .onCreate(async (snap, context) => {
     //문서가 처음 작성될 때(새 메시지가 생성될 때) 트리거
     console.log("------ START : CHAT PUSH NOTIFICATION ------");
-
     const doc = snap.data();
 
     console.log(doc.idFrom);
