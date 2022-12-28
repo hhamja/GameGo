@@ -12,6 +12,8 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
+    _c.getUserPushNtf();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('설정'),
@@ -27,26 +29,31 @@ class _SettingPageState extends State<SettingPage> {
               title: Text('알림 설정'),
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
-                  onToggle: (value) {
-                    _c.isChatNtf.value = value;
+                  onToggle: (value) async {
+                    _c.isChatNtf.value = await value;
+                    _c.updateChatPushNtf(_c.isChatNtf.value);
                   },
                   initialValue: _c.isChatNtf.value,
                   title: Text('채팅 알림'),
                   description: Text('메시지 알림'),
                 ),
                 SettingsTile.switchTile(
-                  onToggle: (value) {
+                  onToggle: (value) async {
+                    _c.isActivitNtf.value = !_c.isActivitNtf.value;
                     _c.isActivitNtf.value = value;
+                    _c.updateActivityPushNtf(_c.isActivitNtf.value);
                   },
                   initialValue: _c.isActivitNtf.value,
                   title: Text('활동 알림'),
                   description: Text('관심, 약속설정, 매너평가 등 알림'),
                 ),
                 SettingsTile.switchTile(
-                  onToggle: (value) {
-                    _c.isNoticeNtf.value = value;
+                  onToggle: (value) async {
+                    _c.isNoticeNtf.value = await value;
+                    _c.updateNoticePushNtf(_c.isNoticeNtf.value);
                   },
-                  initialValue: _c.isActivitNtf.value,
+                  // trailing: Text(),
+                  initialValue: _c.isNoticeNtf.value,
                   title: Text('공지 알림'),
                   description: Text('매너게이머 소식 알림'),
                 ),
@@ -100,8 +107,16 @@ class _SettingPageState extends State<SettingPage> {
                 //   },
                 // ),
                 SettingsTile.switchTile(
-                  onToggle: (value) {
-                    _c.isMarketingConsent.value = value;
+                  // trailing: Switch(
+                  //   value: ,
+                  //   onChanged: (value) {
+                  //     _c.isMarketingConsent.value = value;
+                  //     _c.updateMarketingConsent(_c.isMarketingConsent.value);
+                  //   },
+                  // ),
+                  onToggle: (value) async {
+                    _c.isMarketingConsent.value = await value;
+                    _c.updateMarketingConsent(_c.isMarketingConsent.value);
                   },
                   initialValue: _c.isMarketingConsent.value,
                   title: Text('마케팅 정보 수신 동의'),

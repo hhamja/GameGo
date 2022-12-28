@@ -19,24 +19,49 @@ class NtfSettingController extends GetxController {
     getUserPushNtf();
   }
 
+  /* 채팅, 활동, 앱 공지, 마케팅 수신 동의에 대한 유저의 값 받기 */
   Future getUserPushNtf() async {
     await _userDB.doc(CurrentUser.uid).get().then((value) {
       var snapshot = value.data() as Map<String, dynamic>;
       isChatNtf.value = snapshot['chatPushNtf']; //채팅알림
-      isActivitNtf.value = snapshot['chatPushNtf']; //활동알림
-      isNoticeNtf.value = snapshot['chatPushNtf']; //앱 공지 및 소식 알림
-      isMarketingConsent.value = snapshot['chatPushNtf']; //마켓팅 수신 동의
+      isActivitNtf.value = snapshot['activityPushNtf']; //활동알림
+      isNoticeNtf.value = snapshot['noticePushNtf']; //앱 공지 및 소식 알림
+      isMarketingConsent.value = snapshot['marketingConsent']; //마켓팅 수신 동의
     });
   }
 
-  /* 알림 설정 페이지 나갈 때 최종 토글버튼 값 반영하여 업데이트 */
-  Future updateChatPushNtf(NotificationSettingModel model) async {
+  /* 채팅알림 토글 버튼 클릭 시 업데이트 */
+  Future updateChatPushNtf(chatPushNtf) async {
     return _userDB.doc(CurrentUser.uid).update(
       {
-        'chatPushNtf': model.chatPushNtf,
-        'activityPushNtf': model.activityPushNtf,
-        'noticePushNtf': model.noticePushNtf,
-        'marketingConsent': model.marketingConsent,
+        'chatPushNtf': chatPushNtf,
+      },
+    );
+  }
+
+  /* 활동알림 토글 버튼 클릭 시 업데이트 */
+  Future updateActivityPushNtf(activityPushNtf) async {
+    return _userDB.doc(CurrentUser.uid).update(
+      {
+        'activityPushNtf': activityPushNtf,
+      },
+    );
+  }
+
+  /* 앱 소식 및 공지 알림 토글 버튼 클릭 시 업데이트 */
+  Future updateNoticePushNtf(noticePushNtf) async {
+    return _userDB.doc(CurrentUser.uid).update(
+      {
+        'noticePushNtf': noticePushNtf,
+      },
+    );
+  }
+
+  /* 마케팅 수신 동의 토글 버튼 클릭 시 업데이트*/
+  Future updateMarketingConsent(marketingConsent) async {
+    return _userDB.doc(CurrentUser.uid).update(
+      {
+        'marketingConsent': marketingConsent,
       },
     );
   }
