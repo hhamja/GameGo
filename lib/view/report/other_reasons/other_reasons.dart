@@ -22,69 +22,69 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(15),
         controller: _scrollController,
         reverse: true,
-        child: Container(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '기타 신고 사유',
-                style: TextStyle(fontSize: 15),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text('신고사유가 앞의 신고항목에 없으신가요?\n원하시는 신고 항목이 없는 경우 신고사유를 입력해주세요.'),
-              SizedBox(height: 20),
-              TextField(
-                autocorrect: false,
-                maxLines: null,
-                textAlignVertical: TextAlignVertical.top,
-                maxLength: _maxLength,
-                keyboardType: TextInputType.text,
-                scrollController: _textScrollController,
-                showCursor: true,
-                focusNode: FocusNode(canRequestFocus: true),
-                controller: _textController,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(10),
-                  counterText: '글자수 제한 : (${textValue.length}/${_maxLength})',
-                  hintText: '신고 사유를 입력해주세요.',
-                  fillColor: Colors.white,
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    borderSide: BorderSide(
-                        color: Colors.grey, style: BorderStyle.solid),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    borderSide: BorderSide(
-                        color: Colors.grey, style: BorderStyle.solid),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    borderSide: BorderSide(
-                        color: Colors.grey, style: BorderStyle.solid),
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '기타 신고 사유',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text('신고사유가 앞의 신고항목에 없으신가요?\n원하시는 신고 항목이 없는 경우 신고사유를 입력해주세요.'),
+            SizedBox(height: 20),
+            TextField(
+              autocorrect: false,
+              maxLines: null,
+              textAlignVertical: TextAlignVertical.top,
+              maxLength: _maxLength,
+              keyboardType: TextInputType.text,
+              scrollController: _textScrollController,
+              showCursor: true,
+              focusNode: FocusNode(canRequestFocus: true),
+              controller: _textController,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10),
+                counterText: '글자수 제한 : (${textValue.length}/${_maxLength})',
+                hintText: '신고 사유를 입력해주세요.',
+                fillColor: Colors.white,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderSide:
+                      BorderSide(color: Colors.grey, style: BorderStyle.solid),
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    textValue = value;
-                  });
-                },
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderSide:
+                      BorderSide(color: Colors.grey, style: BorderStyle.solid),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderSide:
+                      BorderSide(color: Colors.grey, style: BorderStyle.solid),
+                ),
               ),
-              SizedBox(height: 20),
-              CustomTextButton(
-                '신고사유 제출하기',
-                () {
-                  Get.dialog(ReportDialog());
-                },
-              ),
-            ],
-          ),
+              onChanged: (value) {
+                setState(() {
+                  textValue = value;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: CustomTextButton(
+          '신고사유 제출하기',
+          () {
+            Get.dialog(ReportDialog());
+          },
         ),
       ),
     );

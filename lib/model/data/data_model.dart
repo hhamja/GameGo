@@ -1,7 +1,5 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-final double currentAgeValue = 36.8;
-
 final Map mannerEvaluationList = {
   'goodMannerList': [
     '친절하고 매너가 좋아요.',
@@ -49,12 +47,6 @@ final Map mannerEvaluationList = {
   ],
 };
 
-final List receivedDuoReviewList = [
-  '게임을 너무 잘하세요',
-  '다음에 또 같이 하고 싶어요.',
-  '유쾌하시고 재밌었어요 굿밤되세요 ^^',
-];
-
 final List followUesrList = ['팔로우닉네임'];
 final List blockUesrList = ['차단닉네임'];
 final List unexposeUserList = ['게시글노출x닉네임'];
@@ -64,7 +56,8 @@ final Map homePostList = {
   'homePostNickNameList': ['닉네임1', '닉네임2', '닉네임3']
 };
 
-final List<String> leaveAppValue = [
+List<String> leaveAppValue = [
+  '선택해주세요',
   '비매너 사용자를 만났어요',
   '억울하게 이용이 제한됐어요',
   '광고가 너무 많아요',
@@ -78,7 +71,6 @@ final List<String> leaveAppValue = [
 
 String? selectedLeaveReason;
 
-final String userNameID = '오뚜막';
 Container showLeaveReasonSolution() {
   //selectedLeaveReason = value of DropDownButton
   if (selectedLeaveReason == leaveAppValue[0]) {
@@ -99,6 +91,8 @@ Container showLeaveReasonSolution() {
     return leaveReasonSolution[7];
   } else if (selectedLeaveReason == leaveAppValue[8]) {
     return leaveReasonSolution[8];
+  } else if (selectedLeaveReason == leaveAppValue[9]) {
+    return leaveReasonSolution[9];
   }
   return Container();
 }
@@ -126,7 +120,6 @@ final List reportPostReason = [
   '불법 또는 규제 상품 판매',
   '폭력성 · 혐오발언 · 욕설',
   '따돌림 · 괴롭힘',
-  // '지적재산권 침해', (흠... 이거는 기타사유에서 쓰게 하는게 적당할거 같다.)
   '개인정보노출',
   '스팸 · 광고 · 홍보성',
   '사기 · 거짓',
