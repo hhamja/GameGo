@@ -63,7 +63,7 @@ export 'package:mannergamer/view/report/report_list/report_list.dart';
 export 'package:mannergamer/view/login/phone_auth.dart';
 export 'package:mannergamer/view/login/create_profile.dart';
 export 'package:mannergamer/view/login/main_logo_page.dart';
-export 'package:mannergamer/view/my_info/info_page/info_page.dart';
+export 'package:mannergamer/view/my_info/my_info_page.dart';
 export 'package:mannergamer/view/my_info/etc/faq/faq.dart';
 export 'package:mannergamer/view/my_info/etc/feedBack/feedback.dart';
 export 'package:mannergamer/view/my_info/etc/notice/notice_list.dart';

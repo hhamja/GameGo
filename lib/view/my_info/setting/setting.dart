@@ -123,15 +123,11 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 SettingsTile.navigation(
                   title: Text('서비스 이용 약관'),
-                  onPressed: (_) {
-                    Get.dialog(LogOutDialog());
-                  },
+                  onPressed: (_) {},
                 ),
                 SettingsTile.navigation(
                   title: Text('개인정보 취급 처리 방침'),
-                  onPressed: (_) {
-                    Get.dialog(LogOutDialog());
-                  },
+                  onPressed: (_) {},
                 ),
                 SettingsTile.navigation(
                   title: Text('로그아웃'),
