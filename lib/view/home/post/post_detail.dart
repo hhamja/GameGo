@@ -284,7 +284,12 @@ class _PostDetailPageState extends State<PostDetailPage> {
             children: [
               CustomButtomSheet('신고하기', Colors.blue, () {
                 Get.back();
-                Get.toNamed('/report');
+                Get.toNamed(
+                  '/report',
+                  arguments: {
+                    'postId': postId,
+                  },
+                );
               }), //신고하기 페이지로 이동
               // CustomButtomSheet(
               //     "'${_post.postInfo['userName']}' 차단하기", Colors.redAccent, () {

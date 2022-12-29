@@ -106,6 +106,7 @@ export 'package:mannergamer/model/favorite/favorite_model.dart';
 export 'package:mannergamer/model/appointment/appointment.dart';
 
 /* Controller */
+export 'package:mannergamer/controller/report/report.dart';
 export 'package:mannergamer/controller/feedback/feedback.dart';
 export 'package:mannergamer/controller/user/notification_setting.dart';
 export 'package:mannergamer/controller/manner_review/manner_review.dart';

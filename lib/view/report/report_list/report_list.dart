@@ -8,8 +8,13 @@ class ReportListPage extends StatefulWidget {
 }
 
 class _ReportListPageState extends State<ReportListPage> {
+  var postId = Get.arguments['postId']; //이전페이지가 게시글 페이지면? null아님
+  var chatRoomId = Get.arguments['chatRoomId']; //이전페이지가 채팅 페이지면? null아님
+
   @override
   Widget build(BuildContext context) {
+    print(postId);
+    print(chatRoomId);
     return Scaffold(
       appBar: AppBar(
         title: Text('신고'),
@@ -41,7 +46,15 @@ class _ReportListPageState extends State<ReportListPage> {
                     } else if (index == 9) {
                       Get.toNamed('/otherReason');
                     } else {
-                      Get.dialog(ReportDialog());
+                      print(reportPostReason[index].toString());
+                      Get.dialog(
+                        ReportDialog(),
+                        arguments: {
+                          'chatRoomId': chatRoomId ?? null,
+                          'postId': postId ?? null,
+                          'content': reportPostReason[index].toString(),
+                        },
+                      );
                     }
                   },
                 );

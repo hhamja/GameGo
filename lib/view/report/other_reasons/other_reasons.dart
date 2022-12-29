@@ -82,8 +82,22 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: CustomTextButton(
           '신고사유 제출하기',
-          () {
-            Get.dialog(ReportDialog());
+          () async {
+            final text = _textController.text.trim();
+            // 1. 신고사유 입력하지 않은 경우
+            if (text == '' || text.isEmpty) {
+              Get.snackbar('신고 사유 미입력', '신고 사유를 입력해주세요.');
+            }
+            // 2. 신고사유 입력한 경우
+            else {
+              print(_textController.text.trim());
+              Get.dialog(
+                ReportDialog(),
+                arguments: {
+                  'content': _textController.text.trim(),
+                },
+              );
+            }
           },
         ),
       ),

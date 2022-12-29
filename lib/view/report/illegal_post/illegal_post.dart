@@ -35,7 +35,10 @@ class _IllegallyPostedPageState extends State<IllegallyPostedPage> {
                   title: Text('${illegalProduct[index]}'),
                   trailing: Icon(Icons.keyboard_arrow_right_sharp),
                   onTap: () {
-                    Get.dialog(ReportDialog());
+                    print(illegalProduct[index].toString());
+                    Get.dialog(ReportDialog(), arguments: {
+                      'content': illegalProduct[index].toString(),
+                    });
                   },
                 );
               },
