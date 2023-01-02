@@ -11,6 +11,8 @@ class SendReviewPage extends StatefulWidget {
 
 class _SendReviewPageState extends State<SendReviewPage> {
   final MannerReviewController _review = Get.find<MannerReviewController>();
+  final ScrollController _scrollC = ScrollController();
+  final TextEditingController _reviewText = TextEditingController();
 
   /* 상대유저 이름, uid, 채팅방 id */
   final String userName = Get.arguments['userName'];
@@ -23,8 +25,36 @@ class _SendReviewPageState extends State<SendReviewPage> {
   bool isBad = false;
   bool isGood = false;
   bool isShowReviewForm = false;
+  bool? _isChecked = false;
 
-  final TextEditingController _reviewText = TextEditingController();
+  //9개 매너 평가 항목 리스트
+  var goodMannerList = [
+    '친절하고 매너가 좋아요.',
+    '시간 약속을 잘 지켜요.',
+    '응답이 빨라요.',
+    '맨탈이 강해요.',
+    '게임 실력이 뛰어나요.',
+    '불편하지 않게 편하게 대해줘요.',
+    '착하고 부드럽게 말해요.',
+    '게임할 떄 소통을 잘해요.',
+    '게임을 진심으로 열심히 해요.'
+  ];
+
+  //12개 비매너 평가 항목 리스트
+  var badMannerList = [
+    '불친절하고 매너가 나빠요.',
+    '시간 약속을 안 지켜요.',
+    '응답이 늦어요.',
+    '맨탈이 약해요.',
+    '게임 실력이 아쉬워요.',
+    '고의적으로 트롤 행위를 해요.',
+    '욕설이나 험악한 말을 해요',
+    '성적인 발언을 해요.',
+    '반말을 사용해요',
+    '소통을 안해요.',
+    '불편한 분위기를 만들어요.',
+    '사적인 만남을 하려고 해요.',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +66,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
+          controller: _scrollC,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -59,6 +90,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     onPressed: () {
                       setState(() {
                         isShowReviewForm = true;
+                        isBad = true; //bad 선택
+                        isGood = false; //good 선택 되어 있을 시 해제
                         _feeling = 'bad';
                       });
                     },
@@ -89,6 +122,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     onPressed: () {
                       setState(() {
                         isShowReviewForm = true;
+                        isBad = false; //bad 선택 되어있다면 해제
+                        isGood = true; //good 선택
                         _feeling = 'good';
                       });
                     },
@@ -117,6 +152,31 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   ),
                 ],
               ),
+              isBad
+                  ? ListView.builder(
+                      controller: _scrollC,
+                      shrinkWrap: true,
+                      itemCount: badMannerList.length,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Checkbox(
+                              value: _isChecked,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isChecked = value;
+                                });
+                              },
+                            ),
+                            Text(
+                              badMannerList[index].toString(),
+                            ),
+                          ],
+                        );
+                      },
+                    )
+                  : SizedBox.shrink(),
+
               /* 리뷰 작성 박스 */
               isShowReviewForm
                   ? Container(
@@ -177,8 +237,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
               },
               /* 오른쪽 버튼 클릭 시 */
               () async {
-                //ReviewModel 인스턴스
-                final ReviewModel _reviewModel = ReviewModel(
+                //MannerReviewModel 인스턴스
+                final MannerReviewModel _MannerReviewModel = MannerReviewModel(
                   idTo: uid,
                   idFrom: CurrentUser.uid,
                   userName: FirebaseAuth.instance.currentUser!.displayName ??
@@ -201,7 +261,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                 );
                 //보낸 매너후기 파이어스토어에 반영
                 await _review.addMannerReview(
-                    uid, chatRoomId, _reviewModel, _ntfModel);
+                    uid, chatRoomId, _MannerReviewModel, _ntfModel);
                 //보낸 매너후기에 대한 bool값을 채팅화면으로 가기 전 업데이트
                 await _review.checkExistReview(uid, chatRoomId);
                 //작성한 리뷰 텍스트 전부 삭제

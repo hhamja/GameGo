@@ -152,7 +152,7 @@ class _SignOutPageState extends State<SignOutPage> {
               }
               // 1-2. 텍스트를 한 글자라도 입력한 경우
               else {
-                final FeedBackModel _model = FeedBackModel(
+                final SignOutFeedBackModel _model = SignOutFeedBackModel(
                   feedBackContent: text,
                   createdAt: Timestamp.now(),
                 );
@@ -170,7 +170,7 @@ class _SignOutPageState extends State<SignOutPage> {
             }
             // 2. 기타사유가 아닌 경우
             else {
-              final FeedBackModel _model = FeedBackModel(
+              final SignOutFeedBackModel _model = SignOutFeedBackModel(
                 feedBackContent: selectedLeaveReason.toString(),
                 createdAt: Timestamp.now(),
               );

@@ -8,31 +8,32 @@ class MannerReviewController extends GetxController {
   /* 내가 보낸 매너후기 담는 Map 자료 형태 */
   RxMap<String, dynamic> myReview = Map<String, dynamic>().obs;
   /* 매너 후기 리스트 */
-  RxList<ReviewModel> goodReviewList = <ReviewModel>[].obs;
+  RxList<MannerReviewModel> goodReviewList = <MannerReviewModel>[].obs;
   /* 비매너 후기 리스트 */
-  RxList<ReviewModel> badReviewList = <ReviewModel>[].obs;
+  RxList<MannerReviewModel> badReviewList = <MannerReviewModel>[].obs;
   /* 보낸 매너리뷰가 있는지의 여부를 담는 변수 */
   RxBool isExistReview = false.obs;
+  /* 각 평가 항목의 bool 값 */
 
   /* 매너후기를 유저의 하위 컬렉션 'review'에 추가하기
   * 매너후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기 */
-  Future addMannerReview(uid, chatRoomId, ReviewModel reviewModel,
+  Future addMannerReview(uid, chatRoomId, MannerReviewModel MannerReviewModel,
       NotificationModel ntfModel) async {
     //유저 하위 컬렉션으로 리뷰 저장하기
     await _userDB.doc(uid).collection('review').doc(chatRoomId).set(
       {
-        'idFrom': reviewModel.idFrom,
-        'idTo': reviewModel.idTo,
-        'profileUrl': reviewModel.profileUrl,
-        'userName': reviewModel.userName,
-        'feeling': reviewModel.feeling,
-        'content': reviewModel.content,
-        'reviewType': reviewModel.reviewType,
-        'createdAt': reviewModel.createdAt,
+        'idFrom': MannerReviewModel.idFrom,
+        'idTo': MannerReviewModel.idTo,
+        'profileUrl': MannerReviewModel.profileUrl,
+        'userName': MannerReviewModel.userName,
+        'feeling': MannerReviewModel.feeling,
+        'content': MannerReviewModel.content,
+        'reviewType': MannerReviewModel.reviewType,
+        'createdAt': MannerReviewModel.createdAt,
       },
     );
     //비매너 후기가 아닌 매너후기인 경우에만 notification에 추가
-    reviewModel.feeling == 'good'
+    MannerReviewModel.feeling == 'good'
         ? await _ntfDB.add(
             {
               'idFrom': ntfModel.idFrom,
@@ -58,7 +59,7 @@ class MannerReviewController extends GetxController {
         .then(
           (snapshot) => goodReviewList.assignAll(
             snapshot.docs.map(
-              (e) => ReviewModel.fromDocumentSnapshot(e),
+              (e) => MannerReviewModel.fromDocumentSnapshot(e),
             ),
           ),
         );
@@ -74,7 +75,7 @@ class MannerReviewController extends GetxController {
         .then(
           (snapshot) => badReviewList.assignAll(
             snapshot.docs.map(
-              (e) => ReviewModel.fromDocumentSnapshot(e),
+              (e) => MannerReviewModel.fromDocumentSnapshot(e),
             ),
           ),
         );
