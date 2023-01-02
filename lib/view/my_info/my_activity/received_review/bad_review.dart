@@ -29,14 +29,14 @@ class _BadReviewListPageState extends State<BadReviewListPage> {
             itemBuilder: (BuildContext context, int index) {
               final badList = _review.badReviewList[index];
               return CustomTwoLineListTile(
-                badList.profileUrl,
-                badList.userName,
+                'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689', //기본프로필
+                '익명 후기', //비매너평가는 익명으로
                 badList.content == '' ? '(내용없음)' : badList.content,
                 null,
                 null,
                 false,
                 '',
-                () {},
+                () => null,
               );
             },
             separatorBuilder: (BuildContext context, int index) {
