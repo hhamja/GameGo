@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mannergamer/model/notification/notification_model.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class SendReviewPage extends StatefulWidget {
@@ -10,7 +9,9 @@ class SendReviewPage extends StatefulWidget {
 }
 
 class _SendReviewPageState extends State<SendReviewPage> {
-  final MannerReviewController _review = Get.find<MannerReviewController>();
+  final MannerEvaluationController _evaluation =
+      Get.find<MannerEvaluationController>();
+  final GameReviewController _review = Get.find<GameReviewController>();
   final ScrollController _scrollC = ScrollController();
   final TextEditingController _reviewText = TextEditingController();
 
@@ -21,7 +22,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
   final String postId = Get.arguments['postId'];
   final String postTitle = Get.arguments['postTitle'];
 
-  String _feeling = '';
+  String _evaluationtype = '';
   bool isBad = false;
   bool isGood = false;
   bool isShowReviewForm = false;
@@ -92,14 +93,14 @@ class _SendReviewPageState extends State<SendReviewPage> {
                         isShowReviewForm = true;
                         isBad = true; //bad 선택
                         isGood = false; //good 선택 되어 있을 시 해제
-                        _feeling = 'bad';
+                        _evaluationtype = 'bad';
                       });
                     },
                     style: ButtonStyle(
                         padding: MaterialStateProperty.all(EdgeInsets.all(20))),
                     child: Column(
                       children: [
-                        _feeling == 'bad'
+                        _evaluationtype == 'bad'
                             ? Icon(
                                 CupertinoIcons.hand_thumbsdown_fill,
                                 size: 50,
@@ -124,14 +125,14 @@ class _SendReviewPageState extends State<SendReviewPage> {
                         isShowReviewForm = true;
                         isBad = false; //bad 선택 되어있다면 해제
                         isGood = true; //good 선택
-                        _feeling = 'good';
+                        _evaluationtype = 'good';
                       });
                     },
                     style: ButtonStyle(
                         padding: MaterialStateProperty.all(EdgeInsets.all(20))),
                     child: Column(
                       children: [
-                        _feeling == 'good'
+                        _evaluationtype == 'good'
                             ? Icon(
                                 CupertinoIcons.hand_thumbsup_fill,
                                 size: 50,
@@ -225,30 +226,21 @@ class _SendReviewPageState extends State<SendReviewPage> {
         child: CustomTextButton('후기 보내기', () {
           Get.dialog(
             CustomSmallDialog(
-              /* 다이어로그 내용 */
               '$userName에게 보낸 후기는\n수정 및 삭제가 불가합니다',
-              /* 왼쪽 버튼 텍스트 */
               '취소',
-              /* 오른쪽 버튼 텍스트 */
               '보내기',
-              /* 왼쪽버튼 클릭 시 */
-              () {
-                Get.back();
-              },
-              /* 오른쪽 버튼 클릭 시 */
+              () => Get.back(),
               () async {
-                //MannerReviewModel 인스턴스
-                final MannerReviewModel _MannerReviewModel = MannerReviewModel(
-                  idTo: uid,
-                  idFrom: CurrentUser.uid,
-                  userName: FirebaseAuth.instance.currentUser!.displayName ??
-                      '(이름없음)',
-                  profileUrl: FirebaseAuth.instance.currentUser!.photoURL ?? '',
-                  feeling: _feeling,
-                  content: _reviewText.text.trim(),
+                // 평가 인스턴스 생성
+                final MannerEvaluationModel _evaluationModel =
+                    MannerEvaluationModel(
+                  idFrom: uid,
+                  idTo: CurrentUser.uid,
+                  evaluationType: _evaluationtype,
+                  selectList: [],
                   createdAt: Timestamp.now(),
                 );
-                //NotificationModel 인스턴스
+                // notification 인스턴스 생성
                 final NotificationModel _ntfModel = NotificationModel(
                   idTo: uid,
                   idFrom: CurrentUser.uid,
@@ -259,13 +251,30 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   postTitle: postTitle,
                   createdAt: Timestamp.now(),
                 );
-                //보낸 매너후기 파이어스토어에 반영
-                await _review.addMannerReview(
-                    uid, chatRoomId, _MannerReviewModel, _ntfModel);
+                //평가 보내기
+                await _evaluation.addMannerEvaluation(
+                    uid, chatRoomId, _evaluationModel, _ntfModel);
+                //선택사항인 리뷰 작성 시
+                if ((_reviewText.text.trim() != '') ||
+                    _reviewText.text.trim().isNotEmpty) {
+                  // 1. 리뷰 인스턴스 생성
+                  final GameReviewModel _reviewModel = GameReviewModel(
+                    idTo: uid,
+                    idFrom: CurrentUser.uid,
+                    userName: FirebaseAuth.instance.currentUser!.displayName ??
+                        '(이름없음)',
+                    profileUrl:
+                        FirebaseAuth.instance.currentUser!.photoURL ?? '',
+                    content: _reviewText.text.trim(),
+                    createdAt: Timestamp.now(),
+                  );
+                  // 2. 작성한 후기 파이어스토어에 반영
+                  await _review.addMannerReview(
+                      uid, chatRoomId, _reviewModel, _ntfModel);
+                  _reviewText.clear(); // 3. 작성한 리뷰 텍스트 전부 삭제
+                }
                 //보낸 매너후기에 대한 bool값을 채팅화면으로 가기 전 업데이트
-                await _review.checkExistReview(uid, chatRoomId);
-                //작성한 리뷰 텍스트 전부 삭제
-                _reviewText.clear();
+                await _evaluation.checkExistReview(uid, chatRoomId);
                 Get.back();
                 Get.back();
               },

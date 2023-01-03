@@ -3,12 +3,14 @@ import 'package:mannergamer/utilites/index/index.dart';
 class MannerEvaluationModel {
   final String idFrom; //매너 평가 보낸 uid
   final String idTo; //매너 평가 받은 uid
+  final String evaluationType; //ture : 좋아요 평가, false : 별로에요 평가
   final List selectList; //선택한 평가 항목의 index 리스트 ex. [1, 3, 7 ,9]
   final Timestamp createdAt; //생성시간
 
   MannerEvaluationModel({
     required this.idFrom,
     required this.idTo,
+    required this.evaluationType,
     required this.selectList,
     required this.createdAt,
   });
@@ -18,6 +20,7 @@ class MannerEvaluationModel {
     return MannerEvaluationModel(
       idFrom: snapshot['idFrom'],
       idTo: snapshot['idTo'],
+      evaluationType: snapshot['evaluationType'],
       selectList: snapshot['selectList'],
       createdAt: snapshot['createdAt'],
     );

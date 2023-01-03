@@ -1,4 +1,3 @@
-import 'package:mannergamer/model/notification/notification_model.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class NtfController extends GetxController {

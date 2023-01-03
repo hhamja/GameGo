@@ -16,7 +16,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
-  final MannerReviewController _review = Get.put(MannerReviewController());
+  final MannerEvaluationController _evaluation =
+      Get.put(MannerEvaluationController());
   final AppointmentController _appoint = Get.put(AppointmentController());
   final ChatController _chat = Get.find<ChatController>();
 
@@ -26,7 +27,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
     _getAppointment();
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
     _chat.updateChattingWith(uid); //현재 채팅하는 상대가 누군지 업데이트
-    _review.checkExistReview(uid, chatRoomId); //보낸 리뷰가 존재하는지 여부
+    _evaluation.checkExistReview(uid, chatRoomId); //보낸 리뷰가 존재하는지 여부
   }
 
   /* 약속날자 비동기로 받기 */
@@ -160,7 +161,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                           _appoint.toDatetime.value.isBefore(DateTime.now())
                       //약속시간이 현재보다 과거 ? '후기보내기'도 표시 : 약속시간만 표시
                       ? Expanded(
-                          child: _review.isExistReview.value
+                          child: _evaluation.isExistEvaluation.value
                               ?
                               //이미 보낸 후기가 있는 경우
                               InkWell(

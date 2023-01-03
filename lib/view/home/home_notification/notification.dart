@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:mannergamer/controller/notification/notification.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class NotificationPage extends StatefulWidget {

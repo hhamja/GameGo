@@ -1,6 +1,6 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class MannerReviewModel {
+class GameReviewModel {
   final String idFrom; //리뷰 보낸 uid
   final String idTo; //리뷰 받는 uid
   final String profileUrl; //리뷰 보낸 사람의 프로필
@@ -8,7 +8,7 @@ class MannerReviewModel {
   final String content; //직접 작성한 후기
   final Timestamp createdAt; //후기 보낸 시간
 
-  MannerReviewModel({
+  GameReviewModel({
     required this.idFrom,
     required this.idTo,
     required this.profileUrl,
@@ -17,9 +17,9 @@ class MannerReviewModel {
     required this.createdAt,
   });
 
-  factory MannerReviewModel.fromDocumentSnapshot(DocumentSnapshot doc) {
+  factory GameReviewModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     var snapshot = doc.data() as Map<String, dynamic>;
-    return MannerReviewModel(
+    return GameReviewModel(
       idFrom: snapshot['idFrom'],
       idTo: snapshot['idTo'],
       profileUrl: snapshot['profileUrl'],

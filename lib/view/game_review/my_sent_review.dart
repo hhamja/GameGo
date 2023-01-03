@@ -9,7 +9,9 @@ class MySentReviewPage extends StatefulWidget {
 }
 
 class _MySentReviewPageState extends State<MySentReviewPage> {
-  final MannerReviewController _review = Get.find<MannerReviewController>();
+  final MannerEvaluationController _evaluation =
+      Get.find<MannerEvaluationController>();
+  final GameReviewController _review = Get.find<GameReviewController>();
   /* 상대유저 이름, uid, 채팅방 id */
   final String userName = Get.arguments['userName']!;
   final String uid = Get.arguments['uid']!;
@@ -19,12 +21,12 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
   void initState() {
     super.initState();
     //내가 보낸 매너후기 GEt하기
-    _review.getMySentReview(uid, chatRoomId);
+    _evaluation.getMySentReview(uid, chatRoomId);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_review.myReview);
+    print(_review.myReviewContent.value);
     return Scaffold(
       appBar: AppBar(
         title: Text('내가 보낸 후기'),
@@ -38,7 +40,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.4,
-                child: _review.myReview['feeling'] == 'good'
+                child: _evaluation.myEvaluation.value.evaluationType == 'good'
                     ?
                     /* 최고에요 */
                     Row(
@@ -72,9 +74,9 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                 height: 20,
               ),
               Text(
-                _review.myReview['content'] == ''
+                _review.myReviewContent.value == ''
                     ? '(내용없음)'
-                    : _review.myReview['content'],
+                    : _review.myReviewContent.value,
                 textAlign: TextAlign.left,
               ),
             ],

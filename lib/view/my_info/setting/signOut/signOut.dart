@@ -11,7 +11,6 @@ class _SignOutPageState extends State<SignOutPage> {
   final FeedBackController _c = Get.put(FeedBackController());
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _textController = TextEditingController();
-  final GlobalKey _key = GlobalKey<FormState>(); //기타 선택 시 나타나는 텍스트 필드 key
 
   @override
   Widget build(BuildContext context) {

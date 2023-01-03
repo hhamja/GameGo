@@ -130,10 +130,6 @@ class AppRoutes {
       page: () => NoticeDetailPage(),
     ),
     GetPage(
-      name: Paths.ReceivedReview,
-      page: () => GoodReviewListPage(),
-    ),
-    GetPage(
       name: Paths.ReceivedMannerEvaluation,
       page: () => ReceivedMannerEvaluationPage(),
     ),
@@ -162,10 +158,6 @@ class AppRoutes {
     GetPage(
       name: Paths.Setting,
       page: () => SettingPage(),
-    ),
-    GetPage(
-      name: Paths.Alram,
-      page: () => SettingAlram(),
     ),
     GetPage(
       name: Paths.SignOut,

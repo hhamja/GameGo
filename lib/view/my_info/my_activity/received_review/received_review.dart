@@ -1,20 +1,20 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class BadReviewListPage extends StatefulWidget {
-  const BadReviewListPage({Key? key}) : super(key: key);
+class ReceivedGameReviewPage extends StatefulWidget {
+  const ReceivedGameReviewPage({Key? key}) : super(key: key);
 
   @override
-  State<BadReviewListPage> createState() => _BadReviewListPageState();
+  State<ReceivedGameReviewPage> createState() => _ReceivedGameReviewPageState();
 }
 
-class _BadReviewListPageState extends State<BadReviewListPage> {
-  final MannerReviewController _review = Get.put(MannerReviewController());
+class _ReceivedGameReviewPageState extends State<ReceivedGameReviewPage> {
+  final GameReviewController _review = Get.put(GameReviewController());
 
   @override
   void initState() {
     super.initState();
-    //내가 받은 매너 후기 리스트 받기
-    _review.getBadReviewList(CurrentUser.uid);
+    // 내가 받은 게임후기 리스트 받기
+    // _review.getBadReviewList(CurrentUser.uid);
   }
 
   @override
@@ -27,11 +27,11 @@ class _BadReviewListPageState extends State<BadReviewListPage> {
       body: Obx(
         () => ListView.separated(
             itemBuilder: (BuildContext context, int index) {
-              final badList = _review.badReviewList[index];
+              final reviewList = _review.gameReviewList[index];
               return CustomTwoLineListTile(
                 'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689', //기본프로필
                 '익명 후기', //비매너평가는 익명으로
-                badList.content == '' ? '(내용없음)' : badList.content,
+                reviewList.content == '' ? '(내용없음)' : reviewList.content,
                 null,
                 null,
                 false,
@@ -42,7 +42,7 @@ class _BadReviewListPageState extends State<BadReviewListPage> {
             separatorBuilder: (BuildContext context, int index) {
               return CustomDivider();
             },
-            itemCount: _review.badReviewList.length),
+            itemCount: _review.gameReviewList.length),
       ),
     );
   }
