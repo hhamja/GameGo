@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class SendReviewPage extends StatefulWidget {
@@ -11,7 +10,7 @@ class SendReviewPage extends StatefulWidget {
 class _SendReviewPageState extends State<SendReviewPage> {
   final MannerEvaluationController _evaluation =
       Get.find<MannerEvaluationController>();
-  final GameReviewController _review = Get.find<GameReviewController>();
+  final GameReviewController _review = Get.put(GameReviewController());
   final ScrollController _scrollC = ScrollController();
   final TextEditingController _reviewText = TextEditingController();
 
@@ -23,9 +22,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
   final String postTitle = Get.arguments['postTitle'];
 
   String _evaluationtype = '';
-  bool isBad = false;
-  bool isGood = false;
-  bool isShowReviewForm = false;
+
   bool? _isChecked = false;
 
   //9개 매너 평가 항목 리스트
@@ -71,106 +68,138 @@ class _SendReviewPageState extends State<SendReviewPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /* 게시글 정보 */
-              // CustomPostInfo(
-              //   postId,
-              //   title, //제목
-              //   gamemode, //게임모드
-              //   position, //포지션
-              //   tear, //티어
-              // ),
-              // Divider(thickness: 0.5),
-              // Text('$userName님과의 게임이 어떠셨나요?'),
-
-              /* 별로에요  최고에요 이모지 */
+              /* 별로예요, 최고예요 이모지 */
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
                 children: [
+                  /* 별로예요 이모지 */
                   TextButton(
-                    onPressed: () {
-                      setState(() {
-                        isShowReviewForm = true;
-                        isBad = true; //bad 선택
-                        isGood = false; //good 선택 되어 있을 시 해제
-                        _evaluationtype = 'bad';
-                      });
-                    },
+                    onPressed: () => setState(
+                      () => _evaluationtype = 'bad',
+                    ),
                     style: ButtonStyle(
                         padding: MaterialStateProperty.all(EdgeInsets.all(20))),
-                    child: Column(
-                      children: [
-                        _evaluationtype == 'bad'
-                            ? Icon(
-                                CupertinoIcons.hand_thumbsdown_fill,
-                                size: 50,
-                                color: Colors.black87,
-                              )
-                            : Icon(
-                                CupertinoIcons.hand_thumbsdown,
-                                size: 40,
-                                color: Colors.black87,
+                    child: _evaluationtype == 'bad'
+                        ? Column(
+                            children: [
+                              Text(
+                                '\u{1F629}',
+                                style: TextStyle(
+                                  fontSize: 58.5,
+                                ),
                               ),
-                        SizedBox(height: 10),
-                        Text(
-                          '별로에요',
-                          style: TextStyle(color: Colors.black87),
-                        ),
-                      ],
-                    ),
+                              Text(
+                                '별로예요',
+                                style: TextStyle(color: Colors.black87),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              ClipOval(
+                                child: ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.grey, BlendMode.color),
+                                  child: Text(
+                                    '\u{1F629}',
+                                    style: TextStyle(
+                                      fontSize: 50,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '별로예요',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
                   ),
+                  /* 최고예요 이모지 */
                   TextButton(
-                    onPressed: () {
-                      setState(() {
-                        isShowReviewForm = true;
-                        isBad = false; //bad 선택 되어있다면 해제
-                        isGood = true; //good 선택
-                        _evaluationtype = 'good';
-                      });
-                    },
+                    onPressed: () => setState(
+                      () => _evaluationtype = 'good',
+                    ),
                     style: ButtonStyle(
                         padding: MaterialStateProperty.all(EdgeInsets.all(20))),
-                    child: Column(
-                      children: [
-                        _evaluationtype == 'good'
-                            ? Icon(
-                                CupertinoIcons.hand_thumbsup_fill,
-                                size: 50,
-                                color: Colors.blue,
-                              )
-                            : Icon(
-                                CupertinoIcons.hand_thumbsup,
-                                size: 40,
-                                color: Colors.black87,
+                    child: _evaluationtype == 'good'
+                        ? Column(
+                            children: [
+                              Text(
+                                '\u{1F60D}',
+                                style: TextStyle(
+                                  fontSize: 58.5,
+                                ),
                               ),
-                        SizedBox(height: 10),
-                        Text(
-                          '최고에요',
-                          style: TextStyle(color: Colors.black87),
-                        ),
-                      ],
-                    ),
+                              Text(
+                                '최고예요',
+                                style: TextStyle(color: Colors.black87),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              ClipOval(
+                                child: ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.grey, BlendMode.color),
+                                  child: Text(
+                                    '\u{1F60D}',
+                                    style: TextStyle(
+                                      fontSize: 50,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '최고예요',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
                   ),
                 ],
               ),
-              isBad
+              /* 별로예요 선택 시 평가 항목 리스트 */
+              _evaluationtype == 'bad'
                   ? ListView.builder(
+                      padding: EdgeInsets.zero,
                       controller: _scrollC,
                       shrinkWrap: true,
                       itemCount: badMannerList.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () => null,
+                          child: CheckboxListTile(
+                            value: _isChecked,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            onChanged: (value) =>
+                                setState(() => _isChecked = value),
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(badMannerList[index].toString()),
+                          ),
+                        );
+                      },
+                    )
+                  : SizedBox.shrink(),
+              /* 최고예요 선택 시 평가 항목 리스트 */
+              _evaluationtype == 'good'
+                  ? ListView.builder(
+                      controller: _scrollC,
+                      shrinkWrap: true,
+                      itemCount: goodMannerList.length,
                       itemBuilder: (context, index) {
                         return Row(
                           children: [
                             Checkbox(
                               value: _isChecked,
-                              onChanged: (value) {
-                                setState(() {
-                                  _isChecked = value;
-                                });
-                              },
+                              onChanged: (value) =>
+                                  setState(() => _isChecked = value),
                             ),
                             Text(
-                              badMannerList[index].toString(),
+                              goodMannerList[index].toString(),
                             ),
                           ],
                         );
@@ -178,8 +207,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     )
                   : SizedBox.shrink(),
 
-              /* 리뷰 작성 박스 */
-              isShowReviewForm
+              /* 후기 작성 박스 */
+              _evaluationtype != ''
                   ? Container(
                       margin: EdgeInsets.symmetric(vertical: 15),
                       child: TextFormField(
@@ -226,7 +255,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
         child: CustomTextButton('후기 보내기', () {
           Get.dialog(
             CustomSmallDialog(
-              '$userName에게 보낸 후기는\n수정 및 삭제가 불가합니다',
+              '"$userName"에게 한번 보낸 후기는\n수정 및 삭제가 불가합니다',
               '취소',
               '보내기',
               () => Get.back(),

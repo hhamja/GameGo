@@ -9,7 +9,6 @@ class ReceivedMannerEvaluationPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('받은 매너 평가'),
         centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.info_outline))],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 10),
@@ -17,12 +16,13 @@ class ReceivedMannerEvaluationPage extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: Icon(Icons.sentiment_satisfied),
               minLeadingWidth: 0,
-              horizontalTitleGap: 5,
               title: Text(
                 '받은 매너 칭찬',
-                style: TextStyle(height: 1.2),
+                style: TextStyle(
+                  height: 1.2,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             ListView.builder(
@@ -50,12 +50,14 @@ class ReceivedMannerEvaluationPage extends StatelessWidget {
               thickness: 1,
             ),
             ListTile(
-              leading: Icon(Icons.sentiment_satisfied),
               minLeadingWidth: 0,
               horizontalTitleGap: 5,
               title: Text(
                 '받은 비매너',
-                style: TextStyle(height: 1.2),
+                style: TextStyle(
+                  height: 1.2,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             ListView.builder(
