@@ -264,16 +264,26 @@ class EvaluationController extends GetxController {
     );
   }
 
-  /* 내가 이미 보낸 매너평가가 있는지 여부 확인하기
+  /* 내가 이미 보낸 매너평가가 있는지 확인하기
   * 채팅페이지에 들어가면서 함수 실행 */
   checkExistReview(uid, chatRoomId) async {
-    final ref =
-        await _userDB.doc(uid).collection('evaluation').doc(chatRoomId).get();
-    //이미 보낸 리뷰가 있는 경우
-    if (ref.exists) {
+    final goodRef = await _userDB
+        .doc(uid)
+        .collection('goodEvaluation')
+        .doc(chatRoomId)
+        .get();
+    final badRef = await _userDB
+        .doc(uid)
+        .collection('badEvaluation')
+        .doc(chatRoomId)
+        .get();
+    //이미 보낸 평가가 있는 경우
+    //good과 bad중 하나만 있어도 true
+    if (goodRef.exists || badRef.exists) {
       isExistEvaluation.value = true;
     }
-    //이미 보낸 리뷰가 없는 경우
+    //이미 보낸 평가가 없는 경우
+    //good과 bad 둘 다 없는 경우
     else {
       isExistEvaluation.value = false;
     }
