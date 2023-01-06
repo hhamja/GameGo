@@ -55,6 +55,7 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    _ntf.getNtfList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('알림'),
@@ -76,9 +77,9 @@ class _NotificationPageState extends State<NotificationPage> {
             //내용
             final String _content = _ntf.ntfList[index].content ?? '';
             //유저이름
-            final String _userName = _ntf.ntfList[index].userName;
+            final String _userName = _ntf.ntfList[index].userName ?? '(이름없음)';
             //게시글 제목
-            final String _title = _ntf.ntfList[index].postTitle;
+            final String _title = _ntf.ntfList[index].postTitle ?? '(게시글)';
 
             return
                 // Slidable(

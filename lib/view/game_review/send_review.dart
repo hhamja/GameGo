@@ -317,7 +317,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   _reviewText.clear();
                 }
                 //보낸 매너후기에 대한 bool값을 채팅화면으로 가기 전 업데이트
-                await _evaluation.checkExistReview(uid, chatRoomId);
+                await _evaluation.checkExistEvaluation(uid, chatRoomId);
                 Get.back();
                 Get.back();
               },

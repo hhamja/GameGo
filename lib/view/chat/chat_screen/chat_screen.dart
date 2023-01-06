@@ -26,7 +26,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
     _getAppointment();
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
     _chat.updateChattingWith(uid); //현재 채팅하는 상대가 누군지 업데이트
-    _evaluation.checkExistReview(uid, chatRoomId); //보낸 리뷰가 존재하는지 여부
+    _evaluation.checkExistEvaluation(uid, chatRoomId); //보낸 리뷰가 존재하는지 여부
   }
 
   /* 약속날자 비동기로 받기 */
