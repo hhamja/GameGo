@@ -11,7 +11,7 @@ class MySentReviewPage extends StatefulWidget {
 class _MySentReviewPageState extends State<MySentReviewPage> {
   final MannerEvaluationController _evaluation =
       Get.find<MannerEvaluationController>();
-  final GameReviewController _review = Get.find<GameReviewController>();
+  final GameReviewController _review = Get.put(GameReviewController());
   /* 상대유저 이름, uid, 채팅방 id */
   final String userName = Get.arguments['userName']!;
   final String uid = Get.arguments['uid']!;

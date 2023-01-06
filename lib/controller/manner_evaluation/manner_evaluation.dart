@@ -5,13 +5,39 @@ class MannerEvaluationController extends GetxController {
       FirebaseFirestore.instance.collection('user');
   final CollectionReference _ntfDB =
       FirebaseFirestore.instance.collection('notification');
+
+  // /* 매너평가 항목들의 Rxbool 변수 선언 */
+  // RxBool kindManner = false.obs;
+  // RxBool goodAppointment = false.obs;
+  // RxBool fastAnswer = false.obs;
+  // RxBool strongMental = false.obs;
+  // RxBool goodGameSkill = false.obs;
+  // RxBool softMannerTalk = false.obs;
+  // RxBool goodCommunication = false.obs;
+  // RxBool comfortable = false.obs;
+  // RxBool hardGame = false.obs;
+
+  // /* 비매너평가 항목들의 RxBool 변수 선언 */
+  // RxBool badManner = false.obs;
+  // RxBool badAppointment = false.obs;
+  // RxBool slowAnswer = false.obs;
+  // RxBool weakMental = false.obs;
+  // RxBool badGameSkill = false.obs;
+  // RxBool troll = false.obs;
+  // RxBool abuseWord = false.obs;
+  // RxBool sexualWord = false.obs;
+  // RxBool shortTalk = false.obs;
+  // RxBool noCommunication = false.obs;
+  // RxBool uncomfortable = false.obs;
+  // RxBool privateMeeting = false.obs;
+
   /* 매너 평가 담는 GoodEvaluationModel */
   Rx<GoodEvaluationModel> goodEvaluation = GoodEvaluationModel(
     evaluationType: '',
     idFrom: '',
     idTo: '',
-    strongMental: false,
     kindManner: false,
+    strongMental: false,
     goodAppointment: false,
     fastAnswer: false,
     goodGameSkill: false,
@@ -47,6 +73,8 @@ class MannerEvaluationController extends GetxController {
   /* 보낸 매너평가가 있는지 여부 */
   RxBool isExistEvaluation = false.obs;
 
+  /***************************************************************************/
+
   /* 매너 평가 추가 
   * 유저의 하위 컬렉션 'evaluation'에 추가하기
   * 푸시알림 위해 notifiaciton에도 추가 */
@@ -63,8 +91,8 @@ class MannerEvaluationController extends GetxController {
         'fastAnswer': goodEvaluation.fastAnswer,
         'strongMental': goodEvaluation.strongMental,
         'goodGameSkill': goodEvaluation.goodGameSkill,
-        'softMannerTalk': goodEvaluation.softMannerTalk,
         'comfortable': goodEvaluation.comfortable,
+        'softMannerTalk': goodEvaluation.softMannerTalk,
         'goodCommunication': goodEvaluation.goodCommunication,
         'hardGame': goodEvaluation.hardGame,
         'createdAt': goodEvaluation.createdAt,

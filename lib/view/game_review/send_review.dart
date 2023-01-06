@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mannergamer/utilites/index/index.dart';
 
 class SendReviewPage extends StatefulWidget {
@@ -22,34 +24,20 @@ class _SendReviewPageState extends State<SendReviewPage> {
   final String postTitle = Get.arguments['postTitle'];
   String _evaluationtype = '';
 
-  //9개 매너 평가 항목 리스트
-  var goodMannerList = [
-    '친절하고 매너가 좋아요.',
-    '시간 약속을 잘 지켜요.',
-    '응답이 빨라요.',
-    '맨탈이 강해요.',
-    '게임 실력이 뛰어나요.',
-    '불편하지 않게 편하게 대해줘요.',
-    '착하고 부드럽게 말해요.',
-    '게임할 떄 소통을 잘해요.',
-    '게임을 진심으로 열심히 해요.'
-  ];
-
-  //12개 비매너 평가 항목 리스트
-  var badMannerList = [
-    '불친절하고 매너가 나빠요.',
-    '시간 약속을 안 지켜요.',
-    '응답이 늦어요.',
-    '맨탈이 약해요.',
-    '게임 실력이 아쉬워요.',
-    '고의적으로 트롤 행위를 해요.',
-    '욕설이나 험악한 말을 해요',
-    '성적인 발언을 해요.',
-    '반말을 사용해요',
-    '소통을 안해요.',
-    '불편한 분위기를 만들어요.',
-    '사적인 만남을 하려고 해요.',
-  ];
+  List<bool?> goodBoolList = [];
+  List<bool?> badBoolList = [];
+  @override
+  void initState() {
+    super.initState();
+    //비매너 체크박스 항목의 bool List 만들기
+    badBoolList = List.generate(
+        BadEvaluationModel.badList.length, (counter) => false,
+        growable: false);
+    //매너 체크박스 항목의 bool List 만들기
+    goodBoolList = List.generate(
+        GoodEvaluationModel.goodList.length, (counter) => false,
+        growable: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,18 +153,16 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       padding: EdgeInsets.zero,
                       controller: _scrollC,
                       shrinkWrap: true,
-                      itemCount: badMannerList.length,
+                      itemCount: BadEvaluationModel.badList.length,
                       itemBuilder: (context, index) {
-                        List<bool?> isCheckList = List<bool?>.generate(
-                            badMannerList.length, (x) => x == false,
-                            growable: false); //항목 개수많은 false 리스트 생성
                         return CheckboxListTile(
-                          value: isCheckList[index],
+                          value: badBoolList[index],
                           controlAffinity: ListTileControlAffinity.leading,
                           onChanged: (value) =>
-                              setState(() => isCheckList[index] = value),
+                              setState(() => badBoolList[index] = value!),
                           contentPadding: EdgeInsets.zero,
-                          title: Text(badMannerList[index].toString()),
+                          title: Text(
+                              BadEvaluationModel.badList[index].toString()),
                         );
                       },
                     )
@@ -186,18 +172,17 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   ? ListView.builder(
                       controller: _scrollC,
                       shrinkWrap: true,
-                      itemCount: goodMannerList.length,
+                      itemCount: GoodEvaluationModel.goodList.length,
                       itemBuilder: (context, index) {
-                        List<bool?> isCheckList = List<bool?>.generate(
-                            goodMannerList.length, (x) => x == false,
-                            growable: false); //항목 개수많은 false 리스트 생성
                         return CheckboxListTile(
-                          value: true,
+                          value: goodBoolList[index],
                           controlAffinity: ListTileControlAffinity.leading,
-                          onChanged: (value) =>
-                              setState(() => isCheckList[index] = value),
+                          onChanged: (value) => setState(() {
+                            goodBoolList[index] = value;
+                          }),
                           contentPadding: EdgeInsets.zero,
-                          title: Text(goodMannerList[index].toString()),
+                          title: Text(
+                              GoodEvaluationModel.goodList[index].toString()),
                         );
                       },
                     )
@@ -263,15 +248,15 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     idFrom: uid,
                     idTo: CurrentUser.uid,
                     evaluationType: _evaluationtype,
-                    kindManner: false,
-                    goodAppointment: false,
-                    fastAnswer: false,
-                    strongMental: false,
-                    goodGameSkill: false,
-                    softMannerTalk: false,
-                    comfortable: false,
-                    goodCommunication: false,
-                    hardGame: false,
+                    kindManner: goodBoolList[0]!,
+                    goodAppointment: goodBoolList[1]!,
+                    fastAnswer: goodBoolList[2]!,
+                    strongMental: goodBoolList[3]!,
+                    goodGameSkill: goodBoolList[4]!,
+                    softMannerTalk: goodBoolList[5]!,
+                    comfortable: goodBoolList[6]!,
+                    goodCommunication: goodBoolList[7]!,
+                    hardGame: goodBoolList[8]!,
                     createdAt: Timestamp.now(),
                   );
                   // 2. notification 인스턴스 생성
@@ -295,18 +280,18 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     idFrom: uid,
                     idTo: CurrentUser.uid,
                     evaluationType: _evaluationtype,
-                    badManner: false,
-                    badAppointment: false,
-                    slowAnswer: false,
-                    weakMental: false,
-                    badGameSkill: false,
-                    troll: false,
-                    abuseWord: false,
-                    sexualWord: false,
-                    shortTalk: false,
-                    noCommunication: false,
-                    uncomfortable: false,
-                    privateMeeting: false,
+                    badManner: badBoolList[0]!,
+                    badAppointment: badBoolList[1]!,
+                    slowAnswer: badBoolList[2]!,
+                    weakMental: badBoolList[3]!,
+                    badGameSkill: badBoolList[4]!,
+                    troll: badBoolList[5]!,
+                    abuseWord: badBoolList[6]!,
+                    sexualWord: badBoolList[7]!,
+                    shortTalk: badBoolList[8]!,
+                    noCommunication: badBoolList[9]!,
+                    uncomfortable: badBoolList[10]!,
+                    privateMeeting: badBoolList[11]!,
                     createdAt: Timestamp.now(),
                   );
                   // 2. 비매너 평가 보내기
