@@ -38,12 +38,12 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: _evaluation.myEvaluation.value.evaluationType == 'good'
-                    ?
-                    /* 최고에요 */
-                    Row(
+              _evaluation.goodEvaluation.value.evaluationType == 'good'
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child:
+                          /* 최고에요 */
+                          Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
@@ -52,19 +52,23 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                             color: Colors.blue[800],
                           ),
                         ],
-                      )
-                    : /* 별로에요 */
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            CupertinoIcons.hand_thumbsdown_fill,
-                            size: 150,
-                            color: Colors.grey[400],
-                          ),
-                        ],
                       ),
-              ),
+                    )
+                  : SizedBox.shrink(),
+              _evaluation.badEvaluation.value.evaluationType == 'bad'
+                  ?
+                  /* 별로에요 */
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          CupertinoIcons.hand_thumbsdown_fill,
+                          size: 150,
+                          color: Colors.grey[400],
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
               Text(
                 'To. $userName',
               ),

@@ -20,10 +20,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
   final String postTitle = Get.arguments['postTitle'];
-
   String _evaluationtype = '';
-
-  bool? _isChecked = false;
 
   //9개 매너 평가 항목 리스트
   var goodMannerList = [
@@ -170,16 +167,16 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       shrinkWrap: true,
                       itemCount: badMannerList.length,
                       itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () => null,
-                          child: CheckboxListTile(
-                            value: _isChecked,
-                            controlAffinity: ListTileControlAffinity.leading,
-                            onChanged: (value) =>
-                                setState(() => _isChecked = value),
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(badMannerList[index].toString()),
-                          ),
+                        List<bool?> isCheckList = List<bool?>.generate(
+                            badMannerList.length, (x) => x == false,
+                            growable: false); //항목 개수많은 false 리스트 생성
+                        return CheckboxListTile(
+                          value: isCheckList[index],
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (value) =>
+                              setState(() => isCheckList[index] = value),
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(badMannerList[index].toString()),
                         );
                       },
                     )
@@ -191,17 +188,16 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       shrinkWrap: true,
                       itemCount: goodMannerList.length,
                       itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Checkbox(
-                              value: _isChecked,
-                              onChanged: (value) =>
-                                  setState(() => _isChecked = value),
-                            ),
-                            Text(
-                              goodMannerList[index].toString(),
-                            ),
-                          ],
+                        List<bool?> isCheckList = List<bool?>.generate(
+                            goodMannerList.length, (x) => x == false,
+                            growable: false); //항목 개수많은 false 리스트 생성
+                        return CheckboxListTile(
+                          value: true,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (value) =>
+                              setState(() => isCheckList[index] = value),
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(goodMannerList[index].toString()),
                         );
                       },
                     )
@@ -260,30 +256,66 @@ class _SendReviewPageState extends State<SendReviewPage> {
               '보내기',
               () => Get.back(),
               () async {
-                // 평가 인스턴스 생성
-                final MannerEvaluationModel _evaluationModel =
-                    MannerEvaluationModel(
-                  idFrom: uid,
-                  idTo: CurrentUser.uid,
-                  evaluationType: _evaluationtype,
-                  selectList: [],
-                  createdAt: Timestamp.now(),
-                );
-                // notification 인스턴스 생성
-                final NotificationModel _ntfModel = NotificationModel(
-                  idTo: uid,
-                  idFrom: CurrentUser.uid,
-                  userName: FirebaseAuth.instance.currentUser!.displayName ??
-                      '(이름없음)',
-                  type: 'review',
-                  postId: postId,
-                  postTitle: postTitle,
-                  createdAt: Timestamp.now(),
-                );
-                //평가 보내기
-                await _evaluation.addMannerEvaluation(
-                    uid, chatRoomId, _evaluationModel, _ntfModel);
-                //선택사항인 리뷰 작성 시
+                /* '최고예요'를 선택한 경우 */
+                if (_evaluationtype == 'good') {
+                  // 1. 매너 평가 인스턴스 생성
+                  final GoodEvaluationModel _goodModel = GoodEvaluationModel(
+                    idFrom: uid,
+                    idTo: CurrentUser.uid,
+                    evaluationType: _evaluationtype,
+                    kindManner: false,
+                    goodAppointment: false,
+                    fastAnswer: false,
+                    strongMental: false,
+                    goodGameSkill: false,
+                    softMannerTalk: false,
+                    comfortable: false,
+                    goodCommunication: false,
+                    hardGame: false,
+                    createdAt: Timestamp.now(),
+                  );
+                  // 2. notification 인스턴스 생성
+                  final NotificationModel _ntfModel = NotificationModel(
+                    idTo: uid,
+                    idFrom: CurrentUser.uid,
+                    userName: FirebaseAuth.instance.currentUser!.displayName ??
+                        '(이름없음)',
+                    type: 'review',
+                    postId: postId,
+                    postTitle: postTitle,
+                    createdAt: Timestamp.now(),
+                  );
+                  // 3. 매너 평가 보내기
+                  await _evaluation.addGoodEvaluation(
+                      uid, chatRoomId, _goodModel, _ntfModel);
+                } /* '별로예요'를 선택한 경우 */
+                else if (_evaluationtype == 'bad') {
+                  // 1. 비매너 평가 인스턴스 생성
+                  final BadEvaluationModel _badModel = BadEvaluationModel(
+                    idFrom: uid,
+                    idTo: CurrentUser.uid,
+                    evaluationType: _evaluationtype,
+                    badManner: false,
+                    badAppointment: false,
+                    slowAnswer: false,
+                    weakMental: false,
+                    badGameSkill: false,
+                    troll: false,
+                    abuseWord: false,
+                    sexualWord: false,
+                    shortTalk: false,
+                    noCommunication: false,
+                    uncomfortable: false,
+                    privateMeeting: false,
+                    createdAt: Timestamp.now(),
+                  );
+                  // 2. 비매너 평가 보내기
+                  await _evaluation.addBadEvaluation(
+                      uid, chatRoomId, _badModel);
+                }
+                null;
+
+                /* 선택사항인 리뷰 작성 시 */
                 if ((_reviewText.text.trim() != '') ||
                     _reviewText.text.trim().isNotEmpty) {
                   // 1. 리뷰 인스턴스 생성
@@ -297,10 +329,10 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     content: _reviewText.text.trim(),
                     createdAt: Timestamp.now(),
                   );
-                  // 2. 작성한 후기 파이어스토어에 반영
-                  await _review.addMannerReview(
-                      uid, chatRoomId, _reviewModel, _ntfModel);
-                  _reviewText.clear(); // 3. 작성한 리뷰 텍스트 전부 삭제
+                  // 2. 작성한 후기 파이어스토어에 보내기
+                  await _review.addMannerReview(uid, chatRoomId, _reviewModel);
+                  // 3. 작성한 리뷰 텍스트 전부 삭제
+                  _reviewText.clear();
                 }
                 //보낸 매너후기에 대한 bool값을 채팅화면으로 가기 전 업데이트
                 await _evaluation.checkExistReview(uid, chatRoomId);

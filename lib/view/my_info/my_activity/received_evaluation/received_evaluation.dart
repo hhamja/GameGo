@@ -28,7 +28,7 @@ class ReceivedMannerEvaluationPage extends StatelessWidget {
             ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: mannerEvaluationList['goodMannerList'].length,
+              itemCount:  mannerEvaluationList['goodMannerList'].length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   title:

@@ -89,7 +89,8 @@ export 'package:mannergamer/view/my_info/setting/user_setting/myAccount/authenti
 export 'package:mannergamer/view/my_info/setting/signOut/signOut_sms.dart';
 
 /* Models */
-export 'package:mannergamer/model/manner_evaluation/manner_evaluation_model.dart';
+export 'package:mannergamer/model/manner_evaluation/good_evaluation_model.dart';
+export 'package:mannergamer/model/manner_evaluation/bad_evaluation_model.dart';
 export 'package:mannergamer/model/report/report_model.dart';
 export 'package:mannergamer/model/signOut_feedback/feedback_model.dart';
 export 'package:mannergamer/model/notification/notification_model.dart';

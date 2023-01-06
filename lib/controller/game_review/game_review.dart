@@ -11,8 +11,11 @@ class GameReviewController extends GetxController {
 
   /* 선택사항인 게임후기 작성시, 받는 유저 하위 컬렉션 'review'에 추가
   * 게임후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기 */
-  Future addMannerReview(uid, chatRoomId, GameReviewModel GameReviewModel,
-      NotificationModel ntfModel) async {
+  Future addMannerReview(
+    uid,
+    chatRoomId,
+    GameReviewModel GameReviewModel,
+  ) async {
     //유저 하위 컬렉션에 리뷰 저장하기
     await _userDB.doc(uid).collection('review').doc(chatRoomId).set(
       {
