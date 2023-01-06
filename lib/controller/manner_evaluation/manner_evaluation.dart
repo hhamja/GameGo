@@ -1,35 +1,35 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class MannerEvaluationController extends GetxController {
+class EvaluationController extends GetxController {
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
   final CollectionReference _ntfDB =
       FirebaseFirestore.instance.collection('notification');
 
-  // /* 매너평가 항목들의 Rxbool 변수 선언 */
-  // RxBool kindManner = false.obs;
-  // RxBool goodAppointment = false.obs;
-  // RxBool fastAnswer = false.obs;
-  // RxBool strongMental = false.obs;
-  // RxBool goodGameSkill = false.obs;
-  // RxBool softMannerTalk = false.obs;
-  // RxBool goodCommunication = false.obs;
-  // RxBool comfortable = false.obs;
-  // RxBool hardGame = false.obs;
+  /* 매너 평가 항목들을 순서대로 담은 리스트 선언 */
+  RxList kindManner = [].obs;
+  RxList goodAppointment = [].obs;
+  RxList fastAnswer = [].obs;
+  RxList strongMental = [].obs;
+  RxList goodGameSkill = [].obs;
+  RxList softMannerTalk = [].obs;
+  RxList goodCommunication = [].obs;
+  RxList comfortable = [].obs;
+  RxList hardGame = [].obs;
 
-  // /* 비매너평가 항목들의 RxBool 변수 선언 */
-  // RxBool badManner = false.obs;
-  // RxBool badAppointment = false.obs;
-  // RxBool slowAnswer = false.obs;
-  // RxBool weakMental = false.obs;
-  // RxBool badGameSkill = false.obs;
-  // RxBool troll = false.obs;
-  // RxBool abuseWord = false.obs;
-  // RxBool sexualWord = false.obs;
-  // RxBool shortTalk = false.obs;
-  // RxBool noCommunication = false.obs;
-  // RxBool uncomfortable = false.obs;
-  // RxBool privateMeeting = false.obs;
+  /* 비매너평가 항목들을 따로 담을 Rx List 선언 */
+  RxList badManner = [].obs;
+  RxList badAppointment = [].obs;
+  RxList slowAnswer = [].obs;
+  RxList weakMental = [].obs;
+  RxList badGameSkill = [].obs;
+  RxList troll = [].obs;
+  RxList abuseWord = [].obs;
+  RxList sexualWord = [].obs;
+  RxList shortTalk = [].obs;
+  RxList noCommunication = [].obs;
+  RxList uncomfortable = [].obs;
+  RxList privateMeeting = [].obs;
 
   /* 매너 평가 담는 GoodEvaluationModel */
   Rx<GoodEvaluationModel> goodEvaluation = GoodEvaluationModel(
@@ -67,9 +67,9 @@ class MannerEvaluationController extends GetxController {
     createdAt: Timestamp.now(),
   ).obs;
   /* 내가 받은 매너 평가 리스트 */
-  RxList<GoodEvaluationModel> goodEvaluationList = <GoodEvaluationModel>[].obs;
+  RxList<int> goodEvaluationList = <int>[].obs;
   /* 내가 받은 비매너 평가 리스트 */
-  RxList<BadEvaluationModel> badEvaluationList = <BadEvaluationModel>[].obs;
+  RxList<int> badEvaluationList = <int>[].obs;
   /* 보낸 매너평가가 있는지 여부 */
   RxBool isExistEvaluation = false.obs;
 
@@ -81,7 +81,7 @@ class MannerEvaluationController extends GetxController {
   Future addGoodEvaluation(uid, chatRoomId, GoodEvaluationModel goodEvaluation,
       NotificationModel ntfModel) async {
     //1. 유저의 하위 컬렉션에 추가
-    await _userDB.doc(uid).collection('evaluation').doc(chatRoomId).set(
+    await _userDB.doc(uid).collection('goodEvaluation').doc(chatRoomId).set(
       {
         'evaluationType': goodEvaluation.evaluationType,
         'idFrom': goodEvaluation.idFrom,
@@ -122,7 +122,7 @@ class MannerEvaluationController extends GetxController {
     BadEvaluationModel badEvaluation,
   ) async {
     //유저의 하위 컬렉션에 추가
-    await _userDB.doc(uid).collection('evaluation').doc(chatRoomId).set(
+    await _userDB.doc(uid).collection('badEvaluation').doc(chatRoomId).set(
       {
         'evaluationType': badEvaluation.evaluationType,
         'idFrom': badEvaluation.idFrom,
@@ -145,27 +145,57 @@ class MannerEvaluationController extends GetxController {
   }
 
   /* 매너 평가 리스트 받기 */
-  Future getGoodEvaluation(uid) async {
-    final ref = _userDB.doc(uid).collection('evaluation');
+  Future getGoodEvaluationList(uid) async {
+    var _goodEvaluationList = [];
+    final ref = _userDB.doc(uid).collection('goodEvaluation');
     await ref
         .orderBy('createdAt', descending: true) //최신일 수록 위로 오게
         .where('evaluationType', isEqualTo: 'good') //매너 평가만
         .get()
         .then(
-          (snapshot) => goodEvaluationList.assignAll(
+          (snapshot) => _goodEvaluationList.assignAll(
             snapshot.docs.map(
               (e) => GoodEvaluationModel.fromDocumentSnapshot(e),
             ),
           ),
         );
+    // 매너평가 각 항목의 리스트로 세분화 하여 나누기(true인 값만)
+    kindManner.value = _goodEvaluationList
+        .where((element) => element.kindManner == true)
+        .toList();
+    goodAppointment.value = _goodEvaluationList
+        .where((element) => element.goodAppointment == true)
+        .toList();
+    fastAnswer.value = _goodEvaluationList
+        .where((element) => element.fastAnswer == true)
+        .toList();
+    strongMental.value = _goodEvaluationList
+        .where((element) => element.strongMental == true)
+        .toList();
+    goodGameSkill.value = _goodEvaluationList
+        .where((element) => element.goodGameSkill == true)
+        .toList();
+    softMannerTalk.value = _goodEvaluationList
+        .where((element) => element.softMannerTalk == true)
+        .toList();
+    comfortable.value = _goodEvaluationList
+        .where((element) => element.comfortable == true)
+        .toList();
+    goodCommunication.value = _goodEvaluationList
+        .where((element) => element.goodCommunication == true)
+        .toList();
+    hardGame.value = _goodEvaluationList
+        .where((element) => element.hardGame == true)
+        .toList();
   }
 
   /* 비매너 평가 리스트 받기 */
   Future getBadEvaluationList(uid) async {
-    final ref = _userDB.doc(uid).collection('evaluation');
+    var badEvaluationList = [];
+    final ref = _userDB.doc(uid).collection('badEvaluation');
     await ref
         .orderBy('createdAt', descending: true) //최신일 수록 위로 오게
-        .where('evaluationType', isEqualTo: 'bad') //비매너 평가만
+        // .where('evaluationType', isEqualTo:'bad') //비매너 평가만
         .get()
         .then(
           (snapshot) => badEvaluationList.assignAll(
@@ -174,6 +204,43 @@ class MannerEvaluationController extends GetxController {
             ),
           ),
         );
+    // 비매너 평가 각 항목의 리스트로 세분화 하여 나누기
+    //(true인 값만)
+    badManner.value = badEvaluationList
+        .where((element) => element.badManner == true)
+        .toList();
+    badAppointment.value = badEvaluationList
+        .where((element) => element.badAppointment == true)
+        .toList();
+    slowAnswer.value = badEvaluationList
+        .where((element) => element.slowAnswer == true)
+        .toList();
+    weakMental.value = badEvaluationList
+        .where((element) => element.weakMental == true)
+        .toList();
+    badGameSkill.value = badEvaluationList
+        .where((element) => element.badGameSkill == true)
+        .toList();
+    troll.value =
+        badEvaluationList.where((element) => element.troll == true).toList();
+    abuseWord.value = badEvaluationList
+        .where((element) => element.abuseWord == true)
+        .toList();
+    sexualWord.value = badEvaluationList
+        .where((element) => element.sexualWord == true)
+        .toList();
+    shortTalk.value = badEvaluationList
+        .where((element) => element.shortTalk == true)
+        .toList();
+    noCommunication.value = badEvaluationList
+        .where((element) => element.noCommunication == true)
+        .toList();
+    uncomfortable.value = badEvaluationList
+        .where((element) => element.uncomfortable == true)
+        .toList();
+    privateMeeting.value = badEvaluationList
+        .where((element) => element.privateMeeting == true)
+        .toList();
   }
 
   /* 내가 보낸 매너평가 받기 

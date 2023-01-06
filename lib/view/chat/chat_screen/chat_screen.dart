@@ -16,8 +16,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
-  final MannerEvaluationController _evaluation =
-      Get.put(MannerEvaluationController());
+  final EvaluationController _evaluation = Get.put(EvaluationController());
   final AppointmentController _appoint = Get.put(AppointmentController());
   final ChatController _chat = Get.find<ChatController>();
 

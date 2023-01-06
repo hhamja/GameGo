@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:mannergamer/utilites/index/index.dart';
 
 class SendReviewPage extends StatefulWidget {
@@ -10,8 +8,7 @@ class SendReviewPage extends StatefulWidget {
 }
 
 class _SendReviewPageState extends State<SendReviewPage> {
-  final MannerEvaluationController _evaluation =
-      Get.find<MannerEvaluationController>();
+  final EvaluationController _evaluation = Get.find<EvaluationController>();
   final GameReviewController _review = Get.put(GameReviewController());
   final ScrollController _scrollC = ScrollController();
   final TextEditingController _reviewText = TextEditingController();
