@@ -69,7 +69,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
                     },
                   ),
                   SettingsTile(
-                    title: CustomMannerAge(_user.userInfo['mannerAge']),
+                    title: CustomMannerAge(
+                      _user.userInfo['mannerAge'].toString(),
+                    ),
                   ),
                 ],
               ),

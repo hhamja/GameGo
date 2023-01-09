@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MannerAgePage extends StatefulWidget {
-  final String mannerAge; //현재유저 매너나이
+  final mannerAge; //현재유저 매너나이
   const MannerAgePage({Key? key, required this.mannerAge}) : super(key: key);
 
   @override

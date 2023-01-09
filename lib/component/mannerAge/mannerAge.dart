@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class CustomMannerAge extends StatelessWidget {
-  final String mannerAge; //매너나이
+  final mannerAge; //매너나이
   const CustomMannerAge(this.mannerAge);
 
   @override
@@ -63,7 +63,7 @@ class CustomMannerAge extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            '${mannerAge}세',
+                            '${mannerAge.toString()}세',
                             style: TextStyle(
                                 fontSize: 20, height: 1.2, color: Colors.blue),
                           ),

@@ -12,7 +12,7 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
   /* PostDetailPage에서 받은 게시자 uid, 이름, 프로필, 매너나이 */
   final String uid = Get.arguments['uid'];
   final String userName = Get.arguments['userName'];
-  final String mannerAge = Get.arguments['mannerAge'];
+  final String mannerAge = Get.arguments['mannerAge']; //아규먼트로 넘길 때 String으로 변환
   final String profileUrl = Get.arguments['profileUrl'];
   /* PostDetailPage에서 게시글의 고유 id값 */
   final String postId = Get.arguments['postId'];

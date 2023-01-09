@@ -38,7 +38,7 @@ class _AddPostPageState extends State<AddPostPage> {
     final postModel = PostModel(
       postId: FirebaseFirestore.instance.collection('post').doc().id,
       uid: _auth.currentUser!.uid,
-      mannerAge: userModel.mannerAge.toString(),
+      mannerAge: userModel.mannerAge,
       userName: userModel.userName.toString(),
       profileUrl: userModel.profileUrl.toString(),
       title: _titleController.text.trim(),

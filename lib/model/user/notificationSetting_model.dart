@@ -7,7 +7,7 @@ class NotificationSettingModel {
   // final String userName;
   // final String phoneNumber;
   // final String profileUrl;
-  // final String mannerAge; //초기값 20.0세
+  // final num mannerAge; //초기값 20.0세
   // final String? chattingWith; //현재 채팅하고 있는 유저 uid
   // final String? pushToken; //fcm의 장치 토큰
   // final Timestamp createdAt;

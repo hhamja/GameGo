@@ -17,7 +17,7 @@ class GameReviewController extends GetxController {
     GameReviewModel GameReviewModel,
   ) async {
     //유저 하위 컬렉션에 리뷰 저장하기
-    return _userDB.doc(uid).collection('review').doc(chatRoomId).set(
+    await _userDB.doc(uid).collection('review').doc(chatRoomId).set(
       {
         'idFrom': GameReviewModel.idFrom,
         'idTo': GameReviewModel.idTo,
@@ -26,6 +26,9 @@ class GameReviewController extends GetxController {
         'content': GameReviewModel.content,
         'createdAt': GameReviewModel.createdAt,
       },
+    );
+    await _userDB.doc(uid).update(
+      {'mannerAge'},
     );
   }
 

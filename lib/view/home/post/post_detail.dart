@@ -50,8 +50,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                               'profileUrl':
                                   _post.postInfo['profileUrl'], //상대 프로필
                               'userName': _post.postInfo['userName'], //상대 이름
-                              'mannerAge':
-                                  _post.postInfo['mannerAge'], //상대 매너나이
+                              'mannerAge': _post.postInfo['mannerAge']
+                                  .toString(), //상대 매너나이
                               'uid': _post.postInfo['uid'], //상대 uid
                             },
                           ); //다른유저 게시물 ? 해당 유저 프로필로 이동
@@ -70,7 +70,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(_post.postInfo['mannerAge'] + '세'),
+                          Text(_post.postInfo['mannerAge'].toString() + '세'),
                           Icon(Icons.child_care),
                         ],
                       ),
@@ -228,7 +228,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                     'postId': _post.postInfo['postId'],
                                     'uid': _post.postInfo['uid'],
                                     'userName': _post.postInfo['userName'],
-                                    'mannerAge': _post.postInfo['mannerAge'],
+                                    'mannerAge':
+                                        _post.postInfo['mannerAge'].toString(),
                                     'profileUrl': _post.postInfo['profileUrl'],
                                   }, //채팅페이지에 필요한 데이터 전달
                                 );

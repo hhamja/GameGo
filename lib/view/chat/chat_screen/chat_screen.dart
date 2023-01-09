@@ -11,7 +11,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   /* 상대유저정보 (이름, 프로필, 매너나이, uid) */
   final String userName = Get.arguments['userName'];
   final String profileUrl = Get.arguments['profileUrl'];
-  final String mannerAge = Get.arguments['mannerAge'];
+  final String mannerAge =
+      Get.arguments['mannerAge']; //넘겨줄 때 String으로 변환 후 넘겨 줌
   final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];

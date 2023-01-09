@@ -104,7 +104,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             _auth.currentUser!.phoneNumber, //인증받은 폰번호 이전페이지에서 받기
         profileUrl: profileImageUrl ??
             _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
-        mannerAge: '20.0',
+        mannerAge: 20.0,
         chatPushNtf: true,
         activityPushNtf: true,
         noticePushNtf: true,
