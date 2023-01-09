@@ -17,7 +17,7 @@ class GameReviewController extends GetxController {
     GameReviewModel GameReviewModel,
   ) async {
     //유저 하위 컬렉션에 리뷰 저장하기
-    await _userDB.doc(uid).collection('review').doc(chatRoomId).set(
+    return _userDB.doc(uid).collection('review').doc(chatRoomId).set(
       {
         'idFrom': GameReviewModel.idFrom,
         'idTo': GameReviewModel.idTo,
@@ -30,11 +30,11 @@ class GameReviewController extends GetxController {
   }
 
   /* 게임후기 리스트로 받기 */
-  Future getGameReview(uid) async {
-    final ref = _userDB.doc(uid).collection('review');
-    await ref
+  Future getGameReviewList(uid) async {
+    return _userDB
+        .doc(uid)
+        .collection('review')
         .orderBy('createdAt', descending: true) //최신일 수록 위로 오게
-        .where('feeling', isEqualTo: 'bad') //비매너후기만
         .get()
         .then(
           (snapshot) => gameReviewList.assignAll(

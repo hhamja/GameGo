@@ -21,6 +21,8 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(uid);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('받은 매너 평가'),

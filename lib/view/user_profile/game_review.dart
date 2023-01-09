@@ -9,16 +9,18 @@ class UserGameReviewPage extends StatefulWidget {
 
 class _UserGameReviewPageState extends State<UserGameReviewPage> {
   final GameReviewController _review = Get.put(GameReviewController());
+  final String uid = Get.arguments['uid']; //해당 유저 uid
 
   @override
   void initState() {
     super.initState();
-    // 내가 받은 게임후기 리스트 받기
-    // _review.getBadReviewList(CurrentUser.uid);
+    // 해당 유저가 받은 게임후기 리스트 받기
+    _review.getGameReviewList(uid);
   }
 
   @override
   Widget build(BuildContext context) {
+    print(uid);
     return Scaffold(
       appBar: AppBar(
         title: Text('받은 게임 후기'),
@@ -29,13 +31,13 @@ class _UserGameReviewPageState extends State<UserGameReviewPage> {
             itemBuilder: (BuildContext context, int index) {
               final reviewList = _review.gameReviewList[index];
               return CustomTwoLineListTile(
-                'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689', //기본프로필
-                '익명 후기', //비매너평가는 익명으로
+                reviewList.profileUrl, //후기 보낸 사람의 프로필
+                reviewList.userName, //후기 보낸 사람의 이름
                 reviewList.content == '' ? '(내용없음)' : reviewList.content,
                 null,
                 null,
-                false,
-                '',
+                true,
+                Jiffy(reviewList.createdAt.toDate()).fromNow(), // '-전'으로 시간표시
                 () => null,
               );
             },
