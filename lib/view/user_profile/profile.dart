@@ -12,9 +12,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final String profileUrl = Get.arguments['profileUrl'];
   final String userName = Get.arguments['userName'];
   final String mannerAge = Get.arguments['mannerAge'];
+  final String uid = Get.arguments['uid'];
 
   @override
   Widget build(BuildContext context) {
+    print('해당 유저 uid : $uid');
     return Scaffold(
       appBar: AppBar(
         title: Text('프로필'),
@@ -64,14 +66,28 @@ class _UserProfilePageState extends State<UserProfilePage> {
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text('받은 매너 평가'),
-              onTap: () {},
+              onTap: () {
+                Get.to(
+                  () => UserMannerEvaluationPage(),
+                  arguments: {
+                    'uid': uid,
+                  },
+                );
+              },
               trailing: Icon(Icons.keyboard_arrow_right_outlined),
             ),
             Divider(thickness: 1),
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text('받은 게임 후기'),
-              onTap: () {},
+              onTap: () {
+                Get.to(
+                  () => UserGameReviewPage(),
+                  arguments: {
+                    'uid': uid,
+                  },
+                );
+              },
               trailing: Icon(Icons.keyboard_arrow_right_outlined),
             ),
             Divider(thickness: 1),

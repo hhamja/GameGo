@@ -44,11 +44,17 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   onTap: CurrentUser.uid == _post.postInfo['uid']
                       ? null //나의게시물? 프로필 이동 X
                       : () {
-                          Get.toNamed('/userProfile', arguments: {
-                            'profileUrl': _post.postInfo['profileUrl'],
-                            'userName': _post.postInfo['userName'],
-                            'mannerAge': _post.postInfo['mannerAge']
-                          }); //다른유저 게시물 ? 해당 유저 프로필로 이동
+                          Get.toNamed(
+                            '/userProfile', //상대 프로필 페이지로 이동
+                            arguments: {
+                              'profileUrl':
+                                  _post.postInfo['profileUrl'], //상대 프로필
+                              'userName': _post.postInfo['userName'], //상대 이름
+                              'mannerAge':
+                                  _post.postInfo['mannerAge'], //상대 매너나이
+                              'uid': _post.postInfo['uid'], //상대 uid
+                            },
+                          ); //다른유저 게시물 ? 해당 유저 프로필로 이동
                         },
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(_post.postInfo['profileUrl']),

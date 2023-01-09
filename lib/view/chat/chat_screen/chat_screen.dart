@@ -45,21 +45,34 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
     _getAppointment();
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          textBaseline: TextBaseline.alphabetic,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              userName,
-              style: TextStyle(fontSize: 20),
-            ), // 상대유저이름
-            SizedBox(width: 5),
-            Text(
-              mannerAge + '세',
-              style: TextStyle(fontSize: 15),
-            ), //유저 매너나이 (글씨 작게)
-          ],
+        title: InkWell(
+          onTap: () {
+            Get.toNamed(
+              '/userProfile',
+              arguments: {
+                'profileUrl': profileUrl, //상대 프로필
+                'userName': userName, //상대 이름
+                'mannerAge': mannerAge, //상대 매너나이
+                'uid': uid, //상대 uid
+              },
+            );
+          },
+          child: Row(
+            textBaseline: TextBaseline.alphabetic,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                userName,
+                style: TextStyle(fontSize: 20),
+              ), // 상대유저이름
+              SizedBox(width: 5),
+              Text(
+                mannerAge + '세',
+                style: TextStyle(fontSize: 15),
+              ), //유저 매너나이 (글씨 작게)
+            ],
+          ),
         ),
         centerTitle: true,
         actions: [

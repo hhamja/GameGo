@@ -1,13 +1,13 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class ReceivedGameReviewPage extends StatefulWidget {
-  const ReceivedGameReviewPage({Key? key}) : super(key: key);
+class UserGameReviewPage extends StatefulWidget {
+  const UserGameReviewPage({Key? key}) : super(key: key);
 
   @override
-  State<ReceivedGameReviewPage> createState() => _ReceivedGameReviewPageState();
+  State<UserGameReviewPage> createState() => _UserGameReviewPageState();
 }
 
-class _ReceivedGameReviewPageState extends State<ReceivedGameReviewPage> {
+class _UserGameReviewPageState extends State<UserGameReviewPage> {
   final GameReviewController _review = Get.put(GameReviewController());
 
   @override

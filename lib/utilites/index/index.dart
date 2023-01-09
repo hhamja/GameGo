@@ -32,7 +32,9 @@ export 'package:grouped_list/grouped_list.dart';
 /* Screens */
 export 'package:mannergamer/view/my_info/my_activity/received_review/received_review.dart';
 export 'package:mannergamer/view/game_review/my_sent_review.dart';
-export 'package:mannergamer/view/user_profile/user_profile.dart';
+export 'package:mannergamer/view/user_profile/profile.dart';
+export 'package:mannergamer/view/user_profile/game_review.dart';
+export 'package:mannergamer/view/user_profile/manner_evaluation.dart';
 export 'package:mannergamer/view/game_review/send_review.dart';
 export 'package:mannergamer/view/splashPage/myApp.dart';
 export 'package:mannergamer/view/splashPage/splash.dart';

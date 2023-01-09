@@ -31,7 +31,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       return Text(
         '닉네임은 2자 이상 입력해주세요.',
         style: TextStyle(color: Colors.red),
-      );
+      );  
     }
     return Text('프로필 사진과 닉네임을 입력해주세요.');
   }
