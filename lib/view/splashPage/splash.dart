@@ -30,7 +30,7 @@ class SplashPage extends StatelessWidget {
                 Expanded(child: SizedBox()),
                 Align(
                   child: Text(
-                    "© Copyright 2022. mannergamer",
+                    "© Copyright 2023. mannergamer",
                     style: TextStyle(
                         fontSize: fullWidth * (14 / 360), color: Colors.grey),
                   ),

@@ -2,13 +2,28 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class PostController extends GetxController with StateMixin<RxList<PostModel>> {
   static PostController get to => Get.find<PostController>();
-  /* 파이어스토어 Post 컬렉션 참조 instance */
+  final CollectionReference _userDB =
+      FirebaseFirestore.instance.collection('user');
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
   /* RxList postList [] 선언 */
   RxList<PostModel> postList = <PostModel>[].obs;
   /* Post Id로 받은 게시글정보 */
-  RxMap<String, dynamic> postInfo = Map<String, dynamic>().obs;
+  Rx<PostModel> _postInfo = PostModel(
+    postId: '',
+    uid: '',
+    userName: '',
+    profileUrl: '',
+    title: '',
+    maintext: '',
+    gamemode: '',
+    like: 0,
+    createdAt: Timestamp.now(),
+  ).obs;
+  PostModel get postInfo => _postInfo.value;
+  /* postId로 받은 데이터에서 uid를 다시 넣어 유저의 매너나이 받기 */
+  RxString _mannerAge = ''.obs;
+  String get mannerAge => _mannerAge.value;
 
   @override
   void onInit() {
@@ -23,7 +38,6 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
       'uid': postModel.uid,
       'userName': postModel.userName,
       'profileUrl': postModel.profileUrl,
-      'mannerAge': postModel.mannerAge,
       'title': postModel.title,
       'maintext': postModel.maintext,
       'gamemode': postModel.gamemode,
@@ -158,9 +172,20 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
 
   /* postId을 통해서 특정 게시글의 데이터 받기 */
   Future getPostInfoByid(postId) async {
-    await _postDB.doc(postId).get().then((value) {
-      postInfo.value = value.data()! as Map<String, dynamic>;
-      print(postInfo); //게시글 데이터 프린트
-    });
+    //1. 특정 게시글의 데이터 Rx<PostModel> _postInfo에 담기
+    await _postDB.doc(postId).get().then(
+      (e) {
+        _postInfo.value = PostModel.fromDocumentSnapshot(e);
+        print(_postInfo);
+      },
+    );
+    //2. 1번에서 담은 데이터 중 uid를 넣어 게시자의 매너나이 데이터 받기
+    await _userDB.doc(_postInfo.value.uid).get().then(
+      (e) {
+        var data = e.data()! as Map<String, dynamic>;
+        print(data['mannerAge']); //매너나이 프린트
+        _mannerAge.value = data['mannerAge'].toString(); //num인 매너나이 String으로
+      },
+    );
   }
 }

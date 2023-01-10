@@ -1,8 +1,11 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class GameReviewController extends GetxController {
+  final MannerAgeController _age = Get.put(MannerAgeController());
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
+  final CollectionReference _reportDB =
+      FirebaseFirestore.instance.collection('report');
 
   /* 채팅방에서 확인하는 내가 작성해서 보낸 매너리뷰 */
   RxString myReviewContent = ''.obs;
@@ -10,13 +13,15 @@ class GameReviewController extends GetxController {
   RxList<GameReviewModel> gameReviewList = <GameReviewModel>[].obs;
 
   /* 선택사항인 게임후기 작성시, 받는 유저 하위 컬렉션 'review'에 추가
-  * 게임후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기 */
+  * 게임후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기
+  * 매너후기를 보낸 경우에만 보내기
+  * 비매너 후기를 보낸 경우에는 신고로 매너게이머 팀에 보내지도록 하기 */
   Future addMannerReview(
     uid,
     chatRoomId,
     GameReviewModel GameReviewModel,
   ) async {
-    //유저 하위 컬렉션에 리뷰 저장하기
+    //1. 유저 하위 컬렉션에 리뷰 저장하기
     await _userDB.doc(uid).collection('review').doc(chatRoomId).set(
       {
         'idFrom': GameReviewModel.idFrom,
@@ -27,9 +32,26 @@ class GameReviewController extends GetxController {
         'createdAt': GameReviewModel.createdAt,
       },
     );
-    await _userDB.doc(uid).update(
-      {'mannerAge'},
+    //2. 매너 게임 후기 받는 유저의 매너나이 (+ 0.1)
+    await _age.plusMannerAge(uid);
+  }
+
+  /* 비매너 게임 후기를 작성한 경우 
+  * 상대방에게 전달하지 않고 신고하기로 처리하여 운영자가 관리하도록 하기 */
+  Future addUnMannerReview(ReportModel model) async {
+    //1. 서버의 'report'에 저장하기
+    await _reportDB.add(
+      {
+        'idFrom': model.idFrom,
+        'idTo': model.idTo,
+        'postId': model.postId,
+        'chatRoomId': model.chatRoomId,
+        'reportContent': model.reportContent,
+        'createdAt': model.createdAt,
+      },
     );
+    //2. 비매너 게임 후기 받는 유저의 매너나이 (- 0.1)
+    await _age.minusMannerAge(model.idTo);
   }
 
   /* 게임후기 리스트로 받기 */

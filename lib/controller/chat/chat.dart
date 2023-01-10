@@ -18,6 +18,9 @@ class ChatController extends GetxController {
   RxBool isShowDate = false.obs;
   /* 서로서로 보낸 메시지가 1개 이상인지; 약속설정 가능 여부 */
   RxBool isOkAppoint = false.obs;
+  /* 채팅방에서 상대방 매너나이 */
+  RxString _mannerAge = ''.obs;
+  String get mannerAge => _mannerAge.value;
 
   @override
   void onInit() {
@@ -32,7 +35,18 @@ class ChatController extends GetxController {
     super.onClose();
   }
 
-/* 새로운 채팅 입력 시 채팅방 생성하기 */
+  /* 채팅에서 받은 데이터에서 내가 아닌 상대방의 uid로 매너나이 받기 */
+  Future getUserMannerAge(uid) async {
+    await _userDB.doc(uid).get().then(
+      (e) {
+        var data = e.data()! as Map<String, dynamic>;
+        print(data['mannerAge']); //매너나이 프린트
+        _mannerAge.value = data['mannerAge'].toString(); //num인 매너나이 String으로
+      },
+    );
+  }
+
+  /* 새로운 채팅 입력 시 채팅방 생성하기 */
   Future createNewChatRoom(ChatRoomModel chatRoomModel) async {
     final res = await _chatDB.doc(chatRoomModel.chatRoomId).get();
     //채팅방이 존재하지 않는다면? 새로운 채팅방 만듬
@@ -66,26 +80,32 @@ class ChatController extends GetxController {
   }
 
   /* 모든 '채팅' 리스트 스트림으로 받기 */
-  Stream<List<ChatRoomModel>> readAllChatList() {
-    return _chatDB
+  Stream<List<ChatRoomModel>> readAllChatList() async* {
+    yield* _chatDB
         .where('members', arrayContains: CurrentUser.uid)
         .orderBy('updatedAt', descending: true) //최신이 맨 위
         .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              return ChatRoomModel.fromDocumentSnapshot(e);
-            }).toList());
+        .map((snapshot) => snapshot.docs
+            .map(
+              (e) => ChatRoomModel.fromDocumentSnapshot(e),
+            )
+            .toList());
   }
 
+  // Future getUserMannerAge() async {}
+
   /* 모든 '메시지' 리스트 스트림으로 받기 */
-  Stream<List<MessageModel>> readAllMessageList(chatRoomId) {
-    return _chatDB
+  Stream<List<MessageModel>> readAllMessageList(chatRoomId) async* {
+    yield* _chatDB
         .doc(chatRoomId)
         .collection('message')
         .orderBy('timestamp', descending: false) //최신이 맨 아래
         .snapshots()
-        .map((snapshot) => snapshot.docs.map((e) {
-              return MessageModel.fromDocumentSnapshot(e);
-            }).toList());
+        .map((snapshot) => snapshot.docs.map(
+              (e) {
+                return MessageModel.fromDocumentSnapshot(e);
+              },
+            ).toList());
   }
 
   /* 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트 */
@@ -112,11 +132,6 @@ class ChatController extends GetxController {
         .collection('message')
         .doc()
         .update({'isRead': 'true'});
-
-    // final messageRef = _chatDB.doc(chatRoomId).collection('message').doc().update({'isRead': isRead});
-    // await messageRef
-    //     .where('senderId', isNotEqualTo: CurrentUser.uid) //상대가 보낸 메시지만 쿼리
-    //     .where('isRead', isEqualTo: false).; //그 중 내가 인읽은 메시지만 쿼리
   }
 
   /* 채팅페이지 들어가면, chattingWith 상대 uid로 업데이트 */
@@ -130,8 +145,8 @@ class ChatController extends GetxController {
   }
 
   /* 상대방의 메시지만 받기 */
-  Stream isContactUserMessage(chatRoomId) {
-    return _chatDB
+  Stream isContactUserMessage(chatRoomId) async* {
+    yield* _chatDB
         .doc(chatRoomId)
         .collection('message')
         .where('idFrom', isEqualTo: CurrentUser.uid)

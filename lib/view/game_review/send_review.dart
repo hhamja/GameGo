@@ -238,12 +238,12 @@ class _SendReviewPageState extends State<SendReviewPage> {
               '보내기',
               () => Get.back(),
               () async {
-                /* '최고예요'를 선택한 경우 */
+                /* 1. '최고예요'를 선택한 경우 */
                 if (_evaluationtype == 'good') {
-                  // 1. 매너 평가 인스턴스 생성
+                  // 1-1. 매너 평가 인스턴스 생성
                   final GoodEvaluationModel _goodModel = GoodEvaluationModel(
-                    idFrom: uid,
-                    idTo: CurrentUser.uid,
+                    idFrom: CurrentUser.uid,
+                    idTo: uid,
                     evaluationType: _evaluationtype,
                     kindManner: goodBoolList[0]!,
                     goodAppointment: goodBoolList[1]!,
@@ -256,10 +256,10 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     hardGame: goodBoolList[8]!,
                     createdAt: Timestamp.now(),
                   );
-                  // 2. notification 인스턴스 생성
+                  // 1-2. notification 인스턴스 생성
                   final NotificationModel _ntfModel = NotificationModel(
-                    idTo: uid,
                     idFrom: CurrentUser.uid,
+                    idTo: uid,
                     userName: FirebaseAuth.instance.currentUser!.displayName ??
                         '(이름없음)',
                     type: 'review',
@@ -267,15 +267,41 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     postTitle: postTitle,
                     createdAt: Timestamp.now(),
                   );
-                  // 3. 매너 평가 보내기
+                  // 1-3. 매너 평가 보내기
                   await _evaluation.addGoodEvaluation(
                       uid, chatRoomId, _goodModel, _ntfModel);
-                } /* '별로예요'를 선택한 경우 */
+
+                  /* 1-4. 선택사항인 후기 작성 시 */
+                  if ((_reviewText.text.trim() != '') ||
+                      _reviewText.text.trim().isNotEmpty) {
+                    // 1-4-1. 후기 인스턴스 생성
+                    final GameReviewModel _reviewModel = GameReviewModel(
+                      idFrom: CurrentUser.uid,
+                      idTo: uid,
+                      userName:
+                          FirebaseAuth.instance.currentUser!.displayName ??
+                              '(이름없음)',
+                      profileUrl:
+                          FirebaseAuth.instance.currentUser!.photoURL ?? '',
+                      content: _reviewText.text.trim(),
+                      createdAt: Timestamp.now(),
+                    );
+                    // 1-4-1. 작성한 매너 후기 'review'로 서버에 저장하기
+                    await _review.addMannerReview(
+                        uid, chatRoomId, _reviewModel);
+                    // 1-4-1. 작성한 후기 텍스트 전부 삭제
+                    _reviewText.clear();
+                    print('매너평가 + 후기작성 O');
+                  } else {
+                    print('매너평가 + 후기작성 X');
+                  }
+                }
+                /* 2. '별로예요'를 선택한 경우 */
                 else if (_evaluationtype == 'bad') {
-                  // 1. 비매너 평가 인스턴스 생성
+                  // 2-1. 비매너 평가 인스턴스 생성
                   final BadEvaluationModel _badModel = BadEvaluationModel(
-                    idFrom: uid,
-                    idTo: CurrentUser.uid,
+                    idFrom: CurrentUser.uid,
+                    idTo: uid,
                     evaluationType: _evaluationtype,
                     badManner: badBoolList[0]!,
                     badAppointment: badBoolList[1]!,
@@ -291,31 +317,30 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     privateMeeting: badBoolList[11]!,
                     createdAt: Timestamp.now(),
                   );
-                  // 2. 비매너 평가 보내기
+                  // 2-2. 비매너 평가 보내기
                   await _evaluation.addBadEvaluation(
                       uid, chatRoomId, _badModel);
+                  /* 2-3. 선택사항인 후기 작성 시 */
+                  if ((_reviewText.text.trim() != '') ||
+                      _reviewText.text.trim().isNotEmpty) {
+                    // 2-3-1. 신고 인스턴스 생성
+                    final ReportModel _report = ReportModel(
+                      idFrom: CurrentUser.uid,
+                      idTo: uid,
+                      reportContent: _reviewText.text.trim(),
+                      createdAt: Timestamp.now(),
+                    );
+                    // 2-3-2. 작성한 비매너 후기 신고하기로 서버에 보내기
+                    await _review.addUnMannerReview(_report);
+                    // 2-3-3. 작성한 후기 텍스트 전부 삭제
+                    _reviewText.clear();
+                    print('비매너평가 + 후기작성 O');
+                  } else {
+                    print('비매너평가 + 후기작성 X');
+                  }
                 }
                 null;
 
-                /* 선택사항인 리뷰 작성 시 */
-                if ((_reviewText.text.trim() != '') ||
-                    _reviewText.text.trim().isNotEmpty) {
-                  // 1. 리뷰 인스턴스 생성
-                  final GameReviewModel _reviewModel = GameReviewModel(
-                    idTo: uid,
-                    idFrom: CurrentUser.uid,
-                    userName: FirebaseAuth.instance.currentUser!.displayName ??
-                        '(이름없음)',
-                    profileUrl:
-                        FirebaseAuth.instance.currentUser!.photoURL ?? '',
-                    content: _reviewText.text.trim(),
-                    createdAt: Timestamp.now(),
-                  );
-                  // 2. 작성한 후기 파이어스토어에 보내기
-                  await _review.addMannerReview(uid, chatRoomId, _reviewModel);
-                  // 3. 작성한 리뷰 텍스트 전부 삭제
-                  _reviewText.clear();
-                }
                 //보낸 매너후기에 대한 bool값을 채팅화면으로 가기 전 업데이트
                 await _evaluation.checkExistEvaluation(uid, chatRoomId);
                 Get.back();

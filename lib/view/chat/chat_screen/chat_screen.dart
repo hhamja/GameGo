@@ -11,9 +11,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   /* 상대유저정보 (이름, 프로필, 매너나이, uid) */
   final String userName = Get.arguments['userName'];
   final String profileUrl = Get.arguments['profileUrl'];
-  final String mannerAge =
-      Get.arguments['mannerAge']; //넘겨줄 때 String으로 변환 후 넘겨 줌
-  final String uid = Get.arguments['uid'];
+  final String uid = Get.arguments['uid']; //상대 uid
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
@@ -26,6 +24,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
     super.initState();
     _getAppointment();
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
+    _chat.getUserMannerAge(uid); //상대 유저에 대한 매너나이 받기
     _chat.updateChattingWith(uid); //현재 채팅하는 상대가 누군지 업데이트
     _evaluation.checkExistEvaluation(uid, chatRoomId); //보낸 리뷰가 존재하는지 여부
   }
@@ -53,7 +52,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               arguments: {
                 'profileUrl': profileUrl, //상대 프로필
                 'userName': userName, //상대 이름
-                'mannerAge': mannerAge, //상대 매너나이
+                'mannerAge': _chat.mannerAge, //상대 매너나이
                 'uid': uid, //상대 uid
               },
             );
@@ -69,7 +68,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               ), // 상대유저이름
               SizedBox(width: 5),
               Text(
-                mannerAge + '세',
+                _chat.mannerAge + '세',
                 style: TextStyle(fontSize: 15),
               ), //유저 매너나이 (글씨 작게)
             ],
@@ -82,6 +81,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               Get.bottomSheet(
                 ChatBottomSheet(
                   chatRoomId: chatRoomId,
+                  uid: uid, //신고받은 uid
                 ),
               ),
             }, //바텀시트호출
@@ -97,10 +97,10 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
             /* 채팅에 해당하는 게시글 정보 */
             CustomPostInfo(
               postId,
-              _post.postInfo['title'], //제목
-              _post.postInfo['gamemode'], //게임모드
-              _post.postInfo['position'], //포지션
-              _post.postInfo['tear'], //티어
+              _post.postInfo.title, //제목
+              _post.postInfo.gamemode, //게임모드
+              _post.postInfo.position, //포지션
+              _post.postInfo.tear, //티어
             ),
 
             /* 약속 잡는 버튼 */
@@ -232,8 +232,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                           arguments: {
                                             'uid': uid, //상대 uid
                                             'chatRoomId': chatRoomId, //채팅방 id
-                                            'postTitle': _post
-                                                .postInfo['title'], //게시글 제목
+                                            'postTitle':
+                                                _post.postInfo.title, //게시글 제목
                                             'postId': postId, //게시글 id
                                             'userName': userName, //상대유저이름
                                           },
@@ -286,7 +286,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                     chatRoomId: chatRoomId,
                     userName: userName,
                     profileUrl: profileUrl,
-                    mannerAge: mannerAge,
+                    mannerAge: _chat.mannerAge,
                   ),
                 ],
               ),

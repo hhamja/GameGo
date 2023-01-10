@@ -138,7 +138,6 @@ class _ChatListPageState extends State<ChatListPage> {
                     'uid': _contactUser[0], //상대유저 uid
                     'profileUrl': _contactUser[1], //상대유저 프로필
                     'userName': _contactUser[2], //상대유저 이름
-                    'mannerAge': _contactUser[3].toString(), //상대유저 매너나이
                   }, //상대유저정보 전달
                 );
               },

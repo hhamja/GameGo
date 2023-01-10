@@ -5,7 +5,6 @@ class PostModel {
   final String uid; //유저의 id값, 본인의 게시물을 식별하는 조건에 필요
   final String userName; //유저의 닉네임
   final String profileUrl; //유저 프로필
-  final num mannerAge; //유저 매너나이
   final String title; //게시글 제목
   final String maintext; //게시글 본문
   final String gamemode; //게임모드
@@ -19,7 +18,6 @@ class PostModel {
     required this.uid,
     required this.userName,
     required this.profileUrl,
-    required this.mannerAge,
     required this.title,
     required this.maintext,
     required this.gamemode,
@@ -38,7 +36,6 @@ class PostModel {
       uid: snapshot['uid'],
       userName: snapshot['userName'],
       profileUrl: snapshot['profileUrl'],
-      mannerAge: snapshot['mannerAge'],
       title: snapshot['title'],
       maintext: snapshot['maintext'],
       gamemode: snapshot['gamemode'],

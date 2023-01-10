@@ -22,6 +22,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(_post.postInfo);
     print(postId);
     return Scaffold(
       appBar: AppBar(
@@ -41,26 +42,24 @@ class _PostDetailPageState extends State<PostDetailPage> {
               children: [
                 ListTile(
                   contentPadding: EdgeInsets.all(16),
-                  onTap: CurrentUser.uid == _post.postInfo['uid']
+                  onTap: CurrentUser.uid == _post.postInfo.uid
                       ? null //나의게시물? 프로필 이동 X
                       : () {
                           Get.toNamed(
                             '/userProfile', //상대 프로필 페이지로 이동
                             arguments: {
-                              'profileUrl':
-                                  _post.postInfo['profileUrl'], //상대 프로필
-                              'userName': _post.postInfo['userName'], //상대 이름
-                              'mannerAge': _post.postInfo['mannerAge']
-                                  .toString(), //상대 매너나이
-                              'uid': _post.postInfo['uid'], //상대 uid
+                              'profileUrl': _post.postInfo.profileUrl, //상대 프로필
+                              'userName': _post.postInfo.userName, //상대 이름
+                              'mannerAge': _post.mannerAge, //상대 매너나이
+                              'uid': _post.postInfo.uid, //상대 uid
                             },
                           ); //다른유저 게시물 ? 해당 유저 프로필로 이동
                         },
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(_post.postInfo['profileUrl']),
+                    backgroundImage: NetworkImage(_post.postInfo.profileUrl),
                   ),
                   title: Text(
-                    _post.postInfo['userName'],
+                    _post.postInfo.userName,
                   ),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +69,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(_post.postInfo['mannerAge'].toString() + '세'),
+                          Text(_post.mannerAge + '세'),
                           Icon(Icons.child_care),
                         ],
                       ),
@@ -93,7 +92,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     children: [
                       /* 제목 */
                       Text(
-                        _post.postInfo['title'],
+                        _post.postInfo.title,
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
@@ -102,20 +101,20 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         children: [
                           Text(
-                            '${_post.postInfo['gamemode']}',
+                            '${_post.postInfo.gamemode}',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
                           ),
                           Text(
-                            _post.postInfo['position'] != null
-                                ? ' · ${_post.postInfo['position']}'
+                            _post.postInfo.position != null
+                                ? ' · ${_post.postInfo.position}'
                                 : '',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
                           ),
                           Text(
-                            _post.postInfo['tear'] != null
-                                ? ' · ${_post.postInfo['tear']}'
+                            _post.postInfo.tear != null
+                                ? ' · ${_post.postInfo.tear}'
                                 : '',
                             style:
                                 TextStyle(fontSize: 15, color: Colors.black54),
@@ -126,7 +125,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 50),
                         child: Text(
-                          '${_post.postInfo['maintext']}',
+                          '${_post.postInfo.maintext}',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 18,
@@ -152,9 +151,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 ListTile(
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  onTap: () {
-                    Get.to(ReportListPage());
-                  },
+                  onTap: () {},
                   title: Text(
                     '광           고',
                     textAlign: TextAlign.center,
@@ -173,7 +170,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
       ),
       bottomSheet:
           /* 나의 게시글 이라면? */
-          CurrentUser.uid == _post.postInfo['uid']
+          CurrentUser.uid == _post.postInfo.uid
               ? SizedBox.shrink()
               : SafeArea(
                   child: Padding(
@@ -193,14 +190,14 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                   //NotificationModel 인스턴스
                                   final NotificationModel _ntfModel =
                                       NotificationModel(
-                                    idTo: _post.postInfo['uid'], //게시자 uid
+                                    idTo: _post.postInfo.uid, //게시자 uid
                                     idFrom: CurrentUser.uid, //관심버튼 누른 uid
                                     userName: FirebaseAuth.instance.currentUser!
                                             .displayName ??
                                         '(이름없음)',
                                     type: 'favorite',
                                     postId: postId,
-                                    postTitle: _post.postInfo['title'], //게시글 제목
+                                    postTitle: _post.postInfo.title, //게시글 제목
                                     createdAt: Timestamp.now(),
                                   );
                                   //관심게시글 등록
@@ -225,12 +222,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                 Get.to(
                                   () => ChatScreenPageFromPost(),
                                   arguments: {
-                                    'postId': _post.postInfo['postId'],
-                                    'uid': _post.postInfo['uid'],
-                                    'userName': _post.postInfo['userName'],
-                                    'mannerAge':
-                                        _post.postInfo['mannerAge'].toString(),
-                                    'profileUrl': _post.postInfo['profileUrl'],
+                                    'postId': _post.postInfo.postId,
+                                    'uid': _post.postInfo.uid,
+                                    'userName': _post.postInfo.userName,
+                                    'mannerAge': _post.mannerAge,
+                                    'profileUrl': _post.postInfo.profileUrl,
                                   }, //채팅페이지에 필요한 데이터 전달
                                 );
                               },
@@ -253,7 +249,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   /* 게시물 오른쪽 상단의 아이콘 클릭 시  바텀시트 호출 */
   openPostBottomSheet() {
     /* 나의 게시물인 경우 */
-    if (CurrentUser.uid == _post.postInfo['uid']) {
+    if (CurrentUser.uid == _post.postInfo.uid) {
       return Get.bottomSheet(
         Container(
           color: Colors.white,
@@ -264,11 +260,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 Get.back();
                 await Get.to(() => EditPostPage(), arguments: {
                   'postId': postId,
-                  'maintext': _post.postInfo['maintext'],
-                  'title': _post.postInfo['title'],
-                  'gamemode': _post.postInfo['gamemode'],
-                  'position': _post.postInfo['position'],
-                  'tear': _post.postInfo['tear'],
+                  'maintext': _post.postInfo.maintext,
+                  'title': _post.postInfo.title,
+                  'gamemode': _post.postInfo.gamemode,
+                  'position': _post.postInfo.position,
+                  'tear': _post.postInfo.tear,
                 });
               }), //자기 게시물 수정 페이지로 이동
               CustomButtomSheet('삭제', Colors.redAccent, () async {
@@ -295,11 +291,12 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   '/report',
                   arguments: {
                     'postId': postId,
+                    'uid': _post.postInfo.uid, //신고 받는 사람의 uid
                   },
                 );
               }), //신고하기 페이지로 이동
               // CustomButtomSheet(
-              //     "'${_post.postInfo['userName']}' 차단하기", Colors.redAccent, () {
+              //     "'${_post.postInfo.userName}' 차단하기", Colors.redAccent, () {
               //   Get.back();
               // }), // 사용자 차단 (나중)
               CustomButtomSheet('취소', Colors.blue, () => Get.back()),

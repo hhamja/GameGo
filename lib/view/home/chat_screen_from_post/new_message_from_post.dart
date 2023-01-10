@@ -14,8 +14,6 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
   /* FireStore User Collection Instance */
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  /* FirebaseAuth instance */
-  final _auth = FirebaseAuth.instance;
   /* 메시지 입력 칸 */
   final TextEditingController _messageController = TextEditingController();
   /* 채팅 GetX 컨트롤러 */
@@ -27,7 +25,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
   void _sendMessage() async {
     /* 현재유저정보 인스턴스 생성 */
     UserModel contactUser =
-        await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
+        await _userDB.doc(CurrentUser.uid).get().then((value) {
       return UserModel.fromDocumentSnapshot(value);
     });
     /* 게시자정보 인스턴스 생성 */
@@ -45,14 +43,12 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
         postingUser.uid,
         postingUser.profileUrl,
         postingUser.userName,
-        postingUser.mannerAge,
-      ], //게시자 정보 List[uid, 프로필, 이름, 매너나이]
+      ], //게시자 정보 List[uid, 프로필, 이름]
       contactUser: [
         contactUser.uid,
         contactUser.profileUrl,
         contactUser.userName,
-        contactUser.mannerAge,
-      ], //상대유저 정보 List[uid, 프로필, 이름, 매너나이]
+      ], //상대유저 정보 List[uid, 프로필, 이름]
       unReadCount: {
         widget.uid: 0,
         _currentUser.uid: 0,

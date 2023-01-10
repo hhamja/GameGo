@@ -1,12 +1,13 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class ChatBottomSheet extends StatefulWidget {
-  //신고할 때 넣을 채팅방 id값
-  final String chatRoomId;
+  final String chatRoomId; //신고할 때 넣을 채팅방 id값
+  final String uid; //신고 받는 uid
 
   ChatBottomSheet({
     Key? key,
     required this.chatRoomId,
+    required this.uid,
   });
 
   @override
@@ -43,6 +44,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
               '/report',
               arguments: {
                 'chatRoomId': widget.chatRoomId,
+                'uid': widget.uid, //신고 받는 사람의 uid
               },
             ); //신고목록 페이지로 이동
           }),

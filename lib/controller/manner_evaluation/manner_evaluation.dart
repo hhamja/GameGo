@@ -1,6 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class EvaluationController extends GetxController {
+  final MannerAgeController _age = Get.put(MannerAgeController());
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
   final CollectionReference _ntfDB =
@@ -114,6 +115,8 @@ class EvaluationController extends GetxController {
         'createdAt': ntfModel.createdAt,
       },
     );
+    //3. 매너평가 받는 유저의 매너나이 (+ 0.1)
+    await _age.plusMannerAge(uid);
   }
 
   /* 비매너 평가 추가 
@@ -124,7 +127,7 @@ class EvaluationController extends GetxController {
     chatRoomId,
     BadEvaluationModel badEvaluation,
   ) async {
-    //유저의 하위 컬렉션에 추가
+    //1. 유저의 하위 컬렉션에 추가
     await _userDB.doc(uid).collection('badEvaluation').doc(chatRoomId).set(
       {
         'evaluationType': badEvaluation.evaluationType,
@@ -145,6 +148,8 @@ class EvaluationController extends GetxController {
         'createdAt': badEvaluation.createdAt,
       },
     );
+    //2. 비매너 평가 받은 유저의 매너나이 (- 0.1)
+    await _age.minusMannerAge(uid);
   }
 
   /* 매너 평가 리스트 받기 */

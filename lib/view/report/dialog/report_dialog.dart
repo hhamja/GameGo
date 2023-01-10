@@ -9,10 +9,10 @@ class ReportDialog extends StatefulWidget {
 
 class _ReportDialogState extends State<ReportDialog> {
   final ReportController _report = Get.put(ReportController());
-
-  var reportContent = Get.arguments['content'];
+  var reportContent = Get.arguments['content']; //신고 내용
   var postId = Get.arguments['postId']; //채팅방에서 신고한 경우 "null"
   var chatRoomId = Get.arguments['chatRoomId']; //게시글에서 신고한 경우 "null"
+  var uid = Get.arguments['uid']; //신고 받는 uid
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class _ReportDialogState extends State<ReportDialog> {
         // 신고 model 인스턴스
         final ReportModel _model = await ReportModel(
           idFrom: CurrentUser.uid,
+          idTo: uid,
           postId: postId,
           chatRoomId: chatRoomId,
           reportContent: reportContent,

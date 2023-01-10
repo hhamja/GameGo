@@ -12,6 +12,9 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
   final ScrollController _scrollController = ScrollController();
   final ScrollController _textScrollController = ScrollController();
   final int _maxLength = 300;
+  var postId = Get.arguments['postId']; //이전페이지가 게시글 페이지면? null아님
+  var chatRoomId = Get.arguments['chatRoomId']; //이전페이지가 채팅 페이지면? null아님
+  var uid = Get.arguments['uid']; //신고 받는 uid
   String textValue = '';
 
   @override
@@ -94,6 +97,9 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
               Get.dialog(
                 ReportDialog(),
                 arguments: {
+                  'chatRoomId': chatRoomId ?? null,
+                  'postId': postId ?? null,
+                  'uid': uid,
                   'content': _textController.text.trim(),
                 },
               );

@@ -8,6 +8,10 @@ class IllegallyPostedPage extends StatefulWidget {
 }
 
 class _IllegallyPostedPageState extends State<IllegallyPostedPage> {
+  var postId = Get.arguments['postId']; //이전페이지가 게시글 페이지면? null아님
+  var chatRoomId = Get.arguments['chatRoomId']; //이전페이지가 채팅 페이지면? null아님
+  var uid = Get.arguments['uid']; //신고 받는 uid
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +41,9 @@ class _IllegallyPostedPageState extends State<IllegallyPostedPage> {
                   onTap: () {
                     print(illegalProduct[index].toString());
                     Get.dialog(ReportDialog(), arguments: {
+                      'chatRoomId': chatRoomId ?? null,
+                      'postId': postId ?? null,
+                      'uid': uid,
                       'content': illegalProduct[index].toString(),
                     });
                   },
