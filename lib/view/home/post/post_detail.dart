@@ -70,7 +70,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(_post.mannerAge + '세'),
-                          Icon(Icons.child_care),
+                          // Icon(Icons.child_care),
                         ],
                       ),
                       Text(

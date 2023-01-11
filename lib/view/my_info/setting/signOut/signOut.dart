@@ -139,8 +139,15 @@ class _SignOutPageState extends State<SignOutPage> {
         child: CustomTextButton(
           '매너게이머와 이별하기',
           () async {
+            //0. 아무것도 선택하지 않은 경우
+            if (selectedLeaveReason.toString() == '선택해주세요') {
+              Get.snackbar(
+                '이유 선택 안함',
+                '탈퇴 이유를 버튼에서 선택해주세요.',
+              );
+            }
             // 1. 기타사유를 선택한 경우
-            if (selectedLeaveReason.toString() == '기타') {
+            else if (selectedLeaveReason.toString() == '기타') {
               String text = _textController.text.trim(); //입력한 기타 사유 텍스트
               // 1-1. 텍스트를 입력하지 않은 경우
               if (text.length == 0 || text.isEmpty) {
@@ -155,17 +162,10 @@ class _SignOutPageState extends State<SignOutPage> {
                   feedBackContent: text,
                   createdAt: Timestamp.now(),
                 );
-                _c.addFeedBack(_model); //DB에 피드백 저장
-                await UserController.to
-                    .verifyPhone(_auth.currentUser!.phoneNumber!);
+                await _c.addFeedBack(_model); //DB에 피드백 저장
                 _textController.clear(); //작성한 텍스트 필드 내용 제거
                 Get.to(() => SignOutSmsPage()); //OTP 인증 페이지로 이동
               }
-            } else if (selectedLeaveReason.toString() == '선택해주세요') {
-              Get.snackbar(
-                '이유 선택 안함',
-                '탈퇴 이유를 버튼에서 선택해주세요.',
-              );
             }
             // 2. 기타사유가 아닌 경우
             else {
@@ -173,9 +173,7 @@ class _SignOutPageState extends State<SignOutPage> {
                 feedBackContent: selectedLeaveReason.toString(),
                 createdAt: Timestamp.now(),
               );
-              _c.addFeedBack(_model); //DB에 피드백 저장
-              await UserController.to
-                  .verifyPhone(_auth.currentUser!.phoneNumber!);
+              await _c.addFeedBack(_model); //DB에 피드백 저장
               _textController.clear(); //작성한 텍스트 필드 내용 제거
               Get.to(() => SignOutSmsPage()); //OTP 인증 페이지로 이동
             }

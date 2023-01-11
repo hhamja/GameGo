@@ -38,7 +38,10 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
           widget.postId + '_' + _currentUser.uid, //채팅방 id = postId_현재유저ID
       postId: widget.postId,
 
-      members: [widget.uid, _currentUser.uid],
+      members: [
+        postingUser.uid,
+        contactUser.uid,
+      ], //postingUser, contactUser 순으로 넣기
       postingUser: [
         postingUser.uid,
         postingUser.profileUrl,

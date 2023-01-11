@@ -68,10 +68,6 @@ class CustomMannerAge extends StatelessWidget {
                                 fontSize: 20, height: 1.2, color: Colors.blue),
                           ),
                           SizedBox(width: 5),
-                          Icon(
-                            Icons.sentiment_satisfied,
-                            size: 28,
-                          )
                         ],
                       ),
                     ),

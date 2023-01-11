@@ -11,7 +11,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
   /* ProfileController */
   ProfileController _username = Get.put(ProfileController());
 
-  final PhoneSMSController _phone = Get.put(PhoneSMSController());
+  final SmsTimerController _phone = Get.put(SmsTimerController());
   final UserController _user = Get.put(UserController());
   /* 핸드폰 번호 입력 */
   final TextEditingController _phoneController = TextEditingController();
@@ -23,15 +23,15 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
   /* OTP 처음 받는 경우 : false
   * 두번 째   true로 됨. */
   bool isSendSms = false;
-  @override
-  void initState() {
-    super.initState();
-    _listenSmsCode();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _listenSmsCode();
+  // }
 
-  _listenSmsCode() async {
-    await SmsAutoFill().listenForCode();
-  }
+  // _listenSmsCode() async {
+  //   await SmsAutoFill().listenForCode(); ////OTP 자동 입력 패키지
+  // }
 
   @override
   void dispose() {
@@ -109,7 +109,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       height: 50,
                       width: 120,
                       color: Colors.blue,
-                      child: GetBuilder<PhoneSMSController>(
+                      child: GetBuilder<SmsTimerController>(
                         builder: (controller) => TextButton(
                           onPressed: () async {
                             if (!isSendSms &&

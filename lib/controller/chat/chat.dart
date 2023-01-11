@@ -48,8 +48,8 @@ class ChatController extends GetxController {
 
   /* 새로운 채팅 입력 시 채팅방 생성하기 */
   Future createNewChatRoom(ChatRoomModel chatRoomModel) async {
+    //1. 채팅방이 존재하지 않는다면? chat col에 채팅방 데이터 추가
     final res = await _chatDB.doc(chatRoomModel.chatRoomId).get();
-    //채팅방이 존재하지 않는다면? 새로운 채팅방 만듬
     if (!res.exists)
       //Chat(col) - 채팅방UID(Doc)
       await _chatDB.doc(chatRoomModel.chatRoomId).set({
@@ -62,6 +62,33 @@ class ChatController extends GetxController {
         'lastContent': chatRoomModel.lastContent,
         'updatedAt': chatRoomModel.updatedAt,
       });
+
+    //2 postingUser의 하위 컬렉션('chat/isPostingUser')에 채팅방 목록 추가
+    await _userDB
+        .doc(chatRoomModel.postingUser[0])
+        .collection('chat')
+        .doc('chat')
+        .collection('isPostingUser')
+        .doc(chatRoomModel.chatRoomId)
+        .set(
+      {
+        'id': chatRoomModel.chatRoomId,
+        'createdAt': chatRoomModel.updatedAt,
+      },
+    );
+    //3. contactUser 하위 컬렉션('chat/isContactUser')에  채팅방 목록 추가
+    await _userDB
+        .doc(chatRoomModel.contactUser[0])
+        .collection('chat')
+        .doc('chat')
+        .collection('isContactUser')
+        .doc(chatRoomModel.chatRoomId)
+        .set(
+      {
+        'id': chatRoomModel.chatRoomId,
+        'createdAt': chatRoomModel.updatedAt,
+      },
+    );
   }
 
   /* 새로운 채팅 입력 시 메시지DB 추가하기 */

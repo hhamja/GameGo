@@ -8,6 +8,7 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 /* Packages */
+export 'package:decimal/decimal.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
 export 'package:firebase_analytics/firebase_analytics.dart';
@@ -128,7 +129,7 @@ export 'package:mannergamer/controller/dropDownButton/edit_dropDownBT.dart';
 export 'package:mannergamer/controller/dropDownButton/home_dropDownBT.dart';
 export 'package:mannergamer/controller/user/user.dart';
 export 'package:mannergamer/controller/mannerAge/mannerAge.dart';
-export 'package:mannergamer/controller/user/phoneSMS.dart';
+export 'package:mannergamer/controller/user/sms_timer.dart';
 export 'package:mannergamer/controller/user/profile.dart';
 export 'package:mannergamer/controller/favorite/favorite.dart';
 
@@ -147,6 +148,7 @@ export 'package:mannergamer/component/divider/divider.dart';
 export 'package:mannergamer/component/listtile/three_line_listTile.dart';
 
 /* Utilities */
+export 'package:mannergamer/utilites/default_profile/default_profile.dart';
 export 'package:mannergamer/utilites/route/route.dart';
 export 'package:mannergamer/utilites/binding/binding.dart';
 export 'package:mannergamer/utilites/route/route_path.dart';

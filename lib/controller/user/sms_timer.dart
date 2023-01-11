@@ -1,24 +1,14 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class PhoneSMSController extends GetxController {
-  static PhoneSMSController get to => Get.find<PhoneSMSController>();
+class SmsTimerController extends GetxController {
+  static SmsTimerController get to => Get.find<SmsTimerController>();
 
-  /* Life Cycle */
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  // Initial Count Timer value
-  var count = 120;
-
-  //object for Timer Class
+  var count = 120; //파이어베이스에서 지원하는 SMS 최대 시간이 120초
   late Timer _timer;
-  // a Method to start the Count Down
-  void StateTimerStart() {
-    //Timer Loop will execute every 1 second, until it reach 0
-    // once counter value become 0, we store the timer using _timer.cancel()
 
+  /* sms 보내기 버튼 클릭 시 120초 카운트 다운 시작 */
+  void StateTimerStart() {
+    //타이머가 0이 될 때까지 1초 마다 -1
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (count > 0) {
         count--;
@@ -31,7 +21,7 @@ class PhoneSMSController extends GetxController {
     update();
   }
 
-  // reset count value to 10
+  /* 카운터를 120초로 리셋하기 */
   void reset() {
     _timer.cancel();
     count = 120;
