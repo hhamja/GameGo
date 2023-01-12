@@ -47,14 +47,29 @@ class _ChatListPageState extends State<ChatListPage> {
                 Jiffy(_chatList.updatedAt.toDate()).fromNow(); //'-전'시간표시
             /* 상대유저 정보 담기
               * 두개의 List에서 Uid값이 현재uid랑 다르면 상대유저정보의 List */
-            var _contactUser;
-            if (_chatList.postingUser[0] != CurrentUser.uid &&
-                _chatList.contactUser[0] == CurrentUser.uid) {
-              _contactUser = _chatList.postingUser;
-            } else if (_chatList.postingUser[0] == CurrentUser.uid &&
-                _chatList.contactUser[0] != CurrentUser.uid) {
-              _contactUser = _chatList.contactUser;
+            List _chatPartner = [];
+            // 1. 나 == contactUser, 상대방 == postingUser인 경우
+            if (_chatList.postingUid != CurrentUser.uid &&
+                _chatList.contactUid == CurrentUser.uid) {
+              //채팅 상대방 List에 [uid, 프로필url, 이름]순으로 넣기
+              _chatPartner.addAll([
+                _chatList.postingUid,
+                _chatList.postingUserProfileUrl,
+                _chatList.postingUserName
+              ]);
+              print(_chatPartner);
             }
+            // 2. 나 == postingUser인, 상대방 == contactUser 경우
+            else if (_chatList.postingUid == CurrentUser.uid &&
+                _chatList.contactUid != CurrentUser.uid) {
+              //채팅 상대방 List에 [uid, 프로필url, 이름]순으로 넣기
+              _chatPartner.addAll([
+                _chatList.contactUid,
+                _chatList.contactUserProfileUrl,
+                _chatList.contactUserName
+              ]);
+            }
+            null;
             return
                 // Slidable(
                 //   endActionPane: ActionPane(
@@ -90,11 +105,11 @@ class _ChatListPageState extends State<ChatListPage> {
                 ListTile(
               /* 상대 유저 프로필 사진 */
               leading: CircleAvatar(
-                backgroundImage: NetworkImage(_contactUser[1]),
+                backgroundImage: NetworkImage(_chatPartner[1]),
               ),
               /* 이름 · 시간 */
               title: Text(
-                _contactUser[2],
+                _chatPartner[2],
                 maxLines: 1,
               ),
               /* 마지막 대화 내용 */
@@ -135,9 +150,9 @@ class _ChatListPageState extends State<ChatListPage> {
                   arguments: {
                     'chatRoomId': _chatList.chatRoomId,
                     'postId': _chatList.postId,
-                    'uid': _contactUser[0], //상대유저 uid
-                    'profileUrl': _contactUser[1], //상대유저 프로필
-                    'userName': _contactUser[2], //상대유저 이름
+                    'uid': _chatPartner[0], //상대유저 uid
+                    'profileUrl': _chatPartner[1], //상대유저 프로필
+                    'userName': _chatPartner[2], //상대유저 이름
                   }, //상대유저정보 전달
                 );
               },

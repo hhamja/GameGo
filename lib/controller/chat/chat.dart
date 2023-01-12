@@ -56,8 +56,12 @@ class ChatController extends GetxController {
         'chatRoomId': chatRoomModel.chatRoomId,
         'postId': chatRoomModel.postId,
         'members': chatRoomModel.members,
-        'postingUser': chatRoomModel.postingUser,
-        'contactUser': chatRoomModel.contactUser,
+        'postingUid': chatRoomModel.postingUid,
+        'postingUserProfileUrl': chatRoomModel.postingUserProfileUrl,
+        'postingUserName': chatRoomModel.postingUserName,
+        'contactUid': chatRoomModel.contactUid,
+        'contactUserProfileUrl': chatRoomModel.contactUserProfileUrl,
+        'contactUserName': chatRoomModel.contactUserName,
         'unReadCount': chatRoomModel.unReadCount,
         'lastContent': chatRoomModel.lastContent,
         'updatedAt': chatRoomModel.updatedAt,
@@ -65,7 +69,7 @@ class ChatController extends GetxController {
 
     //2 postingUser의 하위 컬렉션('chat/isPostingUser')에 채팅방 목록 추가
     await _userDB
-        .doc(chatRoomModel.postingUser[0])
+        .doc(chatRoomModel.postingUid)
         .collection('chat')
         .doc('chat')
         .collection('isPostingUser')
@@ -78,7 +82,7 @@ class ChatController extends GetxController {
     );
     //3. contactUser 하위 컬렉션('chat/isContactUser')에  채팅방 목록 추가
     await _userDB
-        .doc(chatRoomModel.contactUser[0])
+        .doc(chatRoomModel.contactUid)
         .collection('chat')
         .doc('chat')
         .collection('isContactUser')

@@ -23,59 +23,56 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
-    /* 현재유저정보 인스턴스 생성 */
-    UserModel contactUser =
+    // 게시자(=postingUser) 인스턴스
+    final UserModel postingUser =
+        await _userDB.doc(widget.uid).get().then((value) {
+      return UserModel.fromDocumentSnapshot(value);
+    });
+    // 현재유저정보(=contactUser) 인스턴스
+    final UserModel contactUser =
         await _userDB.doc(CurrentUser.uid).get().then((value) {
       return UserModel.fromDocumentSnapshot(value);
     });
-    /* 게시자정보 인스턴스 생성 */
-    UserModel postingUser = await _userDB.doc(widget.uid).get().then((value) {
-      return UserModel.fromDocumentSnapshot(value);
-    });
-    /* 채팅방 인스턴스 생성 */
-    final chatRoomModel = ChatRoomModel(
-      chatRoomId:
-          widget.postId + '_' + _currentUser.uid, //채팅방 id = postId_현재유저ID
+    // 채팅방 인스턴스
+    final ChatRoomModel chatRoomModel = ChatRoomModel(
+      //채팅방 id = postId_현재유저ID
+      chatRoomId: widget.postId + '_' + _currentUser.uid,
       postId: widget.postId,
-
       members: [
         postingUser.uid,
         contactUser.uid,
       ], //postingUser, contactUser 순으로 넣기
-      postingUser: [
-        postingUser.uid,
-        postingUser.profileUrl,
-        postingUser.userName,
-      ], //게시자 정보 List[uid, 프로필, 이름]
-      contactUser: [
-        contactUser.uid,
-        contactUser.profileUrl,
-        contactUser.userName,
-      ], //상대유저 정보 List[uid, 프로필, 이름]
+      postingUid: postingUser.uid,
+      postingUserProfileUrl: postingUser.profileUrl,
+      postingUserName: postingUser.userName,
+      contactUid: contactUser.uid,
+      contactUserProfileUrl: contactUser.profileUrl,
+      contactUserName: contactUser.userName,
+      //읽지않은 메시지를 '보낸'Uid와 그 수 {게시자 : 0, 상대유저 : 0}
       unReadCount: {
-        widget.uid: 0,
-        _currentUser.uid: 0,
-      }, //읽지않은 메시지를 '보낸'Uid와 그 수 {게시자 : 0, 상대유저 : 0}
+        postingUser.uid: 0,
+        contactUser.uid: 0,
+      },
       lastContent: _messageController.text.trim(),
       updatedAt: Timestamp.now(),
     );
-    /* 메시지 인스턴스 생성 */
-    final messageModel = MessageModel(
+    // 메시지 인스턴스 생성
+    final MessageModel messageModel = MessageModel(
       timestamp: Timestamp.now(),
       content: _messageController.text.trim(),
       idFrom: _currentUser.uid,
       idTo: widget.uid,
       type: 'message',
     );
-    /* 채팅방 만들기, 채팅방이 이미 있다면 실행안됨 */
+    // 채팅방 만들기, 채팅방이 이미 있다면 실행안됨
     await _chat.createNewChatRoom(chatRoomModel);
-    /* 보낸 메시지 파이어스토어 message 컬렉션에 저장하기 */
+    // 보낸 메시지 파이어스토어 message 컬렉션에 저장하기
     await _chat.sendNewMessege(
         messageModel, chatRoomModel.chatRoomId, widget.uid);
-    /* 메시지 텍스트필드 초기화 */
+    // 메시지 텍스트필드 초기화
     setState(() => _messageController.clear());
-    /* 보낸 메시지로 화면이동
-    * 0인이유 : Listview.builder의 reverse가 true이므로 Top과 Bottom이 반전됨 */
+    // 보낸 메시지로 화면이동
+    // 0인이유 : Listview.builder의 reverse가 true이므로 Top과 Bottom이 반전됨
     _chat.scroll.jumpTo(0);
   }
 

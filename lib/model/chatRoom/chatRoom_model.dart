@@ -9,15 +9,16 @@ import 'package:mannergamer/utilites/index/index.dart';
 class ChatRoomModel {
   final String chatRoomId;
   final String postId;
-  /* {uid1 : 'in', UID2 : 'in'}의 구조
-  * 채팅방 나가기 또는 회원탈퇴? 'out'로 업데이트
-  * 둘다 'out'이면? DB의 데이터 삭제 */
-  final List members;
-
+  final List members; //[postingUid, contactUid] 순서로 넣기, 나의 채팅 리스트 쿼리할 때 활용
   /* <List>[uid, profileUrl, userName]의 유저정보 */
-  final List postingUser; //게시자
-  final List contactUser; //게시자가 아닌 상대유저
-
+  // final List postingUser; //게시자
+  // final List contactUser; //게시자가 아닌 상대유저
+  final String postingUid; //게시자 uid
+  final String postingUserProfileUrl; //게시자 프로필 url
+  final String postingUserName; //게시자 유저 이름
+  final String contactUid; //상대방 uid
+  final String contactUserProfileUrl; //상대방 프로필 url
+  final String contactUserName; //상대방 이름
   /* 안읽은 메시지의 수
   * 데이터 구조 -> 
   {postingUser의 uid : 받은 수(보낸 수 X), contact유저의 uid : 받은 수(보낸 수 X)}
@@ -33,8 +34,12 @@ class ChatRoomModel {
     required this.chatRoomId,
     required this.postId,
     required this.members,
-    required this.postingUser,
-    required this.contactUser,
+    required this.postingUid,
+    required this.postingUserProfileUrl,
+    required this.postingUserName,
+    required this.contactUid,
+    required this.contactUserProfileUrl,
+    required this.contactUserName,
     required this.unReadCount,
     required this.lastContent,
     required this.updatedAt,
@@ -47,8 +52,12 @@ class ChatRoomModel {
       chatRoomId: snapshot['chatRoomId'],
       postId: snapshot['postId'],
       members: snapshot['members'],
-      postingUser: snapshot['postingUser'],
-      contactUser: snapshot['contactUser'],
+      postingUid: snapshot['postingUid'],
+      postingUserProfileUrl: snapshot['postingUserProfileUrl'],
+      postingUserName: snapshot['postingUserName'],
+      contactUid: snapshot['contactUid'],
+      contactUserProfileUrl: snapshot['contactUserProfileUrl'],
+      contactUserName: snapshot['contactUserName'],
       unReadCount: snapshot['unReadCount'],
       lastContent: snapshot['lastContent'],
       updatedAt: snapshot['updatedAt'],
