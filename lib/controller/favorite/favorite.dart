@@ -5,10 +5,9 @@ class FavoriteController extends GetxController {
   static FavoriteController get to => Get.find<FavoriteController>();
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  final CollectionReference _ntfDB =
-      FirebaseFirestore.instance.collection('notification');
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
+  final NtfController _ntf = Get.put(NtfController());
   /* 게시물 관심 버튼 클릭하면 on/off 되는 bool 값 */
   RxBool isFavorite = false.obs;
 
@@ -78,18 +77,7 @@ class FavoriteController extends GetxController {
         },
       );
       // 관심게시글 설정 notification에 추가
-      _ntfDB.add(
-        {
-          'idFrom': ntfModel.idFrom,
-          'idTo': ntfModel.idTo,
-          'postId': ntfModel.postId,
-          'userName': ntfModel.userName,
-          'postTitle': ntfModel.postTitle,
-          'content': ntfModel.content,
-          'type': ntfModel.type,
-          'createdAt': ntfModel.createdAt,
-        },
-      );
+      _ntf.addNotification(ntfModel);
       //해당 게시물의 like값 +1
       FirebaseFirestore.instance.collection('post').doc(postId).update(
         {

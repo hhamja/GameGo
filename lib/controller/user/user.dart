@@ -101,32 +101,36 @@ class UserController extends GetxController {
     //     : () => print('smsCode가 맞음 맞음 맞음 맞음맞음맞음맞음맞음맞음');
     // //test
 
-    // //1. 사용자 재인증, 그래야 Auth에서 유저 삭제가능
+    // // 1. 사용자 재인증, 그래야 Auth에서 유저 삭제가능
     // await _auth.currentUser!.reauthenticateWithCredential(credential);
 
-    //3. post에서 해당 유저가 작성한 게시글 삭제
+    //2. 해당 유저가 작성한 게시글 프로필, 이름 수정
     await _userDB.doc(CurrentUser.uid).collection('post').get().then(
       (value) {
-        //내가 만든 게시글 id를 담을 빈 리스트
+        //1) 내가 만든 게시글 id를 담을 빈 리스트
         var _postIdList = [];
-        //게시글 id 리스트 넣기
+        //2) 게시글 id 리스트 넣기
         _postIdList.assignAll(
           value.docs.map(
             (e) => e.reference.id,
           ),
         );
-        //받은 postId 리스트 반복문 -> 게시글 전부 삭제
+        //3) 받은 postId 리스트 반복문 -> 게시글 업데이트
         _postIdList.forEach(
           (postId) {
-            _firestore.collection('post').doc(postId.toString()).delete().then(
-                  (_) => print('나의 모든 게시글 삭제 완료'),
-                );
+            _firestore.collection('post').doc(postId.toString()).update(
+              {
+                'profileUrl': DefaultProfle.url, //기본프로필로 변경
+                'userName': CurrentUser.name + ' (탈퇴)', // 이름 뒤에 + (탈퇴)
+              },
+            ).then(
+              (_) => print('나의 모든 게시글 프로필, 이름 업데이트'),
+            );
           },
         );
       },
     );
-    //4. postingUser로 참여한 채팅 데이터 수정
-    //List postingUser로 = ['', 기본프로필 url, '(탈퇴유저)']
+    //3. postingUser로 참여한 채팅의 프로필, 이름 수정
     await _userDB
         .doc(CurrentUser.uid)
         .collection('chat')
@@ -135,32 +139,30 @@ class UserController extends GetxController {
         .get()
         .then(
       (value) {
-        //내가 postingUser로 있는 채팅방의 id 리스트
+        //1) 내가 postingUser로 있는 채팅방의 id 리스트
         var _chatIdList = [];
-        //isPostingUser에서 id 리스트 담기
+        //2) isPostingUser에서 id 리스트 담기
         _chatIdList.assignAll(
           value.docs.map(
             (e) => e.reference.id,
           ),
         );
-        //받은 채팅방 Id 리스트 반복문 후 postingUser 업데이트
+        //3) 받은 채팅방 Id 리스트 반복문 -> postingUser 프로필, 이름 수정
         _chatIdList.forEach(
           (chatId) {
             _firestore.collection('chat').doc(chatId.toString()).update(
               {
-                'postingUser.${0}': '',
-                'postingUser.${1}': DefaultProfle.url,
-                'postingUser.${2}': '(탈퇴유저)',
+                'postingUserProfileUrl': DefaultProfle.url, //기본프로필로
+                'postingUserName': CurrentUser.name + ' (탈퇴)', //이름 +(탈퇴)
               },
             ).then(
-              (_) => print('내가 속한 채팅 데이터 처리 완료'),
+              (_) => print('postingUser의 프로필, 이름 수정'),
             );
           },
         );
       },
     );
-    //5. contactUser로 참여한 채팅 데이터 수정
-    //List contactUser = ['', 기본프로필 url, '(탈퇴유저)']
+    //4. contactUser로 참여한 채팅의 프로필, 이름 수정
     await _userDB
         .doc(CurrentUser.uid)
         .collection('chat')
@@ -169,35 +171,31 @@ class UserController extends GetxController {
         .get()
         .then(
       (value) {
-        //내가 postingUser로 있는 채팅방의 id 리스트
+        //1) 내가 contactUser 있는 채팅방의 id 리스트
         var _chatIdList = [];
-        //isPostingUser에서 id 리스트 담기
+        //2) isContactUser에서 id 리스트 담기
         _chatIdList.assignAll(
           value.docs.map(
             (e) => e.reference.id,
           ),
         );
-        //받은 채팅방 Id 리스트 반복문 후  postingUser 업데이트
+        //3) 받은 채팅방 Id 리스트 반복문 -> contactUser의 프로필, 이름 수정
         _chatIdList.forEach(
           (chatId) {
             _firestore.collection('chat').doc(chatId.toString()).update(
               {
-                'contactUser.${0}': '',
-                'contactUser.${1}': DefaultProfle.url,
-                'contactUser.${2}': '(탈퇴유저)',
+                'contactUserProfileUrl': DefaultProfle.url, //기본프로필
+                'contactUserName': CurrentUser.name + ' (탈퇴)', //이름 (탈퇴)
               },
             ).then(
-              (_) => print('내가 속한 채팅 데이터 처리 완료'),
+              (_) => print('contactUse의 프로필, 이름 수정'),
             );
           },
         );
       },
     );
-    // await _userDB.doc(CurrentUser.uid).collection('chat');
-    // _firestore.collection('chat');
-    // _firestore.collection('notification');
-    //
-    // //5. notifiacation 컬렉션에서 삭제
+
+    //5. 내가 보낸 notifiacation 수정
 
     //  //6. Auth 정보 삭제
     // await _auth.currentUser!.delete();

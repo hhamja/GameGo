@@ -4,8 +4,8 @@ class EvaluationController extends GetxController {
   final MannerAgeController _age = Get.put(MannerAgeController());
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  final CollectionReference _ntfDB =
-      FirebaseFirestore.instance.collection('notification');
+  final NtfController _ntf = Get.put(NtfController());
+  //
   var goodCheckList = [].obs;
   var badCheckList = [].obs;
   /* 내가 보낸 후기가 매너 후기인지? 비매너 후기 인지? 판단하게 해줄 bool  */
@@ -103,18 +103,7 @@ class EvaluationController extends GetxController {
       },
     );
     //2. notification에 추가
-    await _ntfDB.add(
-      {
-        'idFrom': ntfModel.idFrom,
-        'idTo': ntfModel.idTo,
-        'postId': ntfModel.postId,
-        'userName': ntfModel.userName,
-        'postTitle': ntfModel.postTitle,
-        'content': ntfModel.content,
-        'type': ntfModel.type,
-        'createdAt': ntfModel.createdAt,
-      },
-    );
+    await _ntf.addNotification(ntfModel);
     //3. 매너평가 받는 유저의 매너나이 (+ 0.1)
     await _age.plusMannerAge(uid);
   }

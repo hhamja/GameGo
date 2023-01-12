@@ -18,8 +18,6 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
   final TextEditingController _messageController = TextEditingController();
   /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.find<ChatController>();
-  /* 파베 auth 인스턴스 */
-  final _currentUser = FirebaseAuth.instance.currentUser!;
 
   /* 입력한 메시지 DB에 보내기 */
   void _sendMessage() async {
@@ -36,7 +34,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     // 채팅방 인스턴스
     final ChatRoomModel chatRoomModel = ChatRoomModel(
       //채팅방 id = postId_현재유저ID
-      chatRoomId: widget.postId + '_' + _currentUser.uid,
+      chatRoomId: widget.postId + '_' + CurrentUser.uid,
       postId: widget.postId,
       members: [
         postingUser.uid,
@@ -60,7 +58,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     final MessageModel messageModel = MessageModel(
       timestamp: Timestamp.now(),
       content: _messageController.text.trim(),
-      idFrom: _currentUser.uid,
+      idFrom: CurrentUser.uid,
       idTo: widget.uid,
       type: 'message',
     );
@@ -79,7 +77,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
   @override
   Widget build(BuildContext context) {
     print(
-      '채팅방id는 ' + widget.postId + '_' + _currentUser.uid,
+      '채팅방id는 ' + widget.postId + '_' + CurrentUser.uid,
     );
     return Container(
       margin: EdgeInsets.fromLTRB(10, 3, 0, 3),

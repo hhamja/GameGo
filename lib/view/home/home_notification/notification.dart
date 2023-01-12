@@ -12,6 +12,12 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   final NtfController _ntf = Get.put(NtfController());
 
+  @override
+  void initState() {
+    super.initState();
+    _ntf.getNtfList(); //내가 받은 알림 리스트 서버에서 받기
+  }
+
   /* 아이콘 조건식
   * 리뷰, 약속, 게시글 관심, 앱 공지 알림 타입에 대한 */
   CustomCircleFilledIcon iconByType(ntfType) {
@@ -56,6 +62,7 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     _ntf.getNtfList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('알림'),
@@ -75,12 +82,7 @@ class _NotificationPageState extends State<NotificationPage> {
             //타입
             final String _type = _ntf.ntfList[index].type;
             //내용
-            final String _content = _ntf.ntfList[index].content ?? '';
-            //유저이름
-            final String _userName = _ntf.ntfList[index].userName ?? '(이름없음)';
-            //게시글 제목
-            final String _title = _ntf.ntfList[index].postTitle ?? '(게시글)';
-
+            final String _content = _ntf.ntfList[index].content;
             return
                 // Slidable(
                 //   endActionPane: ActionPane(
@@ -114,8 +116,8 @@ class _NotificationPageState extends State<NotificationPage> {
                 child: Text(
                   contentByType(
                     _type,
-                    _userName,
-                    _title,
+                    _ntf.userName.value,
+                    _ntf.postTitle.value,
                     _content,
                   ),
                   style: TextStyle(

@@ -122,7 +122,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                 () {
                                     Get.to(() => AppointmentPage(), arguments: {
                                       'chatRoomId': chatRoomId,
-                                      'uid': uid
+                                      'uid': uid,
+                                      'postId': postId,
                                     });
                                   }
                                 //없다면? 약속설정 X , 토스트 사용자에게 알림

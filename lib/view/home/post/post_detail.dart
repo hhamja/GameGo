@@ -192,12 +192,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                       NotificationModel(
                                     idTo: _post.postInfo.uid, //게시자 uid
                                     idFrom: CurrentUser.uid, //관심버튼 누른 uid
-                                    userName: FirebaseAuth.instance.currentUser!
-                                            .displayName ??
-                                        '(이름없음)',
                                     type: 'favorite',
                                     postId: postId,
-                                    postTitle: _post.postInfo.title, //게시글 제목
+                                    content: '',
                                     createdAt: Timestamp.now(),
                                   );
                                   //관심게시글 등록

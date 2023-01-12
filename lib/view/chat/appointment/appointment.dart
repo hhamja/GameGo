@@ -12,6 +12,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
   final String chatRoomId = Get.arguments['chatRoomId'];
   /* 채팅 상대 uid */
   final String uid = Get.arguments['uid'];
+  /* 대상이 되는 post Id */
+  final String postId = Get.arguments['postId'];
   /* 캘린더 날짜 텍스트 크기 */
   final double _dateFontsize = 18;
 
@@ -244,8 +246,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
             final NotificationModel _ntfModel = NotificationModel(
               idTo: uid,
               idFrom: CurrentUser.uid,
-              userName:
-                  FirebaseAuth.instance.currentUser!.displayName ?? '(이름없음)',
+              content: '',
+              postId: postId,
+
               type: 'appoint', //약속설정알림
               createdAt: Timestamp.now(),
             );

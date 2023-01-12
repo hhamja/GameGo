@@ -260,11 +260,9 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   final NotificationModel _ntfModel = NotificationModel(
                     idFrom: CurrentUser.uid,
                     idTo: uid,
-                    userName: FirebaseAuth.instance.currentUser!.displayName ??
-                        '(이름없음)',
                     type: 'review',
                     postId: postId,
-                    postTitle: postTitle,
+                    content: '',
                     createdAt: Timestamp.now(),
                   );
                   // 1-3. 매너 평가 보내기

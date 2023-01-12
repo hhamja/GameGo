@@ -3,8 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 class AppointmentController extends GetxController {
   final CollectionReference _chatDB =
       FirebaseFirestore.instance.collection('chat');
-  final CollectionReference _ntfDB =
-      FirebaseFirestore.instance.collection('notification');
+  final NtfController _ntf = Get.put(NtfController());
 
   /* 약속 날짜 담는  Rx String 변수 */
   RxString appointmentDate = ''.obs;
@@ -44,18 +43,7 @@ class AppointmentController extends GetxController {
       'unReadCount.${uid}': FieldValue.increment(1),
     }); //상대 uid의 unReadCount +1
     //약속설정 notification에 추가
-    await _ntfDB.add(
-      {
-        'idFrom': ntfModel.idFrom,
-        'idTo': ntfModel.idTo,
-        'postId': ntfModel.postId,
-        'userName': ntfModel.userName,
-        'postTitle': ntfModel.postTitle,
-        'content': ntfModel.content,
-        'type': ntfModel.type,
-        'createdAt': ntfModel.createdAt,
-      },
-    );
+    await _ntf.addNotification(ntfModel);
   }
 
   /* 약속시간 받기 + 약속설정 여부 bool변수에 담기 */
