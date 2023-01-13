@@ -130,11 +130,11 @@ class ChatController extends GetxController {
         .collection('message')
         .orderBy('timestamp', descending: false) //최신이 맨 아래
         .snapshots()
-        .map((snapshot) => snapshot.docs.map(
-              (e) {
-                return MessageModel.fromDocumentSnapshot(e);
-              },
-            ).toList());
+        .map((snapshot) => snapshot.docs
+            .map(
+              (e) => MessageModel.fromDocumentSnapshot(e),
+            )
+            .toList());
   }
 
   /* 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트 */

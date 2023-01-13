@@ -25,10 +25,12 @@ class _MessagesState extends State<Messages> {
   void initState() {
     super.initState();
     _list = _chat.messageList;
+    _list.bindStream(_chat.readAllMessageList(widget.chatRoomId));
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_list);
     return Obx(
       /* 스크롤 바 */
       () => Padding(
@@ -47,7 +49,6 @@ class _MessagesState extends State<Messages> {
               itemCount: _list.length,
               itemBuilder: (context, index) {
                 int reversed = _list.length - 1 - index;
-
                 final _date = Jiffy(_list[reversed].timestamp.toDate())
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[reversed].timestamp.toDate())
@@ -66,13 +67,12 @@ class _MessagesState extends State<Messages> {
                 /* 메시지 시간표시 조건 */
                 if (reversed == _list.length - 1) {
                   _chat.isShowTime.value = true; //리스트의 마지막 메시지
-                } else if (reversed < _list.length - 1 &&
-                    _list[reversed].idFrom != _list[reversed + 1].idFrom) {
+                } else if (_list[reversed].idFrom !=
+                    _list[reversed + 1].idFrom) {
                   _chat.isShowTime.value = true; //마지막X, 내가 보낸 메시지 그룹에서 마지막
-                } else if (reversed < _list.length - 1 &&
-                    _time !=
-                        Jiffy(_list[reversed + 1].timestamp.toDate())
-                            .format('HH:MM')) {
+                } else if (_time !=
+                    Jiffy(_list[reversed + 1].timestamp.toDate())
+                        .format('HH:MM')) {
                   _chat.isShowTime.value = true; //마지막X, 다음 메시지와 시간이 달라지는 경우
                 } else {
                   _chat.isShowTime.value = false; //나머지 경우
@@ -92,29 +92,39 @@ class _MessagesState extends State<Messages> {
                   _chat.isShowProfile.value = true;
                 }
                 /* 내가 보낸 메시지인지에 대한 bool 값 */
-                final bool _isMe = _list[index].idFrom == CurrentUser.uid;
+                final bool _isMe = _list[reversed].idFrom == CurrentUser.uid;
                 /* 메시지 타입에 대한 bool값 */
                 final bool _appointType = _list[reversed].type == 'appoint';
+                /* 나와 상대방 메시지 간격 주기 위한 bool 변수 */
+                var isChangeUser;
+                if (reversed > 0 &&
+                    _list[reversed].idFrom != _list[reversed - 1].idFrom) {
+                  isChangeUser = true;
+                } else
+                  isChangeUser = false;
 
                 return _isMe
                     ? /* 나의 메시지 */
-                    Column(
-                        children: [
-                          _chat.isShowDate.value
-                              ? Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Text(
-                                    _date.toString(),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              : SizedBox.shrink(),
-                          !_appointType
-                              ?
-                              //메시지 타입인 경우
-                              Container(
-                                  margin: EdgeInsets.symmetric(vertical: 1),
-                                  child: Row(
+                    Container(
+                        margin: isChangeUser
+                            ? EdgeInsets.only(top: 10)
+                            : EdgeInsets.symmetric(vertical: 1),
+                        child: Column(
+                          children: [
+                            _chat.isShowDate.value
+                                ? Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Text(
+                                      _date.toString(),
+                                      style: TextStyle(color: Colors.grey[600]),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            !_appointType
+                                ?
+                                //메시지 타입인 경우
+                                Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     mainAxisSize: MainAxisSize.max,
@@ -156,34 +166,37 @@ class _MessagesState extends State<Messages> {
                                         ),
                                       ),
                                     ],
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Text(
+                                      _list[reversed].content.toString(),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Text(
-                                    _list[reversed].content.toString(),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                        ],
+                          ],
+                        ),
                       )
                     :
                     /* 상대방 메시지 */
-                    Column(
-                        children: [
-                          _chat.isShowDate.value
-                              ? Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Text(
-                                    _date.toString(),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              : SizedBox.shrink(),
-                          !_appointType
-                              ? Container(
-                                  margin: EdgeInsets.symmetric(vertical: 1),
-                                  child: Row(
+                    Container(
+                        margin: isChangeUser
+                            ? EdgeInsets.only(top: 10)
+                            : EdgeInsets.symmetric(vertical: 1),
+                        child: Column(
+                          children: [
+                            _chat.isShowDate.value
+                                ? Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Text(
+                                      _date.toString(),
+                                      style: TextStyle(color: Colors.grey[600]),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            !_appointType
+                                ? Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     mainAxisSize: MainAxisSize.max,
@@ -227,16 +240,16 @@ class _MessagesState extends State<Messages> {
                                             color: Colors.grey[500]),
                                       ),
                                     ],
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Text(
+                                      _list[reversed].content.toString(),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Text(
-                                    _list[reversed].content.toString(),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                        ],
+                          ],
+                        ),
                       );
               },
             ),

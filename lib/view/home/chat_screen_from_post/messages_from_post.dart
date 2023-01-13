@@ -60,7 +60,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[reversed].timestamp.toDate())
                     .format('HH:MM'); //22시간
-                /* Date표시에 대한 조건 */
+                /* 날짜 표시 if */
                 if (reversed == 0) {
                   _chat.isShowDate.value = true; //첫 메시지이면 O
                 } else if (reversed > 0 &&
@@ -71,7 +71,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                 } else {
                   _chat.isShowDate.value = false; //나머지는 X
                 }
-                /* 메시지 시간표시 조건 */
+                /* 시간 표시 if */
                 if (reversed == _list.length - 1) {
                   _chat.isShowTime.value = true; //리스트의 마지막 메시지
                 } else if (reversed < _list.length - 1 &&
@@ -85,7 +85,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                 } else {
                   _chat.isShowTime.value = false; //나머지 경우
                 }
-                /* 상대 프로필 보여주는 조건문 */
+                /* 상대 프로필 if문 */
                 if (reversed >= 1 &&
                     _list[reversed - 1].idFrom == _list[reversed].idFrom) {
                   _chat.isShowProfile.value = false;
@@ -94,23 +94,35 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                 }
                 //현재기기유저와 메시지 보낸사람의 id가 같다면 true, 아니면 false
                 final bool _isMe = CurrentUser.uid == _list[reversed].idFrom;
+                var isChangeUser;
+                if (reversed > 0 &&
+                    _list[reversed].idFrom != _list[reversed - 1].idFrom) {
+                  isChangeUser = true;
+                } else
+                  isChangeUser = false;
+
                 return _isMe
                     ?
                     /* 나의 메시지 */
-                    Column(
-                        children: [
-                          _chat.isShowDate.value
-                              ? Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Text(
-                                    _date.toString(),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              : SizedBox.shrink(),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 1),
-                            child: Row(
+                    Container(
+                        margin: isChangeUser
+                            ? EdgeInsets.symmetric(vertical: 10)
+                            : EdgeInsets.symmetric(vertical: 1),
+                        child: Column(
+                          children: [
+                            /* 연·월·일 */
+                            _chat.isShowDate.value
+                                ? Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Text(
+                                      _date.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.grey[600]),
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            /* 메시지 박스 */
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisSize: MainAxisSize.max,
@@ -151,25 +163,29 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       )
                     :
                     /* 상대방 메시지 */
-                    Column(
-                        children: [
-                          _chat.isShowDate.value
-                              ? Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Text(
-                                    _date.toString(),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              : SizedBox.shrink(),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 1),
-                            child: Row(
+                    Container(
+                        margin: isChangeUser
+                            ? EdgeInsets.only(top: 10)
+                            //상대 메시지와 나의 메시지간 간격
+                            : EdgeInsets.symmetric(vertical: 1),
+                        child: Column(
+                          children: [
+                            _chat.isShowDate.value
+                                ? Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Text(
+                                      _date.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.grey[600]),
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisSize: MainAxisSize.max,
@@ -214,8 +230,8 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
               },
             ),
