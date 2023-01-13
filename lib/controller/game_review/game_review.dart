@@ -22,7 +22,7 @@ class GameReviewController extends GetxController {
     GameReviewModel GameReviewModel,
   ) async {
     //1. gameReview/gameReview/{uid}/{chatRoomId}에 보내기
-    await _gameReviewDB.doc('gameReview').collection(uid).doc(chatRoomId).set(
+    await _gameReviewDB.doc(uid).collection(uid).doc(chatRoomId).set(
       {
         'idFrom': GameReviewModel.idFrom,
         'idTo': GameReviewModel.idTo,
@@ -57,7 +57,7 @@ class GameReviewController extends GetxController {
   /* 게임후기 리스트로 받기 */
   Future getGameReviewList(uid) async {
     return _gameReviewDB
-        .doc('gameReview')
+        .doc(uid)
         .collection(uid)
         .orderBy('createdAt', descending: true) //최신일 수록 위로 오게
         .get()
@@ -73,20 +73,12 @@ class GameReviewController extends GetxController {
   /* 내가 보낸 게임후기 받기 
   * 채팅페이지에서 버튼 클릭 시 보여지는 페이지 */
   Future getMySentReviewContent(uid, chatRoomId) async {
-    final ref = await _gameReviewDB
-        .doc('gameReview')
-        .collection(uid)
-        .doc(chatRoomId)
-        .get();
+    final ref =
+        await _gameReviewDB.doc(uid).collection(uid).doc(chatRoomId).get();
     //후기는 선택사항이라 문서자체가 없어서 null 반환 에러 뜨므로
     //문서가 존재할때만 데이터 받도록 하기
     ref.exists
-        ? _gameReviewDB
-            .doc('gameReview')
-            .collection(uid)
-            .doc(chatRoomId)
-            .get()
-            .then(
+        ? _gameReviewDB.doc(uid).collection(uid).doc(chatRoomId).get().then(
             (value) {
               var snapshot = value.data() as Map<String, dynamic>;
               myReviewContent.value = snapshot['content'];
