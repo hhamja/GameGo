@@ -79,11 +79,10 @@ class _NotificationPageState extends State<NotificationPage> {
             //날짜 형식 변환 '-전'
             final String _time =
                 Jiffy(_ntf.ntfList[index].createdAt.toDate()).fromNow();
-            final String _type = _ntf.ntfList[index].type; //타입
-            final String _content = _ntf.ntfList[index].content; //내용
-            final String _userName = _ntf.ntfList[index].userName; //유저이름
-            final String _postTitle = _ntf.ntfList[index].postTitle; //게시글 제목
-
+            //타입
+            final String _type = _ntf.ntfList[index].type;
+            //내용
+            final String _content = _ntf.ntfList[index].content;
             return
                 // Slidable(
                 //   endActionPane: ActionPane(
@@ -117,8 +116,8 @@ class _NotificationPageState extends State<NotificationPage> {
                 child: Text(
                   contentByType(
                     _type,
-                    _userName,
-                    _postTitle,
+                    _ntf.userName.value,
+                    _ntf.postTitle.value,
                     _content,
                   ),
                   style: TextStyle(
