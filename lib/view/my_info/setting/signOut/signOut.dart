@@ -9,7 +9,6 @@ class SignOutPage extends StatefulWidget {
 
 class _SignOutPageState extends State<SignOutPage> {
   final FeedBackController _c = Get.put(FeedBackController());
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _textController = TextEditingController();
 
   @override
@@ -59,8 +58,9 @@ class _SignOutPageState extends State<SignOutPage> {
                     color: Colors.black,
                   ),
                   buttonDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(width: 0.5, color: Colors.grey)),
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(width: 0.5, color: Colors.grey),
+                  ),
                   dropdownWidth: 230,
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -140,14 +140,15 @@ class _SignOutPageState extends State<SignOutPage> {
           '매너게이머와 이별하기',
           () async {
             //0. 아무것도 선택하지 않은 경우
-            if (selectedLeaveReason.toString() == '선택해주세요') {
+            if (selectedLeaveReason == '선택해주세요' ||
+                selectedLeaveReason == null) {
               Get.snackbar(
                 '이유 선택 안함',
                 '탈퇴 이유를 버튼에서 선택해주세요.',
               );
             }
             // 1. 기타사유를 선택한 경우
-            else if (selectedLeaveReason.toString() == '기타') {
+            else if (selectedLeaveReason == '기타') {
               String text = _textController.text.trim(); //입력한 기타 사유 텍스트
               // 1-1. 텍스트를 입력하지 않은 경우
               if (text.length == 0 || text.isEmpty) {

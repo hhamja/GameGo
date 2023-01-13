@@ -92,9 +92,10 @@ class UserController extends GetxController {
     //어떻게 하지? -> test 주석 참고
     /////////////////////////////////////////////////////////////////////
 
-    // final credential = await PhoneAuthProvider.credential(
-    //     verificationId: verificationID, smsCode: smsCode);
-    // print(credential);
+    final credential = await PhoneAuthProvider.credential(
+        verificationId: verificationID, smsCode: smsCode);
+    print('credential = $credential');
+
     // //test
     // credential.smsCode != smsCode
     //     ? () => print('코드가 틀리잖아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ')
@@ -104,96 +105,96 @@ class UserController extends GetxController {
     // // 1. 사용자 재인증, 그래야 Auth에서 유저 삭제가능
     // await _auth.currentUser!.reauthenticateWithCredential(credential);
 
-    //2. 해당 유저가 작성한 게시글 프로필, 이름 수정
-    await _userDB.doc(CurrentUser.uid).collection('post').get().then(
-      (value) {
-        //1) 내가 만든 게시글 id를 담을 빈 리스트
-        var _postIdList = [];
-        //2) 게시글 id 리스트 넣기
-        _postIdList.assignAll(
-          value.docs.map(
-            (e) => e.reference.id,
-          ),
-        );
-        //3) 받은 postId 리스트 반복문 -> 게시글 업데이트
-        _postIdList.forEach(
-          (postId) {
-            _firestore.collection('post').doc(postId.toString()).update(
-              {
-                'profileUrl': DefaultProfle.url, //기본프로필로 변경
-                'userName': CurrentUser.name + ' (탈퇴)', // 이름 뒤에 + (탈퇴)
-              },
-            ).then(
-              (_) => print('나의 모든 게시글 프로필, 이름 업데이트'),
-            );
-          },
-        );
-      },
-    );
-    //3. postingUser로 참여한 채팅의 프로필, 이름 수정
-    await _userDB
-        .doc(CurrentUser.uid)
-        .collection('chat')
-        .doc('chat')
-        .collection('isPostingUser')
-        .get()
-        .then(
-      (value) {
-        //1) 내가 postingUser로 있는 채팅방의 id 리스트
-        var _chatIdList = [];
-        //2) isPostingUser에서 id 리스트 담기
-        _chatIdList.assignAll(
-          value.docs.map(
-            (e) => e.reference.id,
-          ),
-        );
-        //3) 받은 채팅방 Id 리스트 반복문 -> postingUser 프로필, 이름 수정
-        _chatIdList.forEach(
-          (chatId) {
-            _firestore.collection('chat').doc(chatId.toString()).update(
-              {
-                'postingUserProfileUrl': DefaultProfle.url, //기본프로필로
-                'postingUserName': CurrentUser.name + ' (탈퇴)', //이름 +(탈퇴)
-              },
-            ).then(
-              (_) => print('postingUser의 프로필, 이름 수정'),
-            );
-          },
-        );
-      },
-    );
-    //4. contactUser로 참여한 채팅의 프로필, 이름 수정
-    await _userDB
-        .doc(CurrentUser.uid)
-        .collection('chat')
-        .doc('chat')
-        .collection('isContactUser')
-        .get()
-        .then(
-      (value) {
-        //1) 내가 contactUser 있는 채팅방의 id 리스트
-        var _chatIdList = [];
-        //2) isContactUser에서 id 리스트 담기
-        _chatIdList.assignAll(
-          value.docs.map(
-            (e) => e.reference.id,
-          ),
-        );
-        //3) 받은 채팅방 Id 리스트 반복문 -> contactUser의 프로필, 이름 수정
-        _chatIdList.forEach(
-          (chatId) {
-            _firestore.collection('chat').doc(chatId.toString()).update(
-              {
-                'contactUserProfileUrl': DefaultProfle.url, //기본프로필
-                'contactUserName': CurrentUser.name + ' (탈퇴)', //이름 (탈퇴)
-              },
-            ).then(
-              (_) => print('contactUse의 프로필, 이름 수정'),
-            );
-          },
-        );
-      },
-    );
+    // //2. 해당 유저가 작성한 게시글 프로필, 이름 수정
+    // await _userDB.doc(CurrentUser.uid).collection('post').get().then(
+    //   (value) {
+    //     //1) 내가 만든 게시글 id를 담을 빈 리스트
+    //     var _postIdList = [];
+    //     //2) 게시글 id 리스트 넣기
+    //     _postIdList.assignAll(
+    //       value.docs.map(
+    //         (e) => e.reference.id,
+    //       ),
+    //     );
+    //     //3) 받은 postId 리스트 반복문 -> 게시글 업데이트
+    //     _postIdList.forEach(
+    //       (postId) {
+    //         _firestore.collection('post').doc(postId.toString()).update(
+    //           {
+    //             'profileUrl': DefaultProfle.url, //기본프로필로 변경
+    //             'userName': CurrentUser.name + ' (탈퇴)', // 이름 뒤에 + (탈퇴)
+    //           },
+    //         ).then(
+    //           (_) => print('나의 모든 게시글 프로필, 이름 업데이트'),
+    //         );
+    //       },
+    //     );
+    //   },
+    // );
+    // //3. postingUser로 참여한 채팅의 프로필, 이름 수정
+    // await _userDB
+    //     .doc(CurrentUser.uid)
+    //     .collection('chat')
+    //     .doc('chat')
+    //     .collection('isPostingUser')
+    //     .get()
+    //     .then(
+    //   (value) {
+    //     //1) 내가 postingUser로 있는 채팅방의 id 리스트
+    //     var _chatIdList = [];
+    //     //2) isPostingUser에서 id 리스트 담기
+    //     _chatIdList.assignAll(
+    //       value.docs.map(
+    //         (e) => e.reference.id,
+    //       ),
+    //     );
+    //     //3) 받은 채팅방 Id 리스트 반복문 -> postingUser 프로필, 이름 수정
+    //     _chatIdList.forEach(
+    //       (chatId) {
+    //         _firestore.collection('chat').doc(chatId.toString()).update(
+    //           {
+    //             'postingUserProfileUrl': DefaultProfle.url, //기본프로필로
+    //             'postingUserName': CurrentUser.name + ' (탈퇴)', //이름 +(탈퇴)
+    //           },
+    //         ).then(
+    //           (_) => print('postingUser의 프로필, 이름 수정'),
+    //         );
+    //       },
+    //     );
+    //   },
+    // );
+    // //4. contactUser로 참여한 채팅의 프로필, 이름 수정
+    // await _userDB
+    //     .doc(CurrentUser.uid)
+    //     .collection('chat')
+    //     .doc('chat')
+    //     .collection('isContactUser')
+    //     .get()
+    //     .then(
+    //   (value) {
+    //     //1) 내가 contactUser 있는 채팅방의 id 리스트
+    //     var _chatIdList = [];
+    //     //2) isContactUser에서 id 리스트 담기
+    //     _chatIdList.assignAll(
+    //       value.docs.map(
+    //         (e) => e.reference.id,
+    //       ),
+    //     );
+    //     //3) 받은 채팅방 Id 리스트 반복문 -> contactUser의 프로필, 이름 수정
+    //     _chatIdList.forEach(
+    //       (chatId) {
+    //         _firestore.collection('chat').doc(chatId.toString()).update(
+    //           {
+    //             'contactUserProfileUrl': DefaultProfle.url, //기본프로필
+    //             'contactUserName': CurrentUser.name + ' (탈퇴)', //이름 (탈퇴)
+    //           },
+    //         ).then(
+    //           (_) => print('contactUse의 프로필, 이름 수정'),
+    //         );
+    //       },
+    //     );
+    //   },
+    // );
 
     //5. 내가 보낸 notifiacation 수정
 
