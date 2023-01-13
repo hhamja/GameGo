@@ -123,8 +123,6 @@ class ChatController extends GetxController {
             .toList());
   }
 
-  // Future getUserMannerAge() async {}
-
   /* 모든 '메시지' 리스트 스트림으로 받기 */
   Stream<List<MessageModel>> readAllMessageList(chatRoomId) async* {
     yield* _chatDB

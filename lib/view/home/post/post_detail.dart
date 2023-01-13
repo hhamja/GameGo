@@ -192,9 +192,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                       NotificationModel(
                                     idTo: _post.postInfo.uid, //게시자 uid
                                     idFrom: CurrentUser.uid, //관심버튼 누른 uid
-                                    type: 'favorite',
+                                    userName: CurrentUser.name, // 관심버튼 누른 유저이름
                                     postId: postId,
+                                    postTitle: _post.postInfo.title, //게시글 제목
                                     content: '',
+                                    type: 'favorite',
                                     createdAt: Timestamp.now(),
                                   );
                                   //관심게시글 등록

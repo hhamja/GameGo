@@ -18,6 +18,8 @@ class NtfController extends GetxController {
         'idTo': model.idTo,
         'postId': model.postId,
         'content': model.content,
+        'postTitle': model.postTitle,
+        'userName': model.userName,
         'type': model.type,
         'createdAt': model.createdAt,
       },
@@ -28,44 +30,38 @@ class NtfController extends GetxController {
   Future getNtfList() async {
     await _ntfDB
         .orderBy('createdAt', descending: true)
-        .where('idTo', whereIn: [CurrentUser.uid, 'ALL']) //나에게 온 모든 알림 쿼리
+        .where('idTo', whereIn: [CurrentUser.uid, 'ALL']) //나에게 + 앱 공지
         .get()
         .then(
           (snapshot) => ntfList.assignAll(
             snapshot.docs.map((e) {
-              var postId = e['postId']; //ntf의 postId
-              var idFrom = e['idFrom']; //ntf를 보낸 uid
-              getPostTitle(postId); //게시글 제목 받기
-              getUserName(idFrom); //유저이름 받기
-              print(postTitle);
-              print(userName);
               return NotificationModel.fromDocumentSnapshot(e);
             }),
           ),
         );
   }
 
-  /* ntfList의 postId를 이용하여 게시글 제목 받기 */
-  void getPostTitle(postId) async {
-    await FirebaseFirestore.instance
-        .collection('post')
-        .doc(postId)
-        .get()
-        .then((value) {
-      var snapshot = value.data() as Map<String, dynamic>;
-      return postTitle.value = snapshot['title'];
-    });
-  }
+  // /* ntfList의 postId를 이용하여 게시글 제목 받기 */
+  // Future<String> getPostTitle(postId) async {
+  //   return await FirebaseFirestore.instance
+  //       .collection('post')
+  //       .doc(postId)
+  //       .get()
+  //       .then((value) {
+  //     var snapshot = value.data() as Map<String, dynamic>;
+  //     return snapshot['title'];
+  //   });
+  // }
 
-  /* ntfList의 idFrom 이용하여 ntf 보낸 유저이름 받기 */
-  void getUserName(uid) async {
-    await FirebaseFirestore.instance
-        .collection('user')
-        .doc(uid)
-        .get()
-        .then((value) {
-      var snapshot = value.data() as Map<String, dynamic>;
-      return userName.value = snapshot['userName'];
-    });
-  }
+  // /* ntfList의 idFrom 이용하여 ntf 보낸 유저이름 받기 */
+  // void getUserName(uid) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('user')
+  //       .doc(uid)
+  //       .get()
+  //       .then((value) {
+  //     var snapshot = value.data() as Map<String, dynamic>;
+  //     return userName.value = snapshot['userName'];
+  //   });
+  // }
 }

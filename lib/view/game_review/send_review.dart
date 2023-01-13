@@ -260,8 +260,10 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   final NotificationModel _ntfModel = NotificationModel(
                     idFrom: CurrentUser.uid,
                     idTo: uid,
-                    type: 'review',
                     postId: postId,
+                    postTitle: postTitle,
+                    userName: CurrentUser.name,
+                    type: 'review',
                     content: '',
                     createdAt: Timestamp.now(),
                   );

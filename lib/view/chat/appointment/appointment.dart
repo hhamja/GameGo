@@ -14,6 +14,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
   final String uid = Get.arguments['uid'];
   /* 대상이 되는 post Id */
   final String postId = Get.arguments['postId'];
+  /* 게시글 제목*/
+  final String postTitle = Get.arguments['postTitle'];
   /* 캘린더 날짜 텍스트 크기 */
   final double _dateFontsize = 18;
 
@@ -248,7 +250,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
               idFrom: CurrentUser.uid,
               content: '',
               postId: postId,
-
+              postTitle: postTitle,
+              userName: CurrentUser.name,
               type: 'appoint', //약속설정알림
               createdAt: Timestamp.now(),
             );

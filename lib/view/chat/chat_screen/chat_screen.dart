@@ -26,6 +26,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
     _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
     _chat.getUserMannerAge(uid); //상대 유저에 대한 매너나이 받기
     _chat.updateChattingWith(uid); //현재 채팅하는 상대가 누군지 업데이트
+    _chat.messageList.bindStream(_chat.readAllMessageList(chatRoomId));
     _evaluation.checkExistEvaluation(uid, chatRoomId); //보낸 리뷰가 존재하는지 여부
   }
 
@@ -42,6 +43,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   }
 
   Widget build(BuildContext context) {
+    _chat.messageList.bindStream(_chat.readAllMessageList(chatRoomId));
     _getAppointment();
     return Scaffold(
       appBar: AppBar(
@@ -114,9 +116,9 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                       : Expanded(
                           child: InkWell(
                             //상대방이 보낸 메시지
-                            onTap: _chat.messageList.contains(_chat.messageList
-                                    .firstWhere(
-                                        (e) => e.idFrom != CurrentUser.uid))
+                            onTap: _chat.messageList.value
+                                        .firstWhere((e) => e.idFrom == uid) ==
+                                    ''
                                 ?
                                 //있다면? 약속설정 가능 O
                                 () {
@@ -124,6 +126,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                       'chatRoomId': chatRoomId,
                                       'uid': uid,
                                       'postId': postId,
+                                      'postTitle':
+                                          _post.postInfo.title, //게시글 제목
                                     });
                                   }
                                 //없다면? 약속설정 X , 토스트 사용자에게 알림

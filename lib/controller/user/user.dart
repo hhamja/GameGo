@@ -73,9 +73,16 @@ class UserController extends GetxController {
   Future signUP(token) async {
     final credential = PhoneAuthProvider.credential(
         verificationId: verificationID, smsCode: token);
-    final userCredential = await _auth.signInWithCredential(credential);
-    final user = userCredential.user;
-    print(user?.uid);
+    try {
+      await _auth.signInWithCredential(credential);
+      print('signUp successful');
+    } on FirebaseAuthException catch (e) {
+      //SMS 코드가 틀린 경우
+      if (e.code == 'invalid-verification-code') {
+        Get.snackbar('인증코드 입력 오류', '입력한 인증 코드를 확인해주세요.');
+      }
+      null;
+    }
   }
 
   /* 로그아웃 
@@ -86,26 +93,26 @@ class UserController extends GetxController {
   }
 
   /* 탈퇴하기
-  * DB, Auth정보 삭제O | mainLogoPage()로 이동 */
+  * 1. 서버의 유저 정보는 삭제 O
+  * 2. 유저정보 외 채팅, 게시글,  
+  * 3.mainLogoPage()로 이동 */
   Future deleteUser(smsCode) async {
-    //입력한 sms코드를 잘못 입력한 경우에는 delete 안되게 해야하는데
-    //어떻게 하지? -> test 주석 참고
-    /////////////////////////////////////////////////////////////////////
-
-    final credential = await PhoneAuthProvider.credential(
-        verificationId: verificationID, smsCode: smsCode);
-    print('credential = $credential');
-
-    // //test
-    // credential.smsCode != smsCode
-    //     ? () => print('코드가 틀리잖아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ')
-    //     : () => print('smsCode가 맞음 맞음 맞음 맞음맞음맞음맞음맞음맞음');
-    // //test
+    // try {
+    //   final credential = await PhoneAuthProvider.credential(
+    //       verificationId: verificationID, smsCode: smsCode);
+    //   print('credential = $credential');
+    //   print(credential.token);
+    //   print(credential.accessToken);
+    //   // //test
+    //   credential.smsCode != smsCode
+    //       ? () => print('코드가 틀리잖아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ')
+    //       : () => print('smsCode가 맞음 맞음 맞음 맞음맞음맞음맞음맞음맞음');
+    //   // //test
 
     // // 1. 사용자 재인증, 그래야 Auth에서 유저 삭제가능
     // await _auth.currentUser!.reauthenticateWithCredential(credential);
 
-    // //2. 해당 유저가 작성한 게시글 프로필, 이름 수정
+    // //2. 해당 유저가 작성한 게시글의 프로필, 이름 수정
     // await _userDB.doc(CurrentUser.uid).collection('post').get().then(
     //   (value) {
     //     //1) 내가 만든 게시글 id를 담을 빈 리스트
@@ -197,12 +204,18 @@ class UserController extends GetxController {
     // );
 
     //5. 내가 보낸 notifiacation 수정
-
     //  //6. Auth 정보 삭제
     // await _auth.currentUser!.delete();
     // //7. user 컬렉션에서 삭제
     // _userDB.doc(CurrentUser.uid).delete();
-    print('탈퇴하기');
+
+    //   print('탈퇴 성공 !');
+    // } on FirebaseAuthException catch (e) {
+    //   //SMS 코드가 틀린 경우
+    //   if (e.code == 'invalid-verification-code') {
+    //     Get.snackbar('인증코드 입력 오류', '입력한 인증 코드를 확인해주세요.');
+    //   }
+    // }
   }
 
   /* uid를 통해 특정 유저의 정보 받기 */
