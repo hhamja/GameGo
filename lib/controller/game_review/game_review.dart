@@ -2,17 +2,17 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class GameReviewController extends GetxController {
   final MannerAgeController _age = Get.put(MannerAgeController());
-  final CollectionReference _userDB =
-      FirebaseFirestore.instance.collection('user');
   final CollectionReference _reportDB =
       FirebaseFirestore.instance.collection('report');
+  final CollectionReference _gameReviewDB =
+      FirebaseFirestore.instance.collection('gameReview');
 
   /* 채팅방에서 확인하는 내가 작성해서 보낸 매너리뷰 */
   RxString myReviewContent = ''.obs;
   /* 게임후기 리스트 */
   RxList<GameReviewModel> gameReviewList = <GameReviewModel>[].obs;
 
-  /* 선택사항인 게임후기 작성시, 받는 유저 하위 컬렉션 'review'에 추가
+  /* 선택사항인 게임후기 작성시, gameReview에 보내기
   * 게임후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기
   * 매너후기를 보낸 경우에만 보내기
   * 비매너 후기를 보낸 경우에는 신고로 매너게이머 팀에 보내지도록 하기 */
@@ -21,8 +21,8 @@ class GameReviewController extends GetxController {
     chatRoomId,
     GameReviewModel GameReviewModel,
   ) async {
-    //1. 유저 하위 컬렉션에 리뷰 저장하기
-    await _userDB.doc(uid).collection('review').doc(chatRoomId).set(
+    //1. gameReview/gameReview/{uid}/{chatRoomId}에 보내기
+    await _gameReviewDB.doc('gameReview').collection(uid).doc(chatRoomId).set(
       {
         'idFrom': GameReviewModel.idFrom,
         'idTo': GameReviewModel.idTo,
@@ -56,9 +56,9 @@ class GameReviewController extends GetxController {
 
   /* 게임후기 리스트로 받기 */
   Future getGameReviewList(uid) async {
-    return _userDB
-        .doc(uid)
-        .collection('review')
+    return _gameReviewDB
+        .doc('gameReview')
+        .collection(uid)
         .orderBy('createdAt', descending: true) //최신일 수록 위로 오게
         .get()
         .then(
@@ -73,13 +73,20 @@ class GameReviewController extends GetxController {
   /* 내가 보낸 게임후기 받기 
   * 채팅페이지에서 버튼 클릭 시 보여지는 페이지 */
   Future getMySentReviewContent(uid, chatRoomId) async {
-    final ref =
-        await _userDB.doc(uid).collection('review').doc(chatRoomId).get();
-
+    final ref = await _gameReviewDB
+        .doc('gameReview')
+        .collection(uid)
+        .doc(chatRoomId)
+        .get();
     //후기는 선택사항이라 문서자체가 없어서 null 반환 에러 뜨므로
     //문서가 존재할때만 데이터 받도록 하기
     ref.exists
-        ? _userDB.doc(uid).collection('review').doc(chatRoomId).get().then(
+        ? _gameReviewDB
+            .doc('gameReview')
+            .collection(uid)
+            .doc(chatRoomId)
+            .get()
+            .then(
             (value) {
               var snapshot = value.data() as Map<String, dynamic>;
               myReviewContent.value = snapshot['content'];
