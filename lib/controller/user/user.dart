@@ -32,6 +32,7 @@ class UserController extends GetxController {
       },
     );
   }
+  /* 유저 정보 수정 */
 
   /* 폰으로 SMS 전송 */
   Future verifyPhone(String phonenumber) async {

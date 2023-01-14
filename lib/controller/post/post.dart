@@ -152,35 +152,57 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
   }
 
   /* 게시글 수정하기 */
-  Future updatePost(
-    postid,
-    String title,
-    String maintext,
-    String gamemode,
-    String? position,
-    String? tear,
-  ) async {
-    try {
-      await _postDB.doc(postid).update({
+  Future updatePost(postid, String title, String maintext, String gamemode,
+      String? position, String? tear) async {
+    //1. post 정보를 수정
+    await _postDB.doc(postid).update(
+      {
         'title': title,
         'maintext': maintext,
         'gamemode': gamemode,
         'position': position,
         'tear': tear,
-      });
-    } catch (e) {
-      print('updatePost error : ${e}');
-    }
+      },
+    );
+    //2. notification의 postTitle 수정
+    await FirebaseFirestore.instance
+        .collection('notification')
+        .where('postId', isEqualTo: postid)
+        .get()
+        .then(
+      (value) {
+        //2-1. ntf id를 담을 빈 리스트
+        var _ntfIdList = [];
+        //2-2. 쿼리한 postId에 해당 하는 ntf id를 리스트에 넣기
+        _ntfIdList.assignAll(
+          value.docs.map(
+            (e) => e.reference.id,
+          ),
+        );
+        //2-3. 반복문 -> notification의 postTitle 수정
+        _ntfIdList.forEach(
+          (id) {
+            FirebaseFirestore.instance
+                .collection('notification')
+                .doc(id)
+                .update(
+              {
+                'postTitle': title, //게시글 제목 수정
+              },
+            ).then(
+              (_) => print('ntf에서 게시글 제목 수정'),
+            );
+          },
+        );
+      },
+      onError: (e) => print(e),
+    );
   }
 
   /* 게시글 삭제하기 */
   Future deletePost(postid) async {
-    try {
-      final data = await _postDB.doc(postid).delete();
-      return data;
-    } catch (e) {
-      print('deletePost error : ${e}');
-    }
+    final data = await _postDB.doc(postid).delete();
+    return data;
   }
 
   /* postId을 통해서 특정 게시글의 데이터 받기 */
