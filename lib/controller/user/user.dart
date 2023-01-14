@@ -102,7 +102,6 @@ class UserController extends GetxController {
           verificationId: verificationID, smsCode: smsCode);
       // 1. 사용자 재인증, 그래야 Auth에서 유저 삭제가능
       await _auth.currentUser!.reauthenticateWithCredential(credential);
-
       //2. 해당 유저가 작성한 게시글의 프로필, 이름 수정
       await _userDB.doc(CurrentUser.uid).collection('post').get().then(
         (value) {
@@ -127,6 +126,9 @@ class UserController extends GetxController {
               );
             },
           );
+        },
+        onError: (e) {
+          print(e);
         },
       );
       //3. postingUser로 참여한 채팅의 프로필, 이름 수정
@@ -160,6 +162,9 @@ class UserController extends GetxController {
             },
           );
         },
+        onError: (e) {
+          print(e);
+        },
       );
       //4. contactUser로 참여한 채팅의 프로필, 이름 수정
       await _userDB
@@ -192,9 +197,12 @@ class UserController extends GetxController {
             },
           );
         },
+        onError: (e) {
+          print(e);
+        },
       );
-      //5. 내가 보낸 notifiacation 수정
-      //6. 내가 받은 게임 후기 삭제
+
+      //5. 내가 받은 게임 후기 삭제
       await _firestore
           .collection('gameReview')
           .doc(CurrentUser.uid)
@@ -202,10 +210,10 @@ class UserController extends GetxController {
           .then(
             (_) => print('내가 받은 게임후기 삭제 완료'),
           );
-      //7. Auth 정보 삭제
-      // await _auth.currentUser!.delete();
-      //8. user 컬렉션에서 삭제
-      // _userDB.doc(CurrentUser.uid).delete();
+      //6. Auth 정보 삭제
+      await _auth.currentUser!.delete();
+      //7. user 컬렉션에서 삭제
+      _userDB.doc(CurrentUser.uid).delete();
 
       print('탈퇴 성공');
     } on FirebaseAuthException catch (e) {

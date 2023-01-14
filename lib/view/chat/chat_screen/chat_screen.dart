@@ -17,7 +17,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   final PostController _post = Get.put(PostController());
   final EvaluationController _evaluation = Get.put(EvaluationController());
   final AppointmentController _appoint = Get.put(AppointmentController());
-  final ChatController _chat = Get.find<ChatController>();
+  final ChatController _chat = Get.put(ChatController());
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               arguments: {
                 'profileUrl': profileUrl, //상대 프로필
                 'userName': userName, //상대 이름
-                'mannerAge': _chat.mannerAge, //상대 매너나이
+                'mannerAge': _chat.mannerAge.value, //상대 매너나이
                 'uid': uid, //상대 uid
               },
             );
@@ -69,7 +69,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               ), // 상대유저이름
               SizedBox(width: 5),
               Text(
-                _chat.mannerAge + '세',
+                _chat.mannerAge.value + '세',
                 style: TextStyle(fontSize: 15),
               ), //유저 매너나이 (글씨 작게)
             ],
@@ -295,7 +295,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                     chatRoomId: chatRoomId,
                     userName: userName,
                     profileUrl: profileUrl,
-                    mannerAge: _chat.mannerAge,
+                    mannerAge: _chat.mannerAge.value,
                   ),
                 ],
               ),

@@ -19,8 +19,7 @@ class ChatController extends GetxController {
   /* 서로서로 보낸 메시지가 1개 이상인지; 약속설정 가능 여부 */
   RxBool isOkAppoint = false.obs;
   /* 채팅방에서 상대방 매너나이 */
-  RxString _mannerAge = ''.obs;
-  String get mannerAge => _mannerAge.value;
+  RxString mannerAge = ''.obs;
 
   @override
   void onInit() {
@@ -41,7 +40,7 @@ class ChatController extends GetxController {
       (e) {
         var data = e.data()! as Map<String, dynamic>;
         print(data['mannerAge']); //매너나이 프린트
-        _mannerAge.value = data['mannerAge'].toString(); //num인 매너나이 String으로
+        mannerAge.value = data['mannerAge'].toString(); //num인 매너나이 String으로
       },
     );
   }
