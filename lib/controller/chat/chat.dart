@@ -66,30 +66,28 @@ class ChatController extends GetxController {
         'updatedAt': chatRoomModel.updatedAt,
       });
 
-    //2 postingUser의 하위 컬렉션('chat/isPostingUser')에 채팅방 목록 추가
+    //2 postingUser의 하위 컬렉션('chat')에 채팅방 목록 추가
     await _userDB
         .doc(chatRoomModel.postingUid)
         .collection('chat')
-        .doc('chat')
-        .collection('isPostingUser')
         .doc(chatRoomModel.chatRoomId)
         .set(
       {
         'id': chatRoomModel.chatRoomId,
         'createdAt': chatRoomModel.updatedAt,
+        'isMyPost': true, //게시자이므로 true
       },
     );
-    //3. contactUser 하위 컬렉션('chat/isContactUser')에  채팅방 목록 추가
+    //3. contactUser 하위 컬렉션('chat')에  채팅방 목록 추가
     await _userDB
         .doc(chatRoomModel.contactUid)
         .collection('chat')
-        .doc('chat')
-        .collection('isContactUser')
         .doc(chatRoomModel.chatRoomId)
         .set(
       {
         'id': chatRoomModel.chatRoomId,
         'createdAt': chatRoomModel.updatedAt,
+        'isMyPost': false, //게시자가 아니고 채팅보낸 유저이므로 false
       },
     );
   }
