@@ -10,15 +10,10 @@ class CreateProfilePage extends StatefulWidget {
 
 class _CreateProfilePageState extends State<CreateProfilePage> {
   final TextEditingController _userNameController = TextEditingController();
-  /* User GetX Controller */
-  final UserController _userAuth = Get.put(UserController());
-  /* 프로필 컨트롤러 */
+  final UserController _user = Get.put(UserController());
   final ProfileController _profile = Get.put(ProfileController());
-  /* Firebase Storage instance */
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  /* Firebase Auth instance */
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  /* ImagePicker */
   final ImagePicker _picker = ImagePicker();
   /* 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수 */
   File? _photo;
@@ -95,7 +90,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   /* 완료 버튼 */
-  Future validateButton() async {
+  validateButton() async {
     final text = _userNameController.text.trim(); //닉네임
     UserModel userModel = UserModel(
         uid: _auth.currentUser!.uid,
@@ -112,7 +107,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         createdAt: Timestamp.now());
     if (!text.isEmpty || text.length >= 2) {
       //닉네임 2자 이상이라면?
-      await _userAuth.addNewUser(userModel); //userDB에 저장
+      await _user.addNewUser(userModel); //userDB에 저장
       await _auth.currentUser!.updatePhotoURL(
           profileImageUrl ?? _profile.defaultProfile); //userInfo에 프로필 URL저장
       await _auth.currentUser!.updateDisplayName(text); //userInfo에 닉네임저장
@@ -137,95 +132,99 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 40),
-          Stack(
-            children: [
-              CircleAvatar(
-                backgroundImage: _photo == null
-                    ? NetworkImage(
-                        // //기본 프로필 사진 url
-                        _profile.defaultProfile,
-                        // 기본 프로필 url
-                        // 'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689'
-                      )
-                    // 사용자 설정 url
-                    : NetworkImage(profileImageUrl!),
-                radius: 80,
+      body: SingleChildScrollView(
+        controller: ScrollController(),
+        child: Column(
+          children: [
+            /* 프로필 설정 */
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: 40,
               ),
-              Positioned(
-                bottom: 7,
-                right: 7,
-                child: GestureDetector(
-                  // 클릭시 모달 팝업을 띄워준다.
-                  onTap: () => Get.bottomSheet(showBottomSheet()),
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.black,
-                      size: 30,
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: _photo == null
+                        ? NetworkImage(
+                            // //기본 프로필 사진 url
+                            _profile.defaultProfile,
+                            // 기본 프로필 url
+                            // 'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689'
+                          )
+                        // 사용자 설정 url
+                        : NetworkImage(profileImageUrl!),
+                    radius: 80,
+                  ),
+                  Positioned(
+                    bottom: 7,
+                    right: 7,
+                    child: GestureDetector(
+                      // 클릭시 모달 팝업을 띄워준다.
+                      onTap: () => Get.bottomSheet(showBottomSheet()),
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.white),
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-          SizedBox(height: 40),
-          /* 닉네임 입력란 */
-          TextFormField(
-            decoration: InputDecoration(
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              floatingLabelAlignment: FloatingLabelAlignment.center,
-              hintText: '닉네임을 입력해주세요 :)',
-              fillColor: Colors.white,
-              labelText: '-------- 닉네임 --------',
-              counterText: '',
-              border: InputBorder.none,
             ),
-            autocorrect: false,
-            textInputAction: TextInputAction.done,
-            maxLines: 1,
-            showCursor: true,
-            controller: _userNameController,
-            maxLength: 12,
-            textAlignVertical: TextAlignVertical.center,
-            textAlign: TextAlign.center,
-            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            onChanged: (value) {
-              // setState(() {});
-            },
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(
-                  RegExp(r'[a-z|A-Z|0-9|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]'))
-            ],
-          ),
-          SizedBox(height: 10),
-          Text(
-            _showErrorText,
-            style: TextStyle(color: Colors.red),
-          )
-        ],
+
+            /* 닉네임 입력란 */
+            TextFormField(
+              decoration: InputDecoration(
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                floatingLabelAlignment: FloatingLabelAlignment.center,
+                hintText: '닉네임을 입력해주세요 :)',
+                fillColor: Colors.white,
+                labelText: '-------- 닉네임 --------',
+                counterText: '',
+                border: InputBorder.none,
+              ),
+              autocorrect: false,
+              textInputAction: TextInputAction.done,
+              maxLines: 1,
+              showCursor: true,
+              controller: _userNameController,
+              maxLength: 12,
+              textAlignVertical: TextAlignVertical.center,
+              textAlign: TextAlign.center,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              onChanged: (value) {
+                // setState(() {});
+              },
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r'[a-z|A-Z|0-9|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]'))
+              ],
+            ),
+            SizedBox(height: 10),
+            Text(
+              _showErrorText,
+              style: TextStyle(color: Colors.red),
+            )
+          ],
+        ),
       ),
-      bottomSheet: SafeArea(
-        child: Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Container(
-            width: double.infinity,
-            color: _bottomButtonColorChange,
-            child: CustomTextButton('완료', validateButton),
-          ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: CustomTextButton(
+          '완료',
+          validateButton,
         ),
       ),
     );
   }
 
   /* 카메라 아이콘 클릭시 띄울 바텀시트 */
-  Widget showBottomSheet() {
+  Container showBottomSheet() {
     return Container(
       height: 240,
       color: Colors.white, //투염도 설정(나중)

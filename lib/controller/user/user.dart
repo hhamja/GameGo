@@ -32,7 +32,50 @@ class UserController extends GetxController {
       },
     );
   }
-  /* 유저 정보 수정 */
+
+  // /* 유저가 프로필, 닉네임 변경 */
+  // Future updateUserData(userName, profileUrl) async {
+  //   //기존 닉네임이랑 변경 된 경우 닉네임 수정
+  //   if (CurrentUser.name != userName) {
+  //     //닉네임에 대한 중복확인 후, 닉네임 업데이트
+  //     await _userDB.where('userName', isEqualTo: userName).get().then(
+  //       (snapshot) {
+  //         //1. 중복 닉네임 X
+  //         if (snapshot.docs.isEmpty) {
+  //           //1-1. DB에서 유저 닉네임 업데이트
+  //           _userDB.doc(CurrentUser.uid).update(
+  //             {
+  //               'userName': userName,
+  //             },
+  //           );
+  //           //1-2. 나의 Auth 정보에서 닉네임 업데이트
+  //           _auth.currentUser!.updateDisplayName(userName);
+  //         }
+  //         //2. 중복 닉네임 O
+  //         else {
+  //           Get.snackbar('중복 닉네임', '선택한 닉네임은 사용할 수 없습니다.');
+  //         }
+  //       },
+  //     );
+  //   } else
+  //     null;
+
+  //   //기존 프로필에서 변경 된 경우 프로필 수정
+  //   if (CurrentUser.profile != profileUrl) {
+  //     //1. 유저정보에서 닉네임 업데이트
+  //     _userDB.doc(CurrentUser.uid).update(
+  //       {
+  //         'profileUrl': profileUrl,
+  //       },
+  //     );
+  //     //2. 채팅에서 닉네임 업데이트
+  //     //3. 나의 게시글의 닉네임 업데이트
+  //     //4. 게임 후기에서 닉네임 업데이트, gameReview db 구조 변경해야함 업데이트 위해서
+  //     //5. 나의 auth 정보에서 프로필 업데이트
+  //     _auth.currentUser!.updatePhotoURL(profileUrl);
+  //   } else
+  //     null;
+  // }
 
   /* 폰으로 SMS 전송 */
   Future verifyPhone(String phonenumber) async {

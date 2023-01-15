@@ -21,18 +21,33 @@ class GameReviewController extends GetxController {
     chatRoomId,
     GameReviewModel GameReviewModel,
   ) async {
-    //1. gameReview/gameReview/{uid}/{chatRoomId}에 보내기
-    await _gameReviewDB.doc(uid).collection(uid).doc(chatRoomId).set(
+    //1. 'gameReview'에 보내기
+    await _gameReviewDB.add(
       {
         'idFrom': GameReviewModel.idFrom,
         'idTo': GameReviewModel.idTo,
         'profileUrl': GameReviewModel.profileUrl,
         'userName': GameReviewModel.userName,
         'content': GameReviewModel.content,
+        'gameType': GameReviewModel.gameType,
         'createdAt': GameReviewModel.createdAt,
       },
+    ).then(
+      //2. 보낸 사람 하위컬렉션에 문서 id에 대한 정보 저장
+      (docRef) => FirebaseFirestore.instance
+          .collection('user')
+          .doc(CurrentUser.uid)
+          .collection('sentGameReview') //'sentGameReview'
+          .doc(docRef.id)
+          .set(
+        {
+          'id': docRef.id, //게임후기 문서 id
+          'chatRoomId': chatRoomId, //해당이 되는 채팅방 id
+          'createdAt': GameReviewModel.createdAt, //게임 후기 보낸 시간
+        },
+      ),
     );
-    //2. 매너 게임 후기 받는 유저의 매너나이 (+ 0.1)
+    //3. 매너 게임 후기 받는 유저의 매너나이 (+ 0.1)
     await _age.plusMannerAge(uid);
   }
 
@@ -54,11 +69,10 @@ class GameReviewController extends GetxController {
     await _age.minusMannerAge(model.idTo);
   }
 
-  /* 게임후기 리스트로 받기 */
+  /* 내가 받은 게임후기 리스트로 받기 */
   Future getGameReviewList(uid) async {
     return _gameReviewDB
-        .doc(uid)
-        .collection(uid)
+        .where('idTo', isEqualTo: CurrentUser.uid)
         .orderBy('createdAt', descending: true) //최신일 수록 위로 오게
         .get()
         .then(
@@ -73,17 +87,33 @@ class GameReviewController extends GetxController {
   /* 내가 보낸 게임후기 받기 
   * 채팅페이지에서 버튼 클릭 시 보여지는 페이지 */
   Future getMySentReviewContent(uid, chatRoomId) async {
-    final ref =
-        await _gameReviewDB.doc(uid).collection(uid).doc(chatRoomId).get();
     //후기는 선택사항이라 문서자체가 없어서 null 반환 에러 뜨므로
     //문서가 존재할때만 데이터 받도록 하기
-    ref.exists
-        ? _gameReviewDB.doc(uid).collection(uid).doc(chatRoomId).get().then(
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(CurrentUser.uid)
+        .collection('sentGameReview')
+        .where('chatRoomId', isEqualTo: chatRoomId)
+        .get()
+        .then(
+      (docRef) {
+        //내가 보낸 게임후기 존재하는 경우에만 게임후기 데이터 받기
+        if (docRef.docs.isNotEmpty) {
+          //review Id 데이터 받기
+          String docId = '';
+          docRef.docs.forEach((e) {
+            docId = e.reference.id;
+          });
+          //받은 문서 id값을 'gameReview'에서 데이터 받기
+          _gameReviewDB.doc(docId).get().then(
             (value) {
               var snapshot = value.data() as Map<String, dynamic>;
               myReviewContent.value = snapshot['content'];
             },
-          )
-        : null;
+          );
+        } else
+          null;
+      },
+    );
   }
 }

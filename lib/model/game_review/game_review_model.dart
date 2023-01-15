@@ -6,6 +6,7 @@ class GameReviewModel {
   final String profileUrl; //리뷰 보낸 사람의 프로필
   final String userName; //리뷰 보낸 사람의 이름
   final String content; //직접 작성한 후기
+  final String gameType; //어떤 게임인지? 지금은 : 'lol'  , 게임에 다른 게임 추가될 가능성
   final Timestamp createdAt; //후기 보낸 시간
 
   GameReviewModel({
@@ -14,6 +15,7 @@ class GameReviewModel {
     required this.profileUrl,
     required this.userName,
     required this.content,
+    required this.gameType,
     required this.createdAt,
   });
 
@@ -25,6 +27,7 @@ class GameReviewModel {
       profileUrl: snapshot['profileUrl'],
       userName: snapshot['userName'],
       content: snapshot['content'],
+      gameType: snapshot['gameType'],
       createdAt: snapshot['createdAt'],
     );
   }

@@ -284,6 +284,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       profileUrl:
                           FirebaseAuth.instance.currentUser!.photoURL ?? '',
                       content: _reviewText.text.trim(),
+                      gameType: 'lol',
                       createdAt: Timestamp.now(),
                     );
                     // 1-4-1. 작성한 매너 후기 'review'로 서버에 저장하기

@@ -165,7 +165,8 @@ class _SignOutPageState extends State<SignOutPage> {
                 );
                 await _c.addFeedBack(_model); //DB에 피드백 저장
                 _textController.clear(); //작성한 텍스트 필드 내용 제거
-                Get.to(() => SignOutSmsPage()); //OTP 인증 페이지로 이동
+                Get.to(() => CreateProfilePage()); //OTP 인증 페이지로 이동
+                // Get.to(() => SignOutSmsPage()); //OTP 인증 페이지로 이동
               }
             }
             // 2. 기타사유가 아닌 경우
@@ -176,7 +177,8 @@ class _SignOutPageState extends State<SignOutPage> {
               );
               await _c.addFeedBack(_model); //DB에 피드백 저장
               _textController.clear(); //작성한 텍스트 필드 내용 제거
-              Get.to(() => SignOutSmsPage()); //OTP 인증 페이지로 이동
+              // Get.to(() => SignOutSmsPage()); //OTP 인증 페이지로 이동
+              Get.to(() => CreateProfilePage()); //OTP 인증 페이지로 이동
             }
           },
         ),
