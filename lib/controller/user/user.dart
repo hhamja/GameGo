@@ -33,49 +33,235 @@ class UserController extends GetxController {
     );
   }
 
-  // /* 유저가 프로필, 닉네임 변경 */
-  // Future updateUserData(userName, profileUrl) async {
-  //   //기존 닉네임이랑 변경 된 경우 닉네임 수정
-  //   if (CurrentUser.name != userName) {
-  //     //닉네임에 대한 중복확인 후, 닉네임 업데이트
-  //     await _userDB.where('userName', isEqualTo: userName).get().then(
-  //       (snapshot) {
-  //         //1. 중복 닉네임 X
-  //         if (snapshot.docs.isEmpty) {
-  //           //1-1. DB에서 유저 닉네임 업데이트
-  //           _userDB.doc(CurrentUser.uid).update(
-  //             {
-  //               'userName': userName,
-  //             },
-  //           );
-  //           //1-2. 나의 Auth 정보에서 닉네임 업데이트
-  //           _auth.currentUser!.updateDisplayName(userName);
-  //         }
-  //         //2. 중복 닉네임 O
-  //         else {
-  //           Get.snackbar('중복 닉네임', '선택한 닉네임은 사용할 수 없습니다.');
-  //         }
-  //       },
-  //     );
-  //   } else
-  //     null;
+  /* 유저가 닉네임 변경 */
+  Future updateUserName(userName) async {
+    //기존 닉네임이랑 변경 된 경우 닉네임 수정
+    //이 조건식은 함수 선언하는 view에서 하자
 
-  //   //기존 프로필에서 변경 된 경우 프로필 수정
-  //   if (CurrentUser.profile != profileUrl) {
-  //     //1. 유저정보에서 닉네임 업데이트
-  //     _userDB.doc(CurrentUser.uid).update(
-  //       {
-  //         'profileUrl': profileUrl,
-  //       },
-  //     );
-  //     //2. 채팅에서 닉네임 업데이트
-  //     //3. 나의 게시글의 닉네임 업데이트
-  //     //4. 게임 후기에서 닉네임 업데이트, gameReview db 구조 변경해야함 업데이트 위해서
-  //     //5. 나의 auth 정보에서 프로필 업데이트
-  //     _auth.currentUser!.updatePhotoURL(profileUrl);
-  //   } else
-  //     null;
-  // }
+    //닉네임에 대한 중복확인
+    await _userDB.where('userName', isEqualTo: userName).get().then(
+      (snapshot) {
+        //1. 중복 닉네임 X
+        if (snapshot.docs.isEmpty) {
+          //1-1. 유저 DB
+          _userDB.doc(CurrentUser.uid).update(
+            {'userName': userName},
+          );
+          //1-2. 채팅
+          _userDB.doc(CurrentUser.uid).collection('chat').get().then(
+            (value) {
+              value.docs.map(
+                (e) {
+                  var snapshot = e.data();
+                  var isMyPost =
+                      snapshot['isMyPost']; //해당 채팅방이 내가 postingUser인지
+                  final String chatRoomId = e.reference.id; //채팅방 id 값
+                  print(isMyPost);
+                  print(chatRoomId);
+                  //1-1-1. postingUesr인 채팅인 경우
+                  if (isMyPost) {
+                    //chatRoomId를 넣어 프로필, 닉네임 수정
+                    _firestore.collection('chat').doc(chatRoomId).update(
+                      {
+                        'postingUserName': userName,
+                      },
+                    ).then(
+                      (_) => print('postingUser 닉네임 수정'),
+                    );
+                  }
+                  //1-1-2. contactUser인 채팅인 경우
+                  else {
+                    //chatRoomId를 넣어 프로필, 닉네임 수정
+                    _firestore.collection('chat').doc(chatRoomId).update(
+                      {
+                        'contactUserName': userName,
+                      },
+                    ).then(
+                      (_) => print('contactUser 닉네임 수정'),
+                    );
+                  }
+                },
+              );
+            },
+          );
+          //1-3. 게시글
+          _userDB.doc(CurrentUser.uid).collection('post').get().then(
+            (value) {
+              //내가 만든 게시글 id를 담을 빈 리스트
+              var _postIdList = [];
+              //게시글 id 리스트 넣기
+              _postIdList.assignAll(
+                value.docs.map(
+                  (e) => e.reference.id,
+                ),
+              );
+              //받은 postId 리스트 반복문 -> 게시글 업데이트
+              _postIdList.forEach(
+                (postId) {
+                  _firestore.collection('post').doc(postId.toString()).update(
+                    {
+                      'userName': userName,
+                    },
+                  ).then(
+                    (_) => print('나의 모든 게시글 닉네임 업데이트'),
+                  );
+                },
+              );
+            },
+          );
+          //1-4. 내가 보낸 게임 후기
+          _userDB.doc(CurrentUser.uid).collection('sentGameReview').get().then(
+            (value) {
+              //내가 보낸 게임 후기 id 담을 리스트
+              var _idList = [];
+              //게임 후기 id 리스트 넣기
+              _idList.assignAll(
+                value.docs.map(
+                  (e) => e.reference.id,
+                ),
+              );
+              //id 리스트 반복문 -> 게임후기 업데이트
+              _idList.forEach(
+                (id) {
+                  _firestore.collection('gameReview').doc(id).update(
+                    {
+                      'userName': userName,
+                    },
+                  ).then(
+                    (_) => print('내가 보낸 게임 후기 닉네임 업데이트'),
+                  );
+                },
+              );
+            },
+          );
+          //1-5. Notification
+          _firestore
+              .collection('notification')
+              .where('idFrom', isEqualTo: CurrentUser.uid) //내가 보낸 ntf
+              .get()
+              .then(
+                (value) => value.docs.map(
+                  (e) {
+                    final _id = e.reference.id;
+                    _firestore.collection('notification').doc(_id).update(
+                      {
+                        'userName': userName,
+                      },
+                    );
+                  },
+                ),
+              );
+          //1-6. Auth 정보
+          _auth.currentUser!.updateDisplayName(userName);
+        }
+        //2. 중복 닉네임 O
+        else {
+          Get.snackbar('중복 닉네임', '선택한 닉네임은 사용할 수 없습니다.');
+        }
+      },
+    );
+  }
+
+  /* 유저가 프로필 수정 */
+  Future updateUserProfile(profileUrl) async {
+    //기존 프로필에서 변경 된 경우 프로필 수정
+    //이 조건문은 view로 옮기지 굳이 함수실행까지 할 필요가 없다.
+
+    //1. 유저정보
+    _userDB.doc(CurrentUser.uid).update(
+      {
+        'profileUrl': profileUrl,
+      },
+    );
+    //2. 채팅
+    _userDB.doc(CurrentUser.uid).collection('chat').get().then(
+      (value) {
+        value.docs.map(
+          (e) {
+            var snapshot = e.data();
+            var isMyPost = snapshot['isMyPost']; //해당 채팅방이 내가 postingUser인지
+            final String chatRoomId = e.reference.id; //채팅방 id 값
+            print(isMyPost);
+            print(chatRoomId);
+            //ㄱ. postingUesr인 채팅인 경우
+            if (isMyPost) {
+              //chatRoomId를 넣어 프로필, 닉네임 수정
+              _firestore.collection('chat').doc(chatRoomId).update(
+                {
+                  'postingUserProfileUrl': profileUrl,
+                },
+              ).then(
+                (_) => print('postingUser의 프로필, 이름 수정'),
+              );
+            }
+            //ㄴ. contactUser인 채팅인 경우
+            else {
+              //chatRoomId를 넣어 프로필, 닉네임 수정
+              _firestore.collection('chat').doc(chatRoomId).update(
+                {
+                  'contactUserProfileUrl': profileUrl,
+                },
+              ).then(
+                (_) => print('contactUser 프로필, 이름 수정'),
+              );
+            }
+          },
+        );
+      },
+    );
+    //3. 나의 게시글
+    _userDB.doc(CurrentUser.uid).collection('post').get().then(
+      (value) {
+        //내가 만든 게시글 id를 담을 빈 리스트
+        var _postIdList = [];
+        //게시글 id 리스트 넣기
+        _postIdList.assignAll(
+          value.docs.map(
+            (e) => e.reference.id,
+          ),
+        );
+        //받은 postId 리스트 반복문 -> 게시글 업데이트
+        _postIdList.forEach(
+          (postId) {
+            _firestore.collection('post').doc(postId.toString()).update(
+              {
+                'profileUrl': profileUrl,
+              },
+            ).then(
+              (_) => print('나의 모든 게시글 프로필 업데이트'),
+            );
+          },
+        );
+      },
+    );
+    //4. 내가 보낸 게임 후기
+    _userDB.doc(CurrentUser.uid).collection('sentGameReview').get().then(
+      (value) {
+        //내가 보낸 게임 후기 id 담을 리스트
+        var _idList = [];
+        //게임 후기 id 리스트 넣기
+        _idList.assignAll(
+          value.docs.map(
+            (e) => e.reference.id,
+          ),
+        );
+        //2-3. 받은 id 리스트 반복문 -> 게임후기 업데이트
+        _idList.forEach(
+          (id) {
+            _firestore.collection('gameReview').doc(id).update(
+              {
+                'profileUrl': profileUrl,
+              },
+            ).then(
+              (_) => print('내가 보낸 게임 후기 프로필 업데이트'),
+            );
+          },
+        );
+      },
+    );
+    //5. Auth 정보
+    _auth.currentUser!.updatePhotoURL(profileUrl);
+  }
 
   /* 폰으로 SMS 전송 */
   Future verifyPhone(String phonenumber) async {
