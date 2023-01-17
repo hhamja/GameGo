@@ -31,6 +31,7 @@ export 'package:jiffy/jiffy.dart';
 export 'package:grouped_list/grouped_list.dart';
 
 /* Screens */
+export 'package:mannergamer/view/my_info/my_profile/edit_profile.dart';
 export 'package:mannergamer/view/my_info/my_activity/received_review/received_review.dart';
 export 'package:mannergamer/view/game_review/my_sent_review.dart';
 export 'package:mannergamer/view/user_profile/profile.dart';
@@ -78,7 +79,6 @@ export 'package:mannergamer/view/my_info/my_activity/my_post/bottomSheets.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_post/my_postList.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_post/received_review.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_post/sent_reviews.dart';
-export 'package:mannergamer/view/my_info/my_profile/edit_profile.dart';
 export 'package:mannergamer/view/my_info/setting/setting.dart';
 export 'package:mannergamer/view/my_info/setting/signOut/signOut.dart';
 export 'package:mannergamer/view/my_info/setting/logOut/logOut_dialog.dart';

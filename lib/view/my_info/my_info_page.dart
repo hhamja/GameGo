@@ -10,18 +10,17 @@ class MyInfoPage extends StatefulWidget {
 class _MyInfoPageState extends State<MyInfoPage> {
   final UserController _user = Get.put(UserController());
   final NtfSettingController _ntf = Get.put(NtfSettingController());
-
+  var _createdAt;
   @override
   void initState() {
     super.initState();
     _user.getUserInfoByUid(CurrentUser.uid); //현재유저 정보 받기
+    _createdAt =
+        Jiffy(_user.userInfo['createdAt'].toDate()).format('yy. MM. dd'); //가입날짜
   }
 
   @override
   Widget build(BuildContext context) {
-    final _createdAt =
-        Jiffy(_user.userInfo['createdAt'].toDate()).format('yy. MM. dd'); //가입날짜
-
     return Scaffold(
       appBar: AppBar(
         title: Text('나의 정보'),
@@ -62,10 +61,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                     description: Text('가입일 : $_createdAt'),
                     trailing: Icon(Icons.keyboard_control_outlined),
                     onPressed: (value) {
-                      Get.to(() => ProfileEditPage(), arguments: {
-                        'profileUrl': _user.userInfo['profileUrl'],
-                        'userName': _user.userInfo['userName'],
-                      });
+                      Get.to(() => EditMyProfilePage());
                     },
                   ),
                   SettingsTile(

@@ -35,32 +35,30 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
   /* 만든 게시글 데이터 서버로 보내기 */
   Future createPost(PostModel postModel) async {
     //1. post에 보내기
-    await _postDB.doc(postModel.postId).set(
-      {
-        'postId': postModel.postId,
-        'uid': postModel.uid,
-        'userName': postModel.userName,
-        'profileUrl': postModel.profileUrl,
-        'title': postModel.title,
-        'maintext': postModel.maintext,
-        'gamemode': postModel.gamemode,
-        'position': postModel.position,
-        'tear': postModel.tear,
-        'like': postModel.like,
-        'gameType': postModel.gameType,
-        'createdAt': postModel.createdAt,
-      },
-    );
-    //2. 나의 하위컬렉션 post에 게시글 docId 값 보내기
-    await _userDB
-        .doc(CurrentUser.uid)
-        .collection('post')
-        .doc(postModel.postId)
-        .set(
-      {
+    _postDB.doc(postModel.postId).set({
+      'postId': postModel.postId,
+      'uid': postModel.uid,
+      'userName': postModel.userName,
+      'profileUrl': postModel.profileUrl,
+      'title': postModel.title,
+      'maintext': postModel.maintext,
+      'gamemode': postModel.gamemode,
+      'position': postModel.position,
+      'tear': postModel.tear,
+      'like': postModel.like,
+      'gameType': postModel.gameType,
+      'createdAt': postModel.createdAt,
+    }).then(
+      (_) =>
+          //2. 나의 하위컬렉션 post에 게시글 docId 값 보내기
+          _userDB
+              .doc(CurrentUser.uid)
+              .collection('post')
+              .doc(postModel.postId)
+              .set({
         'id': postModel.postId,
         'createdAt': postModel.createdAt,
-      },
+      }),
     );
   }
 

@@ -147,7 +147,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Paths.ProfileEdit,
-      page: () => ProfileEditPage(),
+      page: () => EditMyProfilePage(),
     ),
     GetPage(
       name: Paths.Favorite,
