@@ -50,7 +50,7 @@ class UserController extends GetxController {
           //1-2. 채팅
           _userDB.doc(CurrentUser.uid).collection('chat').get().then(
             (value) {
-              value.docs.map(
+              value.docs.forEach(
                 (e) {
                   var snapshot = e.data();
                   var isMyPost =
@@ -140,7 +140,7 @@ class UserController extends GetxController {
               .where('idFrom', isEqualTo: CurrentUser.uid) //내가 보낸 ntf
               .get()
               .then(
-                (value) => value.docs.map(
+                (value) => value.docs.forEach(
                   (e) {
                     final _id = e.reference.id;
                     _firestore.collection('notification').doc(_id).update(
@@ -176,7 +176,7 @@ class UserController extends GetxController {
     //2. 채팅
     _userDB.doc(CurrentUser.uid).collection('chat').get().then(
       (value) {
-        value.docs.map(
+        value.docs.forEach(
           (e) {
             var snapshot = e.data();
             var isMyPost = snapshot['isMyPost']; //해당 채팅방이 내가 postingUser인지
@@ -364,7 +364,7 @@ class UserController extends GetxController {
       //3. 내가 맴버로 있는 채팅방의 프로필, 이름 수정
       await _userDB.doc(CurrentUser.uid).collection('chat').get().then(
         (value) {
-          value.docs.map(
+          value.docs.forEach(
             (e) {
               var snapshot = e.data();
               var isMyPost = snapshot['isMyPost']; //해당 채팅방이 내가 postingUser인지
