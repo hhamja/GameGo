@@ -9,8 +9,8 @@ class EditMyProfilePage extends StatefulWidget {
 }
 
 class _EditMyProfilePageState extends State<EditMyProfilePage> {
-  final TextEditingController _nameText =
-      TextEditingController(text: CurrentUser.name);
+  final TextEditingController _nameText = TextEditingController(
+      text: FirebaseAuth.instance.currentUser!.displayName!);
   final UserController _user = Get.put(UserController());
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
