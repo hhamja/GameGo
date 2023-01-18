@@ -17,7 +17,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
   final ImagePicker _picker = ImagePicker();
 
   /* 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수 */
-  File? _photeFile;
+  File? _photoFile;
   /* 파베 스토리지에서 불러올 사진 url */
   String profileImageUrl = FirebaseAuth.instance.currentUser!.photoURL!;
 
@@ -28,7 +28,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
     setState(() {
       //갤러리에 사진이 있다면?
       if (pickedFile != null) {
-        _photeFile = File(pickedFile.path); //해당 이미지 담기 _photefile변수에 담기
+        _photoFile = File(pickedFile.path); //해당 이미지 담기 _photofile변수에 담기
       } else {
         print('No image selected from Gallery');
       }
@@ -43,7 +43,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
     );
     setState(() {
       if (pickedFile != null) {
-        _photeFile = File(pickedFile.path); //해당 이미지 담기 _photefile변수에 담기
+        _photoFile = File(pickedFile.path); //해당 이미지 담기 _photofile변수에 담기
       } else {
         print('No image selected from Camera');
       }
@@ -52,15 +52,15 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
 
   /* 파베 스토리지에 업로드하기 */
   Future uploadFile() async {
-    if (_photeFile == null) return;
+    if (_photoFile == null) return;
     final fileName = _auth.currentUser?.uid; //유저고유 id값을 파일명으로
 
     try {
       //('storage/profile/{uid}') 경로
       final ref = _storage.ref().child('profile').child(fileName!);
       print(ref);
-      print(_photeFile);
-      await ref.putFile(_photeFile!); //스토리지에 업로드
+      print(_photoFile);
+      await ref.putFile(_photoFile!); //스토리지에 업로드
       profileImageUrl = await ref.getDownloadURL(); //업로드한 사진 url받기
       print(profileImageUrl);
     } catch (e) {
@@ -97,7 +97,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
               ),
               child: Stack(
                 children: [
-                  _photeFile == null
+                  _photoFile == null
                       ? //갤러리에서 사진 선택하지 않은 경우 나의 기존 프로필 url
                       CircleAvatar(
                           backgroundImage: NetworkImage(profileImageUrl),
@@ -105,7 +105,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
                         )
                       : //갤러리에서 사진 선택한 경우 선택한 파일의 이미지
                       CircleAvatar(
-                          backgroundImage: FileImage(_photeFile!),
+                          backgroundImage: FileImage(_photoFile!),
                           radius: 80,
                         ),
                   Positioned(
@@ -177,7 +177,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
               _user.updateUserName(text); ////닉네임 수정
             }
             //프로필을 변경한 경우
-            if (_photeFile != null) {
+            if (_photoFile != null) {
               //선택한 갤러리의 사진을 storage에 올리고 url을 profileImageUrl에 받기
               await uploadFile();
               print(profileImageUrl);
@@ -185,8 +185,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
               _user.updateUserProfile(profileImageUrl);
             } else if (profileImageUrl != CurrentUser.profile) {
               print(profileImageUrl);
-              //기본 프로필로 업데이트
-              //기본프로필로 선택하면 ? _photeFile는 null도 된다
+              //기본프로필로 선택하면 ? _photoFile는 null도 된다
               _user.updateUserProfile(profileImageUrl);
             }
 
@@ -228,7 +227,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
             () async {
               //기본 프로필 주소로 변경
               setState(() {
-                _photeFile = null;
+                _photoFile = null;
                 profileImageUrl = DefaultProfle.url;
               });
               Get.back();

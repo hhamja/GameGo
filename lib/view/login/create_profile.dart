@@ -18,7 +18,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   /* 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수 */
   File? _photo;
   /* 파베 스토리지에서 불러올 사진 url */
-  String? profileImageUrl;
+  String profileImageUrl = DefaultProfle.url;
 
   /* 갤러리에서 사진 선택하기 */
   Future pickImgFromGallery() async {
@@ -27,7 +27,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       //갤러리에 사진이 있다면?
       if (pickedFile != null) {
         _photo = File(pickedFile.path); //해당 이미지 담기 _photo변수에 담기
-        uploadFile(); //파베 스토리지에 해당 이미지 저장
       } else {
         print('No image selected from Gallery');
       }
@@ -43,7 +42,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     setState(() {
       if (pickedFile != null) {
         _photo = File(pickedFile.path); //해당 이미지 담기 _photo변수에 담기
-        uploadFile(); //파베 스토리지에 해당 이미지 저장
       } else {
         print('No image selected from Camera');
       }
@@ -78,40 +76,34 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     return '';
   }
 
-  /* 닉네임 입력에 따른 바텀 버튼 색 */
-  Color? get _bottomButtonColorChange {
-    final text = _userNameController.text.trim();
-
-    if (text.isEmpty || text.length < 2) {
-      //닉네임 2자 이상이라면?
-      return Colors.grey;
-    }
-    return Colors.blue;
-  }
-
   /* 완료 버튼 */
   validateButton() async {
     final text = _userNameController.text.trim(); //닉네임
-    UserModel userModel = UserModel(
-        uid: _auth.currentUser!.uid,
-        userName: text,
-        phoneNumber: Get.arguments ??
-            _auth.currentUser!.phoneNumber, //인증받은 폰번호 이전페이지에서 받기
-        profileUrl: profileImageUrl ??
-            _profile.defaultProfile, // 유저가 저장한 프로필 ?? 기본프로필url
-        mannerAge: 20.0,
-        chatPushNtf: true,
-        activityPushNtf: true,
-        noticePushNtf: true,
-        marketingConsent: true, //이거는 동의 창 띄우고 동의하면 true, 비동의 하면 false로
-        createdAt: Timestamp.now());
+    //닉네임 2자 이상이라면?
     if (!text.isEmpty || text.length >= 2) {
-      //닉네임 2자 이상이라면?
-      await _user.addNewUser(userModel); //userDB에 저장
-      await _auth.currentUser!.updatePhotoURL(
-          profileImageUrl ?? _profile.defaultProfile); //userInfo에 프로필 URL저장
-      await _auth.currentUser!.updateDisplayName(text); //userInfo에 닉네임저장
-      Get.offAllNamed('/myapp'); //홈으로 이동
+      //파베 스토리지에 해당 이미지 보내고 url 받기
+      //await 이유 : profileUrl변수를 먼저 받아야함
+      await uploadFile();
+      UserModel userModel = UserModel(
+          uid: _auth.currentUser!.uid,
+          userName: text,
+          phoneNumber: Get.arguments ??
+              _auth.currentUser!.phoneNumber, //인증받은 폰번호 이전페이지에서 받기
+          profileUrl: profileImageUrl,
+          mannerAge: 20.0,
+          chatPushNtf: true,
+          activityPushNtf: true,
+          noticePushNtf: true,
+          marketingConsent: true, //이거는 동의 창 띄우고 동의하면 true, 비동의 하면 false로
+          createdAt: Timestamp.now());
+      //서버에 유저정보 보내기
+      _user.addNewUser(userModel);
+      //Auth에 프로필 URL저장
+      _auth.currentUser!.updatePhotoURL(profileImageUrl);
+      //Auth에 닉네임저장
+      _auth.currentUser!.updateDisplayName(text);
+      //홈으로 이동
+      Get.offAllNamed('/myapp');
     }
   }
 
@@ -122,15 +114,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       appBar: AppBar(
         title: Text('프로필 설정'),
         centerTitle: true,
-        actions: [
-          TextButton(
-            onPressed: validateButton,
-            child: Text(
-              '완료',
-              style: TextStyle(color: Colors.white),
-            ),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         controller: ScrollController(),
@@ -143,18 +126,17 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               ),
               child: Stack(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: _photo == null
-                        ? NetworkImage(
-                            // //기본 프로필 사진 url
-                            _profile.defaultProfile,
-                            // 기본 프로필 url
-                            // 'https://firebasestorage.googleapis.com/v0/b/mannergamer-c2546.appspot.com/o/profile%2Fdefault_profile.png?alt=media&token=4a999f41-c0f9-478b-b0ee-d88e5364c689'
-                          )
-                        // 사용자 설정 url
-                        : NetworkImage(profileImageUrl!),
-                    radius: 80,
-                  ),
+                  _photo == null
+                      ? //갤러리에서 사진 선택하지 않은 경우 나의 기존 프로필 url
+                      CircleAvatar(
+                          backgroundImage: NetworkImage(profileImageUrl),
+                          radius: 80,
+                        )
+                      : //갤러리에서 사진 선택한 경우 선택한 파일의 이미지
+                      CircleAvatar(
+                          backgroundImage: FileImage(_photo!),
+                          radius: 80,
+                        ),
                   Positioned(
                     bottom: 7,
                     right: 7,
@@ -251,10 +233,11 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           CustomButtomSheet(
             '기본 이미지로 설정',
             Colors.blue,
-            () {
-              //스토리지, 프로필 이미지 제거 후 기본 프로필 사진으로
+            () async {
+              //기본 프로필 주소로 변경
               setState(() {
                 _photo = null;
+                profileImageUrl = DefaultProfle.url;
               });
               Get.back();
             },
