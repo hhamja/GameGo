@@ -8,6 +8,7 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 /* Packages */
+export 'package:permission_handler/permission_handler.dart';
 export 'package:decimal/decimal.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
@@ -38,7 +39,7 @@ export 'package:mannergamer/view/user_profile/profile.dart';
 export 'package:mannergamer/view/user_profile/game_review.dart';
 export 'package:mannergamer/view/user_profile/manner_evaluation.dart';
 export 'package:mannergamer/view/game_review/send_review.dart';
-export 'package:mannergamer/view/splashPage/myApp.dart';
+export 'package:mannergamer/view/myApp.dart';
 export 'package:mannergamer/view/splashPage/splash.dart';
 export 'package:mannergamer/view/chat/bottomSheet/chat_bottomSheet.dart';
 export 'package:mannergamer/view/chat/appointment/alarm_bottomSheet.dart';
@@ -157,3 +158,5 @@ export 'package:mannergamer/utilites/currentUser/currentUser.dart';
 /* Themes */
 export 'package:mannergamer/theme/theme.dart';
 export 'package:mannergamer/main.dart';
+
+export 'package:mannergamer/controller/permission_handler/permission_handler.dart';

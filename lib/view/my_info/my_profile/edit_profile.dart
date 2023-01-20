@@ -35,6 +35,40 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
     });
   }
 
+  // /* 카메라 권한 요청
+  // * 프로필 설정 및 수정할 때 */
+  // Future requestCameraPermission() async {
+  //   // PermissionStatus status = await Permission.camera.status;
+  //   // 권한 요청
+  //   await Permission.camera.request().then(
+  //     (status) {
+  //       // 결과 확인
+  //       if (status.isGranted) {
+  //         // 승인된 경우
+  //         pickImgFromCamera();
+  //       } else {
+  //         // 거부된 경우
+  //         return Get.dialog(
+  //           // 다이어로그 띄우기
+  //           CustomSmallDialog(
+  //             '기능 사용을 원하실 경우\n설정>앱 관리자>매너게이머에서\n카메라 권한을 허용해 주세요.',
+  //             '닫기',
+  //             '설정으로 이동',
+  //             () => Get.back(),
+  //             () {
+  //               Get.back();
+  //               // 앱 설정으로 이동,
+  //               openAppSettings();
+  //             },
+  //             2,
+  //             3,
+  //           ),
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
+
   /* 카메라로 사진 찍기 */
   Future pickImgFromCamera() async {
     final pickedFile = await _picker.pickImage(
@@ -209,7 +243,14 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
             '갤러리에서 사진 선택',
             Colors.blue,
             () async {
-              await pickImgFromGallery();
+              //갤러리 권한 요청
+              await PermissionHandler().requestStoragePermission().then(
+                    (value) => value == true
+                        // 허용된 권한 : 사진 저장소 실행
+                        ? pickImgFromGallery()
+                        // 허용되지 않은 권한 : 다시 권한 요청
+                        : PermissionHandler().requestStoragePermission(),
+                  );
               Get.back();
             },
           ),
@@ -217,7 +258,14 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
             '기본 카메라로 사진 찍기',
             Colors.blue,
             () async {
-              await pickImgFromCamera();
+              //카메라 권한 요청
+              await PermissionHandler().requestCameraPermission().then(
+                    (value) => value == true
+                        // 허용된 권한 : 기본 카메라 실행
+                        ? pickImgFromCamera()
+                        // 허용되지 않은 권한 : 다시 권한 요청
+                        : PermissionHandler().requestCameraPermission(),
+                  );
               Get.back();
             },
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mannergamer/controller/permission_handler/permission_handler.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MyApp extends StatefulWidget {
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     _token.getToken();
   }
 

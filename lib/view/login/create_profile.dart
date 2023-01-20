@@ -11,7 +11,6 @@ class CreateProfilePage extends StatefulWidget {
 class _CreateProfilePageState extends State<CreateProfilePage> {
   final TextEditingController _userNameController = TextEditingController();
   final UserController _user = Get.put(UserController());
-  final ProfileController _profile = Get.put(ProfileController());
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final ImagePicker _picker = ImagePicker();
@@ -78,6 +77,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
 
   /* 완료 버튼 */
   validateButton() async {
+    // 알림 권한에 대한 상태 값 받기
+    final _isGrantedNtf = await Permission.notification.status.isGranted;
     final text = _userNameController.text.trim(); //닉네임
     //닉네임 2자 이상이라면?
     if (!text.isEmpty || text.length >= 2) {
@@ -91,10 +92,11 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               _auth.currentUser!.phoneNumber, //인증받은 폰번호 이전페이지에서 받기
           profileUrl: profileImageUrl,
           mannerAge: 20.0,
-          chatPushNtf: true,
-          activityPushNtf: true,
-          noticePushNtf: true,
-          marketingConsent: true, //이거는 동의 창 띄우고 동의하면 true, 비동의 하면 false로
+          chatPushNtf: _isGrantedNtf,
+          activityPushNtf: _isGrantedNtf,
+          noticePushNtf: _isGrantedNtf,
+          //광고성 수신 동의는 처음에 물어보지 않고 유저가 설정했을 때만
+          marketingConsent: false,
           createdAt: Timestamp.now());
       //서버에 유저정보 보내기
       _user.addNewUser(userModel);
@@ -102,6 +104,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       _auth.currentUser!.updatePhotoURL(profileImageUrl);
       //Auth에 닉네임저장
       _auth.currentUser!.updateDisplayName(text);
+
       //홈으로 이동
       Get.offAllNamed('/myapp');
     }
@@ -213,11 +216,17 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       child: Column(
         children: [
           CustomButtomSheet(
-            '갤러리에서 사진 선택', // ★★★★★갤러리 권한 요청
+            '갤러리에서 사진 선택',
             Colors.blue,
             () async {
-              //갤러리에서 사진 가져오고 프로필 + 스토리지 업로드하기
-              await pickImgFromGallery();
+              //갤러리 권한 요청
+              await PermissionHandler().requestStoragePermission().then(
+                    (value) => value == true
+                        // 허용된 권한 : 사진 저장소 실행
+                        ? pickImgFromGallery()
+                        // 허용되지 않은 권한 : 다시 권한 요청
+                        : PermissionHandler().requestStoragePermission(),
+                  );
               Get.back();
             },
           ),
@@ -225,6 +234,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             '기본 카메라로 사진 찍기', // ★★★★★카메라 권한 요청
             Colors.blue,
             () async {
+              //카메라 권한 요청
+              await PermissionHandler().requestCameraPermission().then(
+                    (value) => value == true
+                        // 허용된 권한 : 기본 카메라 실행
+                        ? pickImgFromCamera()
+                        // 허용되지 않은 권한 : 다시 권한 요청
+                        : PermissionHandler().requestCameraPermission(),
+                  );
               //카메라에서 사진 찍고 프로필 + 스토리지 업로드하기
               await pickImgFromCamera();
               Get.back();

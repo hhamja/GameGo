@@ -55,8 +55,9 @@ dependencies:
   table_calendar: ^3.0.8
   flutter_time_picker_spinner: ^2.0.0
   firebase_messaging: ^14.1.1
-  flutter_local_notifications: ^12.0.4
+  flutter_local_notifications: ^13.0.0
   decimal: ^2.3.2
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:

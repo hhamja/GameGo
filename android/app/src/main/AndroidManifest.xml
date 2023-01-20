@@ -1,9 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mannergamer.mannergamer">
+    <!--  디버그 모드에서는 INTERNET 권한이 없어도 API 요청 등이 동작한다. 릴리즈 모드에서 사용하기 위해서는 해당 권한이 필요하다 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    
+    <!-- 필수 권한 요청 : 없음 -->
+    <!-- 선택 권한 요청 : 사진(갤러리), 카메라, 알림, 캘린더(약속설정 시) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/> 
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
-    <uses-permission android:name="android.name.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.name.CAMERA"/>
-    <uses-permission android:name="android.name.INTERNET"/>
     <application
         android:label="mannergamer"
         android:name="${applicationName}"

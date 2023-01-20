@@ -9,8 +9,8 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   @override
   void initState() {
-    Get.put(PostController());
     super.initState();
+    Get.put(PostController());
   }
 
   @override

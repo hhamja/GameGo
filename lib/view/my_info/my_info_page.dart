@@ -1,3 +1,4 @@
+import 'package:mannergamer/controller/permission_handler/permission_handler.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MyInfoPage extends StatefulWidget {
@@ -10,10 +11,12 @@ class MyInfoPage extends StatefulWidget {
 class _MyInfoPageState extends State<MyInfoPage> {
   final UserController _user = Get.put(UserController());
   final NtfSettingController _ntf = Get.put(NtfSettingController());
+
   var _createdAt;
   @override
   void initState() {
     super.initState();
+
     _user.getUserInfoByUid(CurrentUser.uid); //현재유저 정보 받기
     _createdAt =
         Jiffy(_user.userInfo['createdAt'].toDate()).format('yy. MM. dd'); //가입날짜
