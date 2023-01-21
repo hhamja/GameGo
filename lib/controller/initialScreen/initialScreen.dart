@@ -27,9 +27,21 @@ class InitialScreenCntroller extends GetxController {
   * 신규회원? 메인로고 페이지
   * Auth에만 유저정보 있고 DB에 유저정보 없는 유저? 프로필 생성 페이지
   * 둘다 있는 유저? MyApp()으로 이동 */
-  _setInitialScreen(User? user) async {
+  Future _setInitialScreen(User? user) async {
+    //서버에서 유저정보있는지 확인
     final doc = await _userDB.doc(_auth.currentUser?.uid).get();
-    if (user == null) {
+    final prefs = await SharedPreferences.getInstance();
+    // 앱을 처음 키는지 확인하는 변수 받기
+    // _isSeen ? 앱을 처음키는게 아닌 경우 : 앱을 처음 키는 경우
+    bool _isSeen = prefs.getBool('isSeen') ?? false;
+    // 첫 화면 설정
+    if (!_isSeen) {
+      // 설치 후 처음 실행
+      // isSeen를 true로 업데이트
+      await prefs.setBool('isSeen', true);
+      // 앱 권한 사용 안내 페이지로 이동
+      Get.offAll(PermissionGuidePage());
+    } else if (user == null) {
       print('신규유저');
       return Get.offAll(MainLogoPage());
     } else if (!doc.exists) {

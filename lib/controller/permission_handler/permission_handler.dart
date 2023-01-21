@@ -6,8 +6,6 @@ class PermissionHandler extends GetxController {
   Future<bool> requestNotificationPermission() async {
     // 권한 요청
     PermissionStatus status = await Permission.notification.request();
-    var x = await Permission.camera.status;
-    x == isBlank ? true : false;
     // 결과 확인
     if (status.isGranted) {
       // 승인된 경우

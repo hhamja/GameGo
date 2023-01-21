@@ -4,7 +4,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     
     <!-- 필수 권한 요청 : 없음 -->
-    <!-- 선택 권한 요청 : 사진(갤러리), 카메라, 알림, 캘린더(약속설정 시) -->
+    <!-- 선택 권한 요청 : 사진(갤러리), 카메라, 알림 -->
+    
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA"/> 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />

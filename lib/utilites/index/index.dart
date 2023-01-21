@@ -8,6 +8,7 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 /* Packages */
+export 'package:shared_preferences/shared_preferences.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:decimal/decimal.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -32,6 +33,9 @@ export 'package:jiffy/jiffy.dart';
 export 'package:grouped_list/grouped_list.dart';
 
 /* Screens */
+export 'package:mannergamer/view/splashPage/permission_item.dart';
+export 'package:mannergamer/component/textButton/full_textButton.dart';
+export 'package:mannergamer/view/splashPage/permission_guide.dart';
 export 'package:mannergamer/view/my_info/my_profile/edit_profile.dart';
 export 'package:mannergamer/view/my_info/my_activity/received_review/received_review.dart';
 export 'package:mannergamer/view/game_review/my_sent_review.dart';
@@ -149,11 +153,11 @@ export 'package:mannergamer/component/divider/divider.dart';
 export 'package:mannergamer/component/listtile/three_line_listTile.dart';
 
 /* Utilities */
-export 'package:mannergamer/utilites/default_profile/default_profile.dart';
+export 'package:mannergamer/utilites/app_data/default_profile/default_profile.dart';
 export 'package:mannergamer/utilites/route/route.dart';
 export 'package:mannergamer/utilites/binding/binding.dart';
 export 'package:mannergamer/utilites/route/route_path.dart';
-export 'package:mannergamer/utilites/currentUser/currentUser.dart';
+export 'package:mannergamer/utilites/app_data/currentUser/currentUser.dart';
 
 /* Themes */
 export 'package:mannergamer/theme/theme.dart';
