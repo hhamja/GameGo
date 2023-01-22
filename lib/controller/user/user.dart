@@ -27,7 +27,7 @@ class UserController extends GetxController {
         'phoneNumber': userModel.phoneNumber,
         'chatPushNtf': userModel.chatPushNtf,
         'activityPushNtf': userModel.activityPushNtf,
-        'noticePushNtf': userModel.noticePushNtf,
+        'nightPushNtf': userModel.nightPushNtf,
         'marketingConsent': userModel.marketingConsent,
       },
     );
@@ -311,7 +311,7 @@ class UserController extends GetxController {
       if (e.code == 'invalid-verification-code') {
         Get.snackbar('인증코드 입력 오류', '입력한 인증 코드를 확인해주세요.');
       }
-      null;
+      print(e.code);
     }
   }
 

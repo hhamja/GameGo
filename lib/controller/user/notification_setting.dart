@@ -4,13 +4,13 @@ class NtfSettingController extends GetxController {
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
   /* 유저의 알림 on/off에 대한 bool 변수 
-  * chatPushNtf, activityPushNtf, noticePushNtf, marketingConsent */
+  * chatPushNtf, activityPushNtf, nightPushNtf, marketingConsent */
   RxMap<String, dynamic> userNtfBool = Map<String, dynamic>().obs;
   // var userNtfBool = NotificationSettingModel().obs;
 
   var isChatNtf = true.obs;
   var isActivitNtf = true.obs;
-  var isNoticeNtf = true.obs;
+  var isNightNtf = true.obs;
   var isMarketingConsent = true.obs;
 
   @override
@@ -25,7 +25,7 @@ class NtfSettingController extends GetxController {
       var snapshot = value.data() as Map<String, dynamic>;
       isChatNtf.value = snapshot['chatPushNtf']; //채팅알림
       isActivitNtf.value = snapshot['activityPushNtf']; //활동알림
-      isNoticeNtf.value = snapshot['noticePushNtf']; //앱 공지 및 소식 알림
+      isNightNtf.value = snapshot['nightPushNtf']; //앱 공지 및 소식 알림
       isMarketingConsent.value = snapshot['marketingConsent']; //마켓팅 수신 동의
     });
   }
@@ -49,10 +49,10 @@ class NtfSettingController extends GetxController {
   }
 
   /* 앱 소식 및 공지 알림 토글 버튼 클릭 시 업데이트 */
-  Future updateNoticePushNtf(noticePushNtf) async {
+  Future updateNightPushNtf(nightPushNtf) async {
     return _userDB.doc(CurrentUser.uid).update(
       {
-        'noticePushNtf': noticePushNtf,
+        'nightPushNtf': nightPushNtf,
       },
     );
   }

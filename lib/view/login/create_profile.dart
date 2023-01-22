@@ -94,7 +94,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           mannerAge: 20.0,
           chatPushNtf: _isGrantedNtf,
           activityPushNtf: _isGrantedNtf,
-          noticePushNtf: _isGrantedNtf,
+          nightPushNtf: _isGrantedNtf,
           //광고성 수신 동의는 처음에 물어보지 않고 유저가 설정했을 때만
           marketingConsent: false,
           createdAt: Timestamp.now());

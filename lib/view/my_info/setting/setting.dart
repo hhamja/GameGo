@@ -9,11 +9,20 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   final NtfSettingController _c = Get.put(NtfSettingController());
+  var isGrantedNtf;
+  @override
+  void initState() {
+    super.initState();
+    getNtfPermission();
+    _c.getUserPushNtf();
+  }
+
+  Future getNtfPermission() async {
+    isGrantedNtf = await Permission.notification.status.isGranted;
+  }
 
   @override
   Widget build(BuildContext context) {
-    _c.getUserPushNtf();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('설정'),
@@ -33,9 +42,9 @@ class _SettingPageState extends State<SettingPage> {
                     _c.isChatNtf.value = await value;
                     _c.updateChatPushNtf(_c.isChatNtf.value);
                   },
-                  initialValue: _c.isChatNtf.value,
+                  initialValue: isGrantedNtf ? _c.isChatNtf.value : false,
                   title: Text('채팅 알림'),
-                  description: Text('메시지 알림'),
+                  description: Text('메시지 알림을 받습니다.'),
                 ),
                 SettingsTile.switchTile(
                   onToggle: (value) async {
@@ -43,19 +52,29 @@ class _SettingPageState extends State<SettingPage> {
                     _c.isActivitNtf.value = value;
                     _c.updateActivityPushNtf(_c.isActivitNtf.value);
                   },
-                  initialValue: _c.isActivitNtf.value,
+                  initialValue: isGrantedNtf ? _c.isActivitNtf.value : false,
                   title: Text('활동 알림'),
-                  description: Text('관심, 약속설정, 매너평가 등 알림'),
+                  description: Text('관심, 약속, 매너평가 알림을 받습니다.'),
                 ),
                 SettingsTile.switchTile(
                   onToggle: (value) async {
-                    _c.isNoticeNtf.value = await value;
-                    _c.updateNoticePushNtf(_c.isNoticeNtf.value);
+                    _c.isNightNtf.value = await value;
+                    _c.updateNightPushNtf(_c.isNightNtf.value);
                   },
-                  // trailing: Text(),
-                  initialValue: _c.isNoticeNtf.value,
-                  title: Text('공지 알림'),
-                  description: Text('매너게이머 소식 알림'),
+                  initialValue:
+                      isGrantedNtf ? _c.isMarketingConsent.value : false,
+                  title: Text('이벤트 및 소식 알림'),
+                  description: Text('이벤트 및 앱 소석 알림을 받습니다.'),
+                ),
+                SettingsTile.switchTile(
+                  onToggle: (value) async {
+                    _c.isMarketingConsent.value = await value;
+                    _c.updateMarketingConsent(_c.isMarketingConsent.value);
+                  },
+                  initialValue:
+                      isGrantedNtf ? _c.isMarketingConsent.value : false,
+                  title: Text('야간 해택 알림'),
+                  description: Text('21시~08시 사이 해택 알림 푸시를 받습니다.'),
                 ),
               ],
             ),
@@ -106,21 +125,7 @@ class _SettingPageState extends State<SettingPage> {
                 //     );
                 //   },
                 // ),
-                SettingsTile.switchTile(
-                  // trailing: Switch(
-                  //   value: ,
-                  //   onChanged: (value) {
-                  //     _c.isMarketingConsent.value = value;
-                  //     _c.updateMarketingConsent(_c.isMarketingConsent.value);
-                  //   },
-                  // ),
-                  onToggle: (value) async {
-                    _c.isMarketingConsent.value = await value;
-                    _c.updateMarketingConsent(_c.isMarketingConsent.value);
-                  },
-                  initialValue: _c.isMarketingConsent.value,
-                  title: Text('마케팅 정보 수신 동의'),
-                ),
+
                 SettingsTile.navigation(
                   title: Text('서비스 이용 약관'),
                   onPressed: (_) {},

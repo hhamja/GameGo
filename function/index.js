@@ -83,12 +83,12 @@ exports.chatNotification = functions
       });
   });
 
-/* 매너후기, 관심게시글, 약속설정, 앱 공지 및 마케팅 푸시알림 함수 */
-exports.activityAndNoticeNotification = functions
+/* 매너후기, 관심게시글, 약속, 이벤트 및 소식 푸시알림 */
+exports.activityAndMarketingNotification = functions
   .region("asia-northeast3")
   .firestore.document("notification/{notificationId}")
   .onCreate(async (snap, context) => {
-    console.log("------ START : ACTIVITY & NOTICE NOTIFICATION ------");
+    console.log("------ START : ACTIVITY & Marketing NOTIFICATION ------");
 
     const doc = snap.data();
 
@@ -111,14 +111,14 @@ exports.activityAndNoticeNotification = functions
         querySnapshot.forEach((userTo) => {
           console.log(`Found user to: ${userTo.data().userName}`);
 
-          // 후기, 관심게시글, 약속설정 알림에 대한 bool 값
+          // 후기, 관심게시글, 약속설정 알림에 대한 on/off
           const activityNtf = userTo.data().activityPushNtf;
-          // 앱 공지 알림에 대한 bool 값
-          const noticeNtf = userTo.data().noticePushNtf;
-          // 마케팅 수신 동의에 대한 bool 값
+          // 이벤트 및 앱 소식에 대한 on/off
+          const nightNtf = userTo.data().nightPushNtf;
+          // 마케팅 수신 동의에 대한 on/off
           const marketingConsent = userTo.data().marketingConsent;
           console.log(activityNtf);
-          console.log(noticeNtf);
+          console.log(nightNtf);
           console.log(marketingConsent);
           console.log(ntfType);
           /* User From의 이름을 받고 푸시알림에 대한 설정하기 */
@@ -228,7 +228,7 @@ exports.activityAndNoticeNotification = functions
           } else if (
             /* 4. 앱 공지 */
             ntfType == "notice" &&
-            noticeNtf == true &&
+            nightNtf == true &&
             marketingConsent == true
           ) {
             console.log("앱 소식 알림 조건식 통과");
