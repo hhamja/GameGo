@@ -278,6 +278,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     final GameReviewModel _reviewModel = GameReviewModel(
                       idFrom: CurrentUser.uid,
                       idTo: uid,
+                      chatRoomId: chatRoomId,
                       userName:
                           FirebaseAuth.instance.currentUser!.displayName ??
                               '(이름없음)',
@@ -288,8 +289,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       createdAt: Timestamp.now(),
                     );
                     // 1-4-1. 작성한 매너 후기 'review'로 서버에 저장하기
-                    await _review.addMannerReview(
-                        uid, chatRoomId, _reviewModel);
+                    await _review.addMannerReview(uid, _reviewModel);
                     // 1-4-1. 작성한 후기 텍스트 전부 삭제
                     _reviewText.clear();
                     print('매너평가 + 후기작성 O');

@@ -3,6 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 class GameReviewModel {
   final String idFrom; //리뷰 보낸 uid
   final String idTo; //리뷰 받는 uid
+  final String chatRoomId; //해당되는 채팅방 id
   final String profileUrl; //리뷰 보낸 사람의 프로필
   final String userName; //리뷰 보낸 사람의 이름
   final String content; //직접 작성한 후기
@@ -12,6 +13,7 @@ class GameReviewModel {
   GameReviewModel({
     required this.idFrom,
     required this.idTo,
+    required this.chatRoomId,
     required this.profileUrl,
     required this.userName,
     required this.content,
@@ -24,6 +26,7 @@ class GameReviewModel {
     return GameReviewModel(
       idFrom: snapshot['idFrom'],
       idTo: snapshot['idTo'],
+      chatRoomId: snapshot['chatRoomId'],
       profileUrl: snapshot['profileUrl'],
       userName: snapshot['userName'],
       content: snapshot['content'],

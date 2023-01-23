@@ -18,44 +18,30 @@ class GameReviewController extends GetxController {
   * 비매너 후기를 보낸 경우에는 신고로 매너게이머 팀에 보내지도록 하기 */
   Future addMannerReview(
     uid,
-    chatRoomId,
     GameReviewModel GameReviewModel,
   ) async {
-    //1. 'gameReview'에 보내기
-    await _gameReviewDB.add(
+    // 루트 컬렉션 'gameReview'에 저장
+    _gameReviewDB.add(
       {
         'idFrom': GameReviewModel.idFrom,
         'idTo': GameReviewModel.idTo,
+        'chatRoomId': GameReviewModel.chatRoomId,
         'profileUrl': GameReviewModel.profileUrl,
         'userName': GameReviewModel.userName,
         'content': GameReviewModel.content,
         'gameType': GameReviewModel.gameType,
         'createdAt': GameReviewModel.createdAt,
       },
-    ).then(
-      //2. 보낸 사람 하위컬렉션에 문서 id에 대한 정보 저장
-      (docRef) => FirebaseFirestore.instance
-          .collection('user')
-          .doc(CurrentUser.uid)
-          .collection('sentGameReview') //'sentGameReview'
-          .doc(docRef.id)
-          .set(
-        {
-          'id': docRef.id, //게임후기 문서 id
-          'chatRoomId': chatRoomId, //해당이 되는 채팅방 id
-          'createdAt': GameReviewModel.createdAt, //게임 후기 보낸 시간
-        },
-      ),
     );
-    //3. 매너 게임 후기 받는 유저의 매너나이 (+ 0.1)
-    await _age.plusMannerAge(uid);
+    // 매너 게임 후기 받는 유저의 매너나이 (+ 0.1)
+    _age.plusMannerAge(uid);
   }
 
   /* 비매너 게임 후기를 작성한 경우 
   * 상대방에게 전달하지 않고 신고하기로 처리하여 운영자가 관리하도록 하기 */
   Future addUnMannerReview(ReportModel model) async {
-    //1. 서버의 'report'에 저장하기
-    await _reportDB.add(
+    // 루트 컬렉션 'report'에 저장
+    _reportDB.add(
       {
         'idFrom': model.idFrom,
         'idTo': model.idTo,
@@ -65,8 +51,8 @@ class GameReviewController extends GetxController {
         'createdAt': model.createdAt,
       },
     );
-    //2. 비매너 게임 후기 받는 유저의 매너나이 (- 0.1)
-    await _age.minusMannerAge(model.idTo);
+    // 비매너 게임 후기 받는 유저의 매너나이 (- 0.1)
+    _age.minusMannerAge(model.idTo);
   }
 
   /* 내가 받은 게임후기 리스트로 받기 */
@@ -84,35 +70,25 @@ class GameReviewController extends GetxController {
         );
   }
 
-  /* 내가 보낸 게임후기 받기 
-  * 채팅페이지에서 버튼 클릭 시 보여지는 페이지 */
+  /* 내가 보낸 게임후기 받기 */
   Future getMySentReviewContent(uid, chatRoomId) async {
-    //후기는 선택사항이라 문서자체가 없어서 null 반환 에러 뜨므로
-    //문서가 존재할때만 데이터 받도록 하기
-    FirebaseFirestore.instance
-        .collection('user')
-        .doc(CurrentUser.uid)
-        .collection('sentGameReview')
+    // 후기는 선택사항이라 문서자체가 없어서 null 반환 에러 뜨므로
+    // 문서가 존재할때만 데이터 받도록 하기
+    return _gameReviewDB
         .where('chatRoomId', isEqualTo: chatRoomId)
+        .where('idFrom', isEqualTo: CurrentUser.uid)
         .get()
         .then(
       (docRef) {
-        //내가 보낸 게임후기 존재하는 경우에만 게임후기 데이터 받기
         if (docRef.docs.isNotEmpty) {
-          //review Id 데이터 받기
-          String docId = '';
-          docRef.docs.forEach((e) {
-            docId = e.reference.id;
-          });
-          //받은 문서 id값을 'gameReview'에서 데이터 받기
-          _gameReviewDB.doc(docId).get().then(
-            (value) {
-              var snapshot = value.data() as Map<String, dynamic>;
-              myReviewContent.value = snapshot['content'];
-            },
-          );
-        } else
-          null;
+          // 내가 보낸 게임후기 존재
+          // 하나의 문서가 담긴 List이므로 0번째 데이터 Map으로 변환
+          var snapshot = docRef.docs[0].data() as Map<String, dynamic>;
+          // 게임후기의 내용을 RxString 변수에 담기
+          myReviewContent.value = snapshot['content'];
+        } else {
+          print('내가 보낸 게임후기 null');
+        }
       },
     );
   }
