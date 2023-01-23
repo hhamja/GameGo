@@ -156,7 +156,7 @@ class UserController extends GetxController {
         }
         //2. 중복 닉네임 O
         else {
-          Get.snackbar('중복 닉네임', '선택한 닉네임은 사용할 수 없습니다.');
+          Get.snackbar('중복 닉네임', '해당 닉네임은 사용할 수 없습니다.');
         }
       },
     );
@@ -330,90 +330,14 @@ class UserController extends GetxController {
     try {
       final credential = await PhoneAuthProvider.credential(
           verificationId: verificationID, smsCode: smsCode);
-      // 1. 사용자 재인증, 그래야 Auth에서 유저 삭제가능
-      await _auth.currentUser!.reauthenticateWithCredential(credential);
-      //2. 해당 유저가 작성한 게시글의 프로필, 이름 수정
-      await _userDB.doc(CurrentUser.uid).collection('post').get().then(
-        (value) {
-          //2-1. 내가 만든 게시글 id를 담을 빈 리스트
-          var _postIdList = [];
-          //2-2. 게시글 id 리스트 넣기
-          _postIdList.assignAll(
-            value.docs.map(
-              (e) => e.reference.id,
-            ),
-          );
-          //2-3. 받은 postId 리스트 반복문 -> 게시글 업데이트
-          _postIdList.forEach(
-            (postId) {
-              _firestore.collection('post').doc(postId.toString()).update(
-                {
-                  'profileUrl': DefaultProfle.url, //기본프로필로 변경
-                  'userName': CurrentUser.name + ' (탈퇴)', // 이름 뒤에 + (탈퇴)
-                },
-              ).then(
-                (_) => print('나의 모든 게시글 프로필, 이름 업데이트'),
-              );
-            },
-          );
-        },
-        onError: (e) {
-          print(e);
-        },
-      );
-      //3. 내가 맴버로 있는 채팅방의 프로필, 이름 수정
-      await _userDB.doc(CurrentUser.uid).collection('chat').get().then(
-        (value) {
-          value.docs.forEach(
-            (e) {
-              var snapshot = e.data();
-              var isMyPost = snapshot['isMyPost']; //해당 채팅방이 내가 postingUser인지
-              final String chatRoomId = e.reference.id; //채팅방 id 값
-              print(isMyPost);
-              print(chatRoomId);
-              //1. postingUesr인 채팅인 경우
-              if (isMyPost) {
-                //chatRoomId를 넣어 프로필, 닉네임 수정
-                _firestore.collection('chat').doc(chatRoomId).update(
-                  {
-                    'postingUserProfileUrl': DefaultProfle.url, //기본프로필로
-                    'postingUserName': CurrentUser.name + ' (탈퇴)', //닉네임 +(탈퇴)
-                  },
-                ).then(
-                  (_) => print('postingUser의 프로필, 이름 수정'),
-                );
-              }
-              // 2. contactUser인 채팅인 경우
-              else {
-                //chatRoomId를 넣어 프로필, 닉네임 수정
-                _firestore.collection('chat').doc(chatRoomId).update(
-                  {
-                    'contactUserProfileUrl': DefaultProfle.url, //기본프로필로
-                    'contactUserName': CurrentUser.name + ' (탈퇴)', //닉네임 +(탈퇴)
-                  },
-                ).then(
-                  (_) => print('contactUser 프로필, 이름 수정'),
-                );
-              }
-            },
-          );
-        },
-        onError: (e) {
-          print(e);
-        },
-      );
-      //4. 내가 받은 게임 후기 삭제
-      await _firestore
-          .collection('gameReview')
-          .doc(CurrentUser.uid)
-          .delete()
-          .then(
-            (_) => print('내가 받은 게임후기 삭제 완료'),
-          );
-      //5. Auth 정보 삭제
-      await _auth.currentUser!.delete();
-      //6. user 컬렉션에서 삭제
+      // 1. Storage에서 해당 유저의 프로필 삭제
+      FirebaseStorage.instance.ref().child(CurrentUser.uid).delete();
+      // 2. user 컬렉션에서 삭제
       _userDB.doc(CurrentUser.uid).delete();
+      // 3. 사용자 재인증, 그래야 Auth에서 유저 삭제가능
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+      // 4. Auth 정보 삭제
+      await _auth.currentUser!.delete();
 
       print('탈퇴 성공');
     } on FirebaseAuthException catch (e) {
