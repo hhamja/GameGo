@@ -2,10 +2,10 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class EvaluationController extends GetxController {
   final MannerAgeController _age = Get.put(MannerAgeController());
-  final CollectionReference _userDB =
-      FirebaseFirestore.instance.collection('user');
+  final CollectionReference _evaluationDB =
+      FirebaseFirestore.instance.collection('evaluation');
   final NtfController _ntf = Get.put(NtfController());
-  //
+
   var goodCheckList = [].obs;
   var badCheckList = [].obs;
   /* 내가 보낸 후기가 매너 후기인지? 비매너 후기 인지? 판단하게 해줄 bool  */
@@ -35,57 +35,18 @@ class EvaluationController extends GetxController {
   RxList uncomfortable = [].obs;
   RxList privateMeeting = [].obs;
 
-  // /* 매너 평가 담는 GoodEvaluationModel */
-  // Rx<GoodEvaluationModel> goodEvaluation = GoodEvaluationModel(
-  //   evaluationType: '',
-  //   idFrom: '',
-  //   idTo: '',
-  //   kindManner: false,
-  //   strongMental: false,
-  //   goodAppointment: false,
-  //   fastAnswer: false,
-  //   goodGameSkill: false,
-  //   goodCommunication: false,
-  //   comfortable: false,
-  //   hardGame: false,
-  //   softMannerTalk: false,
-  //   createdAt: Timestamp.now(),
-  // ).obs;
-  /* 비매너 평가 담는 BadEvaluationModel */
-  Rx<BadEvaluationModel> badEvaluation = BadEvaluationModel(
-    evaluationType: '',
-    idFrom: '',
-    idTo: '',
-    badManner: false,
-    badAppointment: false,
-    slowAnswer: false,
-    weakMental: false,
-    badGameSkill: false,
-    troll: false,
-    abuseWord: false,
-    sexualWord: false,
-    shortTalk: false,
-    noCommunication: false,
-    uncomfortable: false,
-    privateMeeting: false,
-    createdAt: Timestamp.now(),
-  ).obs;
-  /* 내가 받은 매너 평가 리스트 */
+  // 내가 받은 매너 평가 리스트
   RxList<int> goodEvaluationList = <int>[].obs;
-  /* 내가 받은 비매너 평가 리스트 */
+  // 내가 받은 비매너 평가 리스트
   RxList<int> badEvaluationList = <int>[].obs;
-  /* 보낸 매너평가가 있는지 여부 */
+  // 보낸 매너평가가 있는지 여부
   RxBool isExistEvaluation = false.obs;
 
-  /***************************************************************************/
-
-  /* 매너 평가 추가 
-  * 유저의 하위 컬렉션 'evaluation'에 추가하기
-  * 푸시알림 위해 notifiaciton에도 추가 */
+  /* 매너 평가 보내기 */
   Future addGoodEvaluation(uid, chatRoomId, GoodEvaluationModel goodEvaluation,
       NotificationModel ntfModel) async {
-    //1. 유저의 하위 컬렉션에 추가
-    await _userDB.doc(uid).collection('goodEvaluation').doc(chatRoomId).set(
+    // evaluation/{받는uid}/goodEvaluation/{chatRoomId}에 저장
+    _evaluationDB.doc(uid).collection('goodEvaluation').doc(chatRoomId).set(
       {
         'evaluationType': goodEvaluation.evaluationType,
         'idFrom': goodEvaluation.idFrom,
@@ -102,22 +63,21 @@ class EvaluationController extends GetxController {
         'createdAt': goodEvaluation.createdAt,
       },
     );
-    //2. notification에 추가
-    await _ntf.addNotification(ntfModel);
-    //3. 매너평가 받는 유저의 매너나이 (+ 0.1)
-    await _age.plusMannerAge(uid);
+    // 푸시알림 위해 notifiaciton에 추가
+    _ntf.addNotification(ntfModel);
+    // 매너평가 받는 유저의 매너나이 + 0.1
+    _age.plusMannerAge(uid);
   }
 
   /* 비매너 평가 추가 
-  * 유저의 하위 컬렉션 'evaluation'에 추가하기
   * 푸시알림 필요 X이므로 ntf는 추가 X */
   Future addBadEvaluation(
     uid,
     chatRoomId,
     BadEvaluationModel badEvaluation,
   ) async {
-    //1. 유저의 하위 컬렉션에 추가
-    await _userDB.doc(uid).collection('badEvaluation').doc(chatRoomId).set(
+    // evaluation/{받는uid}/badEvaluation/{chatRoomId}에 저장
+    _evaluationDB.doc(uid).collection('badEvaluation').doc(chatRoomId).set(
       {
         'evaluationType': badEvaluation.evaluationType,
         'idFrom': badEvaluation.idFrom,
@@ -137,17 +97,17 @@ class EvaluationController extends GetxController {
         'createdAt': badEvaluation.createdAt,
       },
     );
-    //2. 비매너 평가 받은 유저의 매너나이 (- 0.1)
-    await _age.minusMannerAge(uid);
+    // 비매너 평가 받은 유저의 매너나이 - 0.)
+    _age.minusMannerAge(uid);
   }
 
   /* 매너 평가 리스트 받기 */
   Future getGoodEvaluationList(uid) async {
     var _goodEvaluationList = [];
-    final ref = _userDB.doc(uid).collection('goodEvaluation');
-    await ref
-        .orderBy('createdAt', descending: true) //최신일 수록 위로 오게
-        // .where('evaluationType', isEqualTo: 'good') //매너 평가만
+    _evaluationDB
+        .doc(uid)
+        .collection('goodEvaluation')
+        .orderBy('createdAt', descending: true) //최신일 수록 위로
         .get()
         .then(
           (snapshot) => _goodEvaluationList.assignAll(
@@ -156,43 +116,34 @@ class EvaluationController extends GetxController {
             ),
           ),
         );
-    // 매너평가 각 항목의 리스트로 세분화 하여 나누기(true인 값만)
-    kindManner.value = _goodEvaluationList
-        .where((element) => element.kindManner == true)
-        .toList();
-    goodAppointment.value = _goodEvaluationList
-        .where((element) => element.goodAppointment == true)
-        .toList();
-    fastAnswer.value = _goodEvaluationList
-        .where((element) => element.fastAnswer == true)
-        .toList();
-    strongMental.value = _goodEvaluationList
-        .where((element) => element.strongMental == true)
-        .toList();
-    goodGameSkill.value = _goodEvaluationList
-        .where((element) => element.goodGameSkill == true)
-        .toList();
-    softMannerTalk.value = _goodEvaluationList
-        .where((element) => element.softMannerTalk == true)
-        .toList();
-    comfortable.value = _goodEvaluationList
-        .where((element) => element.comfortable == true)
-        .toList();
-    goodCommunication.value = _goodEvaluationList
-        .where((element) => element.goodCommunication == true)
-        .toList();
-    hardGame.value = _goodEvaluationList
-        .where((element) => element.hardGame == true)
-        .toList();
+    // 매너평가 각 항목의 리스트로 세분화 하여 나누기(true만)
+    kindManner.value =
+        _goodEvaluationList.where((e) => e.kindManner == true).toList();
+    goodAppointment.value =
+        _goodEvaluationList.where((e) => e.goodAppointment == true).toList();
+    fastAnswer.value =
+        _goodEvaluationList.where((e) => e.fastAnswer == true).toList();
+    strongMental.value =
+        _goodEvaluationList.where((e) => e.strongMental == true).toList();
+    goodGameSkill.value =
+        _goodEvaluationList.where((e) => e.goodGameSkill == true).toList();
+    softMannerTalk.value =
+        _goodEvaluationList.where((e) => e.softMannerTalk == true).toList();
+    comfortable.value =
+        _goodEvaluationList.where((e) => e.comfortable == true).toList();
+    goodCommunication.value =
+        _goodEvaluationList.where((e) => e.goodCommunication == true).toList();
+    hardGame.value =
+        _goodEvaluationList.where((e) => e.hardGame == true).toList();
   }
 
   /* 비매너 평가 리스트 받기 */
   Future getBadEvaluationList(uid) async {
     var badEvaluationList = [];
-    final ref = _userDB.doc(uid).collection('badEvaluation');
-    await ref
-        .orderBy('createdAt', descending: true) //최신일 수록 위로 오게
-        // .where('evaluationType', isEqualTo:'bad') //비매너 평가만
+    _evaluationDB
+        .doc(uid)
+        .collection('badEvaluation')
+        .orderBy('createdAt', descending: true) //최신일 수록 위로
         .get()
         .then(
           (snapshot) => badEvaluationList.assignAll(
@@ -201,66 +152,59 @@ class EvaluationController extends GetxController {
             ),
           ),
         );
-    // 비매너 평가 각 항목의 리스트로 세분화 하여 나누기
-    //(true인 값만)
-    badManner.value = badEvaluationList
-        .where((element) => element.badManner == true)
-        .toList();
-    badAppointment.value = badEvaluationList
-        .where((element) => element.badAppointment == true)
-        .toList();
-    slowAnswer.value = badEvaluationList
-        .where((element) => element.slowAnswer == true)
-        .toList();
-    weakMental.value = badEvaluationList
-        .where((element) => element.weakMental == true)
-        .toList();
-    badGameSkill.value = badEvaluationList
-        .where((element) => element.badGameSkill == true)
-        .toList();
-    troll.value =
-        badEvaluationList.where((element) => element.troll == true).toList();
-    abuseWord.value = badEvaluationList
-        .where((element) => element.abuseWord == true)
-        .toList();
-    sexualWord.value = badEvaluationList
-        .where((element) => element.sexualWord == true)
-        .toList();
-    shortTalk.value = badEvaluationList
-        .where((element) => element.shortTalk == true)
-        .toList();
-    noCommunication.value = badEvaluationList
-        .where((element) => element.noCommunication == true)
-        .toList();
-    uncomfortable.value = badEvaluationList
-        .where((element) => element.uncomfortable == true)
-        .toList();
-    privateMeeting.value = badEvaluationList
-        .where((element) => element.privateMeeting == true)
-        .toList();
+    // 비매너 평가 각 항목의 리스트로 세분화 하여 나누기 (true 만)
+    badManner.value =
+        badEvaluationList.where((e) => e.badManner == true).toList();
+    badAppointment.value =
+        badEvaluationList.where((e) => e.badAppointment == true).toList();
+    slowAnswer.value =
+        badEvaluationList.where((e) => e.slowAnswer == true).toList();
+    weakMental.value =
+        badEvaluationList.where((e) => e.weakMental == true).toList();
+    badGameSkill.value =
+        badEvaluationList.where((e) => e.badGameSkill == true).toList();
+    troll.value = badEvaluationList.where((e) => e.troll == true).toList();
+    abuseWord.value =
+        badEvaluationList.where((e) => e.abuseWord == true).toList();
+    sexualWord.value =
+        badEvaluationList.where((e) => e.sexualWord == true).toList();
+    shortTalk.value =
+        badEvaluationList.where((e) => e.shortTalk == true).toList();
+    noCommunication.value =
+        badEvaluationList.where((e) => e.noCommunication == true).toList();
+    uncomfortable.value =
+        badEvaluationList.where((e) => e.uncomfortable == true).toList();
+    privateMeeting.value =
+        badEvaluationList.where((e) => e.privateMeeting == true).toList();
   }
 
   /* 내가 보낸 매너평가 받기 
-  * 채팅페이지에서 버튼 클릭 시 보여지는 페이지 
   * evaluationType == good ? goodEvaluation에 담기
   * evaluationType == bad ? badEvaluation에 담기 */
   Future getMySentEvaluation(uid, chatRoomId) async {
     GoodEvaluationModel? goodEvaluation;
     BadEvaluationModel? badEvaluation;
-    final goodRef = await _userDB
+    final goodRef = await _evaluationDB
         .doc(uid)
         .collection('goodEvaluation')
         .doc(chatRoomId)
         .get();
-    final badRef = await _userDB
+    final badRef = await _evaluationDB
         .doc(uid)
         .collection('badEvaluation')
         .doc(chatRoomId)
         .get();
-    //1. 매너 평가인 경우
+
+    // 매너, 비매너평가 구분
     if (goodRef.exists) {
+      // 매너 평가인 경우
       isGood.value = true;
-      _userDB.doc(uid).collection('goodEvaluation').doc(chatRoomId).get().then(
+      _evaluationDB
+          .doc(uid)
+          .collection('goodEvaluation')
+          .doc(chatRoomId)
+          .get()
+          .then(
         (value) {
           goodEvaluation = GoodEvaluationModel.fromDocumentSnapshot(value);
           //순서대로 리스트에 넣기, 9개
@@ -276,11 +220,15 @@ class EvaluationController extends GetxController {
           print(goodCheckList);
         },
       );
-    }
-    //2. 비매너 평가인 경우
-    else if (badRef.exists) {
+    } else if (badRef.exists) {
+      // 비매너 평가인 경우
       isGood.value = false;
-      _userDB.doc(uid).collection('badEvaluation').doc(chatRoomId).get().then(
+      _evaluationDB
+          .doc(uid)
+          .collection('badEvaluation')
+          .doc(chatRoomId)
+          .get()
+          .then(
         (value) {
           badEvaluation = BadEvaluationModel.fromDocumentSnapshot(value);
           //순서대로 리스트에 넣기, 12개
@@ -299,30 +247,30 @@ class EvaluationController extends GetxController {
           print(badCheckList);
         },
       );
-    }
+    } else
+      null;
   }
 
-  /* 내가 이미 보낸 매너평가가 있는지 확인하기
-  * 채팅페이지에 들어가면서 함수 실행 */
+  /* 내가 이미 보낸 매너평가가 있는지 확인
+  * 채팅페이지에 들어가면서 선언 */
   checkExistEvaluation(uid, chatRoomId) async {
-    final goodRef = await _userDB
+    final goodRef = await _evaluationDB
         .doc(uid)
         .collection('goodEvaluation')
         .doc(chatRoomId)
         .get();
-    final badRef = await _userDB
+    final badRef = await _evaluationDB
         .doc(uid)
         .collection('badEvaluation')
         .doc(chatRoomId)
         .get();
-    //이미 보낸 평가가 있는 경우
-    //good과 bad중 하나만 있어도 true
+
+    // 매너평가, 비매너평가 문서 존재여부 확인
     if (goodRef.exists || badRef.exists) {
+      // 이미 보낸 평가가 있는 경우
       isExistEvaluation.value = true;
-    }
-    //이미 보낸 평가가 없는 경우
-    //good과 bad 둘 다 없는 경우
-    else {
+    } else {
+      // 이미 보낸 평가가 없는 경우 (good과 bad 둘 다 없는 경우)
       isExistEvaluation.value = false;
     }
   }

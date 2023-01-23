@@ -187,11 +187,19 @@ class _PostDetailPageState extends State<PostDetailPage> {
                             child: Obx(
                               () => IconButton(
                                 onPressed: () async {
-                                  //NotificationModel 인스턴스
+                                  // favoriteModel 인스턴스
+                                  final FavoriteModel _favoriteModel =
+                                      FavoriteModel(
+                                    postId: postId,
+                                    idFrom: CurrentUser.uid,
+                                    idTo: _post.postInfo.uid,
+                                    createdAt: Timestamp.now(),
+                                  );
+                                  // NotificationModel 인스턴스
                                   final NotificationModel _ntfModel =
                                       NotificationModel(
-                                    idTo: _post.postInfo.uid, //게시자 uid
                                     idFrom: CurrentUser.uid, //관심버튼 누른 uid
+                                    idTo: _post.postInfo.uid, //게시자 uid
                                     userName: CurrentUser.name, // 관심버튼 누른 유저이름
                                     postId: postId,
                                     postTitle: _post.postInfo.title, //게시글 제목
@@ -201,7 +209,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                   );
                                   //관심게시글 등록
                                   await _favorite.clickfavoriteButton(
-                                      CurrentUser.uid, postId, _ntfModel);
+                                      _favoriteModel, _ntfModel);
                                 },
                                 icon: _favorite.isFavorite.value
                                     ? Icon(
