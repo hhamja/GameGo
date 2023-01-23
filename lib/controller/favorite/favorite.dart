@@ -3,128 +3,109 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class FavoriteController extends GetxController {
   static FavoriteController get to => Get.find<FavoriteController>();
-  final CollectionReference _userDB =
-      FirebaseFirestore.instance.collection('user');
+
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
+  final CollectionReference _favoriteDB =
+      FirebaseFirestore.instance.collection('post');
   final NtfController _ntf = Get.put(NtfController());
-  /* 게시물 관심 버튼 클릭하면 on/off 되는 bool 값 */
+
+  // 게시물 관심 버튼 클릭하면 on/off 되는 bool 값
   RxBool isFavorite = false.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  /* 하트버튼 리스너 스트림 함수 */
-  // Stream<bool> heartListen() async* {
-  //   final snapshot = await FirebaseFirestore.instance
-  //       .collection('user')
-  //       .doc('rSwxX9zvBBX2G2Zk1ybwQpCI7Y32')
-  //       .collection('favorite')
-  //       .doc('HWobrbYaRyfDKq1jRPIH');
-  //   snapshot.snapshots().listen(
-  //     (event) {
-  //       if (event.exists) {
-  //         true;
-  //         print(true);
-  //       } else {
-  //         false;
-  //         print(false);
-  //       }
-  //     }, //문서존재? true, 아니면 false
-  //   );
-  // }
-
-  /* 나의 관심 게시물 리스트 */
-  // RxList<PostModel> favoriteList = <PostModel>[].obs;
-  /* 나의 관심 게시물 리스트 */
+  // 나의 관심 게시물 리스트
   RxList<FavoriteListModel> favoriteList = <FavoriteListModel>[].obs;
-  /* 해당 게시물이 관심 게시물인지 여부를 bool값으로 리턴하기 */
-  isFavoritePost(uid, postId) async {
-    final ref = await _userDB
-        .doc(uid)
-        .collection('favorite')
+
+  /* 관심게시글로 지정했는지 확인 */
+  isFavoritePost(postId) async {
+    // 나의 관심게시글 경로 참조
+    final ref = await _favoriteDB
+        .doc(CurrentUser.uid)
+        .collection(CurrentUser.uid)
         .doc(postId)
-        .get(); //게시물 존재여부를 얻기위한 변수
+        .get();
+    // 해당 게시글이 나의 관심게시글인지 확인
     if (ref.exists) {
+      // 나의 관심게시글인 경우
       isFavorite.value = true;
     } else {
+      // 나의 관심게시글이 아닌 경우
       isFavorite.value = false;
-    } //해당 게시물이 관심목록에 존재한다면? true : false
+    }
   }
 
-  /* 관심게시물 추가/제거하기 */
-  Future favoritePost(uid, postId, NotificationModel ntfModel) async {
-    final ref = await FirebaseFirestore.instance
-        .collection('user')
-        .doc(uid)
-        .collection('favorite')
-        .doc(postId)
-        .get(); //게시물 존재여부를 얻기위한 변수
-    /* 관심 게시물이 아니라면? */
-    if (!ref.exists) {
-      //나의 관심에 추가
-      FirebaseFirestore.instance
-          .collection('user')
-          .doc(uid)
-          .collection('favorite')
-          .doc(postId)
+  /* 관심 버튼 클릭 시 추가 및 제거 */
+  Future clickfavoriteButton(
+      FavoriteModel favoriteModel, NotificationModel ntfModel) async {
+    if (isFavorite.value) {
+      // 관심게시글인 경우
+      print('이 게시글은 나의 관심게시글임');
+      // 나의 관심목록에서 제거
+      _favoriteDB
+          .doc(CurrentUser.uid)
+          .collection(CurrentUser.uid)
+          .doc(favoriteModel.postId)
+          .delete();
+      // 해당 게시물 like값 -1
+      _postDB.doc(favoriteModel.postId).update({
+        'like': FieldValue.increment(-1),
+      });
+    } else {
+      // 관심게시글 아닌 경우
+      print('이 게시글은 나의 관심게시글이 아님');
+      // 관심게시글로 추가
+      _favoriteDB
+          .doc(CurrentUser.uid)
+          .collection(CurrentUser.uid)
+          .doc(favoriteModel.postId)
           .set(
         {
-          'isFavorite': true,
-          'updatedAt': Timestamp.now(),
+          'postId': favoriteModel.postId,
+          'idFrom': favoriteModel.idFrom,
+          'idTo': favoriteModel.idTo,
+          'createdAt': favoriteModel.createdAt,
         },
       );
-      // 관심게시글 설정 notification에 추가
+      // 관심게시글 추가에 대해 알림 추가
       _ntf.addNotification(ntfModel);
-      //해당 게시물의 like값 +1
-      FirebaseFirestore.instance.collection('post').doc(postId).update(
+      // 해당 게시물의 like값 +1
+      _postDB.doc(favoriteModel.postId).update(
         {
           'like': FieldValue.increment(1),
         },
       );
     }
-    /* 이미 관심 게시글이라면 ? */
-    else {
-      //나의 관심목록에서 제거
-      FirebaseFirestore.instance
-          .collection('user')
-          .doc(uid)
-          .collection('favorite')
-          .doc(postId)
-          .delete();
-      //해당 게시물 like값 -1
-      FirebaseFirestore.instance
-          .collection('post')
-          .doc(postId)
-          .update({'like': FieldValue.increment(-1)});
-    }
-    isFavorite.value = !isFavorite.value; //토글버튼
+    // 관심버튼 상태를 나타내는 bool변수 토글화
+    isFavorite.value = !isFavorite.value;
   }
 
-  /* DB에서 관심 게시글 받기 */
-  Future getFavoriteList(uid) async {
-    List postIdList = []; //관심 게시물 id 리스트
-    final ref = _userDB.doc(uid).collection('favorite');
-    await ref.orderBy('updatedAt', descending: true).get().then((value) {
-      postIdList.assignAll(value.docs.map((e) => e.reference.id));
-    });
-
-    /* 반복문 돌려서 postId를 넣어 PostModel에 넣기 */
-    for (var id in postIdList) {
-      await _postDB.doc(id).get().then((value) =>
-          favoriteList.add(FavoriteListModel.fromDocumentSnapshot(value)));
-    }
+  /* 나의 관심 게시글 리스트 받기 */
+  Future getFavoriteList() async {
+    // 관심게시글 id 리스트
+    List postIdList = [];
+    // 관심게시글의 postId의 리스트를 받아서 넣기
+    await _favoriteDB
+        .doc(CurrentUser.uid)
+        .collection(CurrentUser.uid)
+        .orderBy('createdAt', descending: true)
+        .get()
+        .then(
+      (value) {
+        postIdList.assignAll(
+          value.docs.map(
+            (e) => e.reference.id,
+          ),
+        );
+      },
+    );
+    // 반복문
+    postIdList.forEach(
+      // postId을 루트 컬렉션 post에서 게시글 데이터 받기
+      (id) => _postDB.doc(id).get().then(
+            (e) => favoriteList.add(
+              FavoriteListModel.fromDocumentSnapshot(e),
+            ),
+          ),
+    );
     return favoriteList; //리턴해주지 않으면 순서가 뒤죽박죽으로 출력
   }
-
-  /* 관심게시글 목록에서 관심버튼에 대한 */
-  // /* postId을 통해서 특정 게시글의 데이터 받기 */
-  // Future getPostInfoByid(postId) async {
-  //   await _postDB.doc(postId).get().then((value) {
-  //     postInfo.value = value.data()! as Map<String, dynamic>;
-  //     print(postInfo); //게시글 데이터 프린트
-  //   });
-  // }
 }

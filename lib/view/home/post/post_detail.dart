@@ -17,7 +17,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   void initState() {
     super.initState();
     _post.getPostInfoByid(postId); //postInfo에 게시글 데이터 담기
-    _favorite.isFavoritePost(CurrentUser.uid, postId); //하트아이콘에 적용한 초기 bool값 반환
+    _favorite.isFavoritePost(postId); //하트아이콘에 적용한 초기 bool값 반환
   }
 
   @override
@@ -200,7 +200,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                     createdAt: Timestamp.now(),
                                   );
                                   //관심게시글 등록
-                                  await _favorite.favoritePost(
+                                  await _favorite.clickfavoriteButton(
                                       CurrentUser.uid, postId, _ntfModel);
                                 },
                                 icon: _favorite.isFavorite.value

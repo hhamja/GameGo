@@ -6,7 +6,6 @@ class FavoriteListModel {
   final String gamemode; //게임모드
   final String? position; //포지션, 솔로·자유·일반게임만 값을 가짐
   final String? tear; //티어, 솔로·자유만 값을 가짐
-  // bool isFavorite; //하트버튼에 대한 bool값 -> 토글버튼
 
   FavoriteListModel({
     required this.postId,
@@ -16,7 +15,6 @@ class FavoriteListModel {
     required this.gamemode,
     this.position,
     this.tear,
-    // required this.isFavorite,
   });
 
   factory FavoriteListModel.fromDocumentSnapshot(doc) {
@@ -29,8 +27,6 @@ class FavoriteListModel {
       gamemode: snapshot['gamemode'],
       position: snapshot['position'],
       tear: snapshot['tear'],
-      // isFavorite: a,
-      //관심 게시글 목록에 있는 게시글은 관심을 선택한 상태이므로 초기값은 true
     );
   }
 }

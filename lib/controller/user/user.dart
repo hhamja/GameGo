@@ -163,6 +163,7 @@ class UserController extends GetxController {
   }
 
   /* 유저가 프로필 수정 */
+  // 관심게시글의 
   Future updateUserProfile(profileUrl) async {
     //기존 프로필에서 변경 된 경우 프로필 수정
     //이 조건문은 view로 옮기지 굳이 함수실행까지 할 필요가 없다.
