@@ -47,10 +47,10 @@ class ChatController extends GetxController {
 
   /* 새로운 채팅 입력 시 채팅방 생성하기 */
   Future createNewChatRoom(ChatRoomModel chatRoomModel) async {
-    //1. 채팅방이 존재하지 않는다면? chat col에 채팅방 데이터 추가
+    // 채팅방이 존재하지 않는다면? chat col에 채팅방 데이터 추가
     final res = await _chatDB.doc(chatRoomModel.chatRoomId).get();
     if (!res.exists)
-      //Chat(col) - 채팅방UID(Doc)
+      // Chat(col) - 채팅방UID(Doc)
       await _chatDB.doc(chatRoomModel.chatRoomId).set({
         'chatRoomId': chatRoomModel.chatRoomId,
         'postId': chatRoomModel.postId,
@@ -65,46 +65,24 @@ class ChatController extends GetxController {
         'lastContent': chatRoomModel.lastContent,
         'updatedAt': chatRoomModel.updatedAt,
       });
-
-    //2 postingUser의 하위 컬렉션('chat')에 채팅방 목록 추가
-    await _userDB
-        .doc(chatRoomModel.postingUid)
-        .collection('chat')
-        .doc(chatRoomModel.chatRoomId)
-        .set(
-      {
-        'id': chatRoomModel.chatRoomId,
-        'createdAt': chatRoomModel.updatedAt,
-        'isMyPost': true, //게시자이므로 true
-      },
-    );
-    //3. contactUser 하위 컬렉션('chat')에  채팅방 목록 추가
-    await _userDB
-        .doc(chatRoomModel.contactUid)
-        .collection('chat')
-        .doc(chatRoomModel.chatRoomId)
-        .set(
-      {
-        'id': chatRoomModel.chatRoomId,
-        'createdAt': chatRoomModel.updatedAt,
-        'isMyPost': false, //게시자가 아니고 채팅보낸 유저이므로 false
-      },
-    );
   }
 
   /* 새로운 채팅 입력 시 메시지DB 추가하기 */
   Future sendNewMessege(MessageModel messageModel, chatRoomId, uid) async {
-    await _chatDB.doc(chatRoomId).collection('message').add({
-      'content': messageModel.content,
-      'idFrom': messageModel.idFrom,
-      'idTo': messageModel.idTo,
-      'type': messageModel.type,
-      'timestamp': messageModel.timestamp,
-    }); //메시지 컬렉션에 추가
-
-    await _chatDB.doc(chatRoomId).update({
+    // 메시지 컬렉션에 추가
+    _chatDB.doc(chatRoomId).collection('message').add(
+      {
+        'content': messageModel.content,
+        'idFrom': messageModel.idFrom,
+        'idTo': messageModel.idTo,
+        'type': messageModel.type,
+        'timestamp': messageModel.timestamp,
+      },
+    );
+    // 상대 uid의 unReadCount +1
+    _chatDB.doc(chatRoomId).update({
       'unReadCount.${uid}': FieldValue.increment(1),
-    }); //상대 uid의 unReadCount +1
+    });
   }
 
   /* 모든 '채팅' 리스트 스트림으로 받기 */
@@ -113,11 +91,11 @@ class ChatController extends GetxController {
         .where('members', arrayContains: CurrentUser.uid)
         .orderBy('updatedAt', descending: true) //최신이 맨 위
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map(
-              (e) => ChatRoomModel.fromDocumentSnapshot(e),
-            )
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((e) => ChatRoomModel.fromDocumentSnapshot(e))
+              .toList(),
+        );
   }
 
   /* 모든 '메시지' 리스트 스트림으로 받기 */

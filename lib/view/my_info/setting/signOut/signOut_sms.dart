@@ -181,10 +181,10 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
         child: CustomTextButton(
           '매너게이머와 이별하기',
           () async {
-            //1. 서버에서 유저정보 삭제
+            // 유저정보 삭제
             await UserController.to.deleteUser(_smsController.text.trim());
-            //2. 앱 초기 회원가입 페이지로 이동
-            // Get.offAllNamed('/main');
+            // 앱 초기 회원가입 페이지로 이동
+            Get.offAllNamed('/main');
           },
         ),
       ),
