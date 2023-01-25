@@ -10,8 +10,8 @@ class NtfSettingController extends GetxController {
 
   var isChatNtf = true.obs;
   var isActivitNtf = true.obs;
-  var isNightNtf = true.obs;
   var isMarketingConsent = true.obs;
+  var isNightNtf = true.obs;
 
   @override
   void onInit() {

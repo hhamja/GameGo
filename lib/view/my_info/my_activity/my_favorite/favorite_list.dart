@@ -24,45 +24,37 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
         centerTitle: true,
       ),
       body: Obx(
-        () => RefreshIndicator(
-          //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
-          onRefresh: () async {
-            _favorite.favoriteList.clear();
-            await _favorite.getFavoriteList();
+        () => ListView.separated(
+          physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능
+          separatorBuilder: (BuildContext context, int index) {
+            return CustomDivider();
           },
-          displacement: 0, //맨 위에 위치시키는 값
-          child: ListView.separated(
-            physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능
-            separatorBuilder: (BuildContext context, int index) {
-              return CustomDivider();
-            },
-            itemCount: _favorite.favoriteList.length,
-            itemBuilder: (BuildContext context, int index) {
-              final _profileUrl = _favorite.favoriteList[index].profileUrl;
-              final _userName = _favorite.favoriteList[index].userName;
-              final _title = _favorite.favoriteList[index].title;
-              final _gamemode = _favorite.favoriteList[index].gamemode;
-              final _position = _favorite.favoriteList[index].position;
-              final _tear = _favorite.favoriteList[index].tear;
-              _onTap() {
-                Get.toNamed('/postdetail', arguments: {
-                  'postId': _favorite.favoriteList[index].postId,
-                });
-              }
+          itemCount: _favorite.favoriteList.length,
+          itemBuilder: (BuildContext context, int index) {
+            final _profileUrl = _favorite.favoriteList[index].profileUrl;
+            final _userName = _favorite.favoriteList[index].userName;
+            final _title = _favorite.favoriteList[index].title;
+            final _gamemode = _favorite.favoriteList[index].gamemode;
+            final _position = _favorite.favoriteList[index].position;
+            final _tear = _favorite.favoriteList[index].tear;
+            _onTap() {
+              Get.toNamed('/postdetail', arguments: {
+                'postId': _favorite.favoriteList[index].postId,
+              });
+            }
 
-              return CustomThreeLineListTile(
-                _profileUrl,
-                _userName,
-                _title,
-                _gamemode,
-                _position,
-                _tear,
-                false, //시간표시 X
-                '', //시간표시 X
-                _onTap,
-              );
-            },
-          ),
+            return CustomThreeLineListTile(
+              _profileUrl,
+              _userName,
+              _title,
+              _gamemode,
+              _position,
+              _tear,
+              false, //시간표시 X
+              '', //시간표시 X
+              _onTap,
+            );
+          },
         ),
       ),
     );

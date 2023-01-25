@@ -31,7 +31,11 @@ class HomePostList extends GetView<PostController> {
   Widget build(BuildContext context) {
     print(Get.currentRoute);
     return controller.obx(
-      onEmpty: Center(child: Text('텅')),
+      onEmpty: Center(
+        child: Text(
+          '게시글이 없습니다.\n 직접 게시글을 만들어 최초의 1인이 되어보세요',
+        ),
+      ),
       onError: (error) => Center(child: Text(error.toString())),
       (state) => RefreshIndicator(
         //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함

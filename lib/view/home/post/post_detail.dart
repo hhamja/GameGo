@@ -27,9 +27,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          // /* 외부SNS로 해당 게시물 공유버튼 */
+          // 외부SNS로 해당 게시물 공유버튼
           // IconButton(onPressed: () {}, icon: Icon(Icons.ios_share)),
-          /* 내게시물 ? openMypostBottomSheet() : openBottomSheet() */
+          // 내게시물 ? openMypostBottomSheet() : openBottomSheet()
           IconButton(
               onPressed: openPostBottomSheet, icon: Icon(Icons.more_vert)),
         ],
@@ -64,13 +64,12 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      /* 유저 매너나이 */
+                      // 유저 매너나이
                       // 유저 DB에서 uid로 해당 유저의 매너나이 불러오기
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(_post.mannerAge + '세'),
-                          // Icon(Icons.child_care),
                         ],
                       ),
                       Text(
@@ -86,7 +85,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   thickness: 1,
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(16, 25, 16, 15),
+                  padding: EdgeInsets.fromLTRB(16, 30, 16, 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -141,22 +140,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       //     textWidthBasis: TextWidthBasis.longestLine),
                     ],
                   ),
-                ),
-                Divider(
-                  color: Colors.grey[300],
-                  height: 0,
-                  thickness: 1,
-                ),
-                /* 신고하기 */
-                ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  onTap: () {},
-                  title: Text(
-                    '광           고',
-                    textAlign: TextAlign.center,
-                  ),
-                  // trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 ),
                 Divider(
                   color: Colors.grey[300],

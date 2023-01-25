@@ -7,7 +7,7 @@ class FavoriteController extends GetxController {
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
   final CollectionReference _favoriteDB =
-      FirebaseFirestore.instance.collection('post');
+      FirebaseFirestore.instance.collection('favorite');
   final NtfController _ntf = Get.put(NtfController());
 
   // 게시물 관심 버튼 클릭하면 on/off 되는 bool 값
@@ -19,7 +19,7 @@ class FavoriteController extends GetxController {
   isFavoritePost(postId) async {
     // 나의 관심게시글 경로 참조
     final ref = await _favoriteDB
-        .doc(CurrentUser.uid)
+        .doc('favorite')
         .collection(CurrentUser.uid)
         .doc(postId)
         .get();
@@ -41,7 +41,7 @@ class FavoriteController extends GetxController {
       print('이 게시글은 나의 관심게시글임');
       // 나의 관심목록에서 제거
       _favoriteDB
-          .doc(CurrentUser.uid)
+          .doc('favorite')
           .collection(CurrentUser.uid)
           .doc(favoriteModel.postId)
           .delete();
@@ -54,7 +54,7 @@ class FavoriteController extends GetxController {
       print('이 게시글은 나의 관심게시글이 아님');
       // 관심게시글로 추가
       _favoriteDB
-          .doc(CurrentUser.uid)
+          .doc('favorite')
           .collection(CurrentUser.uid)
           .doc(favoriteModel.postId)
           .set(
@@ -81,24 +81,26 @@ class FavoriteController extends GetxController {
   /* 나의 관심 게시글 리스트 받기 */
   Future getFavoriteList() async {
     // 관심게시글 id 리스트
-    List postIdList = [];
+    List _postIdList = [];
     // 관심게시글의 postId의 리스트를 받아서 넣기
     await _favoriteDB
-        .doc(CurrentUser.uid)
+        .doc('favorite')
         .collection(CurrentUser.uid)
         .orderBy('createdAt', descending: true)
         .get()
         .then(
-      (value) {
-        postIdList.assignAll(
-          value.docs.map(
-            (e) => e.reference.id,
+          // 반복문
+          (snapshot) => _postIdList.assignAll(
+            snapshot.docs
+                .map(
+                  // id값을 리스트에 넣기
+                  (e) => e.reference.id,
+                )
+                .toList(),
           ),
         );
-      },
-    );
     // 반복문
-    postIdList.forEach(
+    return _postIdList.forEach(
       // postId을 루트 컬렉션 post에서 게시글 데이터 받기
       (id) => _postDB.doc(id).get().then(
             (e) => favoriteList.add(
@@ -106,6 +108,5 @@ class FavoriteController extends GetxController {
             ),
           ),
     );
-    return favoriteList; //리턴해주지 않으면 순서가 뒤죽박죽으로 출력
   }
 }

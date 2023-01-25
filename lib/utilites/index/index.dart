@@ -139,6 +139,7 @@ export '../../../controller/user/profile.dart';
 export '../../../controller/favorite/favorite.dart';
 
 /* Components */
+export 'package:mannergamer/component/appbar/appbar.dart';
 export 'package:mannergamer/component/evaluation_item/bad_evaluation_item.dart';
 export 'package:mannergamer/component/evaluation_item/good_evaluation_item.dart';
 export 'package:mannergamer/component/icon/circle_fill_icon.dart';
