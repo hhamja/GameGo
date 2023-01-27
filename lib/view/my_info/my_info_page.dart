@@ -15,10 +15,11 @@ class _MyInfoPageState extends State<MyInfoPage> {
   @override
   void initState() {
     super.initState();
-
-    _user.getUserInfoByUid(CurrentUser.uid); //현재유저 정보 받기
+    // 현재유저 정보 받기
+    _user.getUserInfoByUid(CurrentUser.uid);
+    // 가입날짜
     _createdAt =
-        Jiffy(_user.userInfo['createdAt'].toDate()).format('yy. MM. dd'); //가입날짜
+        Jiffy(_user.userInfo['createdAt'].toDate()).format('yy. MM. dd');
   }
 
   @override
@@ -29,8 +30,8 @@ class _MyInfoPageState extends State<MyInfoPage> {
         actions: [
           IconButton(
               onPressed: () async {
-                await _ntf.getUserPushNtf(); //페이지 이동 전 알림on/off에 대한 데이터 받기
-                print(_ntf.userNtfBool['chatPushNtf']);
+                // 페이지 이동 전 알림on/off에 대한 데이터 받기
+                await _ntf.getUserPushNtf();
                 Get.to(
                   () => SettingPage(),
                 );
@@ -40,7 +41,8 @@ class _MyInfoPageState extends State<MyInfoPage> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await _user.getUserInfoByUid(CurrentUser.uid); //내정보 새로고침
+          // 내정보 새로고침
+          await _user.getUserInfoByUid(CurrentUser.uid);
         },
         displacement: 0,
         child: Obx(
@@ -76,14 +78,8 @@ class _MyInfoPageState extends State<MyInfoPage> {
               SettingsSection(
                 title: Text('나의 활동'),
                 tiles: <SettingsTile>[
-                  // SettingsTile.navigation(
-                  //   title: Text('활동 배지 0개'), //배지 개수 $state
-                  //   trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                  //   onPressed: (_) {},
-                  //
-                  // ),
                   SettingsTile.navigation(
-                    title: Text('나의 글'), //나의 글 $state
+                    title: Text('나의 글'),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                     onPressed: (_) {
                       Get.to(() => MyPostListPage());
@@ -96,13 +92,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
                       Get.toNamed('/favorite');
                     },
                   ),
-                  // SettingsTile.navigation(
-                  //   title: Text('받은 매너 평가'),
-                  //   trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                  //   onPressed: (_) {
-                  //     Get.to(() => ReceivedMannerEvaluationPage());
-                  //   },
-                  // ),
                   SettingsTile.navigation(
                     title: Text('받은 매너 평가'),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),

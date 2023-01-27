@@ -17,7 +17,7 @@ class _SettingPageState extends State<SettingPage> {
     _c.getUserPushNtf();
   }
 
-  Future getNtfPermission() async {
+  getNtfPermission() async {
     isGrantedNtf = await Permission.notification.status.isGranted;
   }
 
@@ -66,15 +66,15 @@ class _SettingPageState extends State<SettingPage> {
                   title: Text('이벤트 및 소식 알림'),
                   description: Text('이벤트 및 앱 소석 알림을 받습니다.'),
                 ),
-                SettingsTile.switchTile(
-                  onToggle: (value) async {
-                    _c.isNightNtf.value = await value;
-                    _c.updateNightPushNtf(_c.isNightNtf.value);
-                  },
-                  initialValue: isGrantedNtf ? _c.isNightNtf.value : false,
-                  title: Text('야간 해택 알림'),
-                  description: Text('21시~08시 사이 해택 알림 푸시를 받습니다.'),
-                ),
+                // SettingsTile.switchTile(
+                //   onToggle: (value) async {
+                //     _c.isNightNtf.value = await value;
+                //     _c.updateNightPushNtf(_c.isNightNtf.value);
+                //   },
+                //   initialValue: isGrantedNtf ? _c.isNightNtf.value : false,
+                //   title: Text('야간 해택 알림'),
+                //   description: Text('21시~08시 사이 해택 알림 푸시를 받습니다.'),
+                // ),
               ],
             ),
             SettingsSection(
