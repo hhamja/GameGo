@@ -16,9 +16,6 @@ class _ChatListPageState extends State<ChatListPage> {
   /* 안읽은 채팅 메시지 수 표시하는 위젯 key 변수 */
   GlobalKey<FormState> countKey = GlobalKey<FormState>();
 
-  /*  */
-  bool _click = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

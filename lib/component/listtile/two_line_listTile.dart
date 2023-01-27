@@ -11,14 +11,20 @@ class CustomTwoLineListTile extends StatelessWidget {
     this.time,
     this.onTap,
   );
-  final String profileUrl; //프로필 (Leading 위치)
-  final String content; //ListTile 내용 (title 위치)
-  final String gamemode; //게임모드
-  final String? position; //포지션
-  final String? tear; //티어
-  final bool isTrailing; //trailing을 표시할지 여부의 bool변수
-  final String time; // ~전'으로 시간표시 (박스의 오른쪽 위 끝에 위치)
-  final Function() onTap; //ListTile 클릭 시
+
+  // 프로필 (Leading 위치)
+  final String profileUrl;
+  // ListTile 내용 (title 위치)
+  final String content;
+  final String gamemode;
+  final String? position;
+  final String? tear;
+  //trailing을 표시할지 여부의 bool변수
+  final bool isTrailing;
+  // ~전'으로 시간표시 (박스의 오른쪽 위 끝에 위치)
+  final String time;
+  //ListTile 클릭 시
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,7 @@ class CustomTwoLineListTile extends StatelessWidget {
       subtitle: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          /* 게임모드 · 포지션 · 티어 */
+          // 게임모드 · 포지션 · 티어
           Text(
             gamemode,
             style: TextStyle(fontSize: 14),

@@ -27,7 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  badges:
+  badges: ^3.0.2
   chat_bubbles:
   cloud_firestore:
   cupertino_icons:
@@ -59,6 +59,8 @@ dependencies:
   decimal: ^2.3.2
   permission_handler: ^10.2.0
   shared_preferences: ^2.0.17
+  cached_network_image: ^3.2.3
+  
 
 dev_dependencies:
   flutter_test:

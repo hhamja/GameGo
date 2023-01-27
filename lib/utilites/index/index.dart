@@ -19,7 +19,7 @@ export 'package:table_calendar/table_calendar.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:get/get.dart';
-export 'package:badges/badges.dart';
+export 'package:cached_network_image/cached_network_image.dart';
 export 'package:multi_select_flutter/multi_select_flutter.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:mask_text_input_formatter/mask_text_input_formatter.dart';

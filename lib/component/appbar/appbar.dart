@@ -1,10 +1,10 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class CustomAppbar extends StatefulWidget {
-  var leading;
-  var actions;
-  var title;
-  var centerTitle;
+  final leading;
+  final actions;
+  final title;
+  final centerTitle;
 
   CustomAppbar({
     required this.leading,

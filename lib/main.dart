@@ -31,21 +31,6 @@ Future<void> main() async {
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.blue,
         ), // 플로팅 버튼 배경색
-        textTheme: const TextTheme(
-          headline1: TextStyle(
-            color: Colors.black,
-            fontSize: 42,
-            fontWeight: FontWeight.bold,
-          ),
-          headline2: TextStyle(
-            color: Colors.black87,
-            fontSize: 28,
-            fontStyle: FontStyle.italic,
-          ),
-          bodyText1: TextStyle(
-            fontSize: 16,
-          ),
-        ),
       ),
       home: SplashPage(),
     ),

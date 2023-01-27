@@ -1,4 +1,3 @@
-import 'package:mannergamer/controller/permission_handler/permission_handler.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MyInfoPage extends StatefulWidget {

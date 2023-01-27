@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mannergamer/controller/permission_handler/permission_handler.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MyApp extends StatefulWidget {
@@ -54,15 +54,19 @@ class _MyAppState extends State<MyApp> {
                     '채팅',
                   )
                 : _BottomBarItem(
-                    Badge(
+                    badges.Badge(
                       child: Icon(CupertinoIcons.chat_bubble_2),
-                      position: BadgePosition.topEnd(end: -10, top: 0),
-                      padding: EdgeInsets.all(3),
+                      position: badges.BadgePosition.topEnd(end: -10, top: 0),
+                      badgeStyle: badges.BadgeStyle(
+                        padding: EdgeInsets.all(5),
+                      ),
                     ),
-                    Badge(
-                      position: BadgePosition.topEnd(end: -10, top: 0),
+                    badges.Badge(
+                      position: badges.BadgePosition.topEnd(end: -10, top: 0),
                       child: Icon(CupertinoIcons.chat_bubble_2_fill),
-                      padding: EdgeInsets.all(3),
+                      badgeStyle: badges.BadgeStyle(
+                        padding: EdgeInsets.all(5),
+                      ),
                     ),
                     '채팅',
                   ),

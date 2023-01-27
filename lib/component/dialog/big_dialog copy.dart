@@ -1,8 +1,16 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class CustomBigDialog extends StatelessWidget {
-  CustomBigDialog(this.title, this.content, this.cancelText, this.completeText,
-      this.cancelFun, this.completeFun, this.cancelFlex, this.completeFlex);
+  CustomBigDialog(
+    this.title,
+    this.content,
+    this.cancelText,
+    this.completeText,
+    this.cancelFun,
+    this.completeFun,
+    this.cancelFlex,
+    this.completeFlex,
+  );
 
   final String title; //제목
   final String content; //내용

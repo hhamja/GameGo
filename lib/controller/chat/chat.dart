@@ -38,9 +38,9 @@ class ChatController extends GetxController {
   Future getUserMannerAge(uid) async {
     await _userDB.doc(uid).get().then(
       (e) {
-        var data = e.data()! as Map<String, dynamic>;
-        print(data['mannerAge']); //매너나이 프린트
-        mannerAge.value = data['mannerAge'].toString(); //num인 매너나이 String으로
+        var data = e.data() as Map<String, dynamic>?;
+        mannerAge.value =
+            data?['mannerAge'].toString() ?? ' - '; //num인 매너나이 String으로
       },
     );
   }
