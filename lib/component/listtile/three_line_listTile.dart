@@ -31,10 +31,7 @@ class CustomThreeLineListTile extends StatelessWidget {
       onTap: onTap,
       leading: CircleAvatar(
         radius: 20,
-        backgroundImage: CachedNetworkImageProvider(
-          profileUrl,
-          errorListener: () => NetworkImage(DefaultProfle.url),
-        ),
+        backgroundImage: NetworkImage(profileUrl),
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 5),
