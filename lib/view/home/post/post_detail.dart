@@ -42,6 +42,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // 유저 정보
                 ListTile(
                   contentPadding: EdgeInsets.all(16),
                   onTap: CurrentUser.uid == _post.postInfo.uid
@@ -60,20 +61,19 @@ class _PostDetailPageState extends State<PostDetailPage> {
                             },
                           );
                         },
+                  // 프로필
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(_post.postInfo.profileUrl),
                   ),
+                  // 닉네임
                   title: Text(
                     _post.postInfo.userName,
                   ),
-
-                  /// 매너나이
-                  /// 탈퇴유저는 null이므로 ' - 세'로 표시
+                  // 매너나이
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(_post.uesrInfo?.value.mannerAge.toString() ??
-                          '-' + ' 세'),
+                      Text(_post.mannerAge.toString() + '세'),
                       Text(
                         '매너나이',
                         style: TextStyle(fontSize: 12),
@@ -86,6 +86,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   height: 0,
                   thickness: 1,
                 ),
+                // 게시글
                 Container(
                   padding: EdgeInsets.fromLTRB(16, 30, 16, 15),
                   child: Column(
@@ -122,7 +123,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                           ),
                         ],
                       ),
-                      // 본문글
+                      // 본문 글
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 50),
                         child: Text(
@@ -152,93 +153,95 @@ class _PostDetailPageState extends State<PostDetailPage> {
           ),
         ),
       ),
-      bottomSheet:
-          // 나의 게시글 이라면?
-          CurrentUser.uid == _post.postInfo.uid
-              ? SizedBox.shrink()
-              : SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: Row(
-                        children: [
-                          /* 관심(하트) */
-                          Expanded(
-                            flex: 2,
-                            child: Obx(
-                              () => IconButton(
-                                onPressed: () async {
-                                  // favoriteModel 인스턴스
-                                  final FavoriteModel _favoriteModel =
-                                      FavoriteModel(
-                                    postId: postId,
-                                    idFrom: CurrentUser.uid,
-                                    idTo: _post.postInfo.uid,
-                                    createdAt: Timestamp.now(),
-                                  );
-                                  // NotificationModel 인스턴스
-                                  final NotificationModel _ntfModel =
-                                      NotificationModel(
-                                    // 관심버튼 누른 uid
-                                    idFrom: CurrentUser.uid,
-                                    // 게시자 uid
-                                    idTo: _post.postInfo.uid,
-                                    // 관심버튼 누른 유저이름
-                                    userName: CurrentUser.name,
-                                    postId: postId,
-                                    //게시글 제목
-                                    postTitle: _post.postInfo.title,
-                                    content: '',
-                                    type: 'favorite',
-                                    createdAt: Timestamp.now(),
-                                  );
-                                  //관심게시글 등록
-                                  await _favorite.clickfavoriteButton(
-                                      _favoriteModel, _ntfModel);
-                                },
-                                icon: _favorite.isFavorite.value
-                                    //true => 파란색 하트
-                                    ? Icon(
-                                        Icons.favorite,
-                                        color: Colors.blue,
-                                      )
-                                    //false => 빈 하트
-                                    : Icon(Icons.favorite_border_outlined),
-                              ),
-                            ),
+      bottomSheet: CurrentUser.uid == _post.postInfo.uid
+          // 나의 게시글
+          ? SizedBox.shrink()
+          // 타인 게시글
+          : SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Row(
+                    children: [
+                      // 관심(하트)
+                      Expanded(
+                        flex: 2,
+                        child: Obx(
+                          () => IconButton(
+                            onPressed: () async {
+                              // favoriteModel 인스턴스
+                              final FavoriteModel _favoriteModel =
+                                  FavoriteModel(
+                                postId: postId,
+                                idFrom: CurrentUser.uid,
+                                idTo: _post.postInfo.uid,
+                                createdAt: Timestamp.now(),
+                              );
+                              // NotificationModel 인스턴스
+                              final NotificationModel _ntfModel =
+                                  NotificationModel(
+                                // 관심버튼 누른 uid
+                                idFrom: CurrentUser.uid,
+                                // 게시자 uid
+                                idTo: _post.postInfo.uid,
+                                // 관심버튼 누른 유저이름
+                                userName: CurrentUser.name,
+                                postId: postId,
+                                // 게시글 제목
+                                postTitle: _post.postInfo.title,
+                                content: '',
+                                type: 'favorite',
+                                createdAt: Timestamp.now(),
+                              );
+                              // 관심게시글 등록
+                              await _favorite.clickfavoriteButton(
+                                  _favoriteModel, _ntfModel);
+                            },
+                            icon: _favorite.isFavorite.value
+                                // 관심게시글인 경우
+                                // Filled 하트
+                                ? Icon(
+                                    Icons.favorite,
+                                    color: Colors.blue,
+                                  )
+                                // 관심게시글이 아닌 경우
+                                // 빈 하트
+                                : Icon(Icons.favorite_border_outlined),
                           ),
-                          // 채팅하기 버튼 -> 게시글에서 이동하는 채팅페이지로 이동
-                          Expanded(
-                            flex: 5,
-                            child: TextButton(
-                              onPressed: () {
-                                Get.to(
-                                  () => ChatScreenPageFromPost(),
-                                  arguments: {
-                                    'postId': _post.postInfo.postId,
-                                    'uid': _post.postInfo.uid,
-                                    'userName': _post.postInfo.userName,
-                                    'mannerAge': _post.mannerAge,
-                                    'profileUrl': _post.postInfo.profileUrl,
-                                  },
-                                );
-                              },
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 20),
-                                backgroundColor: Colors.blue,
-                              ),
-                              child: Text('채팅하기',
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      // 채팅하기 버튼 -> 게시글에서 이동하는 채팅페이지로 이동
+                      Expanded(
+                        flex: 5,
+                        child: TextButton(
+                          onPressed: () {
+                            Get.to(
+                              () => ChatScreenPageFromPost(),
+                              arguments: {
+                                'postId': _post.postInfo.postId,
+                                'uid': _post.postInfo.uid,
+                                'userName': _post.postInfo.userName,
+                                'mannerAge': _post.mannerAge,
+                                'profileUrl': _post.postInfo.profileUrl,
+                              },
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            backgroundColor: Colors.blue,
+                          ),
+                          child: Text('채팅하기',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+              ),
+            ),
     );
   }
 
@@ -285,21 +288,22 @@ class _PostDetailPageState extends State<PostDetailPage> {
             children: [
               CustomButtomSheet('신고하기', Colors.blue, () {
                 Get.back();
+                //신고하기 페이지로 이동
                 Get.toNamed(
                   '/report',
                   arguments: {
                     'postId': postId,
-                    //신고 받는 사람의 uid
+                    // 신고 받는 사람의 uid
                     'uid': _post.postInfo.uid,
                   },
                 );
-              }), //신고하기 페이지로 이동
+              }),
               // CustomButtomSheet(
               //     "'${_post.postInfo.userName}' 차단하기", Colors.redAccent, () {
               //   Get.back();
               // }), // 사용자 차단 (나중)
-              //
-              //바텀시트 내리기
+
+              /// 바텀시트 내리기
               CustomButtomSheet('취소', Colors.blue, () => Get.back()),
             ],
           ),

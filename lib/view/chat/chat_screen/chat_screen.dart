@@ -8,10 +8,10 @@ class ChatScreenPage extends StatefulWidget {
 }
 
 class _ChatScreenPageState extends State<ChatScreenPage> {
-  /* 상대유저정보 (이름, 프로필, 매너나이, uid) */
+  // 상대유저정보 (이름, 프로필, 매너나이, uid)
   final String userName = Get.arguments['userName'];
   final String profileUrl = Get.arguments['profileUrl'];
-  final String uid = Get.arguments['uid']; //상대 uid
+  final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
@@ -22,39 +22,47 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   @override
   void initState() {
     super.initState();
+    // 약속날자 비동기로 받기
     _getAppointment();
-    _post.getPostInfoByid(postId); //게시글에 대한 데이터 받기
-    _chat.getUserMannerAge(uid); //상대 유저에 대한 매너나이 받기
-    _chat.updateChattingWith(uid); //현재 채팅하는 상대가 누군지 업데이트
-    _evaluation.checkExistEvaluation(uid, chatRoomId); //보낸 리뷰가 존재하는지 여부
+    // 게시글에 대한 데이터 받기
+    _post.getPostInfoByid(postId);
+    // 상대 유저에 대한 매너나이 받기
+    _chat.getUserMannerAge(uid);
+    // 현재 채팅하는 상대가 누군지 업데이트
+    _chat.updateChattingWith(uid);
+    // 보낸 리뷰가 존재하는지 여부
+    _evaluation.checkExistEvaluation(uid, chatRoomId);
   }
 
-  /* 약속날자 비동기로 받기 */
+  // 약속날자 비동기로 받기
   void _getAppointment() async {
     await _appoint.getAppointment(chatRoomId);
   }
 
   @override
   void dispose() {
-    _chat.clearUnReadCount(chatRoomId); //나의 안읽은 메시지 수 0으로 업데이트
-    _chat.clearChattingWith(); //채방하는 상대에 대한 정보 지우기
+    // 나의 안읽은 메시지 수 0으로 업데이트
+    _chat.clearUnReadCount(chatRoomId);
+    // 채팅하는 상대에 대한 정보 지우기
+    _chat.clearChattingWith();
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     _getAppointment();
-
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
           onTap: () {
             Get.toNamed(
               '/userProfile',
+              // 상대 데이터 전달
               arguments: {
-                'profileUrl': profileUrl, //상대 프로필
-                'userName': userName, //상대 이름
-                'mannerAge': _chat.mannerAge.value, //상대 매너나이
-                'uid': uid, //상대 uid
+                'profileUrl': profileUrl,
+                'userName': userName,
+                'mannerAge': _chat.userInfo!.value.mannerAge,
+                'uid': uid,
               },
             );
           },
@@ -63,15 +71,17 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // 상대유저이름
               Text(
                 userName,
                 style: TextStyle(fontSize: 20),
-              ), // 상대유저이름
+              ),
               SizedBox(width: 5),
+              // 매너나이
               Text(
                 _chat.mannerAge.value + '세',
                 style: TextStyle(fontSize: 15),
-              ), //유저 매너나이 (글씨 작게)
+              ),
             ],
           ),
         ),
@@ -82,10 +92,11 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               Get.bottomSheet(
                 ChatBottomSheet(
                   chatRoomId: chatRoomId,
-                  uid: uid, //신고받은 uid
+                  //신고받은 uid
+                  uid: uid,
                 ),
               ),
-            }, //바텀시트호출
+            },
             icon: Icon(Icons.more_vert), //알림끄기, 차단, 신고, 나가기(red), 취소
           ),
         ],
@@ -95,16 +106,15 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            /* 채팅에 해당하는 게시글 정보 */
+            // 게시글 정보
             CustomPostInfo(
               postId,
-              _post.postInfo.title, //제목
-              _post.postInfo.gamemode, //게임모드
-              _post.postInfo.position, //포지션
-              _post.postInfo.tear, //티어
+              _post.postInfo.title,
+              _post.postInfo.gamemode,
+              _post.postInfo.position,
+              _post.postInfo.tear,
             ),
-
-            /* 약속 잡는 버튼 */
+            // 약속 잡는 버튼
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
@@ -127,17 +137,16 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                             .length !=
                                         0
                                 ?
-                                //있다면? 약속설정 가능 O
+                                // 있다면? 약속설정 가능 O
                                 () {
                                     Get.to(() => AppointmentPage(), arguments: {
                                       'chatRoomId': chatRoomId,
                                       'uid': uid,
                                       'postId': postId,
-                                      'postTitle':
-                                          _post.postInfo.title, //게시글 제목
+                                      'postTitle': _post.postInfo.title,
                                     });
                                   }
-                                //없다면? 약속설정 X , 토스트 사용자에게 알림
+                                // 없다면? 약속설정 X , 토스트 사용자에게 알림
                                 : () {
                                     Get.snackbar(
                                       '약속설정불가',
@@ -163,8 +172,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     color: Colors.black,
                                   ),
                                   SizedBox(width: 5),
-                                  /* 약속시간 > 현재 ? 약속시간 표시
-                            * 약속시간 <= 현재 ?  */
+                                  // 약속시간 > 현재 ? 약속시간 표시
+                                  // 약속시간 <= 현재 ?
                                   Text(
                                     _appoint.isSetAppointment.value
                                         ? _appoint.appointmentDate.toString()
@@ -172,7 +181,6 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
                                   ),
-                                  // Text('약속설정')
                                 ],
                               ),
                             ),
@@ -181,19 +189,19 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
 
                   _appoint.isSetAppointment.value &&
                           _appoint.toDatetime.value.isBefore(DateTime.now())
-                      //약속시간이 현재보다 과거 ? '후기보내기'도 표시 : 약속시간만 표시
+                      // 약속시간이 현재보다 과거 ? '후기보내기'도 표시 : 약속시간만 표시
                       ? Expanded(
                           child: _evaluation.isExistEvaluation.value
-                              ?
-                              //이미 보낸 후기가 있는 경우
+                              ? // 이미 보낸 후기가 있는 경우
                               InkWell(
                                   onTap: () {
                                     Get.to(
                                       () => MySentReviewPage(),
                                       arguments: {
-                                        'uid': uid, //상대 uid
-                                        'chatRoomId': chatRoomId, //현재 채팅방의 id
-                                        'userName': userName, //상대유저이름
+                                        // 상대 uid, 닉네임, 채팅방 id
+                                        'uid': uid,
+                                        'userName': userName,
+                                        'chatRoomId': chatRoomId,
                                       },
                                     );
                                   },
@@ -226,8 +234,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     ),
                                   ),
                                 )
-                              :
-                              //이미 보낸 후기가 없는 경우
+                              : // 이미 보낸 후기가 없는 경우
                               InkWell(
                                   onTap: () => Get.dialog(
                                     CustomSmallDialog(
@@ -287,7 +294,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               ),
             ),
 
-            /* 메시지 보여주는 부분 */
+            // 메시지 보여주는 부분
             Expanded(
               child: Stack(
                 children: [
@@ -300,8 +307,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                 ],
               ),
             ),
-
-            /* 메시지 보내는 부분*/
+            // 메시지 보내기
             NewMessage(
               chatRoomId: chatRoomId,
               uid: uid,

@@ -10,11 +10,7 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
-  /* Chat Controller */
   final ChatController _chat = Get.put(ChatController());
-
-  /* 안읽은 채팅 메시지 수 표시하는 위젯 key 변수 */
-  GlobalKey<FormState> countKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +18,15 @@ class _ChatListPageState extends State<ChatListPage> {
       appBar: AppBar(
         title: Text('채팅'),
         actions: [
+          // 아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
           IconButton(
-            onPressed: () => {Get.toNamed('/notification')},
+            onPressed: () => {
+              Get.toNamed('/notification'),
+            },
             icon: Icon(
               CupertinoIcons.bell,
               color: Colors.black,
             ),
-            //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
           ),
         ],
       ),
@@ -40,15 +38,16 @@ class _ChatListPageState extends State<ChatListPage> {
           },
           itemBuilder: (BuildContext context, int index) {
             final _chatList = _chat.chatRoomList[index];
-            String _time =
-                Jiffy(_chatList.updatedAt.toDate()).fromNow(); //'-전'시간표시
-            /* 상대유저 정보 담기
-              * 두개의 List에서 Uid값이 현재uid랑 다르면 상대유저정보의 List */
+            // '-전'시간표시
+            String _time = Jiffy(_chatList.updatedAt.toDate()).fromNow();
+
+            // 상대유저 정보 담기
+            // 두개의 List에서 Uid값이 현재uid랑 다르면 상대유저정보의 List
             List _chatPartner = [];
-            // 1. 나 == contactUser, 상대방 == postingUser인 경우
+            // 나 == contactUser, 상대방 == postingUser인 경우
             if (_chatList.postingUid != CurrentUser.uid &&
                 _chatList.contactUid == CurrentUser.uid) {
-              //채팅 상대방 List에 [uid, 프로필url, 이름]순으로 넣기
+              // 채팅 상대방 List에 [uid, 프로필url, 이름]순으로 넣기
               _chatPartner.addAll([
                 _chatList.postingUid,
                 _chatList.postingUserProfileUrl,
@@ -56,10 +55,10 @@ class _ChatListPageState extends State<ChatListPage> {
               ]);
               print(_chatPartner);
             }
-            // 2. 나 == postingUser인, 상대방 == contactUser 경우
+            // 나 == postingUser인, 상대방 == contactUser 경우
             else if (_chatList.postingUid == CurrentUser.uid &&
                 _chatList.contactUid != CurrentUser.uid) {
-              //채팅 상대방 List에 [uid, 프로필url, 이름]순으로 넣기
+              // 채팅 상대방 List에 [uid, 프로필url, 이름]순으로 넣기
               _chatPartner.addAll([
                 _chatList.contactUid,
                 _chatList.contactUserProfileUrl,
@@ -100,23 +99,23 @@ class _ChatListPageState extends State<ChatListPage> {
                 //   ),
                 //   child:
                 ListTile(
-              /* 상대 유저 프로필 사진 */
+              // 상대 유저 프로필 사진
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(_chatPartner[1]),
               ),
-              /* 이름 · 시간 */
+              // 이름 · 시간
               title: Text(
                 _chatPartner[2],
                 maxLines: 1,
               ),
-              /* 마지막 대화 내용 */
+              // 마지막 대화 내용
               subtitle: Text(
                 _chatList.lastContent,
                 maxLines: 1,
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
               ),
-              /* 최근시간 · 읽지 않은 메시지 수 */
+              // 최근시간 · 읽지 않은 메시지 수
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -125,35 +124,41 @@ class _ChatListPageState extends State<ChatListPage> {
                     _time,
                     style: TextStyle(fontSize: 10),
                   ),
-                  /* 안읽은 메시지 수
-                      * 0개가 아닐때만 표시 */
+                  // 안읽은 메시지 수 0개가 아닐때만 표시
                   _chatList.unReadCount['${CurrentUser.uid}'] != 0
                       ? CircleAvatar(
                           backgroundColor: Colors.red,
                           radius: 10,
                           child: Text(
-                            /* 나의 uid에 해당하는 안읽은 메시지 수 받음 */
+                            // 읽지 않은 메시지 알려주는 빨간숫자
                             _chatList.unReadCount['${CurrentUser.uid}']
                                 .toString(),
                             style: TextStyle(fontSize: 12, color: Colors.white),
                           ),
                         )
-                      : SizedBox.shrink(), // 읽지 않은 메시지 알려주는 빨간숫자
+                      : SizedBox.shrink(),
                 ],
               ),
-              onTap: () {
+              onTap: () async {
+                // 탈퇴유저 확인하기 위해 유저정보 받기
+                await _chat.getUserInfo(_chatPartner[0]);
+                // 페이지 이동
                 Get.toNamed(
-                  '/chatscreen',
+                  _chat.userInfo != null
+                      // 탈퇴유저 아님
+                      ? '/chatscreen'
+                      // 탈퇴유저
+                      : '/noUserChatScreen',
                   arguments: {
                     'chatRoomId': _chatList.chatRoomId,
                     'postId': _chatList.postId,
-                    'uid': _chatPartner[0], //상대유저 uid
-                    'profileUrl': _chatPartner[1], //상대유저 프로필
-                    'userName': _chatPartner[2], //상대유저 이름
-                  }, //상대유저정보 전달
+                    // 상대유저 uid, 프로필, 닉네임
+                    'uid': _chatPartner[0],
+                    'profileUrl': _chatPartner[1],
+                    'userName': _chatPartner[2],
+                  },
                 );
               },
-              // ),
             );
           },
         ),

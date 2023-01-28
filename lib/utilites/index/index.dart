@@ -19,7 +19,6 @@ export 'package:table_calendar/table_calendar.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:get/get.dart';
-export 'package:cached_network_image/cached_network_image.dart';
 export 'package:multi_select_flutter/multi_select_flutter.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -32,7 +31,9 @@ export 'package:path/path.dart';
 export 'package:jiffy/jiffy.dart';
 export 'package:grouped_list/grouped_list.dart';
 
-/* Screens */
+/* Views */
+export 'package:mannergamer/view/chat/chat_screen/no_user_chat_screen.dart';
+export 'package:mannergamer/view/user_profile/no_user_profile.dart';
 export 'package:mannergamer/view/splashPage/permission_item.dart';
 export 'package:mannergamer/component/textButton/full_textButton.dart';
 export 'package:mannergamer/view/splashPage/permission_guide.dart';

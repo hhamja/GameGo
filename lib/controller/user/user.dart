@@ -337,7 +337,7 @@ class UserController extends GetxController {
 
   /* 탈퇴하기
   * 서버의 직접적인 유저정보 전부 삭제 (userDB, storage의 프로필 사진)
-  * 채팅, 게시글, 관심게시글, 유저차단, 신고, 매너평가, 게임후기 등은 그대로 */
+  * 채팅, 게임후기 프로필 -> 기본프로필, 게시글은 삭제 */
   Future deleteUser(smsCode) async {
     try {
       final credential = await PhoneAuthProvider.credential(

@@ -1,34 +1,40 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-// /* 기본값 : true, 채팅방 들어와있는지 여부
-// * 데이터구조 -> {user1 : true, user2 : true,}
-// * 채팅리스트를 GEt ->  where('currentUid', 'true')로 쿼리
-// * 채팅방 나가면? -> 해당Uid : false로 Update()
-// * 둘다 false라면? -> DB데이터 삭제 */
-// final Map<String, bool> isChatIn;
 class ChatRoomModel {
   final String chatRoomId;
   final String postId;
-  final List members; //[postingUid, contactUid] 순서로 넣기, 나의 채팅 리스트 쿼리할 때 활용
-  /* <List>[uid, profileUrl, userName]의 유저정보 */
-  // final List postingUser; //게시자
-  // final List contactUser; //게시자가 아닌 상대유저
-  final String postingUid; //게시자 uid
-  final String postingUserProfileUrl; //게시자 프로필 url
-  final String postingUserName; //게시자 유저 이름
-  final String contactUid; //상대방 uid
-  final String contactUserProfileUrl; //상대방 프로필 url
-  final String contactUserName; //상대방 이름
-  /* 안읽은 메시지의 수
-  * 데이터 구조 -> 
-  {postingUser의 uid : 받은 수(보낸 수 X), contact유저의 uid : 받은 수(보낸 수 X)}
-  * 메시지 보내면 -> 받는 uid의 값 +1  
-  * Get할 때 -> currentUid로 안읽은 메시지 수 받기 
-  * 유저가 메시지 페이지에 들어간다면? -> 나의 uid에 해당하는 값 '0'으로 업데이트 */
+
+  /// [postingUid, contactUid] 순서로 넣기, 나의 채팅 리스트 쿼리할 때 활용
+  final List members;
+
+  /// 게시자 uid, 프로필, 닉네임
+  final String postingUid;
+  final String postingUserProfileUrl;
+  final String postingUserName;
+
+  /// 비게시자 uid, 프로필, 닉네임
+  final String contactUid;
+  final String contactUserProfileUrl;
+  final String contactUserName;
+
+  /// 안읽은 메시지의 수
+  /// 데이터 구조 ->
+  /// {postingUser의 uid : 받은 수(보낸 수 X), contact유저의 uid : 받은 수(보낸 수 X)}
+  /// 메시지 보내면 -> 받는 uid의 값 +1
+  /// Get할 때 -> currentUid로 안읽은 메시지 수 받기
+  /// 유저가 메시지 페이지에 들어간다면? -> 나의 uid에 해당하는 값 '0'으로 업데이트 */
   final Map unReadCount;
-  final String lastContent; //마지막 채팅 내용, 메시지 보낼 때 마다 업데이트
-  /* 게임 같이 하는 약속 잡을 경우  */
-  final Timestamp updatedAt; //가장 최근 주고받은 일시, 메시지 보낼 때 마다 업데이트
+
+  /// 마지막 채팅 내용, 메시지 보낼 때 마다 업데이트
+  final String lastContent;
+
+  /// 채팅 비활성화
+  /// 맴버 중 한명이라도 탈퇴한 유저가 있을 경우 :  true
+  final bool isDisabled;
+
+  /// 게임 같이 하는 약속 잡을 경우
+  /// 가장 최근 주고받은 일시, 메시지 보낼 때 마다 업데이트
+  final Timestamp updatedAt;
 
   ChatRoomModel({
     required this.chatRoomId,
@@ -42,6 +48,7 @@ class ChatRoomModel {
     required this.contactUserName,
     required this.unReadCount,
     required this.lastContent,
+    required this.isDisabled,
     required this.updatedAt,
   });
 
@@ -60,6 +67,7 @@ class ChatRoomModel {
       contactUserName: snapshot['contactUserName'],
       unReadCount: snapshot['unReadCount'],
       lastContent: snapshot['lastContent'],
+      isDisabled: snapshot['isDisabled'],
       updatedAt: snapshot['updatedAt'],
     );
   }
