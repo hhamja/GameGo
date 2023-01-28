@@ -398,7 +398,7 @@ class UserController extends GetxController {
               // 탈퇴유저의 채팅방 플래그 처리
               _chatDB.doc(chatRoomId).update(
                 {
-                  'isActive': true,
+                  'isActive': false,
                 },
               );
             },

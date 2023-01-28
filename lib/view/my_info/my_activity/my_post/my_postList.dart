@@ -27,7 +27,7 @@ class MyPostListPage extends StatelessWidget {
                 final _position = _controller.myPostList[index].position;
                 final _tear = _controller.myPostList[index].tear;
                 String _time =
-                    Jiffy(_controller.myPostList[index].createdAt.toDate())
+                    Jiffy(_controller.myPostList[index].updatedAt.toDate())
                         .fromNow(); //게시글 생성시간 '-전'으로 표시
                 _onTap() {
                   Get.toNamed('/postdetail', arguments: {

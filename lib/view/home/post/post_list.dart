@@ -59,7 +59,7 @@ class HomePostList extends GetView<PostController> {
             final _tear = controller.postList[index].tear;
             //게시글 생성시간, -전
             String time =
-                Jiffy(controller.postList[index].createdAt.toDate()).fromNow();
+                Jiffy(controller.postList[index].updatedAt.toDate()).fromNow();
             //onTap 함수
             _onTap() {
               Get.toNamed('/postdetail',
