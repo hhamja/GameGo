@@ -87,7 +87,7 @@ class ChatController extends GetxController {
   }
 
   /* 새로운 채팅 입력 시 메시지DB 추가하기 */
-  Future sendNewMessege(MessageModel messageModel, chatRoomId, uid) async {
+  Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
     // 메시지 컬렉션에 추가
     _chatDB.doc(chatRoomId).collection('message').add(
       {
@@ -100,7 +100,7 @@ class ChatController extends GetxController {
     );
     // 상대 uid의 unReadCount +1
     _chatDB.doc(chatRoomId).update({
-      'unReadCount.${uid}': FieldValue.increment(1),
+      'unReadCount.${messageModel.idTo}': FieldValue.increment(1),
     });
   }
 
@@ -132,10 +132,11 @@ class ChatController extends GetxController {
   }
 
   /* 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트 */
-  Future updateChatRoom(chatRoomId, lastContent, updatedAt) async {
-    return await _chatDB.doc(chatRoomId).update({
+  Future updateChatRoom(members, chatRoomId, lastContent, updatedAt) async {
+    return _chatDB.doc(chatRoomId).update({
+      'members': members,
       'lastContent': lastContent,
-      'updatedAt': updatedAt,
+      'updatedAt': updatedAt
     });
   }
 

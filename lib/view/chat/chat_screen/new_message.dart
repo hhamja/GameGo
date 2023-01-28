@@ -2,7 +2,9 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class NewMessage extends StatefulWidget {
   final String chatRoomId;
-  final String uid; //상대유저uid
+  // 상대유저uid
+  final String uid;
+
   NewMessage({Key? key, required this.chatRoomId, required this.uid})
       : super(key: key);
 
@@ -11,31 +13,34 @@ class NewMessage extends StatefulWidget {
 }
 
 class _NewMessageState extends State<NewMessage> {
-  /* 메시지 입력 칸 */
   final TextEditingController _messageController = TextEditingController();
-  /* 채팅 GetX 컨트롤러 */
   final ChatController _chat = Get.put(ChatController());
-  /* 파베 auth 인스턴스 */
-  final _currentUser = FirebaseAuth.instance.currentUser!;
 
-  /* 메시지 보내기 클릭 시 */
+  /// 메시지 보내기 클릭 시
   void _sendMessage() async {
     final messageModel = MessageModel(
-      timestamp: Timestamp.now(), 
+      timestamp: Timestamp.now(),
       content: _messageController.text.trim(),
-      idFrom: _currentUser.uid,
+      idFrom: CurrentUser.uid,
       idTo: widget.uid,
       type: 'message',
     );
-    // _chat.focusOnLastMessage(); //마지막 메시지로 스크롤 이동
-    await _chat.sendNewMessege(messageModel, widget.chatRoomId, widget.uid);
+
+    /// 메시지 보내기
+    await _chat.sendNewMessege(messageModel, widget.chatRoomId);
+
+    /// 채팅방 데이터의 마지막 채팅 내용, 시간, 맴버 업데이트
+    /// 맴버 다시 추가 : 상대가 채팅방 나가기하면 맴버에서 uid가 빠지기 때문
     _chat.updateChatRoom(
-      widget.chatRoomId, //채팅방 id
-      _messageController.text.trim(), //마지막 메시지
-      Timestamp.now(), // 마지막 메시지 시간
-    ); //마지막 채팅내용과 시간 업데이트
-    setState(() => _messageController.clear()); //입력한 메시지 지우기
-    _chat.scroll.jumpTo(0); //맨밑으로 스크롤이동
+      [CurrentUser.uid, widget.uid],
+      widget.chatRoomId,
+      _messageController.text.trim(),
+      Timestamp.now(),
+    );
+    // 입력한 메시지 지우기
+    setState(() => _messageController.clear());
+    // 맨밑으로 스크롤이동
+    _chat.scroll.jumpTo(0);
   }
 
   @override

@@ -66,8 +66,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     // 채팅방 만들기, 채팅방이 이미 있다면 실행안됨
     await _chat.createNewChatRoom(chatRoomModel);
     // 보낸 메시지 파이어스토어 message 컬렉션에 저장하기
-    await _chat.sendNewMessege(
-        messageModel, chatRoomModel.chatRoomId, widget.uid);
+    await _chat.sendNewMessege(messageModel, chatRoomModel.chatRoomId);
     // 메시지 텍스트필드 초기화
     setState(() => _messageController.clear());
     // 보낸 메시지로 화면이동
