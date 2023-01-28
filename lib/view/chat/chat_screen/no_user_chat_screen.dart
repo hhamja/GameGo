@@ -4,10 +4,8 @@ class NoUserChatScreenPage extends StatelessWidget {
   NoUserChatScreenPage({Key? key}) : super(key: key);
   // 상대유저정보 (이름, 프로필, 매너나이, uid)
   final String userName = Get.arguments['userName'] + ' (탈퇴)';
-  final String profileUrl = Get.arguments['profileUrl'];
   final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];
-  final String postId = Get.arguments['postId'];
   final ChatController _chat = Get.put(ChatController());
 
   @override
@@ -48,26 +46,25 @@ class NoUserChatScreenPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Obx(
-        () => Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // 메시지 보여주는 부분
-            Expanded(
-              child: Stack(
-                children: [
-                  Messages(
-                    chatRoomId: chatRoomId,
-                    userName: userName,
-                    profileUrl: profileUrl,
-                    mannerAge: _chat.mannerAge.value,
-                  ),
-                ],
-              ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // 메시지 보여주는 부분
+          Expanded(
+            child: Stack(
+              children: [
+                Messages(
+                  // 탈퇴유저 이므로 기기본프로필
+                  profileUrl: DefaultProfle.url,
+                  // 탈퇴유저 이므로 + ('탈퇴')
+                  userName: userName,
+                  chatRoomId: chatRoomId,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

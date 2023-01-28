@@ -61,7 +61,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               arguments: {
                 'profileUrl': profileUrl,
                 'userName': userName,
-                'mannerAge': _chat.userInfo!.value.mannerAge,
+                'mannerAge': _chat.mannerAge.value,
                 'uid': uid,
               },
             );
@@ -302,7 +302,6 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                     chatRoomId: chatRoomId,
                     userName: userName,
                     profileUrl: profileUrl,
-                    mannerAge: _chat.mannerAge.value,
                   ),
                 ],
               ),

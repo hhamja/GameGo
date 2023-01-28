@@ -44,11 +44,12 @@ class UserController extends GetxController {
   /* 유저가 닉네임 변경 */
   Future updateUserName(userName) async {
     // 닉네임 중복확인
+    // 탈퇴 플래그 처리한 유저 닉네임도 고려할 것이므로 플래그 쿼리 X
     await _userDB.where('userName', isEqualTo: userName).get().then((snapshot) {
       if (snapshot.docs.isEmpty) {
         // 중복 닉네임 없는 경우
-        // 유저 DB에서 닉네임 수정
         _userDB.doc(CurrentUser.uid).update(
+          // 유저 DB에서 닉네임 수정
           {
             'userName': userName,
           },

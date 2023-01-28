@@ -98,67 +98,75 @@ class _ChatListPageState extends State<ChatListPage> {
                 //     ],
                 //   ),
                 //   child:
-                ListTile(
-              // 상대 유저 프로필 사진
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(_chatPartner[1]),
+                Opacity(
+              /// 투명도 설정
+              /// 비탈퇴유저는 정상수치인 1, 탈퇴유저는 0.5,
+              opacity: _chatList.isActive ? 1 : 0.5,
+              child: ListTile(
+                // 상대 유저 프로필 사진
+                leading: CircleAvatar(
+                  // 상대가 탈퇴가 아님 : 상대 프로필 표시
+                  // 상대가 탈퇴유저 : 기본 프로필 표시
+                  backgroundImage: NetworkImage(
+                      _chatList.isActive ? _chatPartner[1] : DefaultProfle.url),
+                ),
+                // 이름 · 시간
+                title: Text(
+                  _chatPartner[2],
+                  maxLines: 1,
+                ),
+                // 마지막 대화 내용
+                subtitle: Text(
+                  _chatList.lastContent,
+                  maxLines: 1,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                // 최근시간 · 읽지 않은 메시지 수
+                trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      _time,
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    // 안읽은 메시지 수 0개가 아닐때만 표시
+                    _chatList.unReadCount['${CurrentUser.uid}'] != 0
+                        ? CircleAvatar(
+                            backgroundColor: Colors.red,
+                            radius: 10,
+                            child: Text(
+                              // 읽지 않은 메시지 알려주는 빨간숫자
+                              _chatList.unReadCount['${CurrentUser.uid}']
+                                  .toString(),
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.white),
+                            ),
+                          )
+                        : SizedBox.shrink(),
+                  ],
+                ),
+                onTap: () async {
+                  // 페이지 이동
+                  Get.toNamed(
+                    // 상대가 탈퇴 유저인지 확인
+                    _chatList.isActive
+                        // 탈퇴유저 아님
+                        ? '/chatscreen'
+                        // 탈퇴유저임
+                        : '/noUserChatScreen',
+                    arguments: {
+                      'chatRoomId': _chatList.chatRoomId,
+                      'postId': _chatList.postId,
+                      // 상대유저 uid, 프로필, 닉네임
+                      'uid': _chatPartner[0],
+                      'profileUrl': _chatPartner[1],
+                      'userName': _chatPartner[2],
+                    },
+                  );
+                },
               ),
-              // 이름 · 시간
-              title: Text(
-                _chatPartner[2],
-                maxLines: 1,
-              ),
-              // 마지막 대화 내용
-              subtitle: Text(
-                _chatList.lastContent,
-                maxLines: 1,
-                softWrap: true,
-                overflow: TextOverflow.ellipsis,
-              ),
-              // 최근시간 · 읽지 않은 메시지 수
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    _time,
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  // 안읽은 메시지 수 0개가 아닐때만 표시
-                  _chatList.unReadCount['${CurrentUser.uid}'] != 0
-                      ? CircleAvatar(
-                          backgroundColor: Colors.red,
-                          radius: 10,
-                          child: Text(
-                            // 읽지 않은 메시지 알려주는 빨간숫자
-                            _chatList.unReadCount['${CurrentUser.uid}']
-                                .toString(),
-                            style: TextStyle(fontSize: 12, color: Colors.white),
-                          ),
-                        )
-                      : SizedBox.shrink(),
-                ],
-              ),
-              onTap: () async {
-                // 탈퇴유저 확인하기 위해 유저정보 받기
-                await _chat.getUserInfo(_chatPartner[0]);
-                // 페이지 이동
-                Get.toNamed(
-                  _chat.userInfo != null
-                      // 탈퇴유저 아님
-                      ? '/chatscreen'
-                      // 탈퇴유저
-                      : '/noUserChatScreen',
-                  arguments: {
-                    'chatRoomId': _chatList.chatRoomId,
-                    'postId': _chatList.postId,
-                    // 상대유저 uid, 프로필, 닉네임
-                    'uid': _chatPartner[0],
-                    'profileUrl': _chatPartner[1],
-                    'userName': _chatPartner[2],
-                  },
-                );
-              },
             );
           },
         ),

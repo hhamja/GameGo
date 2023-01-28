@@ -1,14 +1,13 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class Messages extends StatefulWidget {
-  /* 상대유저 이름, 프로필, 매너나이, 채팅방 id 값 */
-  final String userName, profileUrl, mannerAge, chatRoomId;
+  /* 상대유저 이름, 기본프로필, 채팅방 id 값 */
+  final String userName, profileUrl, chatRoomId;
 
   Messages({
     Key? key,
     required this.userName,
     required this.profileUrl,
-    required this.mannerAge,
     required this.chatRoomId,
   }) : super(key: key);
 
