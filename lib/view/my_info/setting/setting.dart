@@ -9,17 +9,29 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   final NtfSettingController _c = Get.put(NtfSettingController());
-  var isGrantedNtf;
-  @override
-  void initState() {
-    super.initState();
-    getNtfPermission();
-    _c.getUserPushNtf();
-  }
 
-  getNtfPermission() async {
-    isGrantedNtf = await Permission.notification.status.isGranted;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // 위젯 관찰자 추가
+  //   WidgetsBinding.instance.addObserver(this);
+  // }
+
+  // @override
+  // void dispose() {
+  //   WidgetsBinding.instance.removeObserver(this);
+  //   super.dispose();
+  // }
+
+  // /// 세팅 페이지에서 권한 설정 후 변경된 값을 위젯에 반영
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   super.didChangeAppLifecycleState(state);
+  //   if (state == AppLifecycleState.resumed) {
+  //     _c.isGrantedNtf.value = true;
+  //     _c.getUserPushNtf();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -38,31 +50,46 @@ class _SettingPageState extends State<SettingPage> {
               title: Text('알림 설정'),
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
-                  onToggle: (value) async {
-                    _c.isChatNtf.value = await value;
-                    _c.updateChatPushNtf(_c.isChatNtf.value);
-                  },
-                  initialValue: isGrantedNtf ? _c.isChatNtf.value : false,
+                  onToggle: _c.isGrantedNtf.value
+                      // 알림권한 허용된 경우
+                      ? (value) async {
+                          _c.isChatNtf.value = await value;
+                          _c.updateChatPushNtf(_c.isChatNtf.value);
+                        }
+                      // 알림권한 거절된 경우
+                      : (_) => _c.requestNotificationPermission(),
+                  initialValue:
+                      _c.isGrantedNtf.value ? _c.isChatNtf.value : false,
                   title: Text('채팅 알림'),
                   description: Text('메시지 알림을 받습니다.'),
                 ),
                 SettingsTile.switchTile(
-                  onToggle: (value) async {
-                    _c.isActivitNtf.value = !_c.isActivitNtf.value;
-                    _c.isActivitNtf.value = value;
-                    _c.updateActivityPushNtf(_c.isActivitNtf.value);
-                  },
-                  initialValue: isGrantedNtf ? _c.isActivitNtf.value : false,
+                  onToggle: _c.isGrantedNtf.value
+                      // 알림권한 허용된 경우
+                      ? (value) async {
+                          _c.isActivitNtf.value = value;
+                          _c.updateActivityPushNtf(_c.isActivitNtf.value);
+                        }
+                      // 알림권한 거절된 경우
+                      : (_) => _c.requestNotificationPermission(),
+                  initialValue:
+                      _c.isGrantedNtf.value ? _c.isActivitNtf.value : false,
                   title: Text('활동 알림'),
                   description: Text('관심, 약속, 매너평가 알림을 받습니다.'),
                 ),
                 SettingsTile.switchTile(
-                  onToggle: (value) async {
-                    _c.isMarketingConsent.value = await value;
-                    _c.updateMarketingConsent(_c.isMarketingConsent.value);
-                  },
-                  initialValue:
-                      isGrantedNtf ? _c.isMarketingConsent.value : false,
+                  onToggle: _c.isGrantedNtf.value
+                      // 알림권한 허용된 경우
+                      ? (value) async {
+                          _c.isMarketingConsent.value = await value;
+                          _c.updateMarketingConsent(
+                              _c.isMarketingConsent.value);
+                        }
+                      // 알림권한 거절된 경우
+                      : (_) => _c.requestNotificationPermission(),
+                  initialValue: _c.isGrantedNtf.value
+                      ? _c.isMarketingConsent.value
+                      : false,
                   title: Text('이벤트 및 소식 알림'),
                   description: Text('이벤트 및 앱 소석 알림을 받습니다.'),
                 ),

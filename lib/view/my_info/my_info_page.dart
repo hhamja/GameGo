@@ -9,7 +9,6 @@ class MyInfoPage extends StatefulWidget {
 
 class _MyInfoPageState extends State<MyInfoPage> {
   final UserController _user = Get.put(UserController());
-  final NtfSettingController _ntf = Get.put(NtfSettingController());
 
   var _createdAt;
   @override
@@ -29,9 +28,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
         title: Text('나의 정보'),
         actions: [
           IconButton(
-              onPressed: () async {
-                // 페이지 이동 전 알림on/off에 대한 데이터 받기
-                await _ntf.getUserPushNtf();
+              onPressed: () {
                 Get.to(
                   () => SettingPage(),
                 );
