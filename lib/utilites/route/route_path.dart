@@ -10,6 +10,8 @@ abstract class Paths {
   /* CHAT */
   static const ChatList = '/chatlist';
   static const Chatscreen = '/chatscreen';
+  // 탈퇴유저의 채팅 페이지
+  static const NoUserChatScreen = '/noUserChatScreen';
 
   /* HOME */
   static const HomeDropDownBT = '/homedropdown';
