@@ -1,36 +1,39 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class ChatController extends GetxController {
-  final CollectionReference _chatDB =
-      FirebaseFirestore.instance.collection('chat');
-  final CollectionReference _userDB =
-      FirebaseFirestore.instance.collection('user');
+  final _chatDB = FirebaseFirestore.instance.collection('chat');
+  final _userDB = FirebaseFirestore.instance.collection('user');
   ScrollController scroll = ScrollController(keepScrollOffset: false);
-  /* 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수 */
+  // 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
-  /* 채팅방안의 모든 메시지 담는 RxList 변수 */
+  // 채팅방안의 모든 메시지 담는 RxList 변수
   RxList<MessageModel> messageList = <MessageModel>[].obs;
-  /* 상대 메시지에서 프로필 보여주는 bool 값 */
+  // 상대 메시지에서 프로필 보여주는 bool 값
   RxBool isShowProfile = false.obs;
-  /* 메시지시간 표시에 대한 bool 값 */
+  // 메시지시간 표시에 대한 bool 값
   RxBool isShowTime = false.obs;
-  /* 메시지시간 표시에 대한 bool 값 */
+  // 메시지시간 표시에 대한 bool 값
   RxBool isShowDate = false.obs;
-  /* 서로서로 보낸 메시지가 1개 이상인지; 약속설정 가능 여부 */
+  // 서로서로 보낸 메시지가 1개 이상인지; 약속설정 가능 여부
   RxBool isOkAppoint = false.obs;
-  /* 채팅방에서 상대방 매너나이 */
+  // 채팅방에서 상대방 매너나이
   RxString mannerAge = ''.obs;
+  // 유저정보
+  // 탈퇴유저도 담아야하므로 nullable
+  Rx<UserModel>? userInfo;
 
   @override
   void onInit() {
     super.onInit();
-    scroll; //채팅페이지 스크롤
-    chatRoomList.bindStream(readAllChatList()); //채팅방리스트 스트림으로 받기
+    // 채팅방리스트 스트림으로 받기
+    chatRoomList.bindStream(readAllChatList());
+    scroll;
   }
 
   @override
   void onClose() {
-    scroll.dispose(); //채팅페이지의 스크롤 끄기
+    //채팅페이지의 스크롤 끄기
+    scroll.dispose();
     super.onClose();
   }
 
@@ -38,11 +41,26 @@ class ChatController extends GetxController {
   Future getUserMannerAge(uid) async {
     await _userDB.doc(uid).get().then(
       (e) {
-        var data = e.data() as Map<String, dynamic>?;
-        mannerAge.value =
-            data?['mannerAge'].toString() ?? ' - '; //num인 매너나이 String으로
+        var data = e.data() as Map<String, dynamic>;
+        mannerAge.value = data['mannerAge'].toString();
       },
     );
+  }
+
+  /* 유저정보 받기 */
+  Future getUserInfo(uid) async {
+    // 유저정보 경로
+    final ref = await _userDB.doc(uid).get();
+    // 탈퇴유저인지 확인
+    if (ref.exists) {
+      // 탈퇴유저가 아닌 경우
+      return _userDB.doc(uid).get().then(
+            (e) => userInfo?.value = UserModel.fromDocumentSnapshot(e),
+          );
+    } else {
+      // 탈퇴유저
+      return userInfo = null;
+    }
   }
 
   /* 새로운 채팅 입력 시 채팅방 생성하기 */
@@ -63,6 +81,7 @@ class ChatController extends GetxController {
         'contactUserName': chatRoomModel.contactUserName,
         'unReadCount': chatRoomModel.unReadCount,
         'lastContent': chatRoomModel.lastContent,
+        // 'isDisabled': chatRoomModel.isDisabled,
         'updatedAt': chatRoomModel.updatedAt,
       });
   }
