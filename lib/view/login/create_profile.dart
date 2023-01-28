@@ -14,25 +14,26 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final ImagePicker _picker = ImagePicker();
-  /* 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수 */
+  // 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수
   File? _photo;
-  /* 파베 스토리지에서 불러올 사진 url */
+  // 파베 스토리지에서 불러올 사진 url
   String profileImageUrl = DefaultProfle.url;
 
-  /* 갤러리에서 사진 선택하기 */
+  /// 갤러리에서 사진 선택하기
   Future pickImgFromGallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       //갤러리에 사진이 있다면?
       if (pickedFile != null) {
-        _photo = File(pickedFile.path); //해당 이미지 담기 _photo변수에 담기
+        //해당 이미지 담기 _photo변수에 담기
+        _photo = File(pickedFile.path);
       } else {
         print('No image selected from Gallery');
       }
     });
   }
 
-  /* 카메라로 사진 찍기 */
+  /// 카메라로 사진 찍기
   Future pickImgFromCamera() async {
     final pickedFile = await _picker.pickImage(
       source: ImageSource.camera,
@@ -47,25 +48,23 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     });
   }
 
-  /* 파베 스토리지에 업로드하기 */
+  /// 파베 스토리지에 업로드하기
   Future uploadFile() async {
     if (_photo == null) return;
-    final fileName = _auth.currentUser?.uid; //유저고유 id값을 파일명으로
-
+    //　유저고유 id값을 파일명으로
+    final fileName = _auth.currentUser?.uid;
     try {
-      //storage > profile 폴더 > filename의 파일 경로
+      // storage > profile 폴더 > filename의 파일 경로
       final ref = _storage.ref().child('profile').child(fileName!);
-      print(ref);
-      print(_photo);
-      await ref.putFile(_photo!); //스토리지에 업로드
+      // 스토리지에 업로드
+      await ref.putFile(_photo!);
       profileImageUrl = await ref.getDownloadURL();
-      print(profileImageUrl);
     } catch (e) {
       print(e);
     }
   }
 
-  /* 닉네임 입력에 따른 에러 택스트 */
+  /// 닉네임 입력에 따른 에러 택스트
   String get _showErrorText {
     final text = _userNameController.text.trim();
 
@@ -75,37 +74,40 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     return '';
   }
 
-  /* 완료 버튼 */
+  /// 완료버튼
   validateButton() async {
     // 알림 권한에 대한 상태 값 받기
     final _isGrantedNtf = await Permission.notification.status.isGranted;
-    final text = _userNameController.text.trim(); //닉네임
-    //닉네임 2자 이상이라면?
+    // 닉네임
+    final text = _userNameController.text.trim();
+    // 닉네임 2자 이상이라면?
     if (!text.isEmpty || text.length >= 2) {
-      //파베 스토리지에 해당 이미지 보내고 url 받기
-      //await 이유 : profileUrl변수를 먼저 받아야함
+      // 파베 스토리지에 해당 이미지 보내고 url 받기
+      // await 이유 : profileUrl변수를 먼저 받아야함
       await uploadFile();
       UserModel userModel = UserModel(
-          uid: _auth.currentUser!.uid,
-          userName: text,
-          phoneNumber: Get.arguments ??
-              _auth.currentUser!.phoneNumber, //인증받은 폰번호 이전페이지에서 받기
-          profileUrl: profileImageUrl,
-          mannerAge: 20.0,
-          chatPushNtf: _isGrantedNtf,
-          activityPushNtf: _isGrantedNtf,
-          nightPushNtf: _isGrantedNtf,
-          //광고성 수신 동의는 처음에 물어보지 않고 유저가 설정했을 때만
-          marketingConsent: false,
-          createdAt: Timestamp.now());
-      //서버에 유저정보 보내기
+        uid: _auth.currentUser!.uid,
+        userName: text,
+        //인증받은 폰번호 이전페이지에서 받기
+        phoneNumber: Get.arguments ?? _auth.currentUser!.phoneNumber,
+        profileUrl: profileImageUrl,
+        mannerAge: 20.0,
+        chatPushNtf: _isGrantedNtf,
+        activityPushNtf: _isGrantedNtf,
+        // 광고성 수신 동의는 처음에 물어보지 않고 유저가 설정했을 때만
+        marketingConsent: false,
+        // 야간 알림은 데이터만 넣어놓고 UI는 표시 X
+        nightPushNtf: false,
+        isWithdrawn: false,
+        createdAt: Timestamp.now(),
+      );
+      // 서버에 유저정보 보내기
       _user.addNewUser(userModel);
-      //Auth에 프로필 URL저장
+      // Auth에 프로필 URL저장
       _auth.currentUser!.updatePhotoURL(profileImageUrl);
-      //Auth에 닉네임저장
+      // Auth에 닉네임저장
       _auth.currentUser!.updateDisplayName(text);
-
-      //홈으로 이동
+      // 홈으로 이동
       Get.offAllNamed('/myapp');
     }
   }

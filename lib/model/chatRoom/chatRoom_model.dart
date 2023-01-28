@@ -30,7 +30,7 @@ class ChatRoomModel {
 
   /// 채팅 비활성화
   /// 맴버 중 한명이라도 탈퇴한 유저가 있을 경우 :  true
-  final bool isDisabled;
+  final bool isActive;
 
   /// 게임 같이 하는 약속 잡을 경우
   /// 가장 최근 주고받은 일시, 메시지 보낼 때 마다 업데이트
@@ -48,11 +48,11 @@ class ChatRoomModel {
     required this.contactUserName,
     required this.unReadCount,
     required this.lastContent,
-    required this.isDisabled,
+    required this.isActive,
     required this.updatedAt,
   });
 
-  /* 파이어스토어 DB로 부터 데이터를 받는 인스턴스 생성 */
+  /// 파이어스토어 DB로 부터 데이터를 받는 인스턴스 생성
   factory ChatRoomModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     var snapshot = doc.data() as Map<String, dynamic>;
     return ChatRoomModel(
@@ -67,7 +67,7 @@ class ChatRoomModel {
       contactUserName: snapshot['contactUserName'],
       unReadCount: snapshot['unReadCount'],
       lastContent: snapshot['lastContent'],
-      isDisabled: snapshot['isDisabled'],
+      isActive: snapshot['isActive'],
       updatedAt: snapshot['updatedAt'],
     );
   }

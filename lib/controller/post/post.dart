@@ -19,7 +19,8 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     gamemode: '',
     like: 0,
     gameType: '',
-    createdAt: Timestamp.now(),
+    isHidden: false,
+    updatedAt: Timestamp.now(),
   ).obs;
 
   PostModel get postInfo => _postInfo.value;
@@ -50,7 +51,8 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
         'tear': postModel.tear,
         'like': postModel.like,
         'gameType': postModel.gameType,
-        'createdAt': postModel.createdAt,
+        'isHidden': postModel.isHidden,
+        'updatedAt': postModel.updatedAt,
       },
     );
   }

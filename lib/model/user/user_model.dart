@@ -1,17 +1,37 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class UserModel {
-  final String uid; //문서의 id도 uid 필드랑 같게하기
+  final String uid;
   final String userName;
   final String phoneNumber;
   final String profileUrl;
-  final num mannerAge; //초기값 20.0세
-  final String? chattingWith; //현재 채팅하고 있는 유저 uid
-  final String? pushToken; //fcm의 장치 토큰
-  final bool chatPushNtf; //채팅 메시지 알림
-  final bool activityPushNtf; //활동 알림(관심게시글, 약속설정, 매너후기)
-  final bool marketingConsent; //마케팅 정보 수집 동의
-  final bool nightPushNtf; //앱 공지 알림
+
+  /// 초기값 20.0세
+  final num mannerAge;
+
+  /// 현재 채팅하고 있는 유저 uid
+  final String? chattingWith;
+
+  /// fcm의 장치 토큰
+  final String? pushToken;
+
+  /// 채팅 메시지 알림
+  /// 활동 알림(관심게시글, 약속설정, 매너후기)
+  /// 마케팅 정보 수집 동의
+  /// 야간 시간 알림
+  final bool chatPushNtf;
+  final bool activityPushNtf;
+  final bool marketingConsent;
+  final bool nightPushNtf;
+
+  /// 탈퇴유저 플래그
+  /// 탈퇴유저의 경우 true, 비탈퇴유저의 경우 false
+  final bool isWithdrawn;
+
+  /// 탈퇴 시간
+  /// 계정 복구 및 일정기간 재가입 못하게 하기 위함
+  final Timestamp? withdrawnAt;
+
   final Timestamp createdAt;
 
   UserModel({
@@ -24,8 +44,10 @@ class UserModel {
     this.pushToken,
     required this.chatPushNtf,
     required this.activityPushNtf,
-    required this.nightPushNtf,
     required this.marketingConsent,
+    required this.nightPushNtf,
+    required this.isWithdrawn,
+    this.withdrawnAt,
     required this.createdAt,
   });
 
@@ -41,8 +63,10 @@ class UserModel {
       pushToken: snapshot['pushToken'],
       chatPushNtf: snapshot['chatPushNtf'],
       activityPushNtf: snapshot['activityPushNtf'],
-      nightPushNtf: snapshot['nightPushNtf'],
       marketingConsent: snapshot['marketingConsent'],
+      nightPushNtf: snapshot['nightPushNtf'],
+      isWithdrawn: snapshot['isWithdrawn'],
+      withdrawnAt: snapshot['withdrawnAt'],
       createdAt: snapshot['createdAt'],
     );
   }

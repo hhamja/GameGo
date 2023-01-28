@@ -52,6 +52,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
         contactUser.uid: 0,
       },
       lastContent: _messageController.text.trim(),
+      isActive: false,
       updatedAt: Timestamp.now(),
     );
     // 메시지 인스턴스 생성

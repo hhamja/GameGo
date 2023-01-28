@@ -81,7 +81,7 @@ class ChatController extends GetxController {
         'contactUserName': chatRoomModel.contactUserName,
         'unReadCount': chatRoomModel.unReadCount,
         'lastContent': chatRoomModel.lastContent,
-        // 'isDisabled': chatRoomModel.isDisabled,
+        'isActive': chatRoomModel.isActive,
         'updatedAt': chatRoomModel.updatedAt,
       });
   }

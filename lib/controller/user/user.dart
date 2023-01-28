@@ -29,12 +29,14 @@ class UserController extends GetxController {
         'userName': userModel.userName,
         'profileUrl': userModel.profileUrl,
         'mannerAge': userModel.mannerAge,
-        'createdAt': userModel.createdAt,
         'phoneNumber': userModel.phoneNumber,
         'chatPushNtf': userModel.chatPushNtf,
         'activityPushNtf': userModel.activityPushNtf,
-        'nightPushNtf': userModel.nightPushNtf,
         'marketingConsent': userModel.marketingConsent,
+        'nightPushNtf': userModel.nightPushNtf,
+        'isWithdrawn': userModel.isWithdrawn,
+        'withdrawnAt': userModel.withdrawnAt,
+        'createdAt': userModel.createdAt,
       },
     );
   }
@@ -174,15 +176,16 @@ class UserController extends GetxController {
     });
   }
 
-  /* 나의 프로필을 변경하기 */
+  /// 나의 프로필을 변경하기
   Future updateUserProfile(profileUrl) async {
-    // 유저정보에서 프로필 수정
+    /// 유저정보에서 프로필 수정
     _userDB.doc(CurrentUser.uid).update(
       {
         'profileUrl': profileUrl,
       },
     );
-    // 채팅에서 프로필 수정
+
+    /// 채팅에서 프로필 수정
     _chatDB.where('members', arrayContains: CurrentUser.uid).get().then(
       // 내가 맴버로 있는 채팅방만 쿼리하여 리스트로 받기
       (value) {
@@ -221,7 +224,8 @@ class UserController extends GetxController {
         );
       },
     );
-    // 게시글에서 프로필 수정
+
+    /// 게시글에서 프로필 수정
     _postDB.where('uid', isEqualTo: CurrentUser.uid).get().then(
       // 나의 게시글만 쿼리하여 리스트로 받기
       (value) {
@@ -246,7 +250,8 @@ class UserController extends GetxController {
         );
       },
     );
-    // 게임후기의 프로필 수정
+
+    /// 게임후기의 프로필 수정
     _reviewDB.where('idFrom', isEqualTo: CurrentUser.uid).get().then(
       // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
       (value) {
@@ -269,19 +274,20 @@ class UserController extends GetxController {
         );
       },
     );
-    // Auth의 프로필 수정
+
+    /// Auth의 프로필 수정
     _auth.currentUser!.updatePhotoURL(profileUrl).then(
           (_) => print('auth의 프로필 수정'),
           onError: (e) => print(e),
         );
   }
 
-  /* 폰으로 SMS 전송 */
+  /// 폰으로 SMS 전송
   Future verifyPhone(String phonenumber) async {
     return _auth.verifyPhoneNumber(
-      //폰번호
+      // 폰번호
       phoneNumber: phonenumber,
-      //인증 성공시
+      // 인증 성공시
       verificationCompleted: (PhoneAuthCredential credential) {},
       // 잘못된 전화번호 또는 SMS 할당량 초과 여부 등과 같은 인증실패 시
       verificationFailed: (FirebaseAuthException e) {
@@ -311,7 +317,7 @@ class UserController extends GetxController {
     );
   }
 
-  /* 휴대폰 번호로 신규 가입하기 */
+  /// 휴대폰 번호로 신규 가입하기
   Future signUP(token) async {
     try {
       final credential = PhoneAuthProvider.credential(
@@ -328,77 +334,81 @@ class UserController extends GetxController {
     }
   }
 
-  /* 로그아웃 
-  * Db,Auth정보 삭제 X  | 탈회하기랑은 다르게  자동로그인 쿠키만 앱에서 지움 */
+  /// 로그아웃
+  /// Db, Auth 정보 삭제 X
+  /// 탈퇴와 다르게 자동로그인 쿠키만 앱에서 지움
   Future signOut() async {
     _auth.signOut();
     print('로그아웃');
   }
 
-  /* 탈퇴하기
-  * 서버의 직접적인 유저정보 전부 삭제 (userDB, storage의 프로필 사진)
-  * 채팅, 게시글, 관심게시글, 유저차단, 신고, 매너평가, 게임후기 등은 그대로 */
+  /// 탈퇴하기
   Future deleteUser(smsCode) async {
     try {
       final credential = await PhoneAuthProvider.credential(
           verificationId: verificationID, smsCode: smsCode);
-      // 게시글 전부 삭제
-      _postDB.where('uid', isEqualTo: CurrentUser.uid).get().then(
-        // 나의 게시글만 쿼리하여 리스트로 받기
+
+      /// 게시글 플래그
+      _postDB
+          .where('uid', isEqualTo: CurrentUser.uid)
+          // 삭제하지 않은 게시글을 쿼리하는 코드 추가
+          .where('isHidden', isEqualTo: false)
+          .get()
+          .then(
+        // 삭제하지 않은 나의 게시글 쿼리
         (value) {
           // 문서리스트 반복문
           value.docs.forEach(
             (e) {
-              // 데이터 Map 변환
+              // 데이터 Map 자료 형태로 변환
               var snapshot = e.data() as Map<String, dynamic>;
               // 게시글 id
               final String postId = snapshot['postId'];
-              // 게시글 삭제
-              _postDB.doc(postId).delete().then(
-                    (_) => print('게시글 전부 삭제'),
-                    onError: (e) => print(e),
-                  );
+              // 게시글 플래그 수정
+              _postDB.doc(postId).update(
+                {
+                  'isHidden': true,
+                },
+              ).then(
+                (_) => print('게시글 플래그 수정'),
+                onError: (e) => print(e),
+              );
             },
           );
         },
       );
 
-      // 채팅 기본 프로필로 수정
-      _chatDB.where('members', arrayContains: CurrentUser.uid).get().then(
-        // 내가 맴버로 있는 채팅방만 쿼리하여 리스트로 받기
+      /// 채팅 플래그
+      _chatDB
+          .where('members', arrayContains: CurrentUser.uid)
+          // 채팅방 나가기 플래그가 false로 되어있다는 쿼리 추가하기 > 나중에
+          .where('isActive', isEqualTo: true)
+          .get()
+          .then(
+        // 나가지 않고 활성화 된 나의 채팅방 쿼리
         (value) {
           // 문서리스트 반복문
           value.docs.forEach(
             (e) {
               // 데이터 Map 변환
               var snapshot = e.data() as Map<String, dynamic>;
-              // 내가 postingUer로 참여한 채팅방인지 여부를 나타내는 변수
-              bool isMyPost = snapshot['postingUid'] == CurrentUser.uid;
               // 채팅방 id 값
               final String chatRoomId = snapshot['chatRoomId'];
-              print(isMyPost);
               print(chatRoomId);
-              // 내가 postingUser인지 contactUser인지 확인
-              if (isMyPost) {
-                // postingUesr인 경우
-                _chatDB.doc(chatRoomId).update(
-                  // postingUserProfileUrl 수정
-                  {'postingUserProfileUrl': DefaultProfle.url},
-                );
-              } else {
-                // contactUser인 경우
-                _chatDB.doc(chatRoomId).update(
-                  // contactUserProfileUrl 수정
-                  {'contactUserProfileUrl': DefaultProfle.url},
-                );
-              }
+              // 탈퇴유저의 채팅방 플래그 처리
+              _chatDB.doc(chatRoomId).update(
+                {
+                  'isActive': true,
+                },
+              );
             },
           );
-          print('채팅에서 기본 프로필로 수정');
+          print('채팅 플래그 처리 완료');
         },
         onError: (e) => print(e),
       );
-      // 게임후기 기본 프로필로 수정
+
+      /// 게임후기 기본 프로필로 수정
       _reviewDB.where('idFrom', isEqualTo: CurrentUser.uid).get().then(
         // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
         (value) {
@@ -408,7 +418,7 @@ class UserController extends GetxController {
               // 게임후기 id
               final String reviewId = e.reference.id;
               print(reviewId);
-              // 게임후기의 userName 수정
+              // 게임후기의 프로필 수정
               _reviewDB.doc(reviewId).update(
                 {
                   'profileUrl': DefaultProfle.url,
@@ -421,18 +431,33 @@ class UserController extends GetxController {
           );
         },
       );
-      // user 컬렉션에서 삭제
-      _userDB.doc(CurrentUser.uid).delete();
-      // Storage에서 해당 유저의 프로필 삭제
-      FirebaseStorage.instance.ref().child(CurrentUser.uid).delete();
-      // 사용자 재인증, 그래야 Auth에서 유저 삭제가능
+
+      /// 유저정보 처리
+      /// 탈퇴 플래그 true, 탈퇴 시간 업데이트
+      _userDB.doc(CurrentUser.uid).update(
+        {
+          'isWithdrawn': true,
+          'withdrawnAt': Timestamp.now(),
+        },
+      ).then(
+        (_) => print('유저정보 플래그'),
+        onError: (e) => print(e),
+      );
+
+      /// Storage에서 해당 유저의 프로필 삭제
+      // FirebaseStorage.instance.ref().child(CurrentUser.uid).delete();
+
+      /// 사용자 재인증
       await _auth.currentUser!.reauthenticateWithCredential(credential);
-      // Auth 정보 삭제
+
+      /// 장치에 저장된 유저 토큰 삭제
       _auth.currentUser!.delete();
+
       print('탈퇴 성공');
     } on FirebaseAuthException catch (e) {
-      //SMS 코드가 틀린 경우
       if (e.code == 'invalid-verification-code') {
+        /// SMS 코드가 틀린 경우
+        /// 스낵바로 유저에게 알림
         Get.snackbar('인증코드 입력 오류', '입력한 인증 코드를 확인해주세요.');
       } else
         print(e);

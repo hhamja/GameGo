@@ -47,7 +47,8 @@ class _AddPostPageState extends State<AddPostPage> {
       tear: _button.seledtedPostTearValue,
       like: 0,
       gameType: 'lol',
-      createdAt: Timestamp.now(),
+      isHidden: false,
+      updatedAt: Timestamp.now(),
     ); //postModel 인스턴스 생성
 
     await _post.createPost(postModel); //게시물 만들기
