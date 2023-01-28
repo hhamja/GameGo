@@ -44,7 +44,8 @@ class _ReportDialogState extends State<ReportDialog> {
         Timer _timer = Timer(Duration(milliseconds: 2000), () {
           Get.until((route) =>
               Get.currentRoute == '/chatscreen' ||
-              Get.currentRoute == '/postdetail');
+              Get.currentRoute == '/postdetail' ||
+              Get.currentRoute == '/noUserChatScreen');
         });
         Get.dialog(
             barrierDismissible: true,
