@@ -48,6 +48,7 @@ class _AddPostPageState extends State<AddPostPage> {
       like: 0,
       gameType: 'lol',
       isHidden: false,
+      isDeleted: false,
       updatedAt: Timestamp.now(),
     ); //postModel 인스턴스 생성
 

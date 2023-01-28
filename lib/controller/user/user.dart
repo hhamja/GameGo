@@ -92,8 +92,12 @@ class UserController extends GetxController {
           },
         );
         // 게시글에서 닉네임 수정
-        _postDB.where('uid', isEqualTo: CurrentUser.uid).get().then(
-          // 나의 게시글만 쿼리하여 리스트로 받기
+        _postDB
+            .where('uid', isEqualTo: CurrentUser.uid)
+            .where('isDeleted', isEqualTo: false)
+            .get()
+            .then(
+          // 삭제하지 않은 나의 게시글만 쿼리
           (value) {
             // 문서리스트 반복문
             value.docs.forEach(
@@ -226,8 +230,12 @@ class UserController extends GetxController {
     );
 
     /// 게시글에서 프로필 수정
-    _postDB.where('uid', isEqualTo: CurrentUser.uid).get().then(
-      // 나의 게시글만 쿼리하여 리스트로 받기
+    _postDB
+        .where('isDeleted', isEqualTo: false)
+        .where('uid', isEqualTo: CurrentUser.uid)
+        .get()
+        .then(
+      // 삭제하지 않은 나의 게시글만 쿼리
       (value) {
         // 문서리스트 반복문
         value.docs.forEach(
@@ -351,7 +359,7 @@ class UserController extends GetxController {
       /// 게시글 플래그
       _postDB
           .where('uid', isEqualTo: CurrentUser.uid)
-          // 삭제하지 않은 게시글을 쿼리하는 코드 추가
+          .where('isDeleted', isEqualTo: false)
           .where('isHidden', isEqualTo: false)
           .get()
           .then(

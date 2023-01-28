@@ -29,7 +29,7 @@ class PostModel {
   final bool isHidden;
 
   /// 게시글 삭제 시 플래그
-  // final bool isDeleted;
+  final bool isDeleted;
 
   /// 만든 시간, 수정 시 이 시간은 업데이트
   final Timestamp updatedAt;
@@ -47,6 +47,7 @@ class PostModel {
     required this.like,
     required this.gameType,
     required this.isHidden,
+    required this.isDeleted,
     required this.updatedAt,
   });
 
@@ -66,6 +67,7 @@ class PostModel {
       like: snapshot['like'],
       gameType: snapshot['gamemode'],
       isHidden: snapshot['isHidden'],
+      isDeleted: snapshot['isDeleted'],
       updatedAt: snapshot['updatedAt'],
     );
   }

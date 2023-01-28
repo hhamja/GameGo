@@ -20,6 +20,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     like: 0,
     gameType: '',
     isHidden: false,
+    isDeleted: false,
     updatedAt: Timestamp.now(),
   ).obs;
 
@@ -52,6 +53,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
         'like': postModel.like,
         'gameType': postModel.gameType,
         'isHidden': postModel.isHidden,
+        'isDeleted': postModel.isDeleted,
         'updatedAt': postModel.updatedAt,
       },
     );
@@ -62,7 +64,11 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     // 데이터 받기 전 로딩상태
     change(postList, status: RxStatus.loading());
     // 파이어스토어 DB에서 데이터 받기
-    await _postDB.orderBy('createdAt', descending: true).get().then(
+    await _postDB
+        .where('isDeleted', isEqualTo: false)
+        .orderBy('createdAt', descending: true)
+        .get()
+        .then(
           (snapshot) => postList.assignAll(
               snapshot.docs.map((e) => PostModel.fromDocumentSnapshot(e))),
           onError: (err) => change(null,
@@ -85,8 +91,9 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     // 데이터 받기 전 로딩상태
     change(postList, status: RxStatus.loading());
     await _postDB
-        .orderBy('createdAt', descending: true)
+        .where('isDeleted', isEqualTo: false)
         .where('gamemode', isEqualTo: gamemode)
+        .orderBy('createdAt', descending: true)
         .get()
         .then(
           (snapshot) => postList.assignAll(
@@ -112,9 +119,10 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     // 데이터 받기 전 로딩상태
     change(postList, status: RxStatus.loading());
     await _postDB
-        .orderBy('createdAt', descending: true)
+        .where('isDeleted', isEqualTo: false)
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
+        .orderBy('createdAt', descending: true)
         .get()
         .then(
           (snapshot) => postList.assignAll(
@@ -139,10 +147,11 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     // 데이터 받기 전 로딩상태
     change(postList, status: RxStatus.loading());
     await _postDB
-        .orderBy('createdAt', descending: true)
+        .where('isDeleted', isEqualTo: false)
         .where('gamemode', isEqualTo: gamemode)
         .where('position', isEqualTo: position)
         .where('tear', isEqualTo: tear)
+        .orderBy('createdAt', descending: true)
         .get()
         .then(
             (snapshot) => postList.assignAll(
