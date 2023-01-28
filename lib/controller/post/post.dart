@@ -21,19 +21,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     gameType: '',
     createdAt: Timestamp.now(),
   ).obs;
-  // 게시글의 uid로 받은 유저정보
-  Rx<UserModel>? uesrInfo = UserModel(
-    uid: '',
-    userName: '+',
-    phoneNumber: '',
-    profileUrl: '',
-    mannerAge: 0,
-    chatPushNtf: false,
-    activityPushNtf: false,
-    nightPushNtf: false,
-    marketingConsent: false,
-    createdAt: Timestamp.now(),
-  ).obs;
+
   PostModel get postInfo => _postInfo.value;
   // postId로 받은 데이터에서 uid를 다시 넣어 유저의 매너나이 받기
   RxString _mannerAge = ''.obs;
@@ -235,21 +223,18 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
         _postInfo.value = PostModel.fromDocumentSnapshot(e);
         print(_postInfo);
       },
+      onError: (e) => print(e),
     );
-    // 유저정보 서버의 경로
-    final ref = await _userDB.doc(_postInfo.value.uid).get();
-    // 유저정보 있는지 서버에서 확인
-    if (ref.exists) {
-      /// 탈퇴 유저가 아닌 경우
-      /// 서버에서 유저정보 받아 userInfo에 담기
-      _userDB
-          .doc(_postInfo.value.uid)
-          .get()
-          .then((e) => uesrInfo!.value = UserModel.fromDocumentSnapshot(e));
-    } else {
-      /// 탈퇴 유저인 경우
-      /// null 넣기
-      uesrInfo = null;
-    }
+    // 1번에서 담은 데이터 중 uid를 넣어 게시자의 매너나이 받기
+    _userDB.doc(_postInfo.value.uid).get().then(
+      (e) {
+        var data = e.data() as Map<String, dynamic>;
+        // 매너나이 프린트
+        print(data['mannerAge']);
+        // num인 매너나이 String으로
+        _mannerAge.value = data['mannerAge'].toString();
+        print(_mannerAge.value);
+      },
+    );
   }
 }
