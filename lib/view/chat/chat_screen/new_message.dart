@@ -16,7 +16,7 @@ class _NewMessageState extends State<NewMessage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatController _chat = Get.put(ChatController());
 
-  /// 메시지 보내기 클릭 시
+  //메시지 보내기 클릭 시
   void _sendMessage() async {
     final messageModel = MessageModel(
       timestamp: Timestamp.now(),
@@ -26,11 +26,11 @@ class _NewMessageState extends State<NewMessage> {
       type: 'message',
     );
 
-    /// 메시지 보내기
+    //메시지 보내기
     await _chat.sendNewMessege(messageModel, widget.chatRoomId);
 
-    /// 채팅방 데이터의 마지막 채팅 내용, 시간, 맴버 업데이트
-    /// 맴버 다시 추가 : 상대가 채팅방 나가기하면 맴버에서 uid가 빠지기 때문
+    //채팅방 데이터의 마지막 채팅 내용, 시간, 맴버 업데이트
+    //맴버 다시 추가 : 상대가 채팅방 나가기하면 맴버에서 uid가 빠지기 때문
     _chat.updateChatRoom(
       [CurrentUser.uid, widget.uid],
       widget.chatRoomId,

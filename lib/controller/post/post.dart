@@ -35,7 +35,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     super.onInit();
   }
 
-  /// 만든 게시글 데이터 서버로 보내기
+  //만든 게시글 데이터 서버로 보내기
   Future createPost(PostModel postModel) async {
     // 루트 컬렉션 post에 저장
     _postDB.doc(postModel.postId).set(
@@ -59,7 +59,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     );
   }
 
-  /// 모든 게시물 리스트로 받기
+  //모든 게시물 리스트로 받기
   Future readPostData() async {
     // 데이터 받기 전 로딩상태
     change(postList, status: RxStatus.loading());
@@ -85,7 +85,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  /// 게시글을 게임모드 필터링하여 받기
+  //게시글을 게임모드 필터링하여 받기
   Future filterGamemode(gamemode) async {
     // 리스트 초기화
     postList.clear();
@@ -114,7 +114,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  /// 게시글을 게임모드, 포지션 필터링하여 받기
+  //게시글을 게임모드, 포지션 필터링하여 받기
   Future filterPosition(gamemode, position) async {
     // 리스트 초기화
     postList.clear();
@@ -143,7 +143,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  /// 게시글을 게임모드, 포지션, 티어 필터링하여 받기
+  //게시글을 게임모드, 포지션, 티어 필터링하여 받기
   Future filterTear(gamemode, position, tear) async {
     // 리스트 초기화
     postList.clear();
@@ -175,7 +175,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  /// 게시글 수정하기
+  //게시글 수정하기
   Future updatePost(postid, String title, String maintext, String gamemode,
       String? position, String? tear) async {
     // post 정보를 수정
@@ -224,9 +224,9 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     );
   }
 
-  /// 게시글 삭제
+  // 게시글 삭제
   Future deletePost(postid) async {
-    /// 업데이트 
+    // idDeleted 삭제 플래그 true로 업데이트
     return _postDB.doc(postid).update(
       {
         'isDeleted': true,
@@ -234,7 +234,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     );
   }
 
-  /// postId을 통해서 특정 게시글의 데이터 받기
+  // postId을 통해서 특정 게시글의 데이터 받기
   Future getPostInfoByid(postId) async {
     // 특정 게시글의 데이터 Rx<PostModel> _postInfo에 담기
     await _postDB.doc(postId).get().then(

@@ -67,8 +67,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     _post.postInfo.userName,
                   ),
 
-                  /// 매너나이
-                  /// 탈퇴유저는 null이므로 ' - 세'로 표시
+                  //매너나이
+                  //탈퇴유저는 null이므로 ' - 세'로 표시
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -84,9 +84,9 @@ class _MessagesState extends State<Messages> {
                   _chat.isShowTime.value = false;
                 }
 
-                /// 상대 프로필 보여주는 조건문
-                /// 첫번째 메시지라면? 프로필 표시 O
-                /// 첫번째 메시지가 아니고 이전 메시지와 현재메시지의 사람이 같고 날짜(시간X)도 같다면? 프로필 표시 X
+                //상대 프로필 보여주는 조건문
+                //첫번째 메시지라면? 프로필 표시 O
+                //첫번째 메시지가 아니고 이전 메시지와 현재메시지의 사람이 같고 날짜(시간X)도 같다면? 프로필 표시 X
                 if (reversed == 0) {
                   _chat.isShowProfile.value = true;
                 } else if (_list[reversed - 1].idFrom ==

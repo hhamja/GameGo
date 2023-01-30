@@ -99,8 +99,8 @@ class _ChatListPageState extends State<ChatListPage> {
                 //   ),
                 //   child:
                 Opacity(
-              /// 투명도 설정
-              /// 비탈퇴유저는 정상수치인 1, 탈퇴유저는 0.5,
+              //투명도 설정
+              //비탈퇴유저는 정상수치인 1, 탈퇴유저는 0.5,
               opacity: _chatList.isActive ? 1 : 0.5,
               child: ListTile(
                 // 상대 유저 프로필 사진

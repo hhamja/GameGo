@@ -14,8 +14,8 @@ class FCMController extends GetxController {
     importance: Importance.max, //중요도 max로 해야 포그라운드 상태에서 표시됨
   );
 
-  /// 컨트롤러 시작 시
-  /// 토큰 받기, fcm 초기 함수 실행
+  //컨트롤러 시작 시
+  //토큰 받기, fcm 초기 함수 실행
   @override
   void onInit() {
     super.onInit();
@@ -25,10 +25,10 @@ class FCMController extends GetxController {
   /* FCM관련 초기 세팅 
   * main에 바인딩하여 앱 시작 시 호출 */
   Future _initialize() async {
-    /// Firebase 초기화해야 FirebaseMessaging 를 사용가능
+    //Firebase 초기화해야 FirebaseMessaging 를 사용가능
     await Firebase.initializeApp();
 
-    /// Android 에서 requestPermission()을 호출하지 않으면 수신되지 않는다.
+    //Android 에서 requestPermission()을 호출하지 않으면 수신되지 않는다.
     await _fcm.requestPermission(
       alert: true, //유저의 디바이스에 알림을 보여줄 것이냐
       badge: true, //읽지 않은 알림을 앱아이콘에 띄울 것이냐
@@ -39,14 +39,14 @@ class FCMController extends GetxController {
       provisional: false, // provisional 권한을 부여할 것이냐
     );
 
-    /// FCM 포그라운드 수신
-    /// Notification Channel을 디바이스에 생성
+    //FCM 포그라운드 수신
+    //Notification Channel을 디바이스에 생성
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-    /// FlutterLocalNotificationsPlugin 초기화
+    //FlutterLocalNotificationsPlugin 초기화
     await flutterLocalNotificationsPlugin.initialize(InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
     ));
@@ -76,8 +76,8 @@ class FCMController extends GetxController {
       }
     });
 
-    /// 백그라운드 클릭 액션
-    /// 백그라운드 수신은 기본적으로 FCM에서 되므로 따로 안해도 된다
+    //백그라운드 클릭 액션
+    //백그라운드 수신은 기본적으로 FCM에서 되므로 따로 안해도 된다
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) _handleMessage(initialMessage);
@@ -85,7 +85,7 @@ class FCMController extends GetxController {
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
-  /// 백그라운드에서 알림 클릭 시 액션
+  //백그라운드에서 알림 클릭 시 액션
   void _handleMessage(RemoteMessage message) {
     final type = message.data['type'];
     print(message.data);

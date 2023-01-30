@@ -19,7 +19,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   // 파베 스토리지에서 불러올 사진 url
   String profileImageUrl = DefaultProfle.url;
 
-  /// 갤러리에서 사진 선택하기
+  //갤러리에서 사진 선택하기
   Future pickImgFromGallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -33,7 +33,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     });
   }
 
-  /// 카메라로 사진 찍기
+  //카메라로 사진 찍기
   Future pickImgFromCamera() async {
     final pickedFile = await _picker.pickImage(
       source: ImageSource.camera,
@@ -48,7 +48,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     });
   }
 
-  /// 파베 스토리지에 업로드하기
+  //파베 스토리지에 업로드하기
   Future uploadFile() async {
     if (_photo == null) return;
     //　유저고유 id값을 파일명으로
@@ -64,7 +64,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     }
   }
 
-  /// 닉네임 입력에 따른 에러 택스트
+  //닉네임 입력에 따른 에러 택스트
   String get _showErrorText {
     final text = _userNameController.text.trim();
 
@@ -74,7 +74,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     return '';
   }
 
-  /// 완료버튼
+  //완료버튼
   validateButton() async {
     // 알림 권한에 대한 상태 값 받기
     final _isGrantedNtf = await Permission.notification.status.isGranted;
