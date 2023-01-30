@@ -7,7 +7,7 @@ admin.initializeApp();
 exports.chatNotification = functions
   .region("asia-northeast3")
   .firestore.document("chat/{chatRoomId}/message/{messageId}") //메시지 문서경로로 지정
-  .onCreate(async (snap, context) => {
+  .onCreate((snap, context) => {
     //문서가 처음 작성될 때(새 메시지가 생성될 때) 트리거
     console.log("------ START : CHAT PUSH NOTIFICATION ------");
     const doc = snap.data();
@@ -23,7 +23,7 @@ exports.chatNotification = functions
     /* 메시지 받은 유저정보 받기
      * pushToken값이 존재, chattringWith와 보낸사람 uid가 다르다면? 채팅 push 알림 보내기
      * uid말고 chatRoomId로 할지 고민되었지만, 메시지 model에 chatRoomId를 추가해줘야하므로 일단을 알림이 제대로 작동하는지 확인하기 위해서 그냥 하기로 결정 */
-    return await admin
+    return admin
       .firestore()
       .collection("user")
       .where("uid", "==", idTo)
@@ -114,16 +114,17 @@ exports.activityAndMarketingNotification = functions
           // 후기, 관심게시글, 약속설정 알림에 대한 on/off
           const activityNtf = userTo.data().activityPushNtf;
           // 이벤트 및 앱 소식에 대한 on/off
-          const nightNtf = userTo.data().nightPushNtf;
-          // 마케팅 수신 동의에 대한 on/off
           const marketingConsent = userTo.data().marketingConsent;
+          // 야간시간 수신 알림
+          const nightNtf = userTo.data().nightPushNtf;
           console.log(activityNtf);
           console.log(nightNtf);
           console.log(marketingConsent);
           console.log(ntfType);
-          /* User From의 이름을 받고 푸시알림에 대한 설정하기 */
-          /* 1. 매너 후기 */
+
+          /// User From의 이름을 받고 푸시알림에 설정하기
           if (ntfType == "review" && activityNtf == true) {
+            // 매너후기
             console.log("review 알림 조건식 통과");
             return admin
               .firestore()
@@ -158,8 +159,8 @@ exports.activityAndMarketingNotification = functions
                 });
               });
           } else if (ntfType == "appoint" && activityNtf == true) {
+            /// 약속 설정
             console.log("약속 알림 조건식 통과");
-            /*  2. 약속 설정 */
             return admin
               .firestore()
               .collection("user")
@@ -192,7 +193,7 @@ exports.activityAndMarketingNotification = functions
                 });
               });
           } else if (ntfType == "favorite" && activityNtf == true) {
-            /*  3. 관심 게시글 */
+            /// 관심 게시글
             console.log("관심게시글 알림 조건식 통과");
             return admin
               .firestore()
@@ -225,12 +226,8 @@ exports.activityAndMarketingNotification = functions
                     });
                 });
               });
-          } else if (
-            /* 4. 앱 공지 */
-            ntfType == "notice" &&
-            nightNtf == true &&
-            marketingConsent == true
-          ) {
+          } else if (ntfType == "notice" && marketingConsent == true) {
+            // 앱 이벤트 및 소식
             console.log("앱 소식 알림 조건식 통과");
             return admin
               .firestore()
@@ -270,8 +267,7 @@ exports.activityAndMarketingNotification = functions
       })
       .catch((error) => {
         console.log("UserTo의 정보를 얻는 admin 에러 :", error);
-      });;
-   
+      });
   });
 
 // // Create and deploy your first functions

@@ -8,7 +8,7 @@ class NotificationModel {
   final String userName; // 알림을 보낸 사람의 이름
   final String content; // 알림 내용
   /* 알림타입 
-  * review : 매너후기, appoint : 약속설정, favorite : 게시글 관심, night : 앱 공지 */
+  * review : 매너 게임후기, appoint : 약속설정, favorite : 게시글 관심, notice : 앱 공지 */
   final String type;
   final Timestamp createdAt; //알림 생성 시간
 

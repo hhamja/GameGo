@@ -82,7 +82,7 @@ export 'package:mannergamer/view/my_info/my_profile/mannerAge.dart';
 export 'package:mannergamer/view/my_info/my_activity/received_evaluation/received_evaluation.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_favorite/favorite_list.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_post/bottomSheets.dart';
-export 'package:mannergamer/view/my_info/my_activity/my_post/my_postList.dart';
+export 'package:mannergamer/view/my_info/my_activity/my_post/my_post_list.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_post/received_review.dart';
 export 'package:mannergamer/view/my_info/my_activity/my_post/sent_reviews.dart';
 export 'package:mannergamer/view/my_info/setting/setting.dart';

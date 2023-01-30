@@ -1,11 +1,10 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MyPostListController extends GetxController {
-  /* Post DB */
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
 
-  /* 모든 나의 게시글 리스트 담는 RxList 변수 */
+  // 모든 나의 게시글 리스트 담는 RxList 변수
   RxList<PostModel> myPostList = <PostModel>[].obs;
 
   @override
@@ -14,16 +13,21 @@ class MyPostListController extends GetxController {
     getMyPostList();
   }
 
+  // 나의 게시글 받기
   Future getMyPostList() async {
-    await _postDB
-        .where('uid', isEqualTo: CurrentUser.uid) //현재유저가 만든 게시글만 쿼리
-        .orderBy('createdAt', descending: true) //최신일수록 맨위에 오도록 정렬
+    return _postDB
+        .where('uid', isEqualTo: CurrentUser.uid)
+        .where('isDeleted', isEqualTo: false)
+        .where('isHidden', isEqualTo: false)
+        .orderBy('updatedAt', descending: true)
         .get()
         .then(
           (snapshot) => myPostList.assignAll(
-            snapshot.docs.map(
-              (e) => PostModel.fromDocumentSnapshot(e),
-            ),
+            snapshot.docs
+                .map(
+                  (e) => PostModel.fromDocumentSnapshot(e),
+                )
+                .toList(),
           ),
         );
   }

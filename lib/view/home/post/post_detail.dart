@@ -72,7 +72,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(_post.mannerAge.toString() + '  세'),
+                      Text(_post.mannerAge.toString() + ' 세'),
                       Text(
                         '매너나이',
                         style: TextStyle(fontSize: 12),

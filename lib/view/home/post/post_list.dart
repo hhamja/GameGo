@@ -31,19 +31,19 @@ class HomePostList extends GetView<PostController> {
   @override
   Widget build(BuildContext context) {
     print(Get.currentRoute);
-    return controller.obx(
-      onEmpty: Center(
-        child: Text(
-          '게시글이 없습니다.\n 직접 게시글을 만들어 최초의 1인이 되어보세요',
+    return RefreshIndicator(
+      //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
+      onRefresh: _refreshFromButtonValue,
+      //맨 위에 위치시키는 값
+      displacement: 0,
+      child: controller.obx(
+        onEmpty: Center(
+          child: Text(
+            '게시글이 없습니다.\n 직접 게시글을 만들어 최초의 1인이 되어보세요',
+          ),
         ),
-      ),
-      onError: (error) => Center(child: Text(error.toString())),
-      (state) => RefreshIndicator(
-        //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
-        onRefresh: _refreshFromButtonValue,
-        //맨 위에 위치시키는 값
-        displacement: 0,
-        child: ListView.separated(
+        onError: (error) => Center(child: Text(error.toString())),
+        (state) => ListView.separated(
           //리스트가 적어도 스크롤 인식 가능
           physics: AlwaysScrollableScrollPhysics(),
           separatorBuilder: (BuildContext context, int index) {
