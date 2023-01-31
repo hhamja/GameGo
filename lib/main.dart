@@ -11,17 +11,22 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  Jiffy.locale('ko'); //시간표시 한국어로 변환
+
+  Jiffy.locale('ko');
 
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes,
-      title: 'MannerGamer',
-      initialBinding: BindingsBuilder(() {
-        Get.put(FCMController()); //푸시알림 초기 설정
-        Get.put(InitialScreenCntroller()); //유저 가입 상태에서 따라 첫페이지 다르게 하기
-      }),
+      title: '게임한판(AGame)',
+      initialBinding: BindingsBuilder(
+        () {
+          // 유저 가입 상태에서 따라 첫페이지 다르게 하기
+          Get.put(InitialScreenCntroller());
+        },
+      ),
+      // 푸시알림 클릭 시 특정페이지 이동을 위한 네베게이션 Key
+      navigatorKey: NavigationService.navigatorKey,
       theme: ThemeData(
         colorScheme: ColorScheme.light().copyWith(
           primary: Colors.blue,

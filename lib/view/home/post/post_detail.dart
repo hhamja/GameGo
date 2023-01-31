@@ -188,7 +188,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                     // 관심버튼 누른 유저이름
                                     userName: CurrentUser.name,
                                     postId: postId,
-                                    //게시글 제목
+                                    chatRoomId: '', // 대상이 되는 채팅방 없음
                                     postTitle: _post.postInfo.title,
                                     content: '',
                                     type: 'favorite',

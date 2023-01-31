@@ -155,6 +155,7 @@ export 'package:mannergamer/component/divider/divider.dart';
 export 'package:mannergamer/component/listtile/three_line_listTile.dart';
 
 /* Utilities */
+export 'package:mannergamer/utilites/route/navigation_service.dart';
 export 'package:mannergamer/utilites/app_data/default_profile/default_profile.dart';
 export 'package:mannergamer/utilites/route/route.dart';
 export 'package:mannergamer/utilites/binding/binding.dart';

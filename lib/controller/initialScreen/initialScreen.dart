@@ -40,16 +40,19 @@ class InitialScreenCntroller extends GetxController {
       // isSeen를 true로 업데이트
       prefs.setBool('isSeen', true);
       // 앱 권한 사용 안내 페이지로 이동
-      Get.offAll(PermissionGuidePage());
+      Get.offAll(() => PermissionGuidePage());
     } else if (user == null) {
       print('신규유저');
-      return Get.offAll(MainLogoPage());
+      return Get.offAll(() => MainLogoPage());
     } else if (!doc.exists) {
       print('Auth에만 있고 DB에는 없는 유저');
-      return Get.offAll(CreateProfilePage());
+      return Get.offAll(() => CreateProfilePage());
     } else {
       print('Auth에도 있고 DB에도 등록되어 있는 유저 : $user');
-      return Get.offAll(MyApp());
+      return Get.offAll(
+        () => MyApp(),
+        binding: MyAppBinding(),
+      );
     }
   }
 }

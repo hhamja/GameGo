@@ -250,6 +250,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               idFrom: CurrentUser.uid,
               content: '',
               postId: postId,
+              chatRoomId: chatRoomId,
               postTitle: postTitle,
               userName: CurrentUser.name,
               type: 'appoint', //약속설정알림

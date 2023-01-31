@@ -261,6 +261,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     idFrom: CurrentUser.uid,
                     idTo: uid,
                     postId: postId,
+                    chatRoomId: chatRoomId,
                     postTitle: postTitle,
                     userName: CurrentUser.name,
                     type: 'review',

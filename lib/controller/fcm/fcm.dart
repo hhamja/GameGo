@@ -15,6 +15,7 @@ class FCMController extends GetxController {
     showBadge: true,
     enableVibration: true,
     enableLights: true,
+
     // 중요도 max로 해야 포그라운드 상태에서 표시됨
     importance: Importance.max,
   );
@@ -62,10 +63,7 @@ class FCMController extends GetxController {
     // 포그라운드 메시지 스트림 수신
     FirebaseMessaging.onMessage.listen((RemoteMessage _message) {
       RemoteNotification? notification = _message.notification;
-
       AndroidNotification? android = _message.notification?.android;
-      var data = _message.data as Map;
-      print('타입이란? ${data['type']}');
 
       if (notification != null && android != null) {
         // 나에게 온 알림 메시지가 존재하는 경우
@@ -101,58 +99,38 @@ class FCMController extends GetxController {
   // 백그라운드에서 알림 클릭 시 액션
   void _handleMessage(RemoteMessage message) {
     final type = message.data['type'];
-    print(message.data);
-    print(message.data['postId']);
-    print(message.data['chatRoomId']);
-    print(message.data['uid']);
-    print(message.data['userName']);
-    print(message.data['profileUrl']);
+    final screen = message.data['screen'];
     print(type);
+    print(screen);
 
     // 알림메시지 타입 확인
-    if (type == 'message') {
-      Get.toNamed(
-        // 채팅 페이지로 이동하면서 데이터 아규먼트로 전달
-        '/chatscreen',
-        arguments: {
-          // 게시글 정보를 불러오기 위한 post id
+    if (type == 'message' || type == 'appoint' || type == 'review') {
+      // 채팅메시지, 약속설정, 매너후기 알림
+      NavigationService.navigateNamedTo(
+        // 채팅 스크린 페이지로 이동
+        screen,
+        {
           'postId': message.data['postId'],
-          // 채팅 메시지를 불러오기 위한 채팅 id
           'chatRoomId': message.data['chatRoomId'],
-          // 채팅 상대정보를 보여주기 위한 uid, 닉네임, 매너나이, 프로필url
           'uid': message.data['uid'],
           'userName': message.data['userName'],
-          // 'mannerAge': message.data['mannerAge'],
           'profileUrl': message.data['profileUrl'],
         },
       );
     } else if (type == 'favorite') {
-      // 관심 게시글 알림
-      Get.to(
+      // 관심게시글 알림인 경우
+      NavigationService.navigateNamedTo(
         // 세부 게시글 페이지로 이동
-        () => PostDetailPage(),
-        arguments: message.data,
+        screen,
+        {
+          'postId': message.data['postId'],
+        },
       );
-    } else if (type == 'appoint') {
-      // 약속 설정 알림
-      Get.toNamed('/chat', arguments: message.data);
-    } else if (type == 'review') {
-      // 게임 후기 알림
-      Get.to(
-        // 채팅페이지로 이동
-        () => ChatScreenPage(),
-        arguments: message.data,
-      );
-      // 채팅페이지로 이동
     } else {
       // type == 'notice'
       // 앱 이벤트 및 소식 알림
-      Get.toNamed('/chatscreen', arguments: message.data);
-      // Get.to(
-      //   // 스플래쉬 페이지 이동하여 유저정보에 따라 페이지 이동하도록 하기
-      //   () => main(),
-      //   arguments: message.data,
-      // );
+      // 페이지 이동 지정안하면 홈페이지 이동함
+      print('앱 이벤트 및 소식 알림');
     }
   }
 }

@@ -11,6 +11,7 @@ class MyAppBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(FcmTokenController());
+    Get.put(FCMController());
   }
 }
 

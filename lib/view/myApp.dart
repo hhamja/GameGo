@@ -12,6 +12,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   /* fcm 토큰에 대한 컨트롤럴 */
   final FcmTokenController _token = Get.put(FcmTokenController());
+
   /* 배지 컨트롤러 인스턴스 생성
   * 채팅리스트의 안읽은 메시지가 하나라도 있다면 채팅아이콘위에 표시하기 위해 */
   final BadgeController _badge = Get.put(BadgeController());

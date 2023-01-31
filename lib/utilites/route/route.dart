@@ -58,7 +58,6 @@ class AppRoutes {
     GetPage(
       name: Paths.Postdetail,
       page: () => PostDetailPage(),
-      binding: PostDetailBinding(),
     ),
     GetPage(
       name: Paths.DeleteDialog,
