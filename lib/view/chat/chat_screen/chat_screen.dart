@@ -8,8 +8,8 @@ class ChatScreenPage extends StatefulWidget {
 }
 
 class _ChatScreenPageState extends State<ChatScreenPage> {
-  // 상대유저정보 (이름, 프로필, 매너나이, uid)
-  final String userName = Get.arguments['userName'];
+  // 상대유저정보 (이름, 프로필, uid)
+  final String userName = Get.arguments['userName'] ?? '';
   final String profileUrl = Get.arguments['profileUrl'];
   final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];

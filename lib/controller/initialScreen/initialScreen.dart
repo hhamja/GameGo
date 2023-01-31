@@ -38,7 +38,7 @@ class InitialScreenCntroller extends GetxController {
     if (!_isSeen) {
       // 설치 후 처음 실행
       // isSeen를 true로 업데이트
-      await prefs.setBool('isSeen', true);
+      prefs.setBool('isSeen', true);
       // 앱 권한 사용 안내 페이지로 이동
       Get.offAll(PermissionGuidePage());
     } else if (user == null) {

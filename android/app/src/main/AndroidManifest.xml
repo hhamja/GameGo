@@ -5,7 +5,6 @@
     
     <!-- 필수 권한 요청 : 없음 -->
     <!-- 선택 권한 요청 : 사진(갤러리), 카메라, 알림 -->
-    
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA"/> 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
@@ -23,13 +22,13 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize"
             android:showWhenLocked="true"
-            android:turnScreenOn="true">
-            
+            android:turnScreenOn="true"> 
+           
+            <!-- 중요한 푸시알림 채널 -->
             <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id" 
                 android:value="high_importance_channel" 
-            /><!-- FCM으로 받는 푸시 알람의 중요도를 MAX하기 위한 설정 -->
-
+            />
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme"
@@ -38,6 +37,11 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- 푸시알림 클릭시의 액션을 설정하기 위한 아래의 코드 삽입
+            <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter> -->
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
