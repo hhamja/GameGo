@@ -102,11 +102,17 @@ class FavoriteController extends GetxController {
     // 반복문
     return _postIdList.forEach(
       // postId을 루트 컬렉션 post에서 게시글 데이터 받기
-      (id) => _postDB.doc(id).get().then(
-            (e) => favoriteList.add(
-              FavoriteListModel.fromDocumentSnapshot(e),
-            ),
-          ),
+      (id) => _postDB.doc(id).get().then((e) {
+        var snapshot = e.data() as Map<String, dynamic>;
+        final bool isDeleted = snapshot['isDeleted'];
+        final bool isHidden = snapshot['isDeleted'];
+        // 삭제게시글, 탈퇴유저 게시글은 제외하여 GET
+        if (isDeleted == false && isHidden == false) {
+          favoriteList.add(
+            FavoriteListModel.fromDocumentSnapshot(e),
+          );
+        }
+      }),
     );
   }
 }
