@@ -9,26 +9,26 @@ class AddPostPage extends StatefulWidget {
 
 class _AddPostPageState extends State<AddPostPage> {
   final _auth = FirebaseAuth.instance;
-  /* 유저 DB Ref */
+  // 유저 DB Ref
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  /* PostController 선언 (∵ Create Post) */
+  // PostController 선언 (∵ Create Post)
   final PostController _post = Get.find<PostController>();
-  /* 홈 드랍다운버튼 컨트롤러 */
+  // 홈 드랍다운버튼 컨트롤러
   final HomePageDropDownBTController _ =
       Get.find<HomePageDropDownBTController>();
-  /* DropDownBTController 선언 (∵ Create Post) */
+  // DropDownBTController 선언 (∵ Create Post)
   CreatePostDropDownBTController _button =
       Get.put(CreatePostDropDownBTController());
-  /* 제목 · 본문 Text Controller */
+  // 제목 · 본문 Text Controller
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _maintextController = TextEditingController();
-  /* ScrollController */
+  // ScrollController
   final ScrollController _titleScrollController = ScrollController();
   final ScrollController _maintextScrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
 
-  /* 게시글 생성 '완료'버튼 클릭 시 */
+  // 게시글 생성 '완료'버튼 클릭 시
   Future<void> _createPost() async {
     UserModel userModel =
         await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
@@ -54,7 +54,7 @@ class _AddPostPageState extends State<AddPostPage> {
 
     await _post.createPost(postModel); //게시물 만들기
 
-    /* 드랍다운버튼 선택의 대한 IF문 */
+    // 드랍다운버튼 선택의 대한 IF문
     if (_.selectedTearValue != '티어') {
       await _post.filterTear(
           _.selectedModeValue, _.selectedPositionValue, _.selectedTearValue);
@@ -80,7 +80,7 @@ class _AddPostPageState extends State<AddPostPage> {
         title: Text('매너게이머 글쓰기'),
         centerTitle: true,
         actions: [
-          /* 완료 버튼 */
+          // 완료 버튼
           TextButton(
             onPressed: _createPost,
             child: Text(
@@ -109,7 +109,7 @@ class _AddPostPageState extends State<AddPostPage> {
                       thickness: 1,
                       color: Colors.grey,
                     ),
-                    /* 제목 입력 란 */
+                    // 제목 입력 란
                     TextField(
                       scrollController: _titleScrollController,
                       maxLines: null,
@@ -146,7 +146,7 @@ class _AddPostPageState extends State<AddPostPage> {
                       color: Colors.grey,
                     ),
 
-                    /* 본문 입력 란 */
+                    // 본문 입력 란
                     TextField(
                       maxLines: null,
                       minLines: 1,

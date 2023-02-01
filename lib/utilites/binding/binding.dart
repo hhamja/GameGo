@@ -80,7 +80,7 @@ class EditPostBinding implements Bindings {
   }
 }
 
-/* 이메일 회원가입 */
+// 이메일 회원가입
 class SignUpBinding implements Bindings {
   @override
   void dependencies() {
@@ -88,7 +88,7 @@ class SignUpBinding implements Bindings {
   }
 }
 
-/* 이메일 로그인 */
+// 이메일 로그인
 class SignInBinding implements Bindings {
   @override
   void dependencies() {

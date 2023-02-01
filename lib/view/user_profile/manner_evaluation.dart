@@ -34,7 +34,7 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
           physics: ScrollPhysics(),
           controller: _scrollC,
           child: Column(
-            /* 해당 유저가 받은 매너 평가 */
+            // 해당 유저가 받은 매너 평가
             children: [
               ListTile(
                 minLeadingWidth: 0,

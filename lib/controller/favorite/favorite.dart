@@ -15,7 +15,7 @@ class FavoriteController extends GetxController {
   // 나의 관심 게시물 리스트
   RxList<FavoriteListModel> favoriteList = <FavoriteListModel>[].obs;
 
-  /* 관심게시글로 지정했는지 확인 */
+  // 관심게시글로 지정했는지 확인
   isFavoritePost(postId) async {
     // 나의 관심게시글 경로 참조
     final ref = await _favoriteDB
@@ -33,7 +33,7 @@ class FavoriteController extends GetxController {
     }
   }
 
-  /* 관심 버튼 클릭 시 추가 및 제거 */
+  // 관심 버튼 클릭 시 추가 및 제거
   Future clickfavoriteButton(
       FavoriteModel favoriteModel, NotificationModel ntfModel) async {
     if (isFavorite.value) {
@@ -78,7 +78,7 @@ class FavoriteController extends GetxController {
     isFavorite.value = !isFavorite.value;
   }
 
-  /* 나의 관심 게시글 리스트 받기 */
+  // 나의 관심 게시글 리스트 받기
   Future getFavoriteList() async {
     // 관심게시글 id 리스트
     List _postIdList = [];

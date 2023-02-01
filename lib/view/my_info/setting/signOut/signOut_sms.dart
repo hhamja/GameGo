@@ -11,15 +11,15 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
   final SmsTimerController _phone = Get.put(SmsTimerController());
   final UserController _user = Get.put(UserController());
 
-  /* 핸드폰 번호 입력 */
+  // 핸드폰 번호 입력
   final TextEditingController _phoneController = TextEditingController();
-  /* SMS 입력 */
+  // SMS 입력
   final TextEditingController _smsController = TextEditingController();
 
-  /* 휴대폰 번호, sms  Key */
+  // 휴대폰 번호, sms  Key
   final _formKey = GlobalKey<FormState>();
 
-  /* SMS 전송하기 버튼을 한번이라도 누른 경우 true */
+  // SMS 전송하기 버튼을 한번이라도 누른 경우 true
   bool isSendSms = false;
 
   @override
@@ -49,7 +49,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    /* 전화번호 입력 칸 */
+                    // 전화번호 입력 칸
                     Flexible(
                       flex: 1,
                       child: Container(
@@ -84,7 +84,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                       ),
                     ),
 
-                    /* SMS 전송 버튼 */
+                    // SMS 전송 버튼
                     Align(
                       heightFactor: 1.3,
                       alignment: Alignment.centerRight,
@@ -135,7 +135,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                   ],
                 ),
                 SizedBox(height: 20),
-                /* SMS번호 */
+                // SMS번호
                 Visibility(
                   visible: isSendSms,
                   child: Column(

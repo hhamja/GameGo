@@ -53,7 +53,7 @@ class CustomThreeLineListTile extends StatelessWidget {
       subtitle: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          /* 게임모드 · 포지션 · 티어 */
+          // 게임모드 · 포지션 · 티어
           Text(
             gamemode,
             style: TextStyle(fontSize: 14),

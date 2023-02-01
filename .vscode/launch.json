@@ -20,7 +20,7 @@
     },
     
   ],
-  /* vsc에서 지원하는 다중 장치 설정 */
+  // vsc에서 지원하는 다중 장치 설정
   "compounds": [
 		{
 			"name": "All Devices",

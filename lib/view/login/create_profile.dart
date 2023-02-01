@@ -124,7 +124,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         controller: ScrollController(),
         child: Column(
           children: [
-            /* 프로필 설정 */
+            // 프로필 설정
             Container(
               margin: EdgeInsets.symmetric(
                 vertical: 40,
@@ -164,7 +164,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               ),
             ),
 
-            /* 닉네임 입력란 */
+            // 닉네임 입력란
             TextFormField(
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -210,7 +210,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
   }
 
-  /* 카메라 아이콘 클릭시 띄울 바텀시트 */
+  // 카메라 아이콘 클릭시 띄울 바텀시트
   Container showBottomSheet() {
     return Container(
       height: 240,

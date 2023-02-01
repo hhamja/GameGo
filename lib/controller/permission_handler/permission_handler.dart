@@ -32,8 +32,8 @@ class PermissionHandler extends GetxController {
     }
   }
 
-  /* 카메라 권한 요청 
-  * 프로필 설정 및 수정할 때 */
+  // 카메라 권한 요청
+  // 프로필 설정 및 수정할 때
   Future<bool> requestCameraPermission() async {
     // 권한 요청
     PermissionStatus status = await Permission.camera.request();
@@ -63,8 +63,8 @@ class PermissionHandler extends GetxController {
     }
   }
 
-  /* 사진 저장소 권한 요청 
-  * 프로필 설정 및 수정할 때*/
+  // 사진 저장소 권한 요청
+  // 프로필 설정 및 수정할 때
   Future<bool> requestStoragePermission() async {
     // 권한 요청
     PermissionStatus status = await Permission.storage.request();

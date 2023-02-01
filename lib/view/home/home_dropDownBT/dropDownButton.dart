@@ -8,7 +8,7 @@ class HomeDropDownButton extends StatefulWidget {
 }
 
 class _HomeDropDownButtonState extends State<HomeDropDownButton> {
-  /* Put -> DropDwon Button Controller */
+  // Put -> DropDwon Button Controller
   HomePageDropDownBTController homeDropDownBTController =
       Get.put(HomePageDropDownBTController());
 
@@ -18,7 +18,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
       builder: (controller) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          /* 게임모드 드랍다운 버튼 */
+          // 게임모드 드랍다운 버튼
           DropdownButtonHideUnderline(
             child: DropdownButton2(
               buttonWidth: controller.selectedModeValue == '무작위 총력전' ? 125 : 85,
@@ -39,7 +39,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
           ),
           SizedBox(width: 10),
 
-          /* 포지션 드랍다운 버튼*/
+          // 포지션 드랍다운 버튼*/
           Visibility(
             visible: controller.showPosition,
             child: DropdownButtonHideUnderline(
@@ -63,7 +63,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
             ),
           ),
           SizedBox(width: 10),
-          /* 티어 드랍다운 버튼*/
+          // 티어 드랍다운 버튼*/
           Visibility(
             visible: controller.showTear,
             child: DropdownButtonHideUnderline(

@@ -14,12 +14,12 @@ class CustomPostInfo extends StatelessWidget {
       onTap: () {
         Get.toNamed('/postdetail', arguments: {'postId': postId});
       },
-      /* 게시글 제목 */
+      // 게시글 제목
       title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
       subtitle: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          /* 게임모드 · 포지션 · 티어 */
+          // 게임모드 · 포지션 · 티어
           Text(
             gamemode,
             style: TextStyle(fontSize: 12),

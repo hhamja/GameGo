@@ -8,20 +8,19 @@ class PhoneAuthPage extends StatefulWidget {
 }
 
 class _PhoneAuthPageState extends State<PhoneAuthPage> {
-  /* ProfileController */
   ProfileController _username = Get.put(ProfileController());
 
   final SmsTimerController _phone = Get.put(SmsTimerController());
   final UserController _user = Get.put(UserController());
-  /* 핸드폰 번호 입력 */
+  // 핸드폰 번호 입력
   final TextEditingController _phoneController = TextEditingController();
-  /* SMS 입력 */
+  // SMS 입력
   final TextEditingController _smsController = TextEditingController();
-  /* 휴대폰 번호, sms  Key */
+  // 휴대폰 번호, sms  Key
   final _formKey = GlobalKey<FormState>();
 
-  /* OTP 처음 받는 경우 : false
-  * 두번 째   true로 됨. */
+  // OTP 처음 받는 경우 : false
+  // 두번 째   true로 됨.
   bool isSendSms = false;
   // @override
   // void initState() {
@@ -66,7 +65,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
             children: [
               Row(
                 children: [
-                  /* 전화번호 입력 칸 */
+                  // 전화번호 입력 칸
                   Flexible(
                     flex: 1,
                     child: Container(
@@ -101,7 +100,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                     ),
                   ),
 
-                  /* SMS 전송 버튼 */
+                  // SMS 전송 버튼
                   Align(
                     heightFactor: 1.3,
                     alignment: Alignment.centerRight,
@@ -141,7 +140,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                 ],
               ),
               SizedBox(height: 20),
-              /* SMS번호 */
+              // SMS번호
               Visibility(
                 visible: isSendSms,
                 child: Column(
@@ -209,7 +208,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                   ],
                 ),
               ),
-              /* 이용약관 및 개인정보 취급방침 */
+              // 이용약관 및 개인정보 취급방침
             ],
           ),
         ),

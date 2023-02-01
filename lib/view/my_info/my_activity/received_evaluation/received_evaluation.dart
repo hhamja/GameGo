@@ -34,7 +34,7 @@ class _ReceivedMannerEvaluationPageState
           physics: ScrollPhysics(),
           controller: _scrollC,
           child: Column(
-            /* 받은 매너 평가 */
+            // 받은 매너 평가
             children: [
               ListTile(
                 minLeadingWidth: 0,
@@ -95,7 +95,7 @@ class _ReceivedMannerEvaluationPageState
               Divider(
                 thickness: 1,
               ),
-              /* 내가 받은 비매너 평가 */
+              // 내가 받은 비매너 평가
               ListTile(
                 minLeadingWidth: 0,
                 horizontalTitleGap: 5,

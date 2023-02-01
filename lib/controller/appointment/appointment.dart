@@ -5,20 +5,20 @@ class AppointmentController extends GetxController {
       FirebaseFirestore.instance.collection('chat');
   final NtfController _ntf = Get.put(NtfController());
 
-  /* 약속 날짜 담는  Rx String 변수 */
+  // 약속 날짜 담는  Rx String 변수
   RxString appointmentDate = ''.obs;
-  /* DateTime 변수 */
+  // DateTime 변수
   var toDatetime = DateTime.now().obs;
-  /* 약속설정이 되어있는지를 나타내는 bool변수 */
+  // 약속설정이 되어있는지를 나타내는 bool변수
   RxBool isSetAppointment = false.obs;
-  /* 약속설정했다는 메시지를 채팅 페이지 보여주기 위한 bool변수 */
+  // 약속설정했다는 메시지를 채팅 페이지 보여주기 위한 bool변수
   RxBool isShowMessage = false.obs;
 
-  /* 약속설정하기 
-  * 문서하나만 만들어서 약속 설정 시 계속 업데이트할 것 */
+  // 약속설정하기
+  // 문서하나만 만들어서 약속 설정 시 계속 업데이트할 것
   Future setAppointment(chatRoomId, AppointmentModel appointmentModel,
       MessageModel messageModel, uid, NotificationModel ntfModel) async {
-    //해당 채팅의 약속 하위 컬렉션에 데이터 추가
+    // 해당 채팅의 약속 하위 컬렉션에 데이터 추가
     await _chatDB
         .doc(chatRoomId)
         .collection('appointment')
@@ -46,7 +46,7 @@ class AppointmentController extends GetxController {
     await _ntf.addNotification(ntfModel);
   }
 
-  /* 약속시간 받기 + 약속설정 여부 bool변수에 담기 */
+  // 약속시간 받기 + 약속설정 여부 bool변수에 담기
   Future getAppointment(chatRoomId) async {
     final ref = await _chatDB
         .doc(chatRoomId)

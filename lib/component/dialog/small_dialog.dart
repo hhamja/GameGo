@@ -9,7 +9,7 @@ class CustomSmallDialog extends StatelessWidget {
   final String completeText; //오른쪽 버튼 내용, ex)확인
   final Function() cancelFun; //취소버튼의 onPressed()
   final Function() completeFun; //완료버튼의 onPressed()
-  /* cancelFlex : completeFlex = 1:1이면 버튼 Width는 서로 동일 */
+  // cancelFlex : completeFlex = 1:1이면 버튼 Width는 서로 동일
   final int cancelFlex; //Expaned 취소버튼 flex 값
   final int completeFlex; //Expaned 완료버튼 flex 값
   @override
@@ -19,7 +19,7 @@ class CustomSmallDialog extends StatelessWidget {
         buttonPadding: EdgeInsets.zero,
         contentPadding: EdgeInsets.symmetric(vertical: 30),
         insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-        /* 내용 */
+        // 내용
         content: Container(
           width: MediaQuery.of(context).size.width,
           child: Text(
@@ -31,7 +31,7 @@ class CustomSmallDialog extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              /* 왼쪽버튼 */
+              // 왼쪽버튼
               Expanded(
                 flex: cancelFlex,
                 child: TextButton(
@@ -47,7 +47,7 @@ class CustomSmallDialog extends StatelessWidget {
                   ),
                 ),
               ),
-              /* 오른쪽버튼 */
+              // 오른쪽버튼
               Expanded(
                 flex: completeFlex,
                 child: TextButton(

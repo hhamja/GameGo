@@ -15,10 +15,10 @@ class ChatBottomSheet extends StatefulWidget {
 }
 
 class _ChatBottomSheetState extends State<ChatBottomSheet> {
-  /* 알림 on/off 바텀시트 클릭에 대한 bool값 */
+  // 알림 on/off 바텀시트 클릭에 대한 bool값
   //처음 값은 true (나중에 아마 컨트롤러로 따로 빼야할듯? 상태값 저장해야함)
   // bool _isAlramOnOff = true;
-  /* 차단 바텀시트 클릭에 대한 bool값 */
+  // 차단 바텀시트 클릭에 대한 bool값
   // bool _isBlockOnOff = false;
 
   @override

@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class Messages extends StatefulWidget {
-  /* 상대유저 이름, 기본프로필, 채팅방 id 값 */
+  // 상대유저 이름, 기본프로필, 채팅방 id 값
   final String userName, profileUrl, chatRoomId;
 
   Messages({
@@ -152,7 +152,7 @@ class _MessagesState extends State<Messages> {
                                               0.7,
                                         ),
                                         decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xff6843F9),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15))),
                                         padding: EdgeInsets.symmetric(

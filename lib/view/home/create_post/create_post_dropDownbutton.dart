@@ -9,7 +9,7 @@ class AddPostDropDownButton extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          /* 게임모드 드랍다운버튼 */
+          // 게임모드 드랍다운버튼
           DropdownButtonHideUnderline(
             child: DropdownButton2(
               buttonPadding: EdgeInsets.only(right: 15),
@@ -34,7 +34,7 @@ class AddPostDropDownButton extends StatelessWidget {
               itemHeight: 50,
             ),
           ),
-          /* 포지션 드랍다운버튼 */
+          // 포지션 드랍다운버튼
           Visibility(
             visible: controller.showPosition,
             child: DropdownButtonHideUnderline(

@@ -1,9 +1,9 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-/* 신고하는 3가지 상황
-1. 게시글에 대해 신고하는 경우
-2. 유저에 대해 신고하는 경우
-3. 비매너 게임 후기를 수기로 작성하여 보내는 경우 */
+// 신고하는 3가지 상황
+// 1. 게시글에 대해 신고하는 경우
+// 2. 유저에 대해 신고하는 경우
+// 3. 비매너 게임 후기를 수기로 작성하여 보내는 경우
 class ReportModel {
   final String idFrom; //신고 보내는 uid
   final String idTo; //신고 받는 uid

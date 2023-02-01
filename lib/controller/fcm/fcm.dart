@@ -87,13 +87,13 @@ class FCMController extends GetxController {
       }
     });
 
+    // 백그라운드 상태에서 푸시 알림 클릭하는 경우
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
     // 종료 상태에서 앱을 열게한 메시지를 가져오기
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
     // 종료 상태에서 알림 클릭시 동작
     if (initialMessage != null) _handleMessage(initialMessage);
-    // 백그라운드 상태에서 푸시 알림 클릭하는 경우
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
   // 백그라운드에서 알림 클릭 시 액션

@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MessagesFromPost extends StatefulWidget {
-  /* 게시글 유저의  UID, 게시물 id 값, 상대프로필 */
+  // 게시글 유저의  UID, 게시물 id 값, 상대프로필
   final String uid, postId, profileUrl;
   MessagesFromPost(
       {Key? key,
@@ -15,9 +15,9 @@ class MessagesFromPost extends StatefulWidget {
 }
 
 class _MessagesFromPostState extends State<MessagesFromPost> {
-  /* 채팅방 id */
+  // 채팅방 id
   var chatRoomId;
-  /* 채팅 GetX 컨트롤러 */
+  // 채팅 GetX 컨트롤러
   final ChatController _chat = Get.find<ChatController>();
   var _list; // = _chat.messageList
 
@@ -39,14 +39,14 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      /* 스크롤 바 */
+      // 스크롤 바
       () => Padding(
         padding: const EdgeInsets.all(3.0),
         child: Scrollbar(
           controller: _chat.scroll,
           interactive: true,
           thickness: 3, //색상은 ThemeData()에서  highlightColor로 변경하자
-          /* 채팅리스트 박스의 패딩 */
+          // 채팅리스트 박스의 패딩
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView.builder(
@@ -60,7 +60,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                     .format('yyyy년 MM월 dd일'); //현재 index에 대한 날짜
                 final _time = Jiffy(_list[reversed].timestamp.toDate())
                     .format('HH:MM'); //22시간
-                /* 날짜 표시 if */
+                // 날짜 표시 if
                 if (reversed == 0) {
                   _chat.isShowDate.value = true; //첫 메시지이면 O
                 } else if (reversed > 0 &&
@@ -71,7 +71,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                 } else {
                   _chat.isShowDate.value = false; //나머지는 X
                 }
-                /* 시간 표시 if */
+                // 시간 표시 if
                 if (reversed == _list.length - 1) {
                   _chat.isShowTime.value = true; //리스트의 마지막 메시지
                 } else if (reversed < _list.length - 1 &&
@@ -85,7 +85,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                 } else {
                   _chat.isShowTime.value = false; //나머지 경우
                 }
-                /* 상대 프로필 if문 */
+                // 상대 프로필 if문
                 if (reversed >= 1 &&
                     _list[reversed - 1].idFrom == _list[reversed].idFrom) {
                   _chat.isShowProfile.value = false;
@@ -103,14 +103,14 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
 
                 return _isMe
                     ?
-                    /* 나의 메시지 */
+                    // 나의 메시지
                     Container(
                         margin: isChangeUser
                             ? EdgeInsets.symmetric(vertical: 10)
                             : EdgeInsets.symmetric(vertical: 1),
                         child: Column(
                           children: [
-                            /* 연·월·일 */
+                            // 연·월·일
                             _chat.isShowDate.value
                                 ? Padding(
                                     padding: const EdgeInsets.all(15.0),
@@ -121,7 +121,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                     ),
                                   )
                                 : SizedBox.shrink(),
-                            /* 메시지 박스 */
+                            // 메시지 박스
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -167,7 +167,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                         ),
                       )
                     :
-                    /* 상대방 메시지 */
+                    // 상대방 메시지
                     Container(
                         margin: isChangeUser
                             ? EdgeInsets.only(top: 10)

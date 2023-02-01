@@ -11,15 +11,15 @@ class NewMessageFromPost extends StatefulWidget {
 }
 
 class _NewMessageFromPostState extends State<NewMessageFromPost> {
-  /* FireStore User Collection Instance */
+  // FireStore User Collection Instance
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  /* 메시지 입력 칸 */
+  // 메시지 입력 칸
   final TextEditingController _messageController = TextEditingController();
-  /* 채팅 GetX 컨트롤러 */
+  // 채팅 GetX 컨트롤러
   final ChatController _chat = Get.find<ChatController>();
 
-  /* 입력한 메시지 DB에 보내기 */
+  // 입력한 메시지 DB에 보내기
   void _sendMessage() async {
     // 게시자(=postingUser) 인스턴스
     final UserModel postingUser =
@@ -93,7 +93,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
           //     color: Colors.grey[500],
           //   ),
           // ),
-          /* 메시지 입력란 */
+          // 메시지 입력란
           Expanded(
             child: Container(
               constraints: BoxConstraints(
@@ -125,7 +125,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
               ),
             ),
           ),
-          /* 보내기 버튼 */
+          // 보내기 버튼
           IconButton(
             alignment: Alignment.center,
             onPressed: _messageController.text.trim().isEmpty

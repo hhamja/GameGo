@@ -60,7 +60,7 @@ class _NewMessageState extends State<NewMessage> {
           //     color: Colors.grey[500],
           //   ),
           // ),
-          /* 메시지 입력란 */
+          // 메시지 입력란
           Expanded(
             child: Container(
               constraints: BoxConstraints(
@@ -93,7 +93,7 @@ class _NewMessageState extends State<NewMessage> {
               ),
             ),
           ),
-          /* 보내기 버튼 */
+          // 보내기 버튼
           IconButton(
             alignment: Alignment.center,
             onPressed: _messageController.text.trim().isEmpty

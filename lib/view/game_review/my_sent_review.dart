@@ -11,7 +11,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
   final EvaluationController _evaluation = Get.find<EvaluationController>();
   final GameReviewController _review = Get.put(GameReviewController());
   final ScrollController _scrollC = ScrollController();
-  /* 상대유저 이름, uid, 채팅방 id */
+  // 상대유저 이름, uid, 채팅방 id
   final String userName = Get.arguments['userName']!;
   final String uid = Get.arguments['uid']!;
   final String chatRoomId = Get.arguments['chatRoomId']!;
@@ -40,7 +40,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                /* 별로예요 : 최고예요 이모지 */
+                // 별로예요 : 최고예요 이모지
                 Padding(
                   padding: EdgeInsets.all(15),
                   child: Column(
@@ -61,7 +61,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                     ],
                   ),
                 ),
-                /* 내가 체크한 비매너 : 매너 평가 항목 */
+                // 내가 체크한 비매너 : 매너 평가 항목
                 !_evaluation.isGood.value
                     ? ListView.builder(
                         padding: EdgeInsets.zero,
@@ -97,7 +97,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                           );
                         },
                       ),
-                /* 작성한 거래 후기 */
+                // 작성한 거래 후기
                 Container(
                   width: MediaQuery.of(context).size.width * 1.0,
                   margin: EdgeInsets.symmetric(vertical: 20),

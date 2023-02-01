@@ -72,7 +72,7 @@ class _ChatListPageState extends State<ChatListPage> {
                 //     extentRatio: 0.2, //한개당 0.2, 삭제버튼 추가시 0.4로 수정할 것
                 //     motion: DrawerMotion(),
                 //     children: [
-                //       /* 알림 on/off */
+                //       // 알림 on/off
                 //       SlidableAction(
                 //         backgroundColor: Colors.grey,
                 //         foregroundColor: Colors.white,
@@ -85,7 +85,7 @@ class _ChatListPageState extends State<ChatListPage> {
                 //           });
                 //         },
                 //       ),
-                //       // /* 채팅 나가기 (DB에서 삭제 X)*/
+                //       // // 채팅 나가기 (DB에서 삭제 X)*/
                 //       // SlidableAction(
                 //       //   onPressed: (_) async {
                 //       //     await _chat.chatRoomList.removeAt(index);

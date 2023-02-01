@@ -110,7 +110,7 @@ exports.chatNotification = functions
       });
   });
 
-/* 매너후기, 관심게시글, 약속, 이벤트 및 소식 푸시알림 */
+// 매너후기, 관심게시글, 약속, 이벤트 및 소식 푸시알림
 exports.activityAndMarketingNotification = functions
   .region("asia-northeast3")
   .firestore.document("notification/{notificationId}")

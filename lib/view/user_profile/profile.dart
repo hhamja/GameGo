@@ -8,7 +8,7 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  /* Post Detail, Chat Page에서 받은 데이터 */
+  // Post Detail, Chat Page에서 받은 데이터
   final String profileUrl = Get.arguments['profileUrl'];
   final String userName = Get.arguments['userName'];
   final String mannerAge = Get.arguments['mannerAge'];
@@ -77,7 +77,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       ),
     );
   }
-  // /* 앱바 상단 아이콘 클릭 시 열리는 바텀시트 */
+  // // 앱바 상단 아이콘 클릭 시 열리는 바텀시트
   // openBottomSheet() {
   //   return Get.bottomSheet(
   //     Container(

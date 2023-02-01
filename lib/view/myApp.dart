@@ -10,11 +10,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  /* fcm 토큰에 대한 컨트롤럴 */
+  // fcm 토큰에 대한 컨트롤럴
   final FcmTokenController _token = Get.put(FcmTokenController());
 
-  /* 배지 컨트롤러 인스턴스 생성
-  * 채팅리스트의 안읽은 메시지가 하나라도 있다면 채팅아이콘위에 표시하기 위해 */
+  // 배지 컨트롤러 인스턴스 생성
+  // 채팅리스트의 안읽은 메시지가 하나라도 있다면 채팅아이콘위에 표시하기 위해
   final BadgeController _badge = Get.put(BadgeController());
   List _bodylist = [Homepage(), ChatListPage(), MyInfoPage()];
   int tabIndex = 0;
@@ -36,7 +36,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _bodylist[tabIndex], //하단 탭바를 이용한 홈-게시글올리기-채팅-나의정보 페이지
+      // 하단 탭바를 이용한 홈-게시글올리기-채팅-나의정보 페이지
+      body: _bodylist[tabIndex],
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           onTap: (value) => setState(() => tabIndex = value),

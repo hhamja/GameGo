@@ -1,4 +1,4 @@
-/* HomePage의 드랍다운버튼 Model */
+// HomePage의 드랍다운버튼 Model
 final List<String> gameModes = [
   '게임모드',
   '솔로랭크',
@@ -26,7 +26,7 @@ final List<String> tears = [
   '다이아몬드',
 ];
 
-/* Create Post Page의 드랍다운버튼 Model */
+// Create Post Page의 드랍다운버튼 Model
 final List<String> gameModes2 = [
   '솔로랭크',
   '자유랭크',

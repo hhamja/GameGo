@@ -16,12 +16,12 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final ImagePicker _picker = ImagePicker();
 
-  /* 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수 */
+  // 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수
   File? _photoFile;
-  /* 파베 스토리지에서 불러올 사진 url */
+  // 파베 스토리지에서 불러올 사진 url
   String profileImageUrl = FirebaseAuth.instance.currentUser!.photoURL!;
 
-  /* 갤러리에서 사진 선택하기 */
+  // 갤러리에서 사진 선택하기
   Future pickImgFromGallery() async {
     //갤러리에서 선택한 사진이 경로
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -35,8 +35,8 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
     });
   }
 
-  // /* 카메라 권한 요청
-  // * 프로필 설정 및 수정할 때 */
+  // // 카메라 권한 요청
+  // * 프로필 설정 및 수정할 때
   // Future requestCameraPermission() async {
   //   // PermissionStatus status = await Permission.camera.status;
   //   // 권한 요청
@@ -69,7 +69,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
   //   );
   // }
 
-  /* 카메라로 사진 찍기 */
+  // 카메라로 사진 찍기
   Future pickImgFromCamera() async {
     final pickedFile = await _picker.pickImage(
       source: ImageSource.camera,
@@ -84,7 +84,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
     });
   }
 
-  /* 파베 스토리지에 업로드하기 */
+  // 파베 스토리지에 업로드하기
   Future uploadFile() async {
     if (_photoFile == null) return;
     final fileName = _auth.currentUser?.uid; //유저고유 id값을 파일명으로
@@ -102,7 +102,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
     }
   }
 
-  /* 닉네임 입력에 따른 에러 택스트 */
+  // 닉네임 입력에 따른 에러 택스트
   String get _showErrorText {
     final text = _nameText.text.trim();
 
@@ -124,7 +124,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
         controller: ScrollController(),
         child: Column(
           children: [
-            /* 프로필 설정 */
+            // 프로필 설정
             Container(
               margin: EdgeInsets.symmetric(
                 vertical: 40,
@@ -164,7 +164,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
               ),
             ),
 
-            /* 닉네임 입력란 */
+            // 닉네임 입력란
             TextFormField(
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -232,7 +232,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
     );
   }
 
-  /* 카메라 아이콘 클릭시 띄울 바텀시트 */
+  // 카메라 아이콘 클릭시 띄울 바텀시트
   showBottomSheet() {
     return Container(
       height: 240,

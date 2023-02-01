@@ -1,26 +1,26 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-/*-------------------- 홈페이지의 드랍다운버튼 컨트롤러 --------------------*/
+//-------------------- 홈페이지의 드랍다운버튼 컨트롤러 --------------------*/
 class HomePageDropDownBTController extends GetxController {
-  /* 포지션 드랍다운 버튼 보여주는 bool값 */
+  // 포지션 드랍다운 버튼 보여주는 bool값
   bool showPosition = false;
-  /* 티어 드랍다운 버튼 보여주는 bool값  */
+  // 티어 드랍다운 버튼 보여주는 bool값
   bool showTear = false;
-  /* 게임모드 선택 value, 초기값 = '게임모드' */
+  // 게임모드 선택 value, 초기값 = '게임모드'
   var selectedModeValue = gameModes[0];
-  /* 포지션 선택 value, 초기값 = '포지션' */
+  // 포지션 선택 value, 초기값 = '포지션'
   var selectedPositionValue = postions[0];
-  /* 티어 선택 value, 초기값 = '티어' */
+  // 티어 선택 value, 초기값 = '티어'
   var selectedTearValue = tears[0];
 
-  /* PostController find */
+  // PostController find
   final PostController _post = Get.put(PostController());
 
-  /* 게임모드가 
-  * 솔로,자유 ? 포지션, 티어 둘다 표시 
-  * 일반 ? 포지션만 표시 
-  * 칼바람, AI ? null 
-  */
+  // 게임모드가
+  // 솔로,자유 ? 포지션, 티어 둘다 표시
+  // 일반 ? 포지션만 표시
+  // 칼바람, AI ? null
+
   changeGamemode(modeValue) {
     selectedModeValue = modeValue as String;
     selectedPositionValue = '포지션';
@@ -30,7 +30,7 @@ class HomePageDropDownBTController extends GetxController {
       _post.filterGamemode(_gamemode);
     }
 
-    /* 게임모드 switch - case */
+    // 게임모드 switch - case
     switch (selectedModeValue) {
       case '게임모드':
         showPosition = false;
@@ -65,7 +65,7 @@ class HomePageDropDownBTController extends GetxController {
     }
   }
 
-  /* 포지션 드랍다운버튼 클릭 시 */
+  // 포지션 드랍다운버튼 클릭 시
   changePosition(value) {
     selectedPositionValue = value as String;
     selectedTearValue = '티어';
@@ -74,7 +74,7 @@ class HomePageDropDownBTController extends GetxController {
       _post.filterPosition(gamemode, position);
     }
 
-    /* 게임모드 switch - case */
+    // 게임모드 switch - case
     switch (selectedPositionValue) {
       case '포지션':
         filter(selectedModeValue, null);
@@ -97,7 +97,7 @@ class HomePageDropDownBTController extends GetxController {
     }
   }
 
-  /* 티어 드랍다운버튼 클릭 시 */
+  // 티어 드랍다운버튼 클릭 시
   changeTear(value) {
     selectedTearValue = value as String;
     update();
@@ -105,7 +105,7 @@ class HomePageDropDownBTController extends GetxController {
       _post.filterTear(gamemode, position, tear);
     }
 
-    /* 게임모드 switch - case */
+    // 게임모드 switch - case
     switch (selectedTearValue) {
       case '티어':
         filter(selectedModeValue, selectedPositionValue, null);

@@ -9,7 +9,7 @@ class HomePostList extends GetView<PostController> {
   // 홈 드랍다운버튼 컨트롤러
   final PostController _post = Get.put(PostController());
 
-  /* 드랍다운버튼 선택한 값에 따른 페이지 새로고침 */
+  // 드랍다운버튼 선택한 값에 따른 페이지 새로고침
   Future<void> _refreshFromButtonValue() async {
     if (_.selectedTearValue != '티어') {
       //티어 선택한 경우( = 3개 다 선택한 경우)

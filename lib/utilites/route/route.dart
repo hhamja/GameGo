@@ -4,19 +4,19 @@ class AppRoutes {
   AppRoutes._(); // 객체 인스턴스화 방지
 
   static final routes = [
-    /* MyApp */
+    // MyApp
     GetPage(
       name: Paths.MyApp,
       page: () => MyApp(),
     ),
 
-    /* UserProfile */
+    // UserProfile
     GetPage(
       name: Paths.UserProfile,
       page: () => UserProfilePage(),
     ),
 
-    /* CHAT */
+    // CHAT
     GetPage(
       name: Paths.ChatList,
       page: () => ChatListPage(),
@@ -30,7 +30,7 @@ class AppRoutes {
       page: () => NoUserChatScreenPage(),
     ),
 
-    /* HOME */
+    // HOME
     GetPage(
       name: Paths.HomeDropDownBT,
       page: () => HomeDropDownButton(),
@@ -95,7 +95,7 @@ class AppRoutes {
       page: () => Homepage(),
     ),
 
-    /* LOGIN */
+    // LOGIN
 
     GetPage(
       name: Paths.Main,
@@ -111,7 +111,7 @@ class AppRoutes {
       binding: PhoneAuthBinding(),
     ),
 
-    /* MyInfoPage */
+    // MyInfoPage
     GetPage(
       name: Paths.My,
       page: () => MyInfoPage(),
@@ -157,7 +157,7 @@ class AppRoutes {
       page: () => MyFavoriteList(),
     ),
 
-    /* SETTING */
+    // SETTING
     GetPage(
       name: Paths.Setting,
       page: () => SettingPage(),
@@ -200,7 +200,7 @@ class AppRoutes {
       page: () => SelfAuthenticationPage(),
     ),
 
-    /* SPLASH */
+    // SPLASH
     GetPage(
       name: Paths.Splash,
       page: () => SplashPage(),

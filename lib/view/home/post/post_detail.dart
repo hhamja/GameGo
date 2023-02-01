@@ -164,7 +164,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       color: Colors.white,
                       child: Row(
                         children: [
-                          /* 관심(하트) */
+                          // 관심(하트)
                           Expanded(
                             flex: 2,
                             child: Obx(
@@ -241,7 +241,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
     );
   }
 
-  /* 게시물 오른쪽 상단의 아이콘 클릭 시  바텀시트 호출 */
+  // 게시물 오른쪽 상단의 아이콘 클릭 시  바텀시트 호출
   openPostBottomSheet() {
     // 나의 게시물인 경우
     if (CurrentUser.uid == _post.postInfo.uid) {

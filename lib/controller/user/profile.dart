@@ -20,7 +20,7 @@ class ProfileController extends GetxController {
     getUserProfileUrl();
   }
 
-  /* 유저 정보가 존재하는지 여부 확인 */
+  // 유저 정보가 존재하는지 여부 확인
   Future checkIfDocExists(phone) async {
     try {
       final doc = await _userDB.doc(_auth.currentUser!.uid).get();
@@ -38,7 +38,7 @@ class ProfileController extends GetxController {
     }
   }
 
-  /* 파베 스토리지에서 기본 프로필 URL 가져오기 */
+  // 파베 스토리지에서 기본 프로필 URL 가져오기
   Future getUserProfileUrl() async {
     try {
       final ref = FirebaseStorage.instance.ref().child(

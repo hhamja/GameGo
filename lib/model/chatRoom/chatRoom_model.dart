@@ -22,7 +22,7 @@ class ChatRoomModel {
   //{postingUser의 uid : 받은 수(보낸 수 X), contact유저의 uid : 받은 수(보낸 수 X)}
   //메시지 보내면 -> 받는 uid의 값 +1
   //Get할 때 -> currentUid로 안읽은 메시지 수 받기
-  //유저가 메시지 페이지에 들어간다면? -> 나의 uid에 해당하는 값 '0'으로 업데이트 */
+  //유저가 메시지 페이지에 들어간다면? -> 나의 uid에 해당하는 값 '0'으로 업데이트
   final Map unReadCount;
 
   //마지막 채팅 내용, 메시지 보낼 때 마다 업데이트

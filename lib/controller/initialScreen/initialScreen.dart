@@ -4,29 +4,28 @@ class InitialScreenCntroller extends GetxController {
   static InitialScreenCntroller get to => Get.find<InitialScreenCntroller>();
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-  /* FirebaseAuth instance */
   final _auth = FirebaseAuth.instance;
-  /* 모든유저정보 */
+  // 모든유저정보
   late Rx<User?> firebaseUser;
 
-  /* spalsh 화면을 몇 초동안 보여주고 유저가입상태에서 따라 페이지 이동구현 */
+  // spalsh 화면을 몇 초동안 보여주고 유저가입상태에서 따라 페이지 이동구현
   @override
   void onReady() {
     super.onReady();
     Timer(Duration(milliseconds: 1500), () {
-      /* 파이베이스 auth User목록 */
+      // 파이베이스 auth User목록
       firebaseUser = Rx<User?>(_auth.currentUser);
-      /* AUTH의 유저변화 반응형으로 감지 */
+      // AUTH의 유저변화 반응형으로 감지
       firebaseUser.bindStream(_auth.userChanges());
-      /* firebaseUser변화 감지해서 _setInitialScreen함수 실행 */
+      // firebaseUser변화 감지해서 _setInitialScreen함수 실행
       ever(firebaseUser, _setInitialScreen);
     });
   }
 
-  /* 유저가입 상태에 따라 다르게 첫화면 띄우기 
-  * 신규회원? 메인로고 페이지
-  * Auth에만 유저정보 있고 DB에 유저정보 없는 유저? 프로필 생성 페이지
-  * 둘다 있는 유저? MyApp()으로 이동 */
+  // 유저가입 상태에 따라 다르게 첫화면 띄우기
+  // 신규회원? 메인로고 페이지
+  // Auth에만 유저정보 있고 DB에 유저정보 없는 유저? 프로필 생성 페이지
+  // 둘다 있는 유저? MyApp()으로 이동
   Future _setInitialScreen(User? user) async {
     //서버에서 유저정보있는지 확인
     final doc = await _userDB.doc(_auth.currentUser?.uid).get();

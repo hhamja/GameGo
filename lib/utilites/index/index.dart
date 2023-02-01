@@ -1,4 +1,4 @@
-/* Flutter Packages */
+// Flutter Packages
 export 'package:flutter/material.dart';
 export 'package:cupertino_icons/cupertino_icons.dart';
 export 'dart:convert';
@@ -7,7 +7,7 @@ export 'dart:async';
 export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
-/* Packages */
+// Packages
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:decimal/decimal.dart';
@@ -31,7 +31,7 @@ export 'package:path/path.dart';
 export 'package:jiffy/jiffy.dart';
 export 'package:grouped_list/grouped_list.dart';
 
-/* Views */
+// Views
 export 'package:mannergamer/view/chat/chat_screen/no_user_chat_screen.dart';
 export 'package:mannergamer/view/user_profile/no_user_profile.dart';
 export 'package:mannergamer/view/splashPage/permission_item.dart';
@@ -97,7 +97,7 @@ export 'package:mannergamer/view/my_info/setting/user_setting/myAccount/phone_ed
 export 'package:mannergamer/view/my_info/setting/user_setting/myAccount/authentication.dart';
 export 'package:mannergamer/view/my_info/setting/signOut/signOut_sms.dart';
 
-/* Models */
+// Models
 export 'package:mannergamer/model/manner_evaluation/good_evaluation_model.dart';
 export 'package:mannergamer/model/manner_evaluation/bad_evaluation_model.dart';
 export 'package:mannergamer/model/report/report_model.dart';
@@ -114,7 +114,7 @@ export 'package:mannergamer/model/chatRoom/chatRoom_model.dart';
 export 'package:mannergamer/model/favorite/favorite_model.dart';
 export 'package:mannergamer/model/appointment/appointment.dart';
 
-/* Controller */
+// Controller
 export '../../../controller/game_review/game_review.dart';
 export '../../../controller/notification/notification.dart';
 export '../../../controller/report/report.dart';
@@ -139,7 +139,7 @@ export '../../../controller/user/sms_timer.dart';
 export '../../../controller/user/profile.dart';
 export '../../../controller/favorite/favorite.dart';
 
-/* Components */
+// Components
 export 'package:mannergamer/component/appbar/appbar.dart';
 export 'package:mannergamer/component/evaluation_item/bad_evaluation_item.dart';
 export 'package:mannergamer/component/evaluation_item/good_evaluation_item.dart';
@@ -154,7 +154,7 @@ export 'package:mannergamer/component/dialog/small_dialog.dart';
 export 'package:mannergamer/component/divider/divider.dart';
 export 'package:mannergamer/component/listtile/three_line_listTile.dart';
 
-/* Utilities */
+// Utilities
 export 'package:mannergamer/utilites/route/navigation_service.dart';
 export 'package:mannergamer/utilites/app_data/default_profile/default_profile.dart';
 export 'package:mannergamer/utilites/route/route.dart';
@@ -162,7 +162,7 @@ export 'package:mannergamer/utilites/binding/binding.dart';
 export 'package:mannergamer/utilites/route/route_path.dart';
 export 'package:mannergamer/utilites/app_data/currentUser/currentUser.dart';
 
-/* Themes */
+// Themes
 export 'package:mannergamer/theme/theme.dart';
 export 'package:mannergamer/main.dart';
 

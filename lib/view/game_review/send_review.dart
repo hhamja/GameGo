@@ -13,7 +13,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
   final ScrollController _scrollC = ScrollController();
   final TextEditingController _reviewText = TextEditingController();
 
-  /* 상대유저 이름, uid, 채팅방 id */
+  // 상대유저 이름, uid, 채팅방 id
   final String userName = Get.arguments['userName'];
   final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];
@@ -50,11 +50,11 @@ class _SendReviewPageState extends State<SendReviewPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /* 별로예요, 최고예요 이모지 */
+              // 별로예요, 최고예요 이모지
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  /* 별로예요 이모지 */
+                  // 별로예요 이모지
                   TextButton(
                     onPressed: () => setState(
                       () => _evaluationtype = 'bad',
@@ -98,7 +98,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                             ],
                           ),
                   ),
-                  /* 최고예요 이모지 */
+                  // 최고예요 이모지
                   TextButton(
                     onPressed: () => setState(
                       () => _evaluationtype = 'good',
@@ -144,7 +144,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   ),
                 ],
               ),
-              /* 별로예요 선택 시 평가 항목 리스트 */
+              // 별로예요 선택 시 평가 항목 리스트
               _evaluationtype == 'bad'
                   ? ListView.builder(
                       padding: EdgeInsets.zero,
@@ -164,7 +164,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       },
                     )
                   : SizedBox.shrink(),
-              /* 최고예요 선택 시 평가 항목 리스트 */
+              // 최고예요 선택 시 평가 항목 리스트
               _evaluationtype == 'good'
                   ? ListView.builder(
                       controller: _scrollC,
@@ -185,7 +185,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     )
                   : SizedBox.shrink(),
 
-              /* 후기 작성 박스 */
+              // 후기 작성 박스
               _evaluationtype != ''
                   ? Container(
                       margin: EdgeInsets.symmetric(vertical: 15),
@@ -238,7 +238,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
               '보내기',
               () => Get.back(),
               () async {
-                /* 1. '최고예요'를 선택한 경우 */
+                // 1. '최고예요'를 선택한 경우
                 if (_evaluationtype == 'good') {
                   // 1-1. 매너 평가 인스턴스 생성
                   final GoodEvaluationModel _goodModel = GoodEvaluationModel(
@@ -272,7 +272,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   await _evaluation.addGoodEvaluation(
                       uid, chatRoomId, _goodModel, _ntfModel);
 
-                  /* 1-4. 선택사항인 후기 작성 시 */
+                  // 1-4. 선택사항인 후기 작성 시
                   if ((_reviewText.text.trim() != '') ||
                       _reviewText.text.trim().isNotEmpty) {
                     // 1-4-1. 후기 인스턴스 생성
@@ -298,7 +298,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     print('매너평가 + 후기작성 X');
                   }
                 }
-                /* 2. '별로예요'를 선택한 경우 */
+                // 2. '별로예요'를 선택한 경우
                 else if (_evaluationtype == 'bad') {
                   // 2-1. 비매너 평가 인스턴스 생성
                   final BadEvaluationModel _badModel = BadEvaluationModel(
@@ -322,7 +322,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   // 2-2. 비매너 평가 보내기
                   await _evaluation.addBadEvaluation(
                       uid, chatRoomId, _badModel);
-                  /* 2-3. 선택사항인 후기 작성 시 */
+                  // 2-3. 선택사항인 후기 작성 시
                   if ((_reviewText.text.trim() != '') ||
                       _reviewText.text.trim().isNotEmpty) {
                     // 2-3-1. 신고 인스턴스 생성

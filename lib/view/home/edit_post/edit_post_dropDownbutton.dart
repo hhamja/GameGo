@@ -15,7 +15,7 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            /* 게임모드 드랍다운버튼 */
+            // 게임모드 드랍다운버튼
             DropdownButtonHideUnderline(
               child: DropdownButton2(
                 isExpanded: true,
@@ -34,7 +34,7 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
                 itemHeight: 50,
               ),
             ),
-            /* 포지션 드랍다운버튼 */
+            // 포지션 드랍다운버튼
             Visibility(
               visible: controller.showdropDownPosition(),
               child: DropdownButtonHideUnderline(
@@ -60,7 +60,7 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
                 ),
               ),
             ),
-            /* 티어 드랍다운버튼 */
+            // 티어 드랍다운버튼
             Visibility(
               visible: controller.showdropDownTears(),
               child: DropdownButtonHideUnderline(

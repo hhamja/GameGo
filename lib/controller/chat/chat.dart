@@ -85,7 +85,7 @@ class ChatController extends GetxController {
     });
   }
 
-  /* 모든 '채팅' 리스트 스트림으로 받기 */
+  // 모든 '채팅' 리스트 스트림으로 받기
   Stream<List<ChatRoomModel>> readAllChatList() async* {
     yield* _chatDB
         .where('members', arrayContains: CurrentUser.uid)

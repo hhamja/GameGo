@@ -6,27 +6,27 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
-  /* 약속 컨트롤러 */
+  // 약속 컨트롤러
   final AppointmentController _controller = Get.find<AppointmentController>();
-  /* 채팅방 id 값 */
+  // 채팅방 id 값
   final String chatRoomId = Get.arguments['chatRoomId'];
-  /* 채팅 상대 uid */
+  // 채팅 상대 uid
   final String uid = Get.arguments['uid'];
-  /* 대상이 되는 post Id */
+  // 대상이 되는 post Id
   final String postId = Get.arguments['postId'];
-  /* 게시글 제목*/
+  // 게시글 제목*/
   final String postTitle = Get.arguments['postTitle'];
-  /* 캘린더 날짜 텍스트 크기 */
+  // 캘린더 날짜 텍스트 크기
   final double _dateFontsize = 18;
 
-  /* 캘린더에서 선택한 약속날짜 년,월,일만(시, 분 X) 담는 변수 
-  * 캘린더 클릭 시 파란색 원으로 강조표시 */
+  // 캘린더에서 선택한 약속날짜 년,월,일만(시, 분 X) 담는 변수
+  // 캘린더 클릭 시 파란색 원으로 강조표시
   DateTime _date = DateTime(
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
   );
-  /* 약속시간의 시, 분(년, 월, 일)을 담는 변수 */
+  // 약속시간의 시, 분(년, 월, 일)을 담는 변수
   DateTime _time = DateTime.now();
 
   @override
@@ -42,7 +42,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /* 날짜 설정 */
+            // 날짜 설정
             // Text(
             //   '날짜',
             //   style: TextStyle(
@@ -51,7 +51,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             //       fontWeight: FontWeight.bold),
             // ),
             // SizedBox(height: 20),
-            /* 약속 날짜 정하기 */
+            // 약속 날짜 정하기
             TableCalendar(
               daysOfWeekVisible: false, //요일 표시 여부
               onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
@@ -119,7 +119,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             SizedBox(
               height: 10,
             ),
-            /* 시간 지정 */
+            // 시간 지정
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -181,7 +181,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             ),
 
             //선택한 약속시간 확인하는 텍스트 용도
-            // /* 알림 설정 */
+            // // 알림 설정
             // Text(
             //   '알림',
             //   style: TextStyle(
@@ -211,7 +211,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
           ],
         ),
       ),
-      /* 완료버튼 */
+      // 완료버튼
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: CustomTextButton(
