@@ -49,7 +49,7 @@ class FCMController extends GetxController {
     // 초기화 전 메시지를 수신하게 되면 에러 발생하므로 초기화 부터 할 것
     await flutterLocalNotificationsPlugin.initialize(
       InitializationSettings(
-        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        android: AndroidInitializationSettings('@mipmap/launcher_icon'),
       ),
     );
 

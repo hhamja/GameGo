@@ -59,6 +59,7 @@ dependencies:
   decimal: ^2.3.2
   permission_handler: ^10.2.0
   shared_preferences: ^2.0.17
+  flutter_launcher_icons: ^0.11.0
   
 
 dev_dependencies:
@@ -77,8 +78,14 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - image/
+    - assets/
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path_android: "assets/app_icon/app_icon.png"
+  adaptive_icon_background: "assets/app_icon/icon_background.png"
+  adaptive_icon_foreground: "assets/app_icon/icon_foreground.png"
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
