@@ -79,7 +79,50 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+  fonts:
+    - family: Jalnan
+      fonts:
+        - asset: assets/fonts/Jalnan.ttf
+  # 에스코어드림
+    - family: SCDream
+      fonts:
+        - asset: assets/fonts/SCDream1.otf
+          weight: 100
+        - asset: assets/fonts/SCDream2.otf
+          weight: 200
+        - asset: assets/fonts/SCDream3.otf
+          weight: 300
+        - asset: assets/fonts/SCDream4.otf
+          weight: 400
+        - asset: assets/fonts/SCDream5.otf
+          weight: 500
+        - asset: assets/fonts/SCDream6.otf
+          weight: 600
+        - asset: assets/fonts/SCDream7.otf
+          weight: 700
+        - asset: assets/fonts/SCDream8.otf
+          weight: 800
+        - asset: assets/fonts/SCDream9.otf
+          weight: 900
+    # 노토 산즈 kr
+    - family: NotoSansCJKkr
+      fonts:
+        - asset: assets/fonts/NotoSansCJKkr-Thin.otf
+          weight: 100
+        - asset: assets/fonts/NotoSansCJKkr-Light.otf
+          weight: 200
+        - asset: assets/fonts/NotoSansCJKkr-DemiLight.otf
+          weight: 300
+        - asset: assets/fonts/NotoSansCJKkr-Regular.otf
+          weight: 400
+        - asset: assets/fonts/NotoSansCJKkr-Medium.otf
+          weight: 500
+        - asset: assets/fonts/NotoSansCJKkr-Bold.otf
+          weight: 600
+        - asset: assets/fonts/NotoSansCJKkr-Black.otf
+          weight: 700
 
+# 앱 로고 아이콘
 flutter_icons:
   android: "launcher_icon"
   ios: false
