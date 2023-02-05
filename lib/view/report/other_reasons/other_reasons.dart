@@ -83,7 +83,7 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        child: CustomTextButton(
+        child: CustomFullFilledTextButton(
           '신고사유 제출하기',
           () async {
             final text = _textController.text.trim();

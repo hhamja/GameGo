@@ -136,7 +136,7 @@ class _SignOutPageState extends State<SignOutPage> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: CustomTextButton(
+        child: CustomFullFilledTextButton(
           '매너게이머와 이별하기',
           () async {
             //0. 아무것도 선택하지 않은 경우

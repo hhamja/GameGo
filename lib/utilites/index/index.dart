@@ -139,15 +139,13 @@ export '../../../controller/user/profile.dart';
 export '../../../controller/favorite/favorite.dart';
 
 // Components
-export '../../component/textButton/full_outline.dart';
-
+export '../../component/textButton/full_outline_textButton.dart';
 export '../../component/textButton/full_filled_textButton.dart';
-
 export '../../component/appbar/appbar.dart';
 export '../../component/evaluation_item/bad_evaluation_item.dart';
 export '../../component/evaluation_item/good_evaluation_item.dart';
-export '../../component/icon/circle_fill_icon.dart';
-export '../../component/dialog/big_dialog%20copy.dart';
+export '../../component/icon/notification_cicle_icon.dart';
+export '../../component/dialog/big_dialog.dart';
 export '../../component/textButton/filled_textButton.dart';
 export '../../component/listtile/two_line_listTile.dart';
 export '../../component/post_info/post_info.dart';

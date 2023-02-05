@@ -47,47 +47,47 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
                 ),
               ),
               // 1.'친절하고 매너가 좋아요.'
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.kindManner.length,
                 title: GoodEvaluationModel.goodList[0],
               ),
               // 2.'시간 약속을 잘 지켜요.',
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.goodAppointment.length,
                 title: GoodEvaluationModel.goodList[1],
               ),
               // 3.'응답이 빨라요.',
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.fastAnswer.length,
                 title: GoodEvaluationModel.goodList[2],
               ),
               // 4.'맨탈이 강해요.',
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.strongMental.length,
                 title: GoodEvaluationModel.goodList[3],
               ),
               // 5.'게임 실력이 뛰어나요.',
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.goodGameSkill.length,
                 title: GoodEvaluationModel.goodList[4],
               ),
               // 6.'착하고 부드럽게 말해요.',
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.softMannerTalk.length,
                 title: GoodEvaluationModel.goodList[5],
               ),
               // 7.'불편하지 않게 편하게 대해줘요.',
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.goodCommunication.length,
                 title: GoodEvaluationModel.goodList[6],
               ),
               // 8.'게임할 떄 소통을 잘해요.',
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.comfortable.length,
                 title: GoodEvaluationModel.goodList[7],
               ),
               // 9.'게임을 진심으로 열심히 해요.',
-              CustomGoodEvaluationItem(
+              GoodEvaluationItem(
                 element: _c.hardGame.length,
                 title: GoodEvaluationModel.goodList[8],
               ),

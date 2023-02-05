@@ -27,7 +27,7 @@ class MainLogoPage extends StatelessWidget {
               ),
               Container(
                 width: 60.w,
-                padding: EdgeInsets.symmetric(vertical: 0.5.h),
+                height: 7.1.h,
                 decoration: BoxDecoration(
                   color: appPrimaryColor,
                   border: Border.all(

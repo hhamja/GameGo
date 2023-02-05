@@ -230,7 +230,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: CustomTextButton('후기 보내기', () {
+        child: CustomFullFilledTextButton('후기 보내기', () {
           Get.dialog(
             CustomSmallDialog(
               '"$userName"에게 한번 보낸 후기는\n수정 및 삭제가 불가합니다',

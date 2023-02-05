@@ -20,19 +20,19 @@ class _NotificationPageState extends State<NotificationPage> {
 
   // 아이콘 조건식
   // 리뷰, 약속, 게시글 관심, 앱 공지 알림 타입에 대한
-  CustomCircleFilledIcon iconByType(ntfType) {
+  NotificationCircleIcon iconByType(ntfType) {
     if (ntfType == 'review') {
       // 매너후기
-      return CustomCircleFilledIcon(Colors.yellow, CupertinoIcons.pen);
+      return NotificationCircleIcon(Colors.yellow, CupertinoIcons.pen);
     } else if (ntfType == 'appoint') {
       // 약속설정
-      return CustomCircleFilledIcon(Colors.green, CupertinoIcons.calendar);
+      return NotificationCircleIcon(Colors.green, CupertinoIcons.calendar);
     } else if (ntfType == 'favorite') {
       // 게시글 관심
-      return CustomCircleFilledIcon(Colors.red, CupertinoIcons.heart);
+      return NotificationCircleIcon(Colors.red, CupertinoIcons.heart);
     } else {
       // 앱 공지 및 마케팅
-      return CustomCircleFilledIcon(Colors.blueAccent, CupertinoIcons.mic);
+      return NotificationCircleIcon(Colors.blueAccent, CupertinoIcons.mic);
     }
   }
 

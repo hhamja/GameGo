@@ -202,7 +202,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        child: CustomTextButton(
+        child: CustomFullFilledTextButton(
           '완료',
           () async {
             final text = _nameText.text.trim(); //닉네임

@@ -178,7 +178,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: CustomTextButton(
+        child: CustomFullFilledTextButton(
           '매너게이머와 이별하기',
           () async {
             // 유저정보 삭제

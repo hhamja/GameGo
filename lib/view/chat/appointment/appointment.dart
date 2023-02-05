@@ -214,7 +214,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
       // 완료버튼
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: CustomTextButton(
+        child: CustomFullFilledTextButton(
           '완료',
           () async {
             //<String>약속날짜와 시간

@@ -202,7 +202,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        child: CustomTextButton(
+        child: CustomFullFilledTextButton(
           '완료',
           validateButton,
         ),

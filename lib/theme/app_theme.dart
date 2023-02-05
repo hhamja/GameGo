@@ -5,7 +5,7 @@ class AppThemeData {
     brightness: Brightness.light,
     colorScheme: ColorScheme.light().copyWith(
       primary: appPrimaryColor,
-      onPrimary: appPrimaryColor,
+      onPrimary: null,
     ),
     primaryColor: appPrimaryColor,
     scaffoldBackgroundColor: appBackgroudColor,
@@ -17,10 +17,10 @@ class AppThemeData {
     appBarTheme: AppBarTheme(
       elevation: 0,
       backgroundColor: appBackgroudColor,
-      iconTheme: IconThemeData(color: appBlackColor),
-      actionsIconTheme: IconThemeData(color: appBlackColor),
-      // titleTextStyle: bodySmall,
-      shadowColor: null,
+      iconTheme: IconThemeData(
+        color: appBlackColor,
+        size: 25.sp,
+      ),
     ),
     // 하단 탭바
     tabBarTheme: TabBarTheme(),
