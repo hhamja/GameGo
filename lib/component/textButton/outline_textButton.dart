@@ -1,7 +1,8 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class CustomFilledTextButton extends StatelessWidget {
-  const CustomFilledTextButton(
+// 흰색 백그라운드에 outline이 핑크색
+class CustomOutlineTextButton extends StatelessWidget {
+  const CustomOutlineTextButton(
     this.w,
     this.h,
     this.content,
@@ -19,11 +20,11 @@ class CustomFilledTextButton extends StatelessWidget {
       width: w,
       height: h,
       decoration: BoxDecoration(
-        color: appPrimaryColor,
-        // border: Border.(
-        //   color: appPrimaryColor,
-        //   width: 0.3.w,
-        // ),
+        color: appWhiteColor,
+        border: Border.all(
+          color: appPrimaryColor,
+          width: 0.3.w,
+        ),
         borderRadius: BorderRadius.all(
           Radius.circular(15.sp),
         ),
@@ -31,7 +32,12 @@ class CustomFilledTextButton extends StatelessWidget {
       child: TextButton(
         child: Text(
           content,
-          style: AppTextStyle.fullButtonTextStyle,
+          style: TextStyle(
+            fontSize: AppTextStyle.fullButtonTextStyle.fontSize,
+            letterSpacing: AppTextStyle.fullButtonTextStyle.letterSpacing,
+            fontWeight: AppTextStyle.fullButtonTextStyle.fontWeight,
+            color: appBlackColor,
+          ),
         ),
         onPressed: onPressed,
       ),

@@ -28,7 +28,12 @@ class CustomFullOutlineTextButton extends StatelessWidget {
       child: TextButton(
         child: Text(
           content,
-          style: Theme.of(context).textTheme.labelLarge,
+          style: TextStyle(
+            fontSize: AppTextStyle.fullButtonTextStyle.fontSize,
+            letterSpacing: AppTextStyle.fullButtonTextStyle.letterSpacing,
+            fontWeight: AppTextStyle.fullButtonTextStyle.fontWeight,
+            color: appBlackColor,
+          ),
         ),
         onPressed: onPressed,
       ),
