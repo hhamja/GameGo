@@ -1,10 +1,10 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class CustomGoodEvaluationItem extends StatelessWidget {
+class GoodEvaluationItem extends StatelessWidget {
   final int element;
   final String title;
 
-  const CustomGoodEvaluationItem({
+  const GoodEvaluationItem({
     required this.element,
     required this.title,
   });

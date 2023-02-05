@@ -1,8 +1,15 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class CustomSmallDialog extends StatelessWidget {
-  CustomSmallDialog(this.content, this.cancelText, this.completeText,
-      this.cancelFun, this.completeFun, this.cancelFlex, this.completeFlex);
+  CustomSmallDialog(
+    this.content,
+    this.cancelText,
+    this.completeText,
+    this.cancelFun,
+    this.completeFun,
+    this.cancelFlex,
+    this.completeFlex,
+  );
 
   final String content; //Dialog 내용
   final String cancelText; //왼쪽 버튼 내용, ex)취소

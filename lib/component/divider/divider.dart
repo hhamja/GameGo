@@ -12,5 +12,6 @@ class CustomDivider extends StatelessWidget {
         height: 0,
         color: Colors.grey[200],
       ),
-    );  }
+    );
+  }
 }

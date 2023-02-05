@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class CustomCircleFilledIcon extends StatelessWidget {
-  CustomCircleFilledIcon(
+class NotificationCircleIcon extends StatelessWidget {
+  NotificationCircleIcon(
     this.backgroundColor,
     this.icon,
   );

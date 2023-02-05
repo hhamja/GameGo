@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class CustomFullTextButton extends StatelessWidget {
-  CustomFullTextButton(
+class CustomTextButton extends StatelessWidget {
+  CustomTextButton(
     this.content,
     this.onPressed,
   );
@@ -11,13 +11,18 @@ class CustomFullTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
     return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        ),
         backgroundColor: MaterialStateProperty.all(
-          Colors.blue,
+          appPrimaryColor,
         ),
       ),
       child: Text(
