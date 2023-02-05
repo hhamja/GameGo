@@ -1,4 +1,3 @@
-import 'package:mannergamer/theme/color.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MainLogoPage extends StatelessWidget {
@@ -18,7 +17,7 @@ class MainLogoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                padding: EdgeInsets.all(0),
+                padding: EdgeInsets.all(30.sp),
                 child: Image.asset(
                   'assets/main_logo.png',
                   color: appWhiteColor,
@@ -49,8 +48,7 @@ class MainLogoPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    // Get.to(() => PhoneAuthPage());
-                    Get.to(() => SplashPage());
+                    Get.to(() => PhoneAuthPage());
                   },
                 ),
               ),
