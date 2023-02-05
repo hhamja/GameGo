@@ -123,7 +123,6 @@ export '../../../controller/feedback/feedback.dart';
 export '../../../controller/user/notification_setting.dart';
 export '../../../controller/manner_evaluation/manner_evaluation.dart';
 export '../../../controller/appointment/appointment.dart';
-export '../../../controller/splash/splash.dart';
 export '../../../controller/fcm/get_token.dart';
 export '../../../controller/fcm/fcm.dart';
 export '../../../controller/chat/badge.dart';
@@ -156,6 +155,7 @@ export 'package:mannergamer/component/divider/divider.dart';
 export 'package:mannergamer/component/listtile/three_line_listTile.dart';
 
 // Utilities
+export 'package:mannergamer/utilites/app_data/app_name/app_name.dart';
 export 'package:mannergamer/theme/color.dart';
 export 'package:mannergamer/theme/app_theme.dart';
 export 'package:mannergamer/theme/text_theme.dart';
@@ -167,7 +167,5 @@ export 'package:mannergamer/utilites/route/route_path.dart';
 export 'package:mannergamer/utilites/app_data/currentUser/currentUser.dart';
 
 // Themes
-export 'package:mannergamer/theme/app_theme.dart';
 export 'package:mannergamer/main.dart';
-
 export 'package:mannergamer/controller/permission_handler/permission_handler.dart';
