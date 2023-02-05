@@ -8,6 +8,7 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 // Packages
+export 'package:sizer/sizer.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:decimal/decimal.dart';
@@ -155,6 +156,9 @@ export 'package:mannergamer/component/divider/divider.dart';
 export 'package:mannergamer/component/listtile/three_line_listTile.dart';
 
 // Utilities
+export 'package:mannergamer/theme/color.dart';
+export 'package:mannergamer/theme/app_theme.dart';
+export 'package:mannergamer/theme/text_theme.dart';
 export 'package:mannergamer/utilites/route/navigation_service.dart';
 export 'package:mannergamer/utilites/app_data/default_profile/default_profile.dart';
 export 'package:mannergamer/utilites/route/route.dart';
@@ -163,7 +167,7 @@ export 'package:mannergamer/utilites/route/route_path.dart';
 export 'package:mannergamer/utilites/app_data/currentUser/currentUser.dart';
 
 // Themes
-export 'package:mannergamer/theme/theme.dart';
+export 'package:mannergamer/theme/app_theme.dart';
 export 'package:mannergamer/main.dart';
 
 export 'package:mannergamer/controller/permission_handler/permission_handler.dart';

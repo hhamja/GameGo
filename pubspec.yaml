@@ -60,6 +60,7 @@ dependencies:
   permission_handler: ^10.2.0
   shared_preferences: ^2.0.17
   flutter_launcher_icons: ^0.11.0
+  sizer: ^2.0.15
   
 
 dev_dependencies:
@@ -82,7 +83,7 @@ flutter:
   fonts:
     - family: Jalnan
       fonts:
-        - asset: assets/fonts/Jalnan.ttf
+        - asset: assets/fonts/JalnanOTF.otf
   # 에스코어드림
     - family: SCDream
       fonts:
