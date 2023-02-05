@@ -1,3 +1,4 @@
+import 'package:mannergamer/theme/color.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MainLogoPage extends StatelessWidget {
@@ -5,36 +6,53 @@ class MainLogoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //디바이스 전체 w
+    print(MediaQuery.of(context).size.width);
+    //디바이스 전체 h
+    print(MediaQuery.of(context).size.height);
     return Scaffold(
-      body: SafeArea(
+      body: Container(
+        color: appPrimaryColor,
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text('MG'),
-              TextButton(
-                child: Text('카카오로 시작하기'),
-                onPressed: () {
-                  Get.to(PermissionGuidePage());
-                },
+              Container(
+                padding: EdgeInsets.all(0),
+                child: Image.asset(
+                  'assets/main_logo.png',
+                  color: appWhiteColor,
+                  width: 40.w,
+                  height: 40.h,
+                ),
               ),
-              TextButton(
-                child: Text('네이버로 시작하기'),
-                onPressed: () async {
-                  var permission = await Permission.calendar.request();
-                  var status = await Permission.calendar.status;
-                  print(FirebaseAuth.instance.app);
-                  print(FirebaseAuth.instance.isBlank);
-                  print(FirebaseAuth.instance.currentUser);
-                  print('permission =$permission');
-                  print('status =$status');
-                },
-              ),
-              TextButton(
-                child: Text('휴대폰으로 시작하기'),
-                onPressed: () {
-                  Get.to(() => PhoneAuthPage());
-                },
+              Container(
+                width: 60.w,
+                padding: EdgeInsets.symmetric(vertical: 0.5.h),
+                decoration: BoxDecoration(
+                  color: appPrimaryColor,
+                  border: Border.all(
+                    color: appWhiteColor,
+                    width: 0.3.w,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15.sp),
+                  ),
+                ),
+                child: TextButton(
+                  child: Text(
+                    '휴대폰으로 시작하기',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      letterSpacing: 0.25.sp,
+                      color: appWhiteColor,
+                    ),
+                  ),
+                  onPressed: () {
+                    // Get.to(() => PhoneAuthPage());
+                    Get.to(() => SplashPage());
+                  },
+                ),
               ),
             ],
           ),
