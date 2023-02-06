@@ -2,12 +2,10 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 // 흰색 백그라운드에 outline이 핑크색
 class CustomFullOutlineTextButton extends StatelessWidget {
-  const CustomFullOutlineTextButton(
-    this.content,
-    this.onPressed,
-  );
+  const CustomFullOutlineTextButton(this.content, this.onPressed, this.color);
 
   final String content;
+  final color;
   final Function() onPressed;
 
   @override
@@ -18,7 +16,7 @@ class CustomFullOutlineTextButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: appLightWhite,
         border: Border.all(
-          color: appPrimaryColor,
+          color: color,
           width: 0.3.w,
         ),
         borderRadius: BorderRadius.all(
@@ -32,7 +30,7 @@ class CustomFullOutlineTextButton extends StatelessWidget {
             fontSize: AppTextStyle.fullButtonTextStyle.fontSize,
             letterSpacing: AppTextStyle.fullButtonTextStyle.letterSpacing,
             fontWeight: AppTextStyle.fullButtonTextStyle.fontWeight,
-            color: appPrimaryColor,
+            color: color,
           ),
         ),
         onPressed: onPressed,
