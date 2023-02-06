@@ -17,14 +17,17 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // 게임모드, 포지션, 티어 드랍다운버튼
         title: HomeDropDownButton(),
         actions: [
+          // 알림 자명종 버튼
           IconButton(
-            onPressed: () => {Get.toNamed('/notification')},
+            onPressed: () => {
+              Get.toNamed('/notification'),
+            },
             icon: Icon(
               CupertinoIcons.bell,
-              color: Colors.black,
-            ), //아이콘에 알림개수 표시, 클릭시 : 알림목록 페이지 출력
+            ),
           ),
         ],
       ),
@@ -33,7 +36,10 @@ class _HomepageState extends State<Homepage> {
         onPressed: () {
           Get.toNamed('/addPost');
         },
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: appLightWhite,
+        ),
       ),
     );
   }

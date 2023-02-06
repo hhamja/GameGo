@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
       icon: iconData,
       activeIcon: activeiconData,
       label: labelText,
+      backgroundColor: appLightWhite,
     );
   }
 
@@ -42,52 +43,60 @@ class _MyAppState extends State<MyApp> {
         () => BottomNavigationBar(
           onTap: (value) => setState(() => tabIndex = value),
           currentIndex: tabIndex,
+          selectedItemColor: appLightBlack,
+          unselectedItemColor: appLightBlack,
           items: [
             _BottomBarItem(
-              Icon(CupertinoIcons.house),
-              Icon(CupertinoIcons.house_fill),
+              Icon(
+                CupertinoIcons.house,
+              ),
+              Icon(
+                CupertinoIcons.house_fill,
+              ),
               '홈',
             ),
             _badge.unReadList.where((e) => e != 0).length == 0
                 ? _BottomBarItem(
-                    Icon(CupertinoIcons.chat_bubble_2),
-                    Icon(CupertinoIcons.chat_bubble_2_fill),
+                    Icon(
+                      CupertinoIcons.chat_bubble_2,
+                    ),
+                    Icon(
+                      CupertinoIcons.chat_bubble_2_fill,
+                    ),
                     '채팅',
                   )
                 : _BottomBarItem(
                     badges.Badge(
-                      child: Icon(CupertinoIcons.chat_bubble_2),
-                      position: badges.BadgePosition.topEnd(end: -10, top: 0),
+                      child: Icon(
+                        CupertinoIcons.chat_bubble_2,
+                      ),
+                      position: badges.BadgePosition.topEnd(end: -2.sp, top: 0),
                       badgeStyle: badges.BadgeStyle(
-                        padding: EdgeInsets.all(5),
+                        badgeColor: appPrimaryColor,
+                        padding: EdgeInsets.all(3.5.sp),
                       ),
                     ),
                     badges.Badge(
-                      position: badges.BadgePosition.topEnd(end: -10, top: 0),
-                      child: Icon(CupertinoIcons.chat_bubble_2_fill),
+                      position:
+                          badges.BadgePosition.topEnd(end: -3.sp, top: -1.sp),
+                      child: Icon(
+                        CupertinoIcons.chat_bubble_2_fill,
+                      ),
                       badgeStyle: badges.BadgeStyle(
-                        padding: EdgeInsets.all(5),
+                        badgeColor: appPrimaryColor,
+                        padding: EdgeInsets.all(3.5.sp),
                       ),
                     ),
                     '채팅',
                   ),
-            // BottomNavigationBarItem(
-            //     icon: Badge(
-            //       child: Icon(Icons.question_answer_outlined),
-            //       position: BadgePosition.topEnd(end: -10, top: 0),
-            //       padding: EdgeInsets.all(3),
-            //     ),
-            //     activeIcon: Badge(
-            //       position: BadgePosition.topEnd(end: -10, top: 0),
-            //       child: Icon(
-            //         Icons.question_answer,
-            //       ),
-            //       padding: EdgeInsets.all(3),
-            //     ),
-            //     label: '채팅',
-            //   ),
-            _BottomBarItem(Icon(CupertinoIcons.person),
-                Icon(CupertinoIcons.person_fill), 'My'),
+            _BottomBarItem(
+                Icon(
+                  CupertinoIcons.person,
+                ),
+                Icon(
+                  CupertinoIcons.person_fill,
+                ),
+                'My'),
           ],
         ),
       ),

@@ -8,24 +8,32 @@ class AppThemeData {
       onPrimary: null,
     ),
     primaryColor: appPrimaryColor,
+
     scaffoldBackgroundColor: appBackgroudColor,
-    // 홈페이지 + 버튼
+    // 게시글 추가하는 +버튼
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        // backgroundColor: Colors.blue,
-        ),
+      backgroundColor: appPrimaryColor,
+    ),
     // 앱바
     appBarTheme: AppBarTheme(
       elevation: 0,
       backgroundColor: appBackgroudColor,
       iconTheme: IconThemeData(
         color: appBlackColor,
-        size: 25.sp,
+        size: 20.sp,
       ),
     ),
-    // 하단 탭바
-    tabBarTheme: TabBarTheme(),
+    // 바텀시트
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: appBackgroudColor,
+      elevation: 0,
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: appBackgroudColor,
+      elevation: 0,
+    ),
     textTheme: AppTextStyle.textTheme,
-    // 앱 전체적으로 기본폰트를 에스코어 드림
+    // 앱 기본 폰트
     fontFamily: 'NotoSansCJKkr',
   );
 }
