@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class PhoneAuthPage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
               Get.back();
             },
             icon: Icon(
-              Icons.close,
+              CupertinoIcons.clear,
             ),
           ),
         ],
