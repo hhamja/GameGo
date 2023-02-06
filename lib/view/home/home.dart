@@ -38,7 +38,7 @@ class _HomepageState extends State<Homepage> {
         },
         child: Icon(
           Icons.add,
-          color: appLightWhite,
+          color: appWhiteColor,
         ),
       ),
     );

@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
       icon: iconData,
       activeIcon: activeiconData,
       label: labelText,
-      backgroundColor: appLightWhite,
+      backgroundColor: appWhiteColor,
     );
   }
 
@@ -43,8 +43,8 @@ class _MyAppState extends State<MyApp> {
         () => BottomNavigationBar(
           onTap: (value) => setState(() => tabIndex = value),
           currentIndex: tabIndex,
-          selectedItemColor: appLightBlack,
-          unselectedItemColor: appLightBlack,
+          selectedItemColor: appBlackColor,
+          unselectedItemColor: appBlackColor,
           items: [
             _BottomBarItem(
               Icon(

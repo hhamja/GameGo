@@ -108,7 +108,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       await _user.verifyPhone('+82${_phoneController.text}');
                     }
                   },
-                  appLightBlack,
+                  appBlackColor,
                 ),
               ),
               SizedBox(height: AppSpaceData.heightLarge),

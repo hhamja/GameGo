@@ -20,7 +20,7 @@ class CustomOutlineTextButton extends StatelessWidget {
       width: w,
       height: h,
       decoration: BoxDecoration(
-        color: appLightWhite,
+        color: appWhiteColor,
         border: Border.all(
           color: appPrimaryColor,
           width: 0.3.w,
