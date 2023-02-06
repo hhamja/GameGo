@@ -47,6 +47,7 @@ class AppTextStyle {
       fontSize: 16.sp,
       letterSpacing: 0.5.sp,
       color: appBlackColor,
+      
     ),
     bodyMedium: TextStyle(
       // 14-20

@@ -4,13 +4,15 @@ import 'package:mannergamer/utilites/index/index.dart';
 // 0xffff0057 : 탈잉
 const Color appPrimaryColor = Color(0xffff0057);
 // const Color appSecondColor = Color(0xffFF82A2);
-const Color appSecondColor = Color(0xffFF82A2);
+const Color appSecondaryColor = Color(0xff16BEBB);
 
 // 블랙
 const Color appBlackColor = Color(0xFF333333);
 // 그레이
+const Color appDeepDarkGrey = Color(0xFF303c4c);
+const Color appDarkGrey = Color(0xFF979fa9);
 const Color appGrayColor = Colors.grey;
-const Color appLightGray = Colors.grey;
+final Color appLightGray = Colors.grey[300]!;
 // 흰색
 const Color appWhiteColor = Color(0xFFf5f5f7);
 // 파란색

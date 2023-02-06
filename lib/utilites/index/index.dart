@@ -156,11 +156,11 @@ export '../../component/divider/divider.dart';
 export '../../component/listtile/three_line_listTile.dart';
 
 // Utilities
-export '../../theme/app_padding.dart';
+export '../theme/app_padding.dart';
 export '../../utilites/app_data/app_name/app_name.dart';
-export '../../theme/color.dart';
-export '../../theme/app_theme.dart';
-export '../../theme/text_theme.dart';
+export '../theme/color.dart';
+export '../theme/app_theme.dart';
+export '../theme/text_theme.dart';
 export '../../utilites/route/navigation_service.dart';
 export '../../utilites/app_data/default_profile/default_profile.dart';
 export '../../utilites/route/route.dart';
