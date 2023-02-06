@@ -14,7 +14,7 @@ class CustomFullOutlineTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100.w,
-      height: 7.5.h,
+      height: 7.h,
       decoration: BoxDecoration(
         color: appWhiteColor,
         border: Border.all(
@@ -22,7 +22,7 @@ class CustomFullOutlineTextButton extends StatelessWidget {
           width: 0.3.w,
         ),
         borderRadius: BorderRadius.all(
-          Radius.circular(15.sp),
+          Radius.circular(10.sp),
         ),
       ),
       child: TextButton(
@@ -32,7 +32,7 @@ class CustomFullOutlineTextButton extends StatelessWidget {
             fontSize: AppTextStyle.fullButtonTextStyle.fontSize,
             letterSpacing: AppTextStyle.fullButtonTextStyle.letterSpacing,
             fontWeight: AppTextStyle.fullButtonTextStyle.fontWeight,
-            color: appBlackColor,
+            color: appPrimaryColor,
           ),
         ),
         onPressed: onPressed,

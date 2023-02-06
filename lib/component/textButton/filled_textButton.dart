@@ -25,7 +25,7 @@ class CustomFilledTextButton extends StatelessWidget {
         //   width: 0.3.w,
         // ),
         borderRadius: BorderRadius.all(
-          Radius.circular(15.sp),
+          Radius.circular(10.sp),
         ),
       ),
       child: TextButton(

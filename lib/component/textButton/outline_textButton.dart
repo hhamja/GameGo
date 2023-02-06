@@ -26,7 +26,7 @@ class CustomOutlineTextButton extends StatelessWidget {
           width: 0.3.w,
         ),
         borderRadius: BorderRadius.all(
-          Radius.circular(15.sp),
+          Radius.circular(10.sp),
         ),
       ),
       child: TextButton(
@@ -36,7 +36,7 @@ class CustomOutlineTextButton extends StatelessWidget {
             fontSize: AppTextStyle.fullButtonTextStyle.fontSize,
             letterSpacing: AppTextStyle.fullButtonTextStyle.letterSpacing,
             fontWeight: AppTextStyle.fullButtonTextStyle.fontWeight,
-            color: appBlackColor,
+            color: appPrimaryColor,
           ),
         ),
         onPressed: onPressed,
