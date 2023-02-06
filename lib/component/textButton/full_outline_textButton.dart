@@ -16,7 +16,7 @@ class CustomFullOutlineTextButton extends StatelessWidget {
       width: 100.w,
       height: 7.h,
       decoration: BoxDecoration(
-        color: appWhiteColor,
+        color: appLightWhite,
         border: Border.all(
           color: appPrimaryColor,
           width: 0.3.w,

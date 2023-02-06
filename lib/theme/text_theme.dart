@@ -91,6 +91,6 @@ class AppTextStyle {
     fontSize: 14.sp,
     letterSpacing: 0.1.sp,
     fontWeight: FontWeight.w500,
-    color: appWhiteColor,
+    color: appLightWhite,
   );
 }
