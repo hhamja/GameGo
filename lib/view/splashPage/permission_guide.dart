@@ -22,8 +22,7 @@ class PermissionGuidePage extends StatelessWidget {
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 30),
-              Text(
-                  '${AppName.appName}는 아래 권한들을 필요로 합니다.\n서비스 사용 중 앱에서 요청 시 허용해주세요.'),
+              Text('${appName}는 아래 권한들을 필요로 합니다.\n서비스 사용 중 앱에서 요청 시 허용해주세요.'),
               SizedBox(height: 20),
               PermissionItem(
                 icon: Icon(
@@ -45,7 +44,7 @@ class PermissionGuidePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomFullTextButton(
+      bottomNavigationBar: CustomFullFilledTextButton(
         '확인',
         () async {
           // 알림 권한 요청
