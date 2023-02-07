@@ -5,10 +5,6 @@ class NtfController extends GetxController {
       FirebaseFirestore.instance.collection('notification');
   // 알림 목록 받을 RXList
   RxList<NotificationModel> ntfList = <NotificationModel>[].obs;
-  // 게시글 제목
-  Rx<String> postTitle = ''.obs;
-  // idFrom으로 받은 유저이름
-  Rx<String> userName = ''.obs;
 
   // notification에 추가하기
   Future addNotification(NotificationModel model) async {

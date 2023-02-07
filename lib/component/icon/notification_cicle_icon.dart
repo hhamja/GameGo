@@ -16,7 +16,7 @@ class NotificationCircleIcon extends StatelessWidget {
       child: Center(
         child: Icon(
           icon,
-          color: Colors.white,
+          color: appWhiteColor,
         ),
       ),
     );

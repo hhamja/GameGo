@@ -23,16 +23,16 @@ class _NotificationPageState extends State<NotificationPage> {
   NotificationCircleIcon iconByType(ntfType) {
     if (ntfType == 'review') {
       // 매너후기
-      return NotificationCircleIcon(Colors.yellow, CupertinoIcons.pen);
+      return NotificationCircleIcon(mannerReviewNtfColor, CupertinoIcons.pen);
     } else if (ntfType == 'appoint') {
       // 약속설정
-      return NotificationCircleIcon(Colors.green, CupertinoIcons.calendar);
+      return NotificationCircleIcon(appointNtfColor, CupertinoIcons.calendar);
     } else if (ntfType == 'favorite') {
       // 게시글 관심
-      return NotificationCircleIcon(Colors.red, CupertinoIcons.heart);
+      return NotificationCircleIcon(favoriteNtfColor, CupertinoIcons.heart);
     } else {
       // 앱 공지 및 마케팅
-      return NotificationCircleIcon(Colors.blueAccent, CupertinoIcons.mic);
+      return NotificationCircleIcon(noticeNtfColor, CupertinoIcons.mic);
     }
   }
 
@@ -62,8 +62,22 @@ class _NotificationPageState extends State<NotificationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('알림'),
-        centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: null,
+        title: Text(
+          '알림',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              CupertinoIcons.clear,
+              color: appBlackColor,
+              size: 18.sp,
+            ),
+            onPressed: () => Get.back(),
+          ),
+        ],
       ),
       body: Obx(
         () => ListView.separated(
@@ -100,7 +114,10 @@ class _NotificationPageState extends State<NotificationPage> {
                 ListTile(
               minLeadingWidth: 0,
               isThreeLine: true,
-              minVerticalPadding: 15,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: AppSpaceData.screenPadding,
+              ),
+              minVerticalPadding: AppSpaceData.screenPadding,
               onTap: () {},
               // 아이콘
               leading: CircleAvatar(
@@ -114,21 +131,21 @@ class _NotificationPageState extends State<NotificationPage> {
                 child: Text(
                   contentByType(
                     _type,
-                    _ntf.userName.value,
-                    _ntf.postTitle.value,
+                    _ntf.ntfList[index].userName,
+                    _ntf.ntfList[index].postTitle,
                     _content,
                   ),
-                  style: TextStyle(
-                    fontSize: 16,
-                    // overflow: TextOverflow.ellipsis,
-                  ),
-                  // maxLines: 2, //멕스라인은 정하지 않기로 함
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               // 날짜표시
               subtitle: Text(
                 _time,
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+                  fontWeight: Theme.of(context).textTheme.bodySmall!.fontWeight,
+                  color: appGrayColor,
+                ),
                 maxLines: 1,
               ),
             );
