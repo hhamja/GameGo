@@ -8,7 +8,6 @@ class CustomThreeLineListTile extends StatelessWidget {
     this.gamemode,
     this.position,
     this.tear,
-    this.isTrailing,
     this.time,
     this.onTap,
   );
@@ -18,7 +17,6 @@ class CustomThreeLineListTile extends StatelessWidget {
   final String gamemode;
   final String? position;
   final String? tear;
-  final bool isTrailing;
   final String time;
   final Function() onTap;
 
@@ -47,10 +45,10 @@ class CustomThreeLineListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 40.sp,
-              width: 40.sp,
+              height: 35.sp,
+              width: 35.sp,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(18.sp),
+                borderRadius: BorderRadius.circular(15.sp),
                 child: Image.network(
                   profileUrl,
                   fit: BoxFit.fill,
