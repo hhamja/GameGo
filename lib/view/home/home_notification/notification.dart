@@ -66,17 +66,10 @@ class _NotificationPageState extends State<NotificationPage> {
         leading: null,
         title: Text(
           '알림',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              CupertinoIcons.clear,
-              color: appBlackColor,
-              size: 18.sp,
-            ),
-            onPressed: () => Get.back(),
-          ),
+          CustomCloseButton(),
         ],
       ),
       body: Obx(
