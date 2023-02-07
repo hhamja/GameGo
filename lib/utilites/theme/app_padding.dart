@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class AppSpaceData {
   // 모든 스크린에 공통적으로 적용한 패딩 값
-  static final screenPadding = 15.sp;
+  static final screenPadding = 12.sp;
 
   static final heightLarge = 7.5.h;
   static final heightMedium = 5.h;
