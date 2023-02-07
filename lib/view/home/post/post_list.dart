@@ -37,6 +37,7 @@ class HomePostList extends GetView<PostController> {
       color: appGrayColor,
       //맨 위에 위치시키는 값
       displacement: 0,
+      strokeWidth: 1.2.sp,
       child: controller.obx(
         onEmpty: Center(
           child: Text(

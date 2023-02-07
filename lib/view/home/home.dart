@@ -31,7 +31,10 @@ class _HomepageState extends State<Homepage> {
           ),
         ],
       ),
-      body: HomePostList(),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
+        child: HomePostList(),
+      ),
       floatingActionButton: FloatingActionButton.small(
         onPressed: () {
           Get.toNamed('/addPost');

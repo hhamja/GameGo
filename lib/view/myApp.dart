@@ -40,64 +40,68 @@ class _MyAppState extends State<MyApp> {
       // 하단 탭바를 이용한 홈-게시글올리기-채팅-나의정보 페이지
       body: _bodylist[tabIndex],
       bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          onTap: (value) => setState(() => tabIndex = value),
-          currentIndex: tabIndex,
-          selectedItemColor: appBlackColor,
-          unselectedItemColor: appBlackColor,
-          items: [
-            _BottomBarItem(
-              Icon(
-                CupertinoIcons.house,
+        () => Padding(
+          padding: EdgeInsets.symmetric(vertical: 5.sp),
+          child: BottomNavigationBar(
+            onTap: (value) => setState(() => tabIndex = value),
+            currentIndex: tabIndex,
+            selectedItemColor: appBlackColor,
+            unselectedItemColor: appGrayColor,
+            items: [
+              _BottomBarItem(
+                Icon(
+                  CupertinoIcons.house,
+                ),
+                Icon(
+                  CupertinoIcons.house_fill,
+                ),
+                '홈',
               ),
-              Icon(
-                CupertinoIcons.house_fill,
-              ),
-              '홈',
-            ),
-            _badge.unReadList.where((e) => e != 0).length == 0
-                ? _BottomBarItem(
-                    Icon(
-                      CupertinoIcons.chat_bubble_2,
-                    ),
-                    Icon(
-                      CupertinoIcons.chat_bubble_2_fill,
-                    ),
-                    '채팅',
-                  )
-                : _BottomBarItem(
-                    badges.Badge(
-                      child: Icon(
+              _badge.unReadList.where((e) => e != 0).length == 0
+                  ? _BottomBarItem(
+                      Icon(
                         CupertinoIcons.chat_bubble_2,
                       ),
-                      position: badges.BadgePosition.topEnd(end: -2.sp, top: 0),
-                      badgeStyle: badges.BadgeStyle(
-                        badgeColor: appPrimaryColor,
-                        padding: EdgeInsets.all(3.5.sp),
-                      ),
-                    ),
-                    badges.Badge(
-                      position:
-                          badges.BadgePosition.topEnd(end: -3.sp, top: -1.sp),
-                      child: Icon(
+                      Icon(
                         CupertinoIcons.chat_bubble_2_fill,
                       ),
-                      badgeStyle: badges.BadgeStyle(
-                        badgeColor: appPrimaryColor,
-                        padding: EdgeInsets.all(3.5.sp),
+                      '채팅',
+                    )
+                  : _BottomBarItem(
+                      badges.Badge(
+                        child: Icon(
+                          CupertinoIcons.chat_bubble_2,
+                        ),
+                        position:
+                            badges.BadgePosition.topEnd(end: -2.sp, top: 0),
+                        badgeStyle: badges.BadgeStyle(
+                          badgeColor: appPrimaryColor,
+                          padding: EdgeInsets.all(3.5.sp),
+                        ),
                       ),
+                      badges.Badge(
+                        position:
+                            badges.BadgePosition.topEnd(end: -3.sp, top: -1.sp),
+                        child: Icon(
+                          CupertinoIcons.chat_bubble_2_fill,
+                        ),
+                        badgeStyle: badges.BadgeStyle(
+                          badgeColor: appPrimaryColor,
+                          padding: EdgeInsets.all(3.5.sp),
+                        ),
+                      ),
+                      '채팅',
                     ),
-                    '채팅',
+              _BottomBarItem(
+                  Icon(
+                    CupertinoIcons.person,
                   ),
-            _BottomBarItem(
-                Icon(
-                  CupertinoIcons.person,
-                ),
-                Icon(
-                  CupertinoIcons.person_fill,
-                ),
-                'My'),
-          ],
+                  Icon(
+                    CupertinoIcons.person_fill,
+                  ),
+                  'My'),
+            ],
+          ),
         ),
       ),
     );
