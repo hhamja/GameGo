@@ -66,19 +66,17 @@ class _NotificationPageState extends State<NotificationPage> {
         leading: null,
         title: Text(
           '알림',
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         actions: [
           CustomCloseButton(),
         ],
       ),
       body: Obx(
-        () => ListView.separated(
+        () => ListView.builder(
           // 리스트가 적어도 스크롤 인식 가능
           physics: AlwaysScrollableScrollPhysics(),
-          separatorBuilder: (BuildContext context, int index) {
-            return CustomDivider();
-          },
+
           itemCount: _ntf.ntfList.length,
           itemBuilder: (BuildContext context, int index) {
             // 날짜 형식 변환 '-전'
@@ -97,13 +95,14 @@ class _NotificationPageState extends State<NotificationPage> {
                 //       SlidableAction(
                 //         onPressed: (_) {},
                 //         backgroundColor: Color(0xFFFE4A49),
-                //         foregroundColor: Colors.white,
+                //         foregroundColor: appWhiteColor,
                 //         icon: Icons.delete,
                 //         label: '삭제',
                 //       ),
                 //     ],
                 //   ),
                 //   child:
+
                 ListTile(
               minLeadingWidth: 0,
               isThreeLine: true,
@@ -113,11 +112,8 @@ class _NotificationPageState extends State<NotificationPage> {
               minVerticalPadding: AppSpaceData.screenPadding,
               onTap: () {},
               // 아이콘
-              leading: CircleAvatar(
-                  child: Center(
-                    child: iconByType(_type),
-                  ),
-                  backgroundColor: Colors.blue),
+              leading: iconByType(_type),
+
               // 알림 내용
               title: Padding(
                 padding: const EdgeInsets.only(bottom: 5),
@@ -137,7 +133,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 style: TextStyle(
                   fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
                   fontWeight: Theme.of(context).textTheme.bodySmall!.fontWeight,
-                  color: appGrayColor,
+                  color: appGreyColor,
                 ),
                 maxLines: 1,
               ),
