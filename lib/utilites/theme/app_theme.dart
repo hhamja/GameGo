@@ -22,6 +22,10 @@ class AppThemeData {
         color: appBlackColor,
         size: 20.sp,
       ),
+      actionsIconTheme: IconThemeData(
+        color: appBlackColor,
+        size: 20.sp,
+      ),
     ),
     // 바텀시트
     bottomSheetTheme: BottomSheetThemeData(
