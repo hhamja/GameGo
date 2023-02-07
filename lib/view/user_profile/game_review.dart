@@ -36,7 +36,6 @@ class _UserGameReviewPageState extends State<UserGameReviewPage> {
                 reviewList.content == '' ? '(내용없음)' : reviewList.content,
                 null,
                 null,
-                true,
                 Jiffy(reviewList.createdAt.toDate()).fromNow(), // '-전'으로 시간표시
                 () => null,
               );

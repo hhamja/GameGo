@@ -76,7 +76,6 @@ class HomePostList extends GetView<PostController> {
               _gamemode,
               _position,
               _tear,
-              true,
               time,
               _onTap,
             );

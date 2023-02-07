@@ -50,7 +50,6 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
               _gamemode,
               _position,
               _tear,
-              false, //시간표시 X
               '', //시간표시 X
               _onTap,
             );

@@ -3,80 +3,101 @@ import 'package:mannergamer/utilites/index/index.dart';
 class CustomTwoLineListTile extends StatelessWidget {
   CustomTwoLineListTile(
     this.profileUrl,
-    this.content,
+    this.title,
     this.gamemode,
     this.position,
     this.tear,
-    this.isTrailing,
     this.time,
     this.onTap,
   );
 
-  // 프로필 (Leading 위치)
   final String profileUrl;
-  // ListTile 내용 (title 위치)
-  final String content;
+  final String title;
   final String gamemode;
   final String? position;
   final String? tear;
-  //trailing을 표시할지 여부의 bool변수
-  final bool isTrailing;
-  // ~전'으로 시간표시 (박스의 오른쪽 위 끝에 위치)
   final String time;
-  //ListTile 클릭 시
   final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      minLeadingWidth: 0,
-      isThreeLine: true,
-      minVerticalPadding: 15,
+    // 제목 텍스트 스타일
+    final TextStyle _titleTextStyle = TextStyle(
+      fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+      letterSpacing: Theme.of(context).textTheme.bodyMedium!.letterSpacing,
+      fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
+      color: Theme.of(context).textTheme.bodyMedium!.color,
+      overflow: TextOverflow.ellipsis,
+    );
+    // 서브 텍스트 스타일
+    final TextStyle _subTextStyle = TextStyle(
+      fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+      letterSpacing: Theme.of(context).textTheme.bodySmall!.letterSpacing,
+      fontWeight: Theme.of(context).textTheme.bodySmall!.fontWeight,
+      color: appDeepDarkGrey,
+    );
+    return InkWell(
       onTap: onTap,
-      leading: CircleAvatar(
-        radius: 20,
-        backgroundImage: NetworkImage(profileUrl),
-      ),
-      title: Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: Text(
-          content,
-          style: TextStyle(fontSize: 16),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 15.sp),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: 35.sp,
+              width: 35.sp,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15.sp),
+                child: Image.network(
+                  profileUrl,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 15.0.sp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // 제목
+                    Text(
+                      title,
+                      maxLines: 1,
+                      style: _titleTextStyle,
+                    ),
+                    SizedBox(height: 3.sp),
+                    // 게임모드 · 포지션 · 티어
+                    Row(
+                      children: [
+                        Text(
+                          gamemode,
+                          style: _subTextStyle,
+                        ),
+                        Text(
+                          position != null ? '·${position}' : '',
+                          style: _subTextStyle,
+                        ),
+                        Text(
+                          tear != null ? '·${tear}' : '',
+                          style: _subTextStyle,
+                        ), // 글 시간
+                        Text(
+                          '·${time}',
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      subtitle: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // 게임모드 · 포지션 · 티어
-          Text(
-            gamemode,
-            style: TextStyle(fontSize: 14),
-          ),
-          Text(
-            position != null ? ' · ${position}' : '',
-            style: TextStyle(fontSize: 14),
-          ),
-          Text(
-            tear != null ? ' · ${tear}' : '',
-            style: TextStyle(fontSize: 14),
-          ),
-        ],
-      ),
-      trailing: isTrailing
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  time,
-                  style: TextStyle(fontSize: 12),
-                ),
-                Expanded(
-                  child: SizedBox(),
-                ),
-              ],
-            )
-          : null,
     );
   }
 }

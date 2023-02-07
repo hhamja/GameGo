@@ -44,7 +44,6 @@ class MyPostListPage extends StatelessWidget {
                   _gamemode,
                   _position,
                   _tear,
-                  true,
                   _time,
                   _onTap,
                 );
