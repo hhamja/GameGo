@@ -7,12 +7,14 @@ class CustomOutlineTextButton extends StatelessWidget {
     this.h,
     this.content,
     this.onPressed,
+    this.color,
   );
 
   final double? w;
   final double? h;
   final String content;
   final Function() onPressed;
+  final color;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class CustomOutlineTextButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: appWhiteColor,
         border: Border.all(
-          color: appPrimaryColor,
+          color: color,
           width: 0.3.w,
         ),
         borderRadius: BorderRadius.all(
@@ -36,7 +38,7 @@ class CustomOutlineTextButton extends StatelessWidget {
             fontSize: AppTextStyle.fullButtonTextStyle.fontSize,
             letterSpacing: AppTextStyle.fullButtonTextStyle.letterSpacing,
             fontWeight: AppTextStyle.fullButtonTextStyle.fontWeight,
-            color: appPrimaryColor,
+            color: color,
           ),
         ),
         onPressed: onPressed,
