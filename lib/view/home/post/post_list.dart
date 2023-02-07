@@ -41,10 +41,15 @@ class HomePostList extends GetView<PostController> {
       child: controller.obx(
         onEmpty: Center(
           child: Text(
-            '게시글이 없습니다.\n 직접 게시글을 만들어 최초의 1인이 되어보세요',
+            '게시글이 없습니다.',
+            style: Theme.of(context).textTheme.bodySmall,
           ),
         ),
-        onError: (error) => Center(child: Text(error.toString())),
+        onError: (error) => Center(
+            child: Text(
+          error.toString(),
+          style: Theme.of(context).textTheme.bodySmall,
+        )),
         (state) => ListView.separated(
           //리스트가 적어도 스크롤 인식 가능
           physics: AlwaysScrollableScrollPhysics(),
