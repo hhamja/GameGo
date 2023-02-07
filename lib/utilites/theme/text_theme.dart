@@ -6,25 +6,30 @@ class AppTextStyle {
     // 헤드라인
     headlineLarge: TextStyle(
       // 32-40
-      fontSize: 32.sp,
+      fontSize: 24.sp,
       color: appBlackColor,
+      fontFamily: 'NotoSansCJKkr',
     ),
     headlineMedium: TextStyle(
       // 28-36
-      fontSize: 28.sp,
+      fontSize: 22.sp,
       color: appBlackColor,
+      fontFamily: 'NotoSansCJKkr',
     ),
     headlineSmall: TextStyle(
       // 24-32
-      fontSize: 24.sp,
+      fontSize: 20.sp,
       color: appBlackColor,
+      fontFamily: 'NotoSansCJKkr',
     ),
 
     // 제목
     titleLarge: TextStyle(
       // 22-28
-      fontSize: 22.sp,
+      fontSize: 18.sp,
+      fontWeight: FontWeight.w500,
       color: appBlackColor,
+      fontFamily: 'NotoSansCJKkr',
     ),
     titleMedium: TextStyle(
       // 16-24
@@ -32,13 +37,14 @@ class AppTextStyle {
       letterSpacing: 0.15.sp,
       fontWeight: FontWeight.w500,
       color: appBlackColor,
+      fontFamily: 'NotoSansCJKkr',
     ),
     titleSmall: TextStyle(
       // 14-20
       fontSize: 14.sp,
       letterSpacing: 0.1.sp,
       fontWeight: FontWeight.w500,
-      color: appBlackColor,
+      color: appBlackColor, fontFamily: 'NotoSansCJKkr',
     ),
 
     // 본문
@@ -46,20 +52,19 @@ class AppTextStyle {
       // 16-24
       fontSize: 16.sp,
       letterSpacing: 0.5.sp,
-      color: appBlackColor,
-      
+      color: appBlackColor, fontFamily: 'NotoSansCJKkr',
     ),
     bodyMedium: TextStyle(
       // 14-20
       fontSize: 14.sp,
       letterSpacing: 0.25.sp,
-      color: appBlackColor,
+      color: appBlackColor, fontFamily: 'NotoSansCJKkr',
     ),
     bodySmall: TextStyle(
       // 12-16
       fontSize: 12.sp,
       letterSpacing: 0.4.sp,
-      color: appBlackColor,
+      color: appBlackColor, fontFamily: 'NotoSansCJKkr',
     ),
 
     // 본문보다 100 두꺼운 w500 라벨택스트
@@ -68,21 +73,21 @@ class AppTextStyle {
       fontSize: 14.sp,
       letterSpacing: 0.1.sp,
       fontWeight: FontWeight.w500,
-      color: appBlackColor,
+      color: appBlackColor, fontFamily: 'NotoSansCJKkr',
     ),
     labelMedium: TextStyle(
       // 12-16
       fontSize: 12.sp,
       letterSpacing: 0.5.sp,
       fontWeight: FontWeight.w500,
-      color: appBlackColor,
+      color: appBlackColor, fontFamily: 'NotoSansCJKkr',
     ),
     labelSmall: TextStyle(
       // 11-16
       fontSize: 11.sp,
       letterSpacing: 0.5.sp,
       fontWeight: FontWeight.w500,
-      color: appBlackColor,
+      color: appBlackColor, fontFamily: 'NotoSansCJKkr',
     ),
   );
 
@@ -92,6 +97,6 @@ class AppTextStyle {
     fontSize: 14.sp,
     letterSpacing: 0.1.sp,
     fontWeight: FontWeight.w500,
-    color: appWhiteColor,
+    color: appWhiteColor, fontFamily: 'NotoSansCJKkr',
   );
 }
