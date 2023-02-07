@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class AddPostPage extends StatefulWidget {
@@ -77,7 +78,12 @@ class _AddPostPageState extends State<AddPostPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('매너게이머 글쓰기'),
+        automaticallyImplyLeading: false,
+        leading: CustomCloseButton(),
+        title: Text(
+          '글쓰기',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
         centerTitle: true,
         actions: [
           // 완료 버튼
@@ -85,7 +91,13 @@ class _AddPostPageState extends State<AddPostPage> {
             onPressed: _createPost,
             child: Text(
               '완료',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
+                fontWeight: Theme.of(context).textTheme.titleSmall!.fontWeight,
+                letterSpacing:
+                    Theme.of(context).textTheme.titleMedium!.letterSpacing,
+                color: appPrimaryColor,
+              ),
             ),
           ),
         ],
@@ -93,100 +105,110 @@ class _AddPostPageState extends State<AddPostPage> {
       body: SingleChildScrollView(
         controller: _scrollController,
         reverse: true,
-        child: Padding(
-          padding: EdgeInsets.all(0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: AddPostDropDownButton(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  children: [
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                    // 제목 입력 란
-                    TextField(
-                      scrollController: _titleScrollController,
-                      maxLines: null,
-                      minLines: 1,
-                      showCursor: true,
-                      cursorColor: Colors.blue,
-                      controller: _titleController,
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '글 제목',
-                        suffixIcon: _titleController.text.isEmpty
-                            ? null
-                            : IconButton(
-                                icon: const Icon(
-                                  Icons.clear,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () {
-                                  _titleController.clear();
-                                  setState(() {});
-                                },
-                              ),
+        child: Column(
+          children: [
+            // 모드, 포지션, 티어 드랍다운버튼
+            AddPostDropDownButton(),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
+              child: Column(
+                children: [
+                  Divider(
+                    thickness: 1,
+                    height: 30.sp,
+                    color: appGrayColor,
+                  ),
+                  // 제목입력
+                  TextField(
+                    scrollController: _titleScrollController,
+                    maxLines: null,
+                    minLines: 1,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    showCursor: true,
+                    controller: _titleController,
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.bodyMedium!.fontSize,
+                        color: appGrayColor,
                       ),
-                      onSubmitted: (value) {
-                        setState(() {});
-                      },
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                    ),
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-
-                    // 본문 입력 란
-                    TextField(
-                      maxLines: null,
-                      minLines: 1,
-                      scrollController: _maintextScrollController,
-                      showCursor: true,
-                      cursorColor: Colors.blue,
-                      controller: _maintextController,
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '자세하게 작성하면 매칭확률이 올라가요 :)',
-                        suffixIcon: _maintextController.text.isEmpty
-                            ? null
-                            : IconButton(
-                                icon: const Icon(
-                                  Icons.clear,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () {
-                                  _maintextController.clear();
-                                  setState(() {});
-                                },
+                      hintText: '글 제목',
+                      suffixIcon: _titleController.text.isEmpty
+                          ? null
+                          : IconButton(
+                              // 드랍다운 버튼과 오른쪽 끝선을 맞추기 위한 수치
+                              padding: EdgeInsets.all(3.sp),
+                              alignment: Alignment.centerRight,
+                              icon: Icon(
+                                Icons.clear,
+                                color: Colors.grey,
                               ),
-                      ),
-                      onSubmitted: (value) {
-                        setState(() {});
-                      },
-                      onChanged: (value) {
-                        setState(() {});
-                      },
+                              onPressed: () {
+                                _titleController.clear();
+                                setState(() {});
+                              },
+                            ),
                     ),
-                  ],
-                ),
+                    onSubmitted: (value) {
+                      setState(() {});
+                    },
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                  ),
+                  Divider(
+                    thickness: 1,
+                    height: 30.sp,
+                    color: appGrayColor,
+                  ),
+                  // 본문입력
+                  TextField(
+                    maxLines: null,
+                    minLines: 1,
+                    scrollController: _maintextScrollController,
+                    showCursor: true,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    cursorColor: Colors.blue,
+                    controller: _maintextController,
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.bodyMedium!.fontSize,
+                        color: appGrayColor,
+                      ),
+                      hintText: '자세하게 작성하면 매칭확률이 올라가요 :)',
+                      suffixIcon: _maintextController.text.isEmpty
+                          ? null
+                          : IconButton(
+                              icon: const Icon(
+                                Icons.clear,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                _maintextController.clear();
+                                setState(() {});
+                              },
+                            ),
+                    ),
+                    onSubmitted: (value) {
+                      setState(() {});
+                    },
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                  ),
+                ],
               ),
-              Padding(
-                padding:
-                    EdgeInsets.all(MediaQuery.of(context).viewInsets.bottom),
-              ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(MediaQuery.of(context).viewInsets.bottom),
+            ),
+          ],
         ),
       ),
     );

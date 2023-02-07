@@ -9,14 +9,23 @@ class AddPostDropDownButton extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // 게임모드 드랍다운버튼
+          // 게임모드
           DropdownButtonHideUnderline(
             child: DropdownButton2(
-              buttonPadding: EdgeInsets.only(right: 15),
-              itemPadding: EdgeInsets.symmetric(horizontal: 15),
+              // 3개 패딩값을 zero로 해야 버튼 자체의 양옆 패딩이 없어짐
+              buttonPadding: EdgeInsets.only(
+                right: AppSpaceData.screenPadding,
+              ),
+              itemPadding: EdgeInsets.symmetric(
+                horizontal: AppSpaceData.screenPadding,
+              ),
+              buttonHeight: 50.sp,
+              itemHeight: 50.sp,
               isExpanded: true,
+
               hint: Text(
                 '게임모드',
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               items: gameModes2
                   .map(
@@ -24,14 +33,13 @@ class AddPostDropDownButton extends StatelessWidget {
                       value: modeItem,
                       child: Text(
                         modeItem,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   )
                   .toList(),
               value: controller.seledtedPostGamemodeValue,
               onChanged: controller.showPositonAndTear,
-              buttonHeight: 60,
-              itemHeight: 50,
             ),
           ),
           // 포지션 드랍다운버튼
@@ -39,11 +47,18 @@ class AddPostDropDownButton extends StatelessWidget {
             visible: controller.showPosition,
             child: DropdownButtonHideUnderline(
               child: DropdownButton2(
-                buttonPadding: EdgeInsets.only(right: 15),
-                itemPadding: EdgeInsets.symmetric(horizontal: 15),
+                buttonPadding: EdgeInsets.only(
+                  right: AppSpaceData.screenPadding,
+                ),
+                itemPadding: EdgeInsets.symmetric(
+                  horizontal: AppSpaceData.screenPadding,
+                ),
+                buttonHeight: 50.sp,
+                itemHeight: 50.sp,
                 isExpanded: true,
                 hint: Text(
                   '포지션',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 items: postions2
                     .map(
@@ -51,6 +66,7 @@ class AddPostDropDownButton extends StatelessWidget {
                         value: positionItem,
                         child: Text(
                           positionItem,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                     )
@@ -61,8 +77,6 @@ class AddPostDropDownButton extends StatelessWidget {
                       positionValue as String;
                   controller.update();
                 },
-                buttonHeight: 60,
-                itemHeight: 50,
               ),
             ),
           ),
@@ -71,17 +85,27 @@ class AddPostDropDownButton extends StatelessWidget {
             visible: controller.showTear,
             child: DropdownButtonHideUnderline(
               child: DropdownButton2(
-                buttonPadding: EdgeInsets.only(right: 15),
-                itemPadding: EdgeInsets.symmetric(horizontal: 15),
+                buttonPadding: EdgeInsets.only(
+                  right: AppSpaceData.screenPadding,
+                ),
+                itemPadding: EdgeInsets.symmetric(
+                  horizontal: AppSpaceData.screenPadding,
+                ),
+                buttonHeight: 50.sp,
+                itemHeight: 50.sp,
                 isExpanded: true,
                 hint: Text(
                   '티어',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 items: tears2
                     .map(
                       (tearItem) => DropdownMenuItem<String>(
                         value: tearItem,
-                        child: Text(tearItem),
+                        child: Text(
+                          tearItem,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ),
                     )
                     .toList(),
@@ -90,8 +114,6 @@ class AddPostDropDownButton extends StatelessWidget {
                   controller.seledtedPostTearValue = tearValue as String;
                   controller.update();
                 },
-                buttonHeight: 60,
-                itemHeight: 50,
               ),
             ),
           ),
