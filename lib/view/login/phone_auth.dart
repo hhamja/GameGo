@@ -95,7 +95,9 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
               ),
               // 인증번호 전송 버튼
               GetBuilder<SmsTimerController>(
-                builder: (controller) => CustomFullOutlineTextButton(
+                builder: (controller) => CustomOutlineTextButton(
+                  100.w,
+                  6.h,
                   !isSendSms ? '인증번호 받기' : '재전송(${_phone.count}초)',
                   () async {
                     if (!isSendSms && _phoneController.text.length == 13) {
