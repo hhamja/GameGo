@@ -38,14 +38,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
       appBar: AppBar(
         leading: Text(''),
         actions: [
-          IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              CupertinoIcons.clear,
-            ),
-          ),
+          CustomCloseButton(),
         ],
       ),
       body: Padding(
@@ -63,7 +56,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                 width: 100.w,
                 height: 7.h,
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     final phone = value!.trim();
                     if (phone.length != 13) {
@@ -136,6 +129,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       },
                       maxLength: 6,
                       autocorrect: false,
+                      style: Theme.of(context).textTheme.bodyMedium,
                       textInputAction: TextInputAction.done,
                       controller: _smsController,
                       keyboardType: TextInputType.number,
