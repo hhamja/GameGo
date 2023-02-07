@@ -7,7 +7,10 @@ class ViewSentReviews extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('내가 보낸 게임 후기'),
+        title: Text(
+          '내가 보낸 게임 후기',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -74,7 +77,7 @@ class ViewSentReviews extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 15),
                 ),
                 child:
-                    Text('받은 게임 후기 보기', style: TextStyle(color: Colors.white)),
+                    Text('받은 게임 후기 보기', style: TextStyle(color: appWhiteColor)),
               ),
             ),
           ],

@@ -7,13 +7,11 @@ class ViewReceivedReviews extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {
-            Get.back();
-          },
+        leading: CustomCloseButton(),
+        title: Text(
+          '받은 게임 후기',
+          style: Theme.of(context).textTheme.titleMedium,
         ),
-        title: Text('받은 게임 후기'),
         centerTitle: true,
         actions: [
           IconButton(

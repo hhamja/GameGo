@@ -7,7 +7,10 @@ class AccountManagementPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('계정/정보 관리'),
+        title: Text(
+          '계정/정보 관리',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Column(

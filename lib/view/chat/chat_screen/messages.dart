@@ -229,7 +229,7 @@ class _MessagesState extends State<Messages> {
                                           '${_list[reversed].content}',
                                           textWidthBasis: TextWidthBasis.parent,
                                           style:
-                                              TextStyle(color: Colors.black87),
+                                              TextStyle(color: appBlackColor),
                                         ),
                                       ),
                                       SizedBox(width: 5),

@@ -8,7 +8,10 @@ class MyPostListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('나의 글'),
+        title: Text(
+          '나의 글',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Obx(

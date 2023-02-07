@@ -27,7 +27,10 @@ class _EmailEnrollPageState extends State<EmailEnrollPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('이메일 등록'),
+        title: Text(
+          '이메일 등록',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -88,7 +91,7 @@ class _EmailEnrollPageState extends State<EmailEnrollPage> {
               style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 20),
               ),
-              child: Text('인증메일 받기', style: TextStyle(color: Colors.white)),
+              child: Text('인증메일 받기', style: TextStyle(color: appWhiteColor)),
             ),
           ),
         ),

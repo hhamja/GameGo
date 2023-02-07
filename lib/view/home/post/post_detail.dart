@@ -103,21 +103,21 @@ class _PostDetailPageState extends State<PostDetailPage> {
                           Text(
                             '${_post.postInfo.gamemode}',
                             style:
-                                TextStyle(fontSize: 15, color: Colors.black54),
+                                TextStyle(fontSize: 15, color: appBlackColor),
                           ),
                           Text(
                             _post.postInfo.position != null
                                 ? ' · ${_post.postInfo.position}'
                                 : '',
                             style:
-                                TextStyle(fontSize: 15, color: Colors.black54),
+                                TextStyle(fontSize: 15, color: appBlackColor),
                           ),
                           Text(
                             _post.postInfo.tear != null
                                 ? ' · ${_post.postInfo.tear}'
                                 : '',
                             style:
-                                TextStyle(fontSize: 15, color: Colors.black54),
+                                TextStyle(fontSize: 15, color: appBlackColor),
                           ),
                         ],
                       ),
@@ -135,7 +135,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       // SizedBox(height: 30),
                       // 채팅 · 좋아요 · 조회 수
                       // Text('채팅 1 · 관심 1 · 조회 82',
-                      //     style: TextStyle(fontSize: 15, color: Colors.black54),
+                      //     style: TextStyle(fontSize: 15, color: appBlackColor54),
                       //     textAlign: TextAlign.right,
                       //     textWidthBasis: TextWidthBasis.longestLine),
                     ],
@@ -161,7 +161,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                         bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Container(
                       width: double.infinity,
-                      color: Colors.white,
+                      color: appWhiteColor,
                       child: Row(
                         children: [
                           // 관심(하트)
@@ -230,7 +230,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                 backgroundColor: Colors.blue,
                               ),
                               child: Text('채팅하기',
-                                  style: TextStyle(color: Colors.white)),
+                                  style: TextStyle(color: appWhiteColor)),
                             ),
                           ),
                         ],
@@ -247,7 +247,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
     if (CurrentUser.uid == _post.postInfo.uid) {
       return Get.bottomSheet(
         Container(
-          color: Colors.white,
+          color: appWhiteColor,
           height: 180,
           child: Column(
             children: [
@@ -278,7 +278,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
       // 타인의 게시물인 경우
       return Get.bottomSheet(
         Container(
-          color: Colors.white,
+          color: appWhiteColor,
           height: 120,
           child: Column(
             children: [

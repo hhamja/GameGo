@@ -14,8 +14,8 @@ const Color noticeNtfColor = Colors.blue;
 const Color appBlackColor = Color(0xFF333333);
 // 그레이
 const Color appDeepDarkGrey = Color(0xFF303c4c);
-const Color appDarkGrey = Color(0xFF979fa9);
-const Color appGrayColor = Colors.grey;
+final Color appDarkGrey = Colors.grey[600]!;
+const Color appGreyColor = Colors.grey;
 final Color appLightGray = Colors.grey[300]!;
 // 흰색
 const Color appWhiteColor = Color(0xFFf5f5f7);

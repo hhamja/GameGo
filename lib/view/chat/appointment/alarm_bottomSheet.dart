@@ -6,17 +6,17 @@ class AlarmBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: appWhiteColor,
       height: 420,
       child: Column(
         children: [
-          CustomButtomSheet('없음', Colors.black, () {}), //없음
-          CustomButtomSheet('5분 전', Colors.black, () {}), //5분 전
-          CustomButtomSheet('10분 전', Colors.black, () {}), //10분 전
-          CustomButtomSheet('15분 전', Colors.black, () {}), //15분 전
-          CustomButtomSheet('30분 전', Colors.black, () {}), //30분 전
-          CustomButtomSheet('1시간 전', Colors.black, () {}), //1시간 전
-          CustomButtomSheet('2시간 전', Colors.black, () {}), //2시간 전
+          CustomButtomSheet('없음', appBlackColor, () {}), //없음
+          CustomButtomSheet('5분 전', appBlackColor, () {}), //5분 전
+          CustomButtomSheet('10분 전', appBlackColor, () {}), //10분 전
+          CustomButtomSheet('15분 전', appBlackColor, () {}), //15분 전
+          CustomButtomSheet('30분 전', appBlackColor, () {}), //30분 전
+          CustomButtomSheet('1시간 전', appBlackColor, () {}), //1시간 전
+          CustomButtomSheet('2시간 전', appBlackColor, () {}), //2시간 전
         ],
       ),
     );

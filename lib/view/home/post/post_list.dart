@@ -34,7 +34,7 @@ class HomePostList extends GetView<PostController> {
     return RefreshIndicator(
       //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
       onRefresh: _refreshFromButtonValue,
-      color: appGrayColor,
+      color: appGreyColor,
       //맨 위에 위치시키는 값
       displacement: 0,
       strokeWidth: 1.2.sp,
@@ -50,12 +50,9 @@ class HomePostList extends GetView<PostController> {
           error.toString(),
           style: Theme.of(context).textTheme.bodySmall,
         )),
-        (state) => ListView.separated(
+        (state) => ListView.builder(
           //리스트가 적어도 스크롤 인식 가능
           physics: AlwaysScrollableScrollPhysics(),
-          separatorBuilder: (BuildContext context, int index) {
-            return CustomDivider();
-          },
           itemCount: controller.postList.length,
           itemBuilder: (BuildContext context, int index) {
             final _profileUrl = controller.postList[index].profileUrl;

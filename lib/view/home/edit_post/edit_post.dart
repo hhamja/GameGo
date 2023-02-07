@@ -46,7 +46,10 @@ class _EditPostPageState extends State<EditPostPage> {
       appBar: AppBar(
         leading:
             IconButton(onPressed: () => Get.back(), icon: Icon(Icons.close)),
-        title: Text('게시글 수정하기'),
+        title: Text(
+          '게시글 수정하기',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
         actions: [
           // update 완료 버튼
@@ -65,7 +68,7 @@ class _EditPostPageState extends State<EditPostPage> {
             },
             child: Text(
               '완료',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: appWhiteColor),
             ),
           ),
         ],

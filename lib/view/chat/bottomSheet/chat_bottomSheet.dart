@@ -24,7 +24,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: appWhiteColor,
       height: 120, //개당 60
       child: Column(
         //알림끄기, 차단, 신고, 나가기(red), 취소

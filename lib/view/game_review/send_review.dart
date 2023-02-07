@@ -40,7 +40,10 @@ class _SendReviewPageState extends State<SendReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('게임 후기 보내기'),
+        title: Text(
+          '게임 후기 보내기',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -72,7 +75,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               ),
                               Text(
                                 '별로예요',
-                                style: TextStyle(color: Colors.black87),
+                                style: TextStyle(color: appBlackColor),
                               ),
                             ],
                           )
@@ -116,7 +119,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               ),
                               Text(
                                 '최고예요',
-                                style: TextStyle(color: Colors.black87),
+                                style: TextStyle(color: appBlackColor),
                               ),
                             ],
                           )
@@ -193,8 +196,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                           hintText: '게임 후기를 작성해주세요.(선택사항)',
-                          // hintStyle: TextStyle(color: Colors.black),
-                          // fillColor: Colors.white,
+                          // hintStyle: TextStyle(color: appBlackColor),
+                          // fillColor: appWhiteColor,
                           hintStyle: TextStyle(),
                           contentPadding: EdgeInsets.all(15),
                           counterText: '남겨주신 후기는 상대방에게 전달돼요.',

@@ -45,7 +45,7 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
           children: [
             Text(
               userName,
-              style: TextStyle(fontSize: 20),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             SizedBox(width: 5),
             Text(

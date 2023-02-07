@@ -39,7 +39,7 @@ class CustomTwoLineListTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 15.sp),
+        padding: EdgeInsets.symmetric(vertical: AppSpaceData.screenPadding),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -47,7 +47,7 @@ class CustomTwoLineListTile extends StatelessWidget {
               height: 35.sp,
               width: 35.sp,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.sp),
+                borderRadius: BorderRadius.circular(12.sp),
                 child: Image.network(
                   profileUrl,
                   fit: BoxFit.fill,
@@ -56,7 +56,7 @@ class CustomTwoLineListTile extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 15.0.sp),
+                padding: EdgeInsets.only(left: AppSpaceData.screenPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

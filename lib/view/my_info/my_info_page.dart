@@ -25,7 +25,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('나의 정보'),
+        title: Text(
+          '나의 정보',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -45,7 +48,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
         child: Obx(
           () => SettingsList(
             lightTheme: SettingsThemeData(
-              settingsListBackground: Colors.white,
+              settingsListBackground: appWhiteColor,
             ),
             sections: [
               SettingsSection(

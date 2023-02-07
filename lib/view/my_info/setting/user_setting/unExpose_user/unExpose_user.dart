@@ -7,7 +7,10 @@ class UnexposeUserManagementPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('게시물 미노출 유저 관리'),
+        title: Text(
+          '게시물 미노출 유저 관리',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: ListView.separated(
@@ -25,7 +28,7 @@ class UnexposeUserManagementPage extends StatelessWidget {
                 onPressed: () {},
                 child: Text(
                   '게시물 안보는중',
-                  style: TextStyle(color: Colors.white, fontSize: 13),
+                  style: TextStyle(color: appWhiteColor, fontSize: 13),
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -20,7 +20,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
     print('해당 유저 uid : $uid');
     return Scaffold(
       appBar: AppBar(
-        title: Text('프로필'),
+        title: Text(
+          '프로필',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
         actions: [
           // IconButton(onPressed: openBottomSheet, icon: Icon(Icons.more_vert)),
@@ -81,7 +84,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   // openBottomSheet() {
   //   return Get.bottomSheet(
   //     Container(
-  //       color: Colors.white,
+  //       color: appWhiteColor,
   //       height: 120,
   //       child: Column(
   //         children: [

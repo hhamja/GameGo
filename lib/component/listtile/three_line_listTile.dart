@@ -35,20 +35,21 @@ class CustomThreeLineListTile extends StatelessWidget {
       fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
       letterSpacing: Theme.of(context).textTheme.bodySmall!.letterSpacing,
       fontWeight: Theme.of(context).textTheme.bodySmall!.fontWeight,
-      color: appDeepDarkGrey,
+      color: appGreyColor,
     );
     return InkWell(
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: AppSpaceData.screenPadding),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 32.sp,
-              width: 32.sp,
+              height: 35.sp,
+              width: 35.sp,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.sp),
+                borderRadius: BorderRadius.circular(12.sp),
                 child: Image.network(
                   profileUrl,
                   fit: BoxFit.fill,
@@ -62,12 +63,20 @@ class CustomThreeLineListTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // 닉네임
                         Text(
                           userName,
                           style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        Text(
+                          time,
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: appGreyColor,
+                          ),
                         ),
                       ],
                     ),
@@ -87,20 +96,13 @@ class CustomThreeLineListTile extends StatelessWidget {
                           style: _subTextStyle,
                         ),
                         Text(
-                          position != null ? '·${position}' : '',
+                          position != null ? ' ·${position}' : '',
                           style: _subTextStyle,
                         ),
                         Text(
-                          tear != null ? '·${tear}' : '',
+                          tear != null ? ' ·${tear}' : '',
                           style: _subTextStyle,
                         ), // 글 시간
-                        Text(
-                          '·${time}',
-                          style: TextStyle(
-                            fontSize: 11.sp,
-                            color: appGrayColor,
-                          ),
-                        ),
                       ],
                     ),
                   ],

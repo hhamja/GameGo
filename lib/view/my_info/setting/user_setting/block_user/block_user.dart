@@ -12,7 +12,10 @@ class _BlockUserManagementState extends State<BlockUserManagement> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('차단 유저 관리'),
+        title: Text(
+          '차단 유저 관리',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: ListView.separated(
@@ -30,7 +33,7 @@ class _BlockUserManagementState extends State<BlockUserManagement> {
                 onPressed: () {},
                 child: Text(
                   '차단중',
-                  style: TextStyle(color: Colors.white, fontSize: 13),
+                  style: TextStyle(color: appWhiteColor, fontSize: 13),
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -215,7 +215,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                     child: Text(
                                       '${_list[reversed].content}', //메시지 입력 리스트
                                       textWidthBasis: TextWidthBasis.parent,
-                                      style: TextStyle(color: Colors.black87),
+                                      style: TextStyle(color: appBlackColor),
                                     ),
                                   ),
                                 ),

@@ -37,13 +37,16 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('설정'),
+        title: Text(
+          '설정',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Obx(
         () => SettingsList(
           lightTheme: SettingsThemeData(
-            settingsListBackground: Colors.white,
+            settingsListBackground: appWhiteColor,
           ),
           sections: [
             SettingsSection(

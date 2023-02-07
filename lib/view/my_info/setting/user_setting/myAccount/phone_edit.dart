@@ -29,7 +29,10 @@ class _PhoneNumberEditPagestate extends State<PhoneNumberEditPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('휴대폰 번호 변경'),
+        title: Text(
+          '휴대폰 번호 변경',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -93,7 +96,7 @@ class _PhoneNumberEditPagestate extends State<PhoneNumberEditPage> {
               style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 20),
               ),
-              child: Text('인증문자 받기', style: TextStyle(color: Colors.white)),
+              child: Text('인증문자 받기', style: TextStyle(color: appWhiteColor)),
             ),
           ),
         ),

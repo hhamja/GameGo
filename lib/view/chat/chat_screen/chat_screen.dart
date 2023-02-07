@@ -74,7 +74,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               // 상대유저이름
               Text(
                 userName,
-                style: TextStyle(fontSize: 20),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(width: 5),
               // 매너나이
@@ -169,7 +169,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                   Icon(
                                     size: 15,
                                     Icons.calendar_month,
-                                    color: Colors.black,
+                                    color: appBlackColor,
                                   ),
                                   SizedBox(width: 5),
                                   // 약속시간 > 현재 ? 약속시간 표시
@@ -179,7 +179,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                         ? _appoint.appointmentDate.toString()
                                         : '약속 잡기',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 15),
+                                        color: appBlackColor, fontSize: 15),
                                   ),
                                 ],
                               ),
@@ -221,13 +221,13 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                         Icon(
                                           size: 15,
                                           Icons.sticky_note_2_outlined,
-                                          color: Colors.black,
+                                          color: appBlackColor,
                                         ),
                                         SizedBox(width: 5),
                                         Text(
                                           '보낸 후기 확인하기',
                                           style: TextStyle(
-                                              color: Colors.black,
+                                              color: appBlackColor,
                                               fontSize: 15),
                                         ),
                                       ],
@@ -275,13 +275,13 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                         Icon(
                                           size: 15,
                                           Icons.sticky_note_2_outlined,
-                                          color: Colors.black,
+                                          color: appBlackColor,
                                         ),
                                         SizedBox(width: 5),
                                         Text(
                                           '후기 보내기',
                                           style: TextStyle(
-                                              color: Colors.black,
+                                              color: appBlackColor,
                                               fontSize: 15),
                                         ),
                                       ],

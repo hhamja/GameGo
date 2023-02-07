@@ -34,7 +34,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text('약속 설정'),
+        title: Text(
+          '약속 설정',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -46,7 +49,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             // Text(
             //   '날짜',
             //   style: TextStyle(
-            //       color: Colors.black,
+            //       color: appBlackColor,
             //       fontSize: 18,
             //       fontWeight: FontWeight.bold),
             // ),
@@ -76,7 +79,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 canMarkersOverflow: false, //마커 여러개이면 셀 영역을 벗어날지 여부
                 markersAutoAligned: true, //자동정렬 여부
                 weekendTextStyle: TextStyle(
-                    fontSize: _dateFontsize, color: Colors.black), //토,일 텍스트 스타일
+                    fontSize: _dateFontsize,
+                    color: appBlackColor), //토,일 텍스트 스타일
                 outsideTextStyle: TextStyle(
                   fontSize: _dateFontsize,
                   color: Colors.grey[300],
@@ -95,7 +99,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ), //선택한 날짜 박스 스타일
                 selectedTextStyle: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: appWhiteColor,
                 ), //선택한 날짜의 텍스트 스타일
                 tablePadding: EdgeInsets.zero, //테이블 패딩
               ),
@@ -126,7 +130,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 Text(
                   '시간  :  ',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: appBlackColor,
                     fontSize: 15,
                   ),
                 ),
@@ -135,7 +139,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     Get.dialog(
                       Dialog(
                         child: Container(
-                          color: Colors.white,
+                          color: appWhiteColor,
                           child: TimePickerSpinner(
                             alignment: Alignment.center,
                             is24HourMode: false,
@@ -146,7 +150,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                             // time: _dateTime,
                             highlightedTextStyle: TextStyle(
                               fontSize: 21,
-                              color: Colors.black,
+                              color: appBlackColor,
                             ),
                             spacing: 20,
                             itemHeight: 50,
@@ -165,7 +169,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                   child: Text(
                     Jiffy(_time).format('a hh시 mm분'),
                     style: TextStyle(
-                        color: Colors.black,
+                        color: appBlackColor,
                         fontSize: 15,
                         height: 1.2,
                         fontWeight: FontWeight.normal),
@@ -185,7 +189,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             // Text(
             //   '알림',
             //   style: TextStyle(
-            //       color: Colors.black,
+            //       color: appBlackColor,
             //       fontSize: 18,
             //       fontWeight: FontWeight.bold),
             // ),
@@ -204,7 +208,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             //     }, //알림 '~전' 시간선택하는 다이어로그 띄우기
             //     trailing: Icon(
             //       Icons.arrow_drop_down_sharp,
-            //       color: Colors.black,
+            //       color: appBlackColor,
             //     ),
             //   ),
             // ),

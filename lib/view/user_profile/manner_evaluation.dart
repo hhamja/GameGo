@@ -25,7 +25,10 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('받은 매너 평가'),
+        title: Text(
+          '받은 매너 평가',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Obx(

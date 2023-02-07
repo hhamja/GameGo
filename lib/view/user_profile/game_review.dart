@@ -23,7 +23,10 @@ class _UserGameReviewPageState extends State<UserGameReviewPage> {
     print(uid);
     return Scaffold(
       appBar: AppBar(
-        title: Text('받은 게임 후기'),
+        title: Text(
+          '받은 게임 후기',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Obx(

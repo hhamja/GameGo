@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 void leftTabOpenBottomSheet() {
   Get.bottomSheet(
     Container(
-      color: Colors.white,
+      color: appWhiteColor,
       height: 240,
       child: Column(
         children: [
@@ -53,7 +53,7 @@ void leftTabOpenBottomSheet() {
 void centerTabOpenBottomSheet() {
   Get.bottomSheet(
     Container(
-      color: Colors.white,
+      color: appWhiteColor,
       height: 300,
       child: Column(
         children: [
@@ -110,7 +110,7 @@ void centerTabOpenBottomSheet() {
 void rightTabOpenBottomSheet() {
   Get.bottomSheet(
     Container(
-      color: Colors.white,
+      color: appWhiteColor,
       height: 180,
       child: Column(
         children: [
@@ -153,7 +153,7 @@ void rightTabOpenBottomSheet() {
 void viewSentReviewsBottomSheet() {
   Get.bottomSheet(
     Container(
-      color: Colors.white,
+      color: appWhiteColor,
       height: 120,
       child: Column(
         children: [
@@ -189,7 +189,7 @@ void viewSentReviewsBottomSheet() {
 void receivedReviewsBottomSheet() {
   Get.bottomSheet(
     Container(
-      color: Colors.white,
+      color: appWhiteColor,
       height: 120,
       child: Column(
         children: [

@@ -33,7 +33,10 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('로그인/회원가입'),
+        title: Text(
+          '로그인/회원가입',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -125,7 +128,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                             child: Text(
                               !isSendSms ? '인증번호 받기' : '재전송(${_phone.count}초)',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: appWhiteColor,
                               ),
                             ),
                           ),

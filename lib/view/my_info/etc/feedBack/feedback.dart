@@ -7,7 +7,10 @@ class FeedbackPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('1:1 문의 및 피드백'),
+        title: Text(
+          '1:1 문의 및 피드백',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Text('1:1 문의 및 피드백 페이지'),

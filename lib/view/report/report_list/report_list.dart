@@ -19,7 +19,10 @@ class _ReportListPageState extends State<ReportListPage> {
     print(chatRoomId);
     return Scaffold(
       appBar: AppBar(
-        title: Text('신고'),
+        title: Text(
+          '신고',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: ListView(

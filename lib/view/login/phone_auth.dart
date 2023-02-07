@@ -81,7 +81,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                     hintStyle: TextStyle(
                       fontSize:
                           Theme.of(context).textTheme.bodyMedium!.fontSize,
-                      color: appGrayColor,
+                      color: appGreyColor,
                     ),
                   ),
                 ),
@@ -148,7 +148,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                         hintStyle: TextStyle(
                           fontSize:
                               Theme.of(context).textTheme.bodyMedium!.fontSize,
-                          color: appGrayColor,
+                          color: appGreyColor,
                         ),
                       ),
                     ),

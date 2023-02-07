@@ -20,7 +20,10 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('관심 게시글'),
+        title: Text(
+          '관심 게시글',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Obx(

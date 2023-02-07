@@ -117,7 +117,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('프로필 설정'),
+        title: Text(
+          '프로필 설정',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -151,10 +154,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       child: Container(
                         padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Colors.white),
+                            shape: BoxShape.circle, color: appWhiteColor),
                         child: Icon(
                           Icons.camera_alt,
-                          color: Colors.black,
+                          color: appBlackColor,
                           size: 30,
                         ),
                       ),
@@ -170,7 +173,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 floatingLabelAlignment: FloatingLabelAlignment.center,
                 hintText: '닉네임을 입력해주세요 :)',
-                fillColor: Colors.white,
+                fillColor: appWhiteColor,
                 labelText: '-------- 닉네임 --------',
                 counterText: '',
                 border: InputBorder.none,
@@ -214,7 +217,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Container showBottomSheet() {
     return Container(
       height: 240,
-      color: Colors.white, //투염도 설정(나중)
+      color: appWhiteColor, //투염도 설정(나중)
       child: Column(
         children: [
           CustomButtomSheet(
@@ -263,7 +266,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           ),
           CustomButtomSheet(
             '취소',
-            Colors.black,
+            appBlackColor,
             () {
               Get.back();
             },

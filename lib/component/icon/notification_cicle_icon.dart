@@ -12,10 +12,12 @@ class NotificationCircleIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
+      radius: 10.sp,
       backgroundColor: backgroundColor,
       child: Center(
         child: Icon(
           icon,
+          size: 10.sp,
           color: appWhiteColor,
         ),
       ),

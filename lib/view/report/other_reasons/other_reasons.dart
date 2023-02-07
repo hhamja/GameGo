@@ -21,7 +21,10 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('신고'),
+        title: Text(
+          '신고',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -54,7 +57,7 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
                 contentPadding: EdgeInsets.all(10),
                 counterText: '글자수 제한 : (${textValue.length}/${_maxLength})',
                 hintText: '신고 사유를 입력해주세요.',
-                fillColor: Colors.white,
+                fillColor: appWhiteColor,
                 filled: true,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),

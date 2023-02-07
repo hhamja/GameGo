@@ -29,7 +29,10 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('내가 보낸 후기'),
+        title: Text(
+          '내가 보낸 후기',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Obx(
@@ -56,7 +59,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                       ),
                       Text(
                         !_evaluation.isGood.value ? '별로예요' : '최고예요',
-                        style: TextStyle(color: Colors.black87),
+                        style: TextStyle(color: appBlackColor),
                       ),
                     ],
                   ),

@@ -117,7 +117,7 @@ class _AddPostPageState extends State<AddPostPage> {
                   Divider(
                     thickness: 1,
                     height: 30.sp,
-                    color: appGrayColor,
+                    color: appGreyColor,
                   ),
                   // 제목입력
                   TextField(
@@ -133,7 +133,7 @@ class _AddPostPageState extends State<AddPostPage> {
                       hintStyle: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.bodyMedium!.fontSize,
-                        color: appGrayColor,
+                        color: appGreyColor,
                       ),
                       hintText: '글 제목',
                       suffixIcon: _titleController.text.isEmpty
@@ -162,7 +162,7 @@ class _AddPostPageState extends State<AddPostPage> {
                   Divider(
                     thickness: 1,
                     height: 30.sp,
-                    color: appGrayColor,
+                    color: appGreyColor,
                   ),
                   // 본문입력
                   TextField(
@@ -179,7 +179,7 @@ class _AddPostPageState extends State<AddPostPage> {
                       hintStyle: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.bodyMedium!.fontSize,
-                        color: appGrayColor,
+                        color: appGreyColor,
                       ),
                       hintText: '자세하게 작성하면 매칭확률이 올라가요 :)',
                       suffixIcon: _maintextController.text.isEmpty

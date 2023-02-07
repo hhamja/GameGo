@@ -50,7 +50,7 @@ class CustomSmallDialog extends StatelessWidget {
                   onPressed: cancelFun,
                   child: Text(
                     cancelText,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: appBlackColor),
                   ),
                 ),
               ),
@@ -66,7 +66,7 @@ class CustomSmallDialog extends StatelessWidget {
                   onPressed: completeFun,
                   child: Text(
                     completeText,
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: appBlackColor),
                   ),
                 ),
               ),

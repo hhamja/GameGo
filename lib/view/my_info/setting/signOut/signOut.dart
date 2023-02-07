@@ -15,7 +15,10 @@ class _SignOutPageState extends State<SignOutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('탈퇴하기'),
+        title: Text(
+          '탈퇴하기',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -55,7 +58,7 @@ class _SignOutPageState extends State<SignOutPage> {
                   isExpanded: true,
                   icon: Icon(
                     Icons.keyboard_arrow_down_sharp,
-                    color: Colors.black,
+                    color: appBlackColor,
                   ),
                   buttonDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -68,7 +71,7 @@ class _SignOutPageState extends State<SignOutPage> {
                   hint: Text(
                     '선택해주세요',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: appBlackColor,
                     ),
                   ),
                   itemHeight: 40,
@@ -104,8 +107,8 @@ class _SignOutPageState extends State<SignOutPage> {
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
                         hintText: '소중한 의견은 매너게이머 팀에게 전달돼요',
-                        // hintStyle: TextStyle(color: Colors.black),
-                        // fillColor: Colors.white,
+                        // hintStyle: TextStyle(color: appBlackColor),
+                        // fillColor: appWhiteColor,
                         hintStyle: TextStyle(),
                         contentPadding: EdgeInsets.all(15),
                         counterStyle: TextStyle(),

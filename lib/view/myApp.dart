@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
             onTap: (value) => setState(() => tabIndex = value),
             currentIndex: tabIndex,
             selectedItemColor: appBlackColor,
-            unselectedItemColor: appGrayColor,
+            unselectedItemColor: appGreyColor,
             items: [
               _BottomBarItem(
                 Icon(

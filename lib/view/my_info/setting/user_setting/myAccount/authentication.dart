@@ -12,7 +12,10 @@ class _SelfAuthenticationPageState extends State<SelfAuthenticationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('본인인증 정보'),
+          title: Text(
+            '본인인증 정보',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           centerTitle: true,
         ),
         body: ListView(
