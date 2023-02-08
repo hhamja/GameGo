@@ -18,20 +18,32 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
             // 게임모드 드랍다운버튼
             DropdownButtonHideUnderline(
               child: DropdownButton2(
+                buttonPadding: EdgeInsets.only(
+                  right: AppSpaceData.screenPadding,
+                ),
+                itemPadding: EdgeInsets.symmetric(
+                  horizontal: AppSpaceData.screenPadding,
+                ),
+                buttonHeight: 50.sp,
+                itemHeight: 50.sp,
                 isExpanded: true,
-                hint: Text('게임모드'),
+                hint: Text(
+                  '게임모드',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 items: gameModes
                     .map(
                       (modeItem) => DropdownMenuItem<String>(
                         value: modeItem,
-                        child: Text(modeItem),
+                        child: Text(
+                          modeItem,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ),
                     )
                     .toList(),
                 value: controller.seledtedPostGamemodeValue,
                 onChanged: controller.showPositonAndTear,
-                buttonHeight: 60,
-                itemHeight: 50,
               ),
             ),
             // 포지션 드랍다운버튼
@@ -39,13 +51,27 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
               visible: controller.showdropDownPosition(),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton2(
+                  buttonPadding: EdgeInsets.only(
+                    right: AppSpaceData.screenPadding,
+                  ),
+                  itemPadding: EdgeInsets.symmetric(
+                    horizontal: AppSpaceData.screenPadding,
+                  ),
+                  buttonHeight: 50.sp,
+                  itemHeight: 50.sp,
                   isExpanded: true,
-                  hint: Text('포지션'),
+                  hint: Text(
+                    '포지션',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                   items: postions
                       .map(
                         (positionItem) => DropdownMenuItem<String>(
                           value: positionItem,
-                          child: Text(positionItem),
+                          child: Text(
+                            positionItem,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
                         ),
                       )
                       .toList(),
@@ -55,8 +81,6 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
                         positionValue as String;
                     controller.update();
                   },
-                  buttonHeight: 60,
-                  itemHeight: 50,
                 ),
               ),
             ),
@@ -65,9 +89,18 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
               visible: controller.showdropDownTears(),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton2(
+                  buttonPadding: EdgeInsets.only(
+                    right: AppSpaceData.screenPadding,
+                  ),
+                  itemPadding: EdgeInsets.symmetric(
+                    horizontal: AppSpaceData.screenPadding,
+                  ),
+                  buttonHeight: 50.sp,
+                  itemHeight: 50.sp,
                   isExpanded: true,
                   hint: Text(
                     '티어',
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   items: tears
                       .map(
@@ -75,6 +108,7 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
                           value: tearItem,
                           child: Text(
                             tearItem,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       )
@@ -84,8 +118,6 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
                     controller.seledtedPostTearValue = tearValue as String;
                     controller.update();
                   },
-                  buttonHeight: 60,
-                  itemHeight: 50,
                 ),
               ),
             ),
