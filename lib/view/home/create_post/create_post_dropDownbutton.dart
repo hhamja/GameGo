@@ -27,7 +27,7 @@ class AddPostDropDownButton extends StatelessWidget {
                 '게임모드',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
-              items: gameModes2
+              items: gameModeList
                   .map(
                     (modeItem) => DropdownMenuItem<String>(
                       value: modeItem,
@@ -60,7 +60,7 @@ class AddPostDropDownButton extends StatelessWidget {
                   '포지션',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                items: postions2
+                items: postionList
                     .map(
                       (positionItem) => DropdownMenuItem<String>(
                         value: positionItem,
@@ -98,7 +98,7 @@ class AddPostDropDownButton extends StatelessWidget {
                   '티어',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                items: tears2
+                items: tearList
                     .map(
                       (tearItem) => DropdownMenuItem<String>(
                         value: tearItem,

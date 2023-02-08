@@ -7,11 +7,11 @@ class HomePageDropDownBTController extends GetxController {
   // 티어 드랍다운 버튼 보여주는 bool값
   bool showTear = false;
   // 게임모드 선택 value, 초기값 = '게임모드'
-  var selectedModeValue = gameModes[0];
+  var selectedModeValue = homeGameModeList[0];
   // 포지션 선택 value, 초기값 = '포지션'
-  var selectedPositionValue = postions[0];
+  var selectedPositionValue = homePostionList[0];
   // 티어 선택 value, 초기값 = '티어'
-  var selectedTearValue = tears[0];
+  var selectedTearValue = homeTearList[0];
 
   // PostController find
   final PostController _post = Get.put(PostController());

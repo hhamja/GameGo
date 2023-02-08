@@ -31,7 +31,7 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
                   '게임모드',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                items: gameModes
+                items: gameModeList
                     .map(
                       (modeItem) => DropdownMenuItem<String>(
                         value: modeItem,
@@ -64,7 +64,7 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
                     '포지션',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  items: postions
+                  items: postionList
                       .map(
                         (positionItem) => DropdownMenuItem<String>(
                           value: positionItem,
@@ -102,7 +102,7 @@ class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
                     '티어',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  items: tears
+                  items: tearList
                       .map(
                         (tearItem) => DropdownMenuItem<String>(
                           value: tearItem,

@@ -25,7 +25,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                   controller.selectedModeValue == '무작위 총력전' ? 101.sp : 72.sp,
               dropdownWidth: 110.sp,
               isExpanded: true,
-              items: gameModes.map(
+              items: homeGameModeList.map(
                 (item) {
                   return DropdownMenuItem<String>(
                     // 솔로,자유 -> 포지션과 티어 표시
@@ -53,7 +53,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                 buttonWidth: 60.sp,
                 dropdownWidth: 80.sp,
                 isExpanded: true,
-                items: postions.map(
+                items: homePostionList.map(
                   (item) {
                     return DropdownMenuItem<String>(
                       onTap: () {},
@@ -77,7 +77,6 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
             visible: controller.showTear,
             child: DropdownButtonHideUnderline(
               child: DropdownButton2(
-                
                 style: Theme.of(context).textTheme.bodyMedium,
                 buttonWidth: controller.selectedTearValue == '다이아몬드' ||
                         controller.selectedTearValue == '플래티넘'
@@ -85,7 +84,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                     : 70.sp,
                 dropdownWidth: 100.sp,
                 isExpanded: true,
-                items: tears
+                items: homeTearList
                     .map(
                       (item) => DropdownMenuItem<String>(
                         value: item,
