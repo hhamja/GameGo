@@ -141,8 +141,8 @@ class _ChatListPageState extends State<ChatListPage> {
                     children: <Widget>[
                       // 상대 유저 프로필
                       Container(
-                        height: 40.sp,
-                        width: 40.sp,
+                        height: 35.sp,
+                        width: 35.sp,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15.sp),
                           child: Image.network(
