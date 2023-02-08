@@ -9,17 +9,21 @@ class CustomButtomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        height: 60,
-        child: TextButton(
-            onPressed: onPressed,
-            child: Text(
-              inputText,
-              style: TextStyle(color: inputColor),
-            )),
-        width: double.infinity,
+    return Container(
+      width: 100.w,
+      height: 50.sp,
+      child: TextButton(
+        onPressed: onPressed,
+        child: Text(
+          inputText,
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+            fontWeight: FontWeight.normal,
+            letterSpacing:
+                Theme.of(context).textTheme.bodyMedium!.letterSpacing,
+            color: inputColor,
+          ),
+        ),
       ),
     );
   }

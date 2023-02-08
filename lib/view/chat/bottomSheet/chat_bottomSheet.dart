@@ -49,7 +49,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
             ); //신고목록 페이지로 이동
           }),
           // CustomButtomSheet('채팅방 나가기', Colors.redAccent, () {}),
-          CustomButtomSheet('취소', Colors.blue, () => Get.back()),
+        
         ],
       ),
     );
