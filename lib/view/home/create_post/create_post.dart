@@ -8,10 +8,6 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPageState extends State<AddPostPage> {
-  final _auth = FirebaseAuth.instance;
-  // 유저 DB Ref
-  final CollectionReference _userDB =
-      FirebaseFirestore.instance.collection('user');
   // PostController 선언 (∵ Create Post)
   final PostController _post = Get.find<PostController>();
   // 홈 드랍다운버튼 컨트롤러
@@ -28,52 +24,50 @@ class _AddPostPageState extends State<AddPostPage> {
   final ScrollController _maintextScrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
 
-  // 게시글 생성 '완료'버튼 클릭 시
-  Future<void> _createPost() async {
-    UserModel userModel =
-        await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
-      return UserModel.fromDocumentSnapshot(value);
-    }); //uid로 해당유저의 data UserModel의 인스턴스의 담기
-
-    final postModel = PostModel(
-      postId: FirebaseFirestore.instance.collection('post').doc().id,
-      uid: _auth.currentUser!.uid,
-      userName: userModel.userName.toString(),
-      profileUrl: userModel.profileUrl.toString(),
-      title: _titleController.text.trim(),
-      maintext: _maintextController.text.trim(),
-      gamemode: _button.seledtedPostGamemodeValue,
-      position: _button.seledtedPostdPositionValue,
-      tear: _button.seledtedPostTearValue,
-      like: 0,
-      gameType: 'lol',
-      isHidden: false,
-      isDeleted: false,
-      updatedAt: Timestamp.now(),
-    ); //postModel 인스턴스 생성
-
-    await _post.createPost(postModel); //게시물 만들기
-
-    // 드랍다운버튼 선택의 대한 IF문
-    if (_.selectedTearValue != '티어') {
-      await _post.filterTear(
-          _.selectedModeValue, _.selectedPositionValue, _.selectedTearValue);
-    } //티어 선택한 경우( = 3개 다 선택한 경우)
-    else if (_.selectedPositionValue != '포지션') {
-      await _post.filterPosition(_.selectedModeValue, _.selectedPositionValue);
-    } //티어 선택 X, 모드와 포지션을 선택한 경우
-    else if (_.selectedModeValue != '게임모드') {
-      await _post.filterGamemode(_.selectedModeValue);
-    } // 티어, 포지션 선택 X, 게임모드만 선택한 경우
-    else {
-      await _post.readPostData();
-    } //티어, 포지션, 게임모드 아무것도 선택하지 않은 경우
-
-    Get.back();
-  }
-
   @override
   Widget build(BuildContext context) {
+    // 게시글 생성 '완료'버튼 클릭 시
+    Future<void> _createPost() async {
+      // 게임모드를 선택했는지 여부
+      if (_button.seledtedPostGamemodeValue == null) {
+        // 버튼에서 아무 게임모드도 선택하지 않은 경우
+        // 게임모드 선택하라고 유저에게 알리기}
+        Get.snackbar(
+          '',
+          '',
+          titleText: Text(
+            '게임모드 선택 안함',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          messageText: Text(
+            '버튼을 클릭하여 게임모드를 선택해주세요.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        );
+      } else {
+        // 게임모드 선택한 경우
+        final postModel = PostModel(
+          postId: FirebaseFirestore.instance.collection('post').doc().id,
+          uid: CurrentUser.uid,
+          userName: CurrentUser.name,
+          profileUrl: CurrentUser.profile,
+          title: _titleController.text.trim(),
+          maintext: _maintextController.text.trim(),
+          gamemode: _button.seledtedPostGamemodeValue!,
+          position: _button.seledtedPostdPositionValue,
+          tear: _button.seledtedPostTearValue,
+          like: 0,
+          gameType: 'lol',
+          isHidden: false,
+          isDeleted: false,
+          updatedAt: Timestamp.now(),
+        );
+        // 게시물 만들기
+        await _post.createPost(postModel);
+        Get.back();
+      }
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
