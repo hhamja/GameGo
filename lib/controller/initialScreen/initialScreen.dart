@@ -12,7 +12,7 @@ class InitialScreenCntroller extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    Timer(Duration(milliseconds: 1500), () {
+    Timer(Duration(seconds: 1), () {
       // 파이베이스 auth User목록
       firebaseUser = Rx<User?>(_auth.currentUser);
       // AUTH의 유저변화 반응형으로 감지
