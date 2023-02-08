@@ -49,7 +49,7 @@ class CustomThreeLineListTile extends StatelessWidget {
               height: 35.sp,
               width: 35.sp,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.sp),
+                borderRadius: BorderRadius.circular(15.sp),
                 child: Image.network(
                   profileUrl,
                   fit: BoxFit.fill,

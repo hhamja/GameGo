@@ -24,8 +24,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_post.postInfo);
-    print(postId);
     return Scaffold(
       appBar: AppBar(
         actions: [
