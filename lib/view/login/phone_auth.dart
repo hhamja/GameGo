@@ -56,6 +56,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                 width: 100.w,
                 height: 7.h,
                 child: TextFormField(
+                  cursorColor: cursorColor,
                   style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     final phone = value!.trim();
@@ -118,6 +119,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     TextFormField(
+                      cursorColor: cursorColor,
                       validator: (value) {
                         final _sms = value!.trim();
                         if (_sms.length != 6) {

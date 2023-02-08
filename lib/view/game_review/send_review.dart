@@ -193,6 +193,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   ? Container(
                       margin: EdgeInsets.symmetric(vertical: 15),
                       child: TextFormField(
+                        cursorColor: cursorColor,
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                           hintText: '게임 후기를 작성해주세요.(선택사항)',

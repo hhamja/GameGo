@@ -42,6 +42,7 @@ class _EmailEnrollPageState extends State<EmailEnrollPage> {
             Text('안전한 계정관리를 위해 이메일을 등록해주세요!'),
             SizedBox(height: 20),
             TextField(
+              cursorColor: cursorColor,
               autofocus: true,
               showCursor: true,
               maxLines: 1,

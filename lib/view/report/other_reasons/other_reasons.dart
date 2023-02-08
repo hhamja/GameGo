@@ -44,6 +44,7 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
             Text('신고사유가 앞의 신고항목에 없으신가요?\n원하시는 신고 항목이 없는 경우 신고사유를 입력해주세요.'),
             SizedBox(height: 20),
             TextField(
+              cursorColor: cursorColor,
               autocorrect: false,
               maxLines: null,
               textAlignVertical: TextAlignVertical.top,

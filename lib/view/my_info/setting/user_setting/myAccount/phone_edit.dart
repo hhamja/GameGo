@@ -46,6 +46,7 @@ class _PhoneNumberEditPagestate extends State<PhoneNumberEditPage> {
             Text('현재 등록된 휴대폰 번호는 010-1234-8563'),
             SizedBox(height: 30),
             TextField(
+              cursorColor: cursorColor,
               autofocus: true,
               showCursor: true,
               maxLines: 1,

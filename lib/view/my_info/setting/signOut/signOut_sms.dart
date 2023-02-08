@@ -57,6 +57,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                       flex: 1,
                       child: Container(
                         child: TextFormField(
+                          cursorColor: cursorColor,
                           validator: (value) {
                             final phone = value!.trim();
                             if (phone.length != 13) {
@@ -144,6 +145,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                   child: Column(
                     children: [
                       TextFormField(
+                        cursorColor: cursorColor,
                         validator: (value) {
                           final _sms = value!.trim();
                           if (_sms.length != 6) {

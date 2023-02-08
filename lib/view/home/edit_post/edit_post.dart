@@ -92,6 +92,7 @@ class _EditPostPageState extends State<EditPostPage> {
                   ),
                   // 제목입력
                   TextField(
+                    cursorColor: cursorColor,
                     scrollController: _titleScrollController,
                     maxLines: null,
                     minLines: 1,
@@ -137,6 +138,7 @@ class _EditPostPageState extends State<EditPostPage> {
                   ),
                   // 본문입력
                   TextField(
+                    cursorColor: cursorColor,
                     maxLines: null,
                     minLines: 1,
                     style: Theme.of(context).textTheme.bodyMedium,

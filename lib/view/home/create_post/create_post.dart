@@ -114,6 +114,7 @@ class _AddPostPageState extends State<AddPostPage> {
                   ),
                   // 제목입력
                   TextField(
+                    cursorColor: cursorColor,
                     scrollController: _titleScrollController,
                     maxLines: null,
                     minLines: 1,
@@ -159,6 +160,7 @@ class _AddPostPageState extends State<AddPostPage> {
                   ),
                   // 본문입력
                   TextField(
+                    cursorColor: cursorColor,
                     maxLines: null,
                     minLines: 1,
                     scrollController: _maintextScrollController,

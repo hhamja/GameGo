@@ -169,6 +169,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
 
             // 닉네임 입력란
             TextFormField(
+              cursorColor: cursorColor,
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 floatingLabelAlignment: FloatingLabelAlignment.center,

@@ -101,9 +101,12 @@ class _SignOutPageState extends State<SignOutPage> {
               SizedBox(height: 10),
               selectedLeaveReason == '기타'
                   ? TextFormField(
-                      onChanged: (value) => setState(() {
-                        value;
-                      }),
+                      cursorColor: cursorColor,
+                      onChanged: (value) => setState(
+                        () {
+                          value;
+                        },
+                      ),
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
                         hintText: '소중한 의견은 매너게이머 팀에게 전달돼요',

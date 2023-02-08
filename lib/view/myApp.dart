@@ -92,14 +92,8 @@ class _MyAppState extends State<MyApp> {
                       ),
                       '채팅',
                     ),
-              _BottomBarItem(
-                  Icon(
-                    CupertinoIcons.person,
-                  ),
-                  Icon(
-                    CupertinoIcons.person_fill,
-                  ),
-                  'My'),
+              _BottomBarItem(Icon(CupertinoIcons.person),
+                  Icon(CupertinoIcons.person_fill), 'My'),
             ],
           ),
         ),
