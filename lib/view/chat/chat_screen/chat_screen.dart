@@ -71,16 +71,15 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 상대유저이름
               Text(
                 userName,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              SizedBox(width: 5),
+              SizedBox(width: 3.sp),
               // 매너나이
               Text(
-                _chat.mannerAge.value + '세',
-                style: TextStyle(fontSize: 15),
+                '(${_chat.mannerAge.value}세)',
+                style: Theme.of(context).textTheme.labelSmall,
               ),
             ],
           ),
@@ -97,7 +96,9 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                 ),
               ),
             },
-            icon: Icon(Icons.more_vert), //알림끄기, 차단, 신고, 나가기(red), 취소
+            icon: Icon(
+              Icons.more_vert,
+            ),
           ),
         ],
       ),
@@ -116,7 +117,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
             ),
             // 약속 잡는 버튼
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding:
+                  EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
               child: Row(
                 children: [
                   _appoint.isSetAppointment.value &&
@@ -154,39 +156,36 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     );
                                   },
                             child: Container(
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 10),
+                              padding: EdgeInsets.all(4.sp),
                               decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1, color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                    width: 0.8.sp, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5.sp),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    size: 15,
+                                    size: 12.sp,
                                     Icons.calendar_month,
                                     color: appBlackColor,
                                   ),
-                                  SizedBox(width: 5),
+                                  SizedBox(width: 3.sp),
                                   // 약속시간 > 현재 ? 약속시간 표시
                                   // 약속시간 <= 현재 ?
                                   Text(
                                     _appoint.isSetAppointment.value
                                         ? _appoint.appointmentDate.toString()
                                         : '약속 잡기',
-                                    style: TextStyle(
-                                        color: appBlackColor, fontSize: 15),
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                        ), //나중에 서비스가 커지게 되면 알림 기능 넣자
-
+                        ),
                   _appoint.isSetAppointment.value &&
                           _appoint.toDatetime.value.isBefore(DateTime.now())
                       // 약속시간이 현재보다 과거 ? '후기보내기'도 표시 : 약속시간만 표시
@@ -206,11 +205,11 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     );
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.all(5),
+                                    padding: EdgeInsets.all(4.sp),
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          width: 1, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(5),
+                                          width: 0.8.sp, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(5.sp),
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -219,16 +218,16 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Icon(
-                                          size: 15,
+                                          size: 12.sp,
                                           Icons.sticky_note_2_outlined,
                                           color: appBlackColor,
                                         ),
-                                        SizedBox(width: 5),
+                                        SizedBox(width: 3.sp),
                                         Text(
                                           '보낸 후기 확인하기',
-                                          style: TextStyle(
-                                              color: appBlackColor,
-                                              fontSize: 15),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
                                         ),
                                       ],
                                     ),
@@ -260,11 +259,11 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     ),
                                   ),
                                   child: Container(
-                                    padding: EdgeInsets.all(5),
+                                    padding: EdgeInsets.all(4.sp),
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          width: 1, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(5),
+                                          width: 0.8.sp, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(5.sp),
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -273,16 +272,16 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Icon(
-                                          size: 15,
+                                          size: 12.sp,
                                           Icons.sticky_note_2_outlined,
                                           color: appBlackColor,
                                         ),
-                                        SizedBox(width: 5),
+                                        SizedBox(width: 3.sp),
                                         Text(
                                           '후기 보내기',
-                                          style: TextStyle(
-                                              color: appBlackColor,
-                                              fontSize: 15),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
                                         ),
                                       ],
                                     ),

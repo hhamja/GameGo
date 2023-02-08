@@ -29,18 +29,37 @@ class _MessagesState extends State<Messages> {
 
   @override
   Widget build(BuildContext context) {
+    final _bodyMedium = Theme.of(context).textTheme.bodyMedium!;
+    // 날짜 텍스트 스타일
+    final TextStyle _dateTextStyle = TextStyle(
+      fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+      letterSpacing: Theme.of(context).textTheme.bodySmall!.letterSpacing,
+      color: appGreyColor,
+    );
+    // 시간 텍스트 스타일
+    final TextStyle _timeTextStyle = TextStyle(
+      fontSize: 10.sp,
+      height: 1.5.sp,
+      color: appGreyColor,
+    );
+
     return Obx(
-      // 스크롤 바
       () => Padding(
-        padding: const EdgeInsets.all(3.0),
+        padding: EdgeInsets.all(3.0.sp),
+        // 스크롤 바
         child: Scrollbar(
           controller: _chat.scroll,
           interactive: true,
-          // 색상은 ThemeData()에서  highlightColor로 변경하자
-          thickness: 3,
+          thickness: 3.sp,
           // 채팅리스트 박스의 패딩
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: EdgeInsets.fromLTRB(
+              AppSpaceData.screenPadding,
+              0,
+              // 오른쪽은 스크롤바의 패딩 값 만큼 고려
+              AppSpaceData.screenPadding - 3.sp,
+              0,
+            ),
             child: ListView.builder(
               reverse: true,
               shrinkWrap: true,
@@ -84,9 +103,9 @@ class _MessagesState extends State<Messages> {
                   _chat.isShowTime.value = false;
                 }
 
-                //상대 프로필 보여주는 조건문
-                //첫번째 메시지라면? 프로필 표시 O
-                //첫번째 메시지가 아니고 이전 메시지와 현재메시지의 사람이 같고 날짜(시간X)도 같다면? 프로필 표시 X
+                // 상대 프로필 보여주는 조건문
+                // 첫번째 메시지 :  프로필 표시 O
+                // 첫번째 메시지가 아니고 이전 메시지와 현재메시지의 사람이 같고 날짜(시간X)도 같다면? 프로필 표시 X
                 if (reversed == 0) {
                   _chat.isShowProfile.value = true;
                 } else if (_list[reversed - 1].idFrom ==
@@ -114,16 +133,17 @@ class _MessagesState extends State<Messages> {
                     ? // 나의 메시지
                     Container(
                         margin: isChangeUser
-                            ? EdgeInsets.only(top: 10)
-                            : EdgeInsets.symmetric(vertical: 1),
+                            ? EdgeInsets.only(top: 10.sp)
+                            : EdgeInsets.symmetric(vertical: 2.sp),
                         child: Column(
                           children: [
                             _chat.isShowDate.value
                                 ? Padding(
-                                    padding: const EdgeInsets.all(15.0),
+                                    padding: EdgeInsets.all(10.sp),
+                                    // 날짜
                                     child: Text(
                                       _date.toString(),
-                                      style: TextStyle(color: Colors.grey[600]),
+                                      style: _dateTextStyle,
                                       textAlign: TextAlign.center,
                                     ),
                                   )
@@ -138,41 +158,42 @@ class _MessagesState extends State<Messages> {
                                       Text(
                                         _chat.isShowTime.value ? _time : '',
                                         textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            height: 3,
-                                            color: Colors.grey[500]),
+                                        style: _timeTextStyle,
                                       ),
-                                      SizedBox(width: 5),
+                                      SizedBox(width: 5.sp),
                                       Container(
                                         constraints: BoxConstraints(
-                                          maxWidth: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.7,
+                                          maxWidth: 70.w,
                                         ),
                                         decoration: BoxDecoration(
-                                            color: Color(0xff6843F9),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15))),
+                                          color: appPrimaryColor,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12.sp),
+                                          ),
+                                        ),
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 15),
+                                            vertical: 8.sp, horizontal: 12.sp),
                                         // 메시지 입력 리스트
                                         child: Text(
                                           _list[reversed].content.toString(),
                                           textWidthBasis: TextWidthBasis.parent,
                                           style: TextStyle(
-                                            color: Colors.grey[100],
-                                          ),
+                                              fontSize: _bodyMedium.fontSize,
+                                              letterSpacing:
+                                                  _bodyMedium.letterSpacing,
+                                              color: appWhiteColor),
                                         ),
                                       ),
                                     ],
                                   )
+                                // 약속 설정 알림 텍스트
                                 : Padding(
-                                    padding: const EdgeInsets.all(15.0),
+                                    padding: EdgeInsets.all(20.sp),
                                     child: Text(
                                       _list[reversed].content.toString(),
                                       textAlign: TextAlign.center,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
                                     ),
                                   ),
                           ],
@@ -181,73 +202,87 @@ class _MessagesState extends State<Messages> {
                     : // 상대방 메시지
                     Container(
                         margin: isChangeUser
-                            ? EdgeInsets.only(top: 10)
-                            : EdgeInsets.symmetric(vertical: 1),
+                            ? EdgeInsets.only(top: 10.sp)
+                            : EdgeInsets.symmetric(vertical: 2.sp),
                         child: Column(
                           children: [
                             _chat.isShowDate.value
                                 ? Padding(
-                                    padding: const EdgeInsets.all(15.0),
+                                    padding: EdgeInsets.all(10.sp),
+                                    // 날짜
                                     child: Text(
                                       _date.toString(),
-                                      style: TextStyle(color: Colors.grey[600]),
+                                      style: _dateTextStyle,
                                       textAlign: TextAlign.center,
                                     ),
                                   )
                                 : SizedBox.shrink(),
                             !_appointType
+                                // 채팅 메시지
                                 ? Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      //상대프로필
+                                      // 상대프로필
                                       _chat.isShowProfile.value
                                           ? CircleAvatar(
-                                              radius: 18,
+                                              radius: 15.sp,
                                               backgroundImage: NetworkImage(
                                                 widget.profileUrl,
                                               ),
                                             )
-                                          : SizedBox(width: 36),
-                                      SizedBox(width: 5),
-                                      Container(
-                                        constraints: BoxConstraints(
-                                          maxWidth: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.6,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[200],
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15))),
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 15),
-                                        // 메시지 입력 리스트
-                                        child: Text(
-                                          '${_list[reversed].content}',
-                                          textWidthBasis: TextWidthBasis.parent,
-                                          style:
-                                              TextStyle(color: appBlackColor),
-                                        ),
-                                      ),
-                                      SizedBox(width: 5),
-                                      Text(
-                                        _chat.isShowTime.value ? _time : '',
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            height: 3,
-                                            color: Colors.grey[500]),
+                                          : SizedBox(width: 30.sp),
+                                      SizedBox(width: 4.sp),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            constraints: BoxConstraints(
+                                              maxWidth: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.6,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFEEEEEE),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(12.sp),
+                                              ),
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: 8.sp,
+                                              horizontal: 12.sp,
+                                            ),
+                                            // 메시지
+                                            child: Text(
+                                              '${_list[reversed].content}',
+                                              textWidthBasis:
+                                                  TextWidthBasis.parent,
+                                              style: _bodyMedium,
+                                            ),
+                                          ),
+                                          SizedBox(width: 5.sp),
+                                          Text(
+                                            _chat.isShowTime.value ? _time : '',
+                                            textAlign: TextAlign.start,
+                                            style: _timeTextStyle,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   )
+
+                                // 약속 설정 알림 텍스트
                                 : Padding(
-                                    padding: const EdgeInsets.all(15.0),
+                                    padding: EdgeInsets.all(20.sp),
                                     child: Text(
                                       _list[reversed].content.toString(),
                                       textAlign: TextAlign.center,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
                                     ),
                                   ),
                           ],

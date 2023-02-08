@@ -20,14 +20,18 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
   // bool _isAlramOnOff = true;
   // 차단 바텀시트 클릭에 대한 bool값
   // bool _isBlockOnOff = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: appWhiteColor,
-      height: 120, //개당 60
+      margin: EdgeInsets.all(AppSpaceData.screenPadding * 0.5),
+      decoration: BoxDecoration(
+        color: appWhiteColor,
+        borderRadius: BorderRadius.circular(10.sp),
+      ),
+      // 아이템 개수*50 + 10 (위아래 공간 각  5)
+      height: 60.sp,
       child: Column(
-        //알림끄기, 차단, 신고, 나가기(red), 취소
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // CustomButtomSheet(_isAlramOnOff ? '알림끄기' : '알림켜기', Colors.blue, () {
           //   setState(() => _isAlramOnOff = !_isAlramOnOff); //토글버튼
@@ -38,18 +42,20 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
           //   setState(() => _isBlockOnOff = !_isBlockOnOff); //토글버튼
           //   Get.back();
           // }),
-          CustomButtomSheet('신고하기', Colors.blue, () {
-            Get.back();
-            Get.toNamed(
-              '/report',
-              arguments: {
-                'chatRoomId': widget.chatRoomId,
-                'uid': widget.uid, //신고 받는 사람의 uid
-              },
-            ); //신고목록 페이지로 이동
-          }),
-          // CustomButtomSheet('채팅방 나가기', Colors.redAccent, () {}),
-        
+          CustomButtomSheet(
+            '신고하기',
+            appBlackColor,
+            () {
+              Get.back();
+              Get.toNamed(
+                '/report',
+                arguments: {
+                  'chatRoomId': widget.chatRoomId,
+                  'uid': widget.uid, //신고 받는 사람의 uid
+                },
+              ); //신고목록 페이지로 이동
+            },
+          ),
         ],
       ),
     );
