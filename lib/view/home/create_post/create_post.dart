@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class AddPostPage extends StatefulWidget {
@@ -171,7 +170,6 @@ class _AddPostPageState extends State<AddPostPage> {
                     scrollController: _maintextScrollController,
                     showCursor: true,
                     style: Theme.of(context).textTheme.bodyMedium,
-                    cursorColor: Colors.blue,
                     controller: _maintextController,
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
@@ -185,7 +183,10 @@ class _AddPostPageState extends State<AddPostPage> {
                       suffixIcon: _maintextController.text.isEmpty
                           ? null
                           : IconButton(
-                              icon: const Icon(
+                              // 드랍다운 버튼과 오른쪽 끝선을 맞추기 위한 수치
+                              padding: EdgeInsets.all(3.sp),
+                              alignment: Alignment.centerRight,
+                              icon: Icon(
                                 Icons.clear,
                                 color: Colors.grey,
                               ),
