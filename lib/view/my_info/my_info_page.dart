@@ -14,9 +14,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
   @override
   void initState() {
     super.initState();
-    // 현재유저 정보 받기
     _user.getUserInfoByUid(CurrentUser.uid);
-    // 가입날짜
     _createdAt =
         Jiffy(_user.userInfo['createdAt'].toDate()).format('yy. MM. dd');
   }
@@ -27,116 +25,155 @@ class _MyInfoPageState extends State<MyInfoPage> {
       appBar: AppBar(
         title: Text(
           '나의 정보',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Get.to(
-                  () => SettingPage(),
-                );
-              },
-              icon: Icon(Icons.settings_outlined))
+            onPressed: () {
+              Get.to(
+                () => SettingPage(),
+              );
+            },
+            icon: Icon(Icons.settings_outlined),
+            iconSize: 18.sp,
+          ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          // 내정보 새로고침
-          await _user.getUserInfoByUid(CurrentUser.uid);
-        },
-        displacement: 0,
-        child: Obx(
-          () => SettingsList(
-            lightTheme: SettingsThemeData(
-              settingsListBackground: appWhiteColor,
-            ),
-            sections: [
-              SettingsSection(
-                margin: EdgeInsetsDirectional.only(bottom: 10),
-                title: Text('프로필'),
-                tiles: <SettingsTile>[
-                  SettingsTile.navigation(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundImage:
-                          NetworkImage(_user.userInfo['profileUrl']),
-                    ),
-                    title: Text(_user.userInfo['userName']),
-                    description: Text('가입일 : $_createdAt'),
-                    trailing: Icon(Icons.keyboard_control_outlined),
-                    onPressed: (value) {
-                      Get.to(() => EditMyProfilePage());
-                    },
-                  ),
-                  SettingsTile(
-                    title: CustomMannerAge(
-                      _user.userInfo['mannerAge'].toString(),
-                    ),
-                  ),
-                ],
-              ),
-              SettingsSection(
-                title: Text('나의 활동'),
-                tiles: <SettingsTile>[
-                  SettingsTile.navigation(
-                    title: Text('나의 글'),
-                    trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                    onPressed: (_) {
-                      Get.to(() => MyPostListPage());
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    title: Text('관심 게시글'),
-                    trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                    onPressed: (_) {
-                      Get.toNamed('/favorite');
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    title: Text('받은 매너 평가'),
-                    trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                    onPressed: (_) {
-                      Get.to(() => ReceivedMannerEvaluationPage());
-                    },
-                  ),
-                  SettingsTile.navigation(
-                    title: Text('받은 게임 후기'),
-                    trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                    onPressed: (_) {
-                      Get.to(() => ReceivedGameReviewPage());
-                    },
-                  ),
-                ],
-              ),
-              SettingsSection(
-                title: Text('기타'),
-                tiles: <SettingsTile>[
-                  // SettingsTile.navigation(
-                  //   title: Text('공지사항'),
-                  //   onPressed: (_) {
-                  //     Get.to(() => AppNoticeListPage());
-                  //   },
-                  // ),
-                  // SettingsTile.navigation(
-                  //   title: Text('1:1 문의 및 피드백'),
-                  //   onPressed: (_) {
-                  //     Get.to(() => FeedbackPage());
-                  //   },
-                  // ),
-                  // SettingsTile.navigation(
-                  //   title: Text('FAQ'),
-                  //   onPressed: (_) {
-                  //     Get.to(() => FAQPage());
-                  //   },
-                  // ),
-                  SettingsTile.navigation(
-                    title: Text('설정'),
-                    onPressed: (_) => {Get.to(() => SettingPage())},
-                  ),
-                ],
-              ),
-            ],
+      body: Obx(
+        () => SettingsList(
+          lightTheme: SettingsThemeData(
+            settingsListBackground: appWhiteColor,
           ),
+          sections: [
+            SettingsSection(
+              title: Text(
+                '프로필',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: CircleAvatar(
+                    radius: 25.sp,
+                    backgroundImage: NetworkImage(
+                      _user.userInfo['profileUrl'],
+                    ),
+                  ),
+                  title: Text(
+                    _user.userInfo['userName'],
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  description: Text(
+                    '가입일 : $_createdAt',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: Icon(Icons.keyboard_control_outlined),
+                  onPressed: (value) {
+                    Get.to(() => EditMyProfilePage());
+                  },
+                ),
+                SettingsTile(
+                  title: CustomMannerAge(
+                    _user.userInfo['mannerAge'].toString(),
+                  ),
+                ),
+              ],
+            ),
+            SettingsSection(
+              title: Text(
+                '나의 활동',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  title: Text(
+                    '나의 글',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                  ),
+                  onPressed: (_) {
+                    Get.to(
+                      () => MyPostListPage(),
+                    );
+                  },
+                ),
+                SettingsTile.navigation(
+                  title: Text(
+                    '관심 게시글',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                  ),
+                  onPressed: (_) {
+                    Get.toNamed('/favorite');
+                  },
+                ),
+                SettingsTile.navigation(
+                  title: Text(
+                    '받은 매너 평가',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                  onPressed: (_) {
+                    Get.to(
+                      () => ReceivedMannerEvaluationPage(),
+                    );
+                  },
+                ),
+                SettingsTile.navigation(
+                  title: Text(
+                    '받은 게임 후기',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                  onPressed: (_) {
+                    Get.to(
+                      () => ReceivedGameReviewPage(),
+                    );
+                  },
+                ),
+              ],
+            ),
+            SettingsSection(
+              title: Text(
+                '기타',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              tiles: <SettingsTile>[
+                // SettingsTile.navigation(
+                //   title: Text('공지사항'),
+                //   onPressed: (_) {
+                //     Get.to(() => AppNoticeListPage());
+                //   },
+                // ),
+                // SettingsTile.navigation(
+                //   title: Text('1:1 문의 및 피드백'),
+                //   onPressed: (_) {
+                //     Get.to(() => FeedbackPage());
+                //   },
+                // ),
+                // SettingsTile.navigation(
+                //   title: Text('FAQ'),
+                //   onPressed: (_) {
+                //     Get.to(() => FAQPage());
+                //   },
+                // ),
+                SettingsTile.navigation(
+                  title: Text(
+                    '설정',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  onPressed: (_) => {
+                    Get.to(
+                      () => SettingPage(),
+                    ),
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -20,7 +20,7 @@ class CustomMannerAge extends StatelessWidget {
               children: [
                 Text(
                   '매너나이',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
                 // IconButton(
                 //     padding: EdgeInsets.all(2),
