@@ -20,6 +20,8 @@ class CustomSmallDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: AlertDialog(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
         backgroundColor: appWhiteColor,
         contentTextStyle: Theme.of(context).textTheme.bodyMedium,
         buttonPadding: EdgeInsets.zero,
