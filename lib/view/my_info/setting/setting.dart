@@ -10,38 +10,18 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   final NtfSettingController _c = Get.put(NtfSettingController());
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // 위젯 관찰자 추가
-  //   WidgetsBinding.instance.addObserver(this);
-  // }
-
-  // @override
-  // void dispose() {
-  //   WidgetsBinding.instance.removeObserver(this);
-  //   super.dispose();
-  // }
-
-  // /// 세팅 페이지에서 권한 설정 후 변경된 값을 위젯에 반영
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   super.didChangeAppLifecycleState(state);
-  //   if (state == AppLifecycleState.resumed) {
-  //     _c.isGrantedNtf.value = true;
-  //     _c.getUserPushNtf();
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '설정',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: Obx(
         () => SettingsList(
@@ -50,9 +30,13 @@ class _SettingPageState extends State<SettingPage> {
           ),
           sections: [
             SettingsSection(
-              title: Text('알림 설정'),
+              title: Text(
+                '알림 설정',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
+                  activeSwitchColor: appPrimaryColor,
                   onToggle: _c.isGrantedNtf.value
                       // 알림권한 허용된 경우
                       ? (value) async {
@@ -63,10 +47,17 @@ class _SettingPageState extends State<SettingPage> {
                       : (_) => _c.requestNotificationPermission(),
                   initialValue:
                       _c.isGrantedNtf.value ? _c.isChatNtf.value : false,
-                  title: Text('채팅 알림'),
-                  description: Text('메시지 알림을 받습니다.'),
+                  title: Text(
+                    '채팅 알림',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  description: Text(
+                    '메시지 알림을 받습니다.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                 ),
                 SettingsTile.switchTile(
+                  activeSwitchColor: appPrimaryColor,
                   onToggle: _c.isGrantedNtf.value
                       // 알림권한 허용된 경우
                       ? (value) async {
@@ -77,10 +68,17 @@ class _SettingPageState extends State<SettingPage> {
                       : (_) => _c.requestNotificationPermission(),
                   initialValue:
                       _c.isGrantedNtf.value ? _c.isActivitNtf.value : false,
-                  title: Text('활동 알림'),
-                  description: Text('관심, 약속, 매너평가 알림을 받습니다.'),
+                  title: Text(
+                    '활동 알림',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  description: Text(
+                    '관심, 약속, 매너평가 알림을 받습니다.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                 ),
                 SettingsTile.switchTile(
+                  activeSwitchColor: appPrimaryColor,
                   onToggle: _c.isGrantedNtf.value
                       // 알림권한 허용된 경우
                       ? (value) async {
@@ -93,8 +91,14 @@ class _SettingPageState extends State<SettingPage> {
                   initialValue: _c.isGrantedNtf.value
                       ? _c.isMarketingConsent.value
                       : false,
-                  title: Text('이벤트 및 소식 알림'),
-                  description: Text('이벤트 및 앱 소석 알림을 받습니다.'),
+                  title: Text(
+                    '이벤트 및 소식 알림',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  description: Text(
+                    '이벤트 및 앱 소석 알림을 받습니다.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                 ),
                 // SettingsTile.switchTile(
                 //   onToggle: (value) async {
@@ -108,24 +112,39 @@ class _SettingPageState extends State<SettingPage> {
               ],
             ),
             SettingsSection(
-              title: Text('기타'),
+              title: Text(
+                '기타',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
-                  title: Text('서비스 이용 약관'),
+                  title: Text(
+                    '서비스 이용 약관',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                   onPressed: (_) {},
                 ),
                 SettingsTile.navigation(
-                  title: Text('개인정보 취급 처리 방침'),
+                  title: Text(
+                    '개인정보 취급 처리 방침',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                   onPressed: (_) {},
                 ),
                 SettingsTile.navigation(
-                  title: Text('로그아웃'),
+                  title: Text(
+                    '로그아웃',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                   onPressed: (_) {
                     Get.dialog(LogOutDialog());
                   },
                 ),
                 SettingsTile.navigation(
-                  title: Text('탈퇴하기'),
+                  title: Text(
+                    '탈퇴하기',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                   onPressed: (_) {
                     Get.toNamed('/signout');
                   },
