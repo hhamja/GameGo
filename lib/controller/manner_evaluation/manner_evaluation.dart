@@ -8,7 +8,7 @@ class EvaluationController extends GetxController {
 
   var goodCheckList = [].obs;
   var badCheckList = [].obs;
-  // 내가 보낸 후기가 매너 후기인지? 비매너 후기 인지? 판단하게 해줄 bool 
+  // 내가 보낸 후기가 매너 후기인지? 비매너 후기 인지? 판단하게 해줄 bool
   RxBool isGood = false.obs;
   // 매너 평가 항목들을 순서대로 담은 리스트 선언
   RxList kindManner = [].obs;
@@ -45,7 +45,7 @@ class EvaluationController extends GetxController {
   // 매너 평가 보내기
   Future addGoodEvaluation(uid, chatRoomId, GoodEvaluationModel goodEvaluation,
       NotificationModel ntfModel) async {
-    // evaluation/{받는uid}/goodEvaluation/{chatRoomId}에 저장
+    // evaluation / {받는uid} / goodEvaluation / { chatRoomId}에 저장
     _evaluationDB.doc(uid).collection('goodEvaluation').doc(chatRoomId).set(
       {
         'evaluationType': goodEvaluation.evaluationType,
@@ -69,14 +69,14 @@ class EvaluationController extends GetxController {
     _age.plusMannerAge(uid);
   }
 
-  // 비매너 평가 추가 
+  // 비매너 평가 추가
   // 푸시알림 필요 X이므로 ntf는 추가 X
   Future addBadEvaluation(
     uid,
     chatRoomId,
     BadEvaluationModel badEvaluation,
   ) async {
-    // evaluation/{받는uid}/badEvaluation/{chatRoomId}에 저장
+    // evaluation / {받는uid} / badEvaluation / {chatRoomId}에 저장
     _evaluationDB.doc(uid).collection('badEvaluation').doc(chatRoomId).set(
       {
         'evaluationType': badEvaluation.evaluationType,
@@ -104,7 +104,7 @@ class EvaluationController extends GetxController {
   // 매너 평가 리스트 받기
   Future getGoodEvaluationList(uid) async {
     var _goodEvaluationList = [];
-    _evaluationDB
+    await _evaluationDB
         .doc(uid)
         .collection('goodEvaluation')
         .orderBy('createdAt', descending: true) //최신일 수록 위로
@@ -140,7 +140,7 @@ class EvaluationController extends GetxController {
   // 비매너 평가 리스트 받기
   Future getBadEvaluationList(uid) async {
     var badEvaluationList = [];
-    _evaluationDB
+    await _evaluationDB
         .doc(uid)
         .collection('badEvaluation')
         .orderBy('createdAt', descending: true) //최신일 수록 위로
@@ -178,7 +178,7 @@ class EvaluationController extends GetxController {
         badEvaluationList.where((e) => e.privateMeeting == true).toList();
   }
 
-  // 내가 보낸 매너평가 받기 
+  // 내가 보낸 매너평가 받기
   // evaluationType == good ? goodEvaluation에 담기
   // evaluationType == bad ? badEvaluation에 담기
   Future getMySentEvaluation(uid, chatRoomId) async {
