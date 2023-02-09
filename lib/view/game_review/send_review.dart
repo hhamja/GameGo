@@ -23,6 +23,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
 
   List<bool?> goodBoolList = [];
   List<bool?> badBoolList = [];
+
   @override
   void initState() {
     super.initState();
@@ -40,14 +41,20 @@ class _SendReviewPageState extends State<SendReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '게임 후기 보내기',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(
+          AppSpaceData.screenPadding,
+        ),
         child: SingleChildScrollView(
           controller: _scrollC,
           child: Column(
@@ -63,19 +70,20 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       () => _evaluationtype = 'bad',
                     ),
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.all(20))),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.all(15.sp),
+                      ),
+                    ),
                     child: _evaluationtype == 'bad'
                         ? Column(
                             children: [
                               Text(
                                 '\u{1F629}',
-                                style: TextStyle(
-                                  fontSize: 58.5,
-                                ),
+                                style: TextStyle(fontSize: 45.sp),
                               ),
                               Text(
                                 '별로예요',
-                                style: TextStyle(color: appBlackColor),
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ],
                           )
@@ -84,11 +92,13 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               ClipOval(
                                 child: ColorFiltered(
                                   colorFilter: ColorFilter.mode(
-                                      Colors.grey, BlendMode.color),
+                                    Colors.grey,
+                                    BlendMode.color,
+                                  ),
                                   child: Text(
                                     '\u{1F629}',
                                     style: TextStyle(
-                                      fontSize: 50,
+                                      fontSize: 40.sp,
                                       color: Colors.grey,
                                     ),
                                   ),
@@ -96,7 +106,11 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               ),
                               Text(
                                 '별로예요',
-                                style: TextStyle(color: Colors.grey),
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  letterSpacing: 0.25.sp,
+                                  color: Colors.grey,
+                                ),
                               ),
                             ],
                           ),
@@ -107,19 +121,22 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       () => _evaluationtype = 'good',
                     ),
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.all(20))),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.all(15.sp),
+                      ),
+                    ),
                     child: _evaluationtype == 'good'
                         ? Column(
                             children: [
                               Text(
                                 '\u{1F60D}',
                                 style: TextStyle(
-                                  fontSize: 58.5,
+                                  fontSize: 45.sp,
                                 ),
                               ),
                               Text(
                                 '최고예요',
-                                style: TextStyle(color: appBlackColor),
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ],
                           )
@@ -128,11 +145,13 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               ClipOval(
                                 child: ColorFiltered(
                                   colorFilter: ColorFilter.mode(
-                                      Colors.grey, BlendMode.color),
+                                    Colors.grey,
+                                    BlendMode.color,
+                                  ),
                                   child: Text(
                                     '\u{1F60D}',
                                     style: TextStyle(
-                                      fontSize: 50,
+                                      fontSize: 40.sp,
                                       color: Colors.grey,
                                     ),
                                   ),
@@ -140,7 +159,11 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               ),
                               Text(
                                 '최고예요',
-                                style: TextStyle(color: Colors.grey),
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  letterSpacing: 0.25.sp,
+                                  color: Colors.grey,
+                                ),
                               ),
                             ],
                           ),
@@ -156,13 +179,17 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       itemCount: BadEvaluationModel.badList.length,
                       itemBuilder: (context, index) {
                         return CheckboxListTile(
+                          activeColor: appPrimaryColor,
                           value: badBoolList[index],
                           controlAffinity: ListTileControlAffinity.leading,
-                          onChanged: (value) =>
-                              setState(() => badBoolList[index] = value!),
+                          onChanged: (value) => setState(
+                            () => badBoolList[index] = value!,
+                          ),
                           contentPadding: EdgeInsets.zero,
                           title: Text(
-                              BadEvaluationModel.badList[index].toString()),
+                            BadEvaluationModel.badList[index].toString(),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
                         );
                       },
                     )
@@ -175,6 +202,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       itemCount: GoodEvaluationModel.goodList.length,
                       itemBuilder: (context, index) {
                         return CheckboxListTile(
+                          activeColor: appPrimaryColor,
                           value: goodBoolList[index],
                           controlAffinity: ListTileControlAffinity.leading,
                           onChanged: (value) => setState(() {
@@ -182,39 +210,47 @@ class _SendReviewPageState extends State<SendReviewPage> {
                           }),
                           contentPadding: EdgeInsets.zero,
                           title: Text(
-                              GoodEvaluationModel.goodList[index].toString()),
+                            GoodEvaluationModel.goodList[index].toString(),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
                         );
                       },
                     )
                   : SizedBox.shrink(),
-
               // 후기 작성 박스
               _evaluationtype != ''
                   ? Container(
-                      margin: EdgeInsets.symmetric(vertical: 15),
+                      margin: EdgeInsets.symmetric(
+                        vertical: AppSpaceData.heightSmall,
+                      ),
                       child: TextFormField(
+                        style: Theme.of(context).textTheme.bodyMedium,
                         cursorColor: cursorColor,
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                           hintText: '게임 후기를 작성해주세요.(선택사항)',
-                          // hintStyle: TextStyle(color: appBlackColor),
-                          // fillColor: appWhiteColor,
-                          hintStyle: TextStyle(),
-                          contentPadding: EdgeInsets.all(15),
+                          hintStyle: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .fontSize,
+                            color: appGreyColor,
+                          ),
+                          contentPadding: EdgeInsets.all(10.sp),
                           counterText: '남겨주신 후기는 상대방에게 전달돼요.',
                           counterStyle: TextStyle(),
                           focusedBorder: OutlineInputBorder(
                             borderSide:
-                                const BorderSide(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(10.0),
+                                BorderSide(color: Colors.grey, width: 0.7.sp),
+                            borderRadius: BorderRadius.circular(10.0.sp),
                           ),
                           border: OutlineInputBorder(
                             borderSide:
-                                const BorderSide(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(10.0),
+                                BorderSide(color: Colors.grey, width: 0.7.sp),
+                            borderRadius: BorderRadius.circular(10.0.sp),
                           ),
                         ),
-                        minLines: 8,
+                        minLines: 5,
                         maxLines: null,
                         showCursor: true,
                         keyboardType: TextInputType.text,
@@ -233,7 +269,12 @@ class _SendReviewPageState extends State<SendReviewPage> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        padding: EdgeInsets.fromLTRB(
+          AppSpaceData.screenPadding,
+          0,
+          AppSpaceData.screenPadding,
+          AppSpaceData.screenPadding,
+        ),
         child: CustomFullFilledTextButton('후기 보내기', () {
           Get.dialog(
             CustomSmallDialog(
@@ -242,9 +283,9 @@ class _SendReviewPageState extends State<SendReviewPage> {
               '보내기',
               () => Get.back(),
               () async {
-                // 1. '최고예요'를 선택한 경우
+                // '최고예요'를 선택한 경우
                 if (_evaluationtype == 'good') {
-                  // 1-1. 매너 평가 인스턴스 생성
+                  // 매너 평가 인스턴스 생성
                   final GoodEvaluationModel _goodModel = GoodEvaluationModel(
                     idFrom: CurrentUser.uid,
                     idTo: uid,
@@ -260,7 +301,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     hardGame: goodBoolList[8]!,
                     createdAt: Timestamp.now(),
                   );
-                  // 1-2. notification 인스턴스 생성
+                  // notification 인스턴스 생성
                   final NotificationModel _ntfModel = NotificationModel(
                     idFrom: CurrentUser.uid,
                     idTo: uid,
@@ -272,14 +313,13 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     content: '',
                     createdAt: Timestamp.now(),
                   );
-                  // 1-3. 매너 평가 보내기
+                  // 매너 평가 보내기
                   await _evaluation.addGoodEvaluation(
                       uid, chatRoomId, _goodModel, _ntfModel);
-
-                  // 1-4. 선택사항인 후기 작성 시
+                  // 선택사항인 후기 작성 시
                   if ((_reviewText.text.trim() != '') ||
                       _reviewText.text.trim().isNotEmpty) {
-                    // 1-4-1. 후기 인스턴스 생성
+                    // 후기 인스턴스 생성
                     final GameReviewModel _reviewModel = GameReviewModel(
                       idFrom: CurrentUser.uid,
                       idTo: uid,
@@ -293,18 +333,18 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       gameType: 'lol',
                       createdAt: Timestamp.now(),
                     );
-                    // 1-4-1. 작성한 매너 후기 'review'로 서버에 저장하기
+                    // 작성한 매너 후기 'review'로 서버에 저장하기
                     await _review.addMannerReview(uid, _reviewModel);
-                    // 1-4-1. 작성한 후기 텍스트 전부 삭제
+                    // 작성한 후기 텍스트 전부 삭제
                     _reviewText.clear();
                     print('매너평가 + 후기작성 O');
                   } else {
                     print('매너평가 + 후기작성 X');
                   }
                 }
-                // 2. '별로예요'를 선택한 경우
+                // '별로예요'를 선택한 경우
                 else if (_evaluationtype == 'bad') {
-                  // 2-1. 비매너 평가 인스턴스 생성
+                  // 비매너 평가 인스턴스 생성
                   final BadEvaluationModel _badModel = BadEvaluationModel(
                     idFrom: CurrentUser.uid,
                     idTo: uid,
@@ -323,22 +363,22 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     privateMeeting: badBoolList[11]!,
                     createdAt: Timestamp.now(),
                   );
-                  // 2-2. 비매너 평가 보내기
+                  // 비매너 평가 보내기
                   await _evaluation.addBadEvaluation(
                       uid, chatRoomId, _badModel);
-                  // 2-3. 선택사항인 후기 작성 시
+                  // 선택사항인 후기 작성 시
                   if ((_reviewText.text.trim() != '') ||
                       _reviewText.text.trim().isNotEmpty) {
-                    // 2-3-1. 신고 인스턴스 생성
+                    // 신고 인스턴스 생성
                     final ReportModel _report = ReportModel(
                       idFrom: CurrentUser.uid,
                       idTo: uid,
                       reportContent: _reviewText.text.trim(),
                       createdAt: Timestamp.now(),
                     );
-                    // 2-3-2. 작성한 비매너 후기 신고하기로 서버에 보내기
+                    // 작성한 비매너 후기 신고하기로 서버에 보내기
                     await _review.addUnMannerReview(_report);
-                    // 2-3-3. 작성한 후기 텍스트 전부 삭제
+                    // 작성한 후기 텍스트 전부 삭제
                     _reviewText.clear();
                     print('비매너평가 + 후기작성 O');
                   } else {
@@ -346,13 +386,11 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   }
                 }
                 null;
-
                 //보낸 매너후기에 대한 bool값을 채팅화면으로 가기 전 업데이트
                 await _evaluation.checkExistEvaluation(uid, chatRoomId);
                 Get.back();
                 Get.back();
               },
-           
             ),
           );
         }),
