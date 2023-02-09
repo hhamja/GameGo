@@ -65,7 +65,7 @@ class CustomMannerAge extends StatelessWidget {
                           Text(
                             '${mannerAge.toString()}세',
                             style: TextStyle(
-                                fontSize: 20, height: 1.2, color: Colors.blue),
+                                fontSize: 20, height: 1.2, color: mannerAgeColor),
                           ),
                           SizedBox(width: 5),
                         ],
