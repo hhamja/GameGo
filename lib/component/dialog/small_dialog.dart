@@ -7,8 +7,6 @@ class CustomSmallDialog extends StatelessWidget {
     this.completeText,
     this.cancelFun,
     this.completeFun,
-    this.cancelFlex,
-    this.completeFlex,
   );
 
   final String content; //Dialog 내용
@@ -17,58 +15,50 @@ class CustomSmallDialog extends StatelessWidget {
   final Function() cancelFun; //취소버튼의 onPressed()
   final Function() completeFun; //완료버튼의 onPressed()
   // cancelFlex : completeFlex = 1:1이면 버튼 Width는 서로 동일
-  final int cancelFlex; //Expaned 취소버튼 flex 값
-  final int completeFlex; //Expaned 완료버튼 flex 값
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: AlertDialog(
+        backgroundColor: appWhiteColor,
+        contentTextStyle: Theme.of(context).textTheme.bodyMedium,
         buttonPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.symmetric(vertical: 30),
-        insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        contentPadding: EdgeInsets.only(top: 20.sp),
+        insetPadding:
+            EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
         // 내용
         content: Container(
-          width: MediaQuery.of(context).size.width,
+          width: 100.w,
           child: Text(
             content,
             textAlign: TextAlign.center,
           ),
         ),
+        actionsPadding:
+            EdgeInsets.symmetric(horizontal: 15.sp, vertical: 20.sp),
+
         actions: [
           Row(
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // 왼쪽버튼
-              Expanded(
-                flex: cancelFlex,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
-                    padding: EdgeInsets.symmetric(vertical: 13, horizontal: 0),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: cancelFun,
-                  child: Text(
-                    cancelText,
-                    style: TextStyle(color: appBlackColor),
-                  ),
-                ),
+              CustomOutlineTextButton(
+                40.w,
+                5.5.h,
+                cancelText,
+                cancelFun,
+                appBlackColor,
               ),
-              // 오른쪽버튼
-              Expanded(
-                flex: completeFlex,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.blue[300],
-                    padding: EdgeInsets.symmetric(vertical: 13, horizontal: 0),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: completeFun,
-                  child: Text(
-                    completeText,
-                    style: TextStyle(color: appBlackColor),
-                  ),
-                ),
+
+              SizedBox(
+                width: 5.sp,
+              ), // 오른쪽버튼
+              CustomFilledTextButton(
+                40.w,
+                5.5.h,
+                completeText,
+                completeFun,
               ),
             ],
           ),

@@ -48,8 +48,7 @@ class _DeleteDialogState extends State<DeleteDialog> {
       () async {
         _deletePost();
       },
-      1,
-      1,
+   
     );
   }
 }

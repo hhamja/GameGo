@@ -352,8 +352,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                 Get.back();
                 Get.back();
               },
-              2,
-              3,
+           
             ),
           );
         }),

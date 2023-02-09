@@ -258,8 +258,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                           },
                                         );
                                       }, //매너평가 페이지로 이동
-                                      1,
-                                      1,
+                                    
                                     ),
                                   ),
                                   child: Container(

@@ -112,8 +112,7 @@ class NtfSettingController extends GetxController with WidgetsBindingObserver {
             // 앱 설정으로 이동,
             openAppSettings();
           },
-          2,
-          3,
+       
         ),
       );
     }

@@ -17,8 +17,7 @@ class LogOutDialog extends StatelessWidget {
         await _user.signOut();
         Get.offAllNamed('/main');
       },
-      5,
-      3,
+    
     );
   }
 }

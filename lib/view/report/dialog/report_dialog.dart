@@ -60,9 +60,6 @@ class _ReportDialogState extends State<ReportDialog> {
           }
         });
       },
-      //왼쪽, 오른쪽 버튼 비율 1:1
-      1,
-      1,
     );
   }
 }
