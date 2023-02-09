@@ -119,8 +119,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       appBar: AppBar(
         title: Text(
           '프로필 설정',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
+        // body의 UI들이 가운데 정렬된 구성을 가지고 있어 이 페이지는 가운데로 함
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -128,54 +129,65 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         child: Column(
           children: [
             // 프로필 설정
-            Container(
-              margin: EdgeInsets.symmetric(
-                vertical: 40,
-              ),
-              child: Stack(
-                children: [
-                  _photo == null
-                      ? //갤러리에서 사진 선택하지 않은 경우 나의 기존 프로필 url
-                      CircleAvatar(
-                          backgroundImage: NetworkImage(profileImageUrl),
-                          radius: 80,
-                        )
-                      : //갤러리에서 사진 선택한 경우 선택한 파일의 이미지
-                      CircleAvatar(
-                          backgroundImage: FileImage(_photo!),
-                          radius: 80,
-                        ),
-                  Positioned(
-                    bottom: 7,
-                    right: 7,
-                    child: GestureDetector(
-                      // 클릭시 모달 팝업을 띄워준다.
-                      onTap: () => Get.bottomSheet(showBottomSheet()),
+            GestureDetector(
+              // 클릭시 모달 팝업을 띄워준다.
+              onTap: () => Get.bottomSheet(showBottomSheet()),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(
+                  0,
+                  // 앱바와의 거리
+                  AppSpaceData.heightLarge,
+                  0,
+                  // 닉네임 입력 칸과의 거리
+                  AppSpaceData.heightMedium,
+                ),
+                child: Stack(
+                  children: [
+                    _photo == null
+                        ? // 갤러리에서 사진 선택하지 않은 경우 나의 기존 프로필 url
+                        CircleAvatar(
+                            backgroundImage: NetworkImage(profileImageUrl),
+                            radius: 65.sp,
+                          )
+                        : // 갤러리에서 사진 선택한 경우 선택한 파일의 이미지
+                        CircleAvatar(
+                            backgroundImage: FileImage(_photo!),
+                            radius: 65.sp,
+                          ),
+                    Positioned(
+                      bottom: 6.sp,
+                      right: 6.sp,
                       child: Container(
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(4.sp),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle, color: appWhiteColor),
                         child: Icon(
                           Icons.camera_alt,
                           color: appBlackColor,
-                          size: 30,
+                          size: 23.sp,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 
             // 닉네임 입력란
             TextFormField(
               cursorColor: cursorColor,
+              style: Theme.of(context).textTheme.titleMedium,
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 floatingLabelAlignment: FloatingLabelAlignment.center,
                 hintText: '닉네임을 입력해주세요 :)',
                 fillColor: appWhiteColor,
+                hintStyle: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                  color: appGreyColor,
+                ),
                 labelText: '-------- 닉네임 --------',
+                labelStyle: Theme.of(context).textTheme.titleSmall,
                 counterText: '',
                 border: InputBorder.none,
               ),
@@ -189,23 +201,29 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               textAlign: TextAlign.center,
               maxLengthEnforcement: MaxLengthEnforcement.enforced,
               onChanged: (value) {
-                // setState(() {});
+                setState(() {});
               },
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
                     RegExp(r'[a-z|A-Z|0-9|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]'))
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 3.sp),
             Text(
               _showErrorText,
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(
+                fontSize: 12.sp,
+                letterSpacing: 0.5,
+                color: Colors.red,
+              ),
             )
           ],
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.all(
+          AppSpaceData.screenPadding,
+        ),
         child: CustomFullFilledTextButton(
           '완료',
           validateButton,
@@ -217,15 +235,20 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   // 카메라 아이콘 클릭시 띄울 바텀시트
   Container showBottomSheet() {
     return Container(
-      height: 240,
-      color: appWhiteColor, //투염도 설정(나중)
+      margin: EdgeInsets.all(AppSpaceData.screenPadding * 0.5),
+      decoration: BoxDecoration(
+        color: appWhiteColor,
+        borderRadius: BorderRadius.circular(10.sp),
+      ),
+      height: 160.sp,
+      color: appWhiteColor,
       child: Column(
         children: [
           CustomButtomSheet(
             '갤러리에서 사진 선택',
-            Colors.blue,
+            appBlackColor,
             () async {
-              //갤러리 권한 요청
+              // 갤러리 권한 요청
               await PermissionHandler().requestStoragePermission().then(
                     (value) => value == true
                         // 허용된 권한 : 사진 저장소 실행
@@ -237,10 +260,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             },
           ),
           CustomButtomSheet(
-            '기본 카메라로 사진 찍기', // ★★★★★카메라 권한 요청
-            Colors.blue,
+            '기본 카메라로 사진 찍기',
+            appBlackColor,
             () async {
-              //카메라 권한 요청
+              // 카메라 권한 요청
               await PermissionHandler().requestCameraPermission().then(
                     (value) => value == true
                         // 허용된 권한 : 기본 카메라 실행
@@ -248,27 +271,20 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                         // 허용되지 않은 권한 : 다시 권한 요청
                         : PermissionHandler().requestCameraPermission(),
                   );
-              //카메라에서 사진 찍고 프로필 + 스토리지 업로드하기
+              // 카메라에서 사진 찍고 프로필 + 스토리지 업로드하기
               await pickImgFromCamera();
               Get.back();
             },
           ),
           CustomButtomSheet(
             '기본 이미지로 설정',
-            Colors.blue,
+            appBlackColor,
             () async {
-              //기본 프로필 주소로 변경
+              // 기본 프로필 주소로 변경
               setState(() {
                 _photo = null;
                 profileImageUrl = DefaultProfle.url;
               });
-              Get.back();
-            },
-          ),
-          CustomButtomSheet(
-            '취소',
-            appBlackColor,
-            () {
               Get.back();
             },
           ),
