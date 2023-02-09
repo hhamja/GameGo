@@ -25,7 +25,7 @@ class NoUserChatScreenPage extends StatelessWidget {
               // 상대유저이름
               Text(
                 userName,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
           ),
