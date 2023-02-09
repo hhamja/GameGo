@@ -1,5 +1,6 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
+
 class ReceivedGameReviewPage extends StatefulWidget {
   const ReceivedGameReviewPage({Key? key}) : super(key: key);
 
@@ -31,7 +32,7 @@ class _ReceivedGameReviewPageState extends State<ReceivedGameReviewPage> {
         () => ListView.separated(
             itemBuilder: (BuildContext context, int index) {
               final reviewList = _review.gameReviewList[index];
-              return CustomTwoLineListTile(
+              return GameReviewItem(
                 reviewList.profileUrl, //후기 보낸 사람의 프로필
                 reviewList.userName, //후기 보낸 사람의 이름
                 reviewList.content == '' ? '(내용없음)' : reviewList.content,

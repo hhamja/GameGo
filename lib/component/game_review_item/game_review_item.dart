@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class CustomTwoLineListTile extends StatelessWidget {
-  CustomTwoLineListTile(
+class GameReviewItem extends StatelessWidget {
+  GameReviewItem(
     this.profileUrl,
     this.title,
     this.gamemode,

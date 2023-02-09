@@ -17,39 +17,41 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('해당 유저 uid : $uid');
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '프로필',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
         actions: [
-          // IconButton(onPressed: openBottomSheet, icon: Icon(Icons.more_vert)),
+          CustomCloseButton(),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
         child: Column(
           children: [
-            SizedBox(height: 30),
+            SizedBox(height: 23.sp),
             CircleAvatar(
               backgroundImage: NetworkImage(profileUrl),
-              radius: 80,
+              radius: 62.sp,
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 10.sp),
             Text(
               userName,
-              style: TextStyle(fontSize: 20),
+              style: Theme.of(context).textTheme.titleSmall,
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 23.sp),
             CustomMannerAge(mannerAge),
-            SizedBox(height: 20),
-            Divider(thickness: 1),
+            SizedBox(height: 23.sp),
+            CustomDivider(),
             ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text('받은 매너 평가'),
+              contentPadding: EdgeInsets.symmetric(vertical: 5.sp),
+              title: Text(
+                '받은 매너 평가',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               onTap: () {
                 Get.to(
                   () => UserMannerEvaluationPage(),
@@ -60,10 +62,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
               },
               trailing: Icon(Icons.keyboard_arrow_right_outlined),
             ),
-            Divider(thickness: 1),
             ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text('받은 게임 후기'),
+              contentPadding: EdgeInsets.symmetric(vertical: 5.sp),
+              title: Text(
+                '받은 게임 후기',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               onTap: () {
                 Get.to(
                   () => UserGameReviewPage(),
@@ -74,7 +78,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
               },
               trailing: Icon(Icons.keyboard_arrow_right_outlined),
             ),
-            Divider(thickness: 1),
           ],
         ),
       ),

@@ -12,7 +12,7 @@ class CustomMannerAge extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.centerLeft,
-          heightFactor: 0.8,
+          heightFactor: 1.sp,
           child: Container(
             //container에 마우스 올리면 매너나이에 대한 설명나오게 하기
             child: Row(
@@ -20,36 +20,39 @@ class CustomMannerAge extends StatelessWidget {
               children: [
                 Text(
                   '매너나이',
-                  style: TextStyle(fontSize: 13, height: 1.28),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                IconButton(
-                    padding: EdgeInsets.all(2),
-                    alignment: Alignment.centerLeft,
-                    onPressed: () {},
-                    icon: Icon(
-                      CupertinoIcons.info_circle,
-                      size: 18,
-                    )),
+                // IconButton(
+                //     padding: EdgeInsets.all(2),
+                //     alignment: Alignment.centerLeft,
+                //     onPressed: () {},
+                //     icon: Icon(
+                //       CupertinoIcons.info_circle,
+                //       size: 18,
+                //     )),
               ],
             ),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 50),
+          margin: EdgeInsets.only(top: 40.sp),
           child: Column(
             children: [
               Row(
                 children: [
-                  SizedBox(width: 10),
+                  SizedBox(width: 8.sp),
                   Expanded(
                     flex: 1,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('첫 나이 20.0세', style: TextStyle(fontSize: 12)),
+                        Text(
+                          '첫 나이 20.0세',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                         Icon(
                           Icons.arrow_drop_down_sharp,
-                          size: 15,
+                          size: 12.sp,
                         ),
                       ],
                     ),
@@ -57,7 +60,7 @@ class CustomMannerAge extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      padding: EdgeInsets.only(bottom: 5),
+                      padding: EdgeInsets.only(bottom: 3.sp),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -65,9 +68,12 @@ class CustomMannerAge extends StatelessWidget {
                           Text(
                             '${mannerAge.toString()}세',
                             style: TextStyle(
-                                fontSize: 20, height: 1.2, color: mannerAgeColor),
+                                fontSize: 16.sp,
+                                height: 1.2,
+                                fontWeight: FontWeight.bold,
+                                color: mannerAgeColor),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: 5.sp),
                         ],
                       ),
                     ),
@@ -81,14 +87,14 @@ class CustomMannerAge extends StatelessWidget {
                 interval: 0,
                 labelPosition: LinearLabelPosition.inside,
                 axisTrackStyle: LinearAxisTrackStyle(
-                  thickness: 20,
+                  thickness: 15.sp,
                   edgeStyle: LinearEdgeStyle.bothCurve,
                 ),
                 barPointers: [
                   LinearBarPointer(
                     value: double.parse(mannerAge),
-                    color: Colors.blue,
-                    thickness: 20,
+                    color: mannerAgeColor,
+                    thickness: 15.sp,
                     edgeStyle: LinearEdgeStyle.bothCurve,
                   )
                 ],

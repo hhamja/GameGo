@@ -15,81 +15,74 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
   @override
   void initState() {
     super.initState();
-    //해당 유저가 받은 매너 평가 리스트 받기
     _c.getGoodEvaluationList(uid);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(uid);
-
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '받은 매너 평가',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: Obx(
         () => SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(
+            vertical: 0,
+            horizontal: AppSpaceData.screenPadding,
+          ),
           physics: ScrollPhysics(),
           controller: _scrollC,
           child: Column(
             // 해당 유저가 받은 매너 평가
             children: [
-              ListTile(
-                minLeadingWidth: 0,
-                title: Text(
-                  '받은 매너 평가',
-                  style: TextStyle(
-                    height: 1.2,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              // 1.'친절하고 매너가 좋아요.'
+              // 친절하고 매너가 좋아요
               GoodEvaluationItem(
                 element: _c.kindManner.length,
                 title: GoodEvaluationModel.goodList[0],
               ),
-              // 2.'시간 약속을 잘 지켜요.',
+              // 시간 약속을 잘 지켜요
               GoodEvaluationItem(
                 element: _c.goodAppointment.length,
                 title: GoodEvaluationModel.goodList[1],
               ),
-              // 3.'응답이 빨라요.',
+              // 응답이 빨라요
               GoodEvaluationItem(
                 element: _c.fastAnswer.length,
                 title: GoodEvaluationModel.goodList[2],
               ),
-              // 4.'맨탈이 강해요.',
+              // 맨탈이 강해요
               GoodEvaluationItem(
                 element: _c.strongMental.length,
                 title: GoodEvaluationModel.goodList[3],
               ),
-              // 5.'게임 실력이 뛰어나요.',
+              // 게임 실력이 뛰어나요
               GoodEvaluationItem(
                 element: _c.goodGameSkill.length,
                 title: GoodEvaluationModel.goodList[4],
               ),
-              // 6.'착하고 부드럽게 말해요.',
+              // 착하고 부드럽게 말해요
               GoodEvaluationItem(
                 element: _c.softMannerTalk.length,
                 title: GoodEvaluationModel.goodList[5],
               ),
-              // 7.'불편하지 않게 편하게 대해줘요.',
+              // 불편하지 않게 편하게 대해줘요
               GoodEvaluationItem(
                 element: _c.goodCommunication.length,
                 title: GoodEvaluationModel.goodList[6],
               ),
-              // 8.'게임할 떄 소통을 잘해요.',
+              // 게임할 떄 소통을 잘해요
               GoodEvaluationItem(
                 element: _c.comfortable.length,
                 title: GoodEvaluationModel.goodList[7],
               ),
-              // 9.'게임을 진심으로 열심히 해요.',
+              // 게임을 진심으로 열심히 해요
               GoodEvaluationItem(
                 element: _c.hardGame.length,
                 title: GoodEvaluationModel.goodList[8],
