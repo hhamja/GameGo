@@ -7,7 +7,7 @@ class LogOutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomSmallDialog(
-      '로그아웃 하시겠나요?',
+      '정말 로그아웃 하시겠나요?',
       '취소',
       '확인',
       () {
@@ -17,7 +17,6 @@ class LogOutDialog extends StatelessWidget {
         await _user.signOut();
         Get.offAllNamed('/main');
       },
-    
     );
   }
 }
