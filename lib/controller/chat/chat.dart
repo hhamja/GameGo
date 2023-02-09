@@ -123,10 +123,14 @@ class ChatController extends GetxController {
 
   //메시지페이지를 나갔을 때 나의 안읽은 메시지 수 0으로 업데이트
   Future clearUnReadCount(chatRoomId) async {
-    // 나의 안읽은메시지 수 0으로 업데이트
-    _chatDB.doc(chatRoomId).update({
-      'unReadCount.${CurrentUser.uid}': 0,
-    });
+    final chatRoomRef = await _chatDB.doc(chatRoomId).get();
+    chatRoomRef.exists
+        ?
+        // 나의 안읽은메시지 수 0으로 업데이트
+        _chatDB.doc(chatRoomId).update({
+            'unReadCount.${CurrentUser.uid}': 0,
+          })
+        : null;
   }
 
   //메시지를 읽은 것에 대한 파이어스토어 값 업데이트 하기

@@ -67,10 +67,8 @@ class _MessagesState extends State<Messages> {
               itemCount: _list.length,
               itemBuilder: (context, index) {
                 int reversed = _list.length - 1 - index;
-                // 현재 index에 대한 날짜
                 final _date = Jiffy(_list[reversed].timestamp.toDate())
                     .format('yyyy년 MM월 dd일');
-                // 24시간
                 final _time =
                     Jiffy(_list[reversed].timestamp.toDate()).format('HH:MM');
                 // Date표시에 대한 조건

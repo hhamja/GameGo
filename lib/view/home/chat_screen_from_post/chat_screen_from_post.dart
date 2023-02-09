@@ -32,31 +32,47 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
 
   @override
   Widget build(BuildContext context) {
-    print('유저 UID 값은 ${uid}');
-    print('PostId 값은 ${postId}');
-
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          textBaseline: TextBaseline.alphabetic,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              userName,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            SizedBox(width: 5),
-            Text(
-              mannerAge + '세',
-              style: TextStyle(
-                fontSize: 15,
+        title: InkWell(
+          onTap: () {
+            Get.toNamed(
+              // 상대 프로필 정보 페이지로 이동
+              '/userProfile',
+              // 상대 데이터 전달
+              arguments: {
+                'profileUrl': profileUrl,
+                'userName': userName,
+                'mannerAge': mannerAge,
+                'uid': uid,
+              },
+            );
+          },
+          child: Row(
+            textBaseline: TextBaseline.alphabetic,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                userName,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
-            ),
-          ],
+              SizedBox(width: 3.sp),
+              // 매너나이
+              Text(
+                '${_chat.mannerAge.value}세',
+                style: TextStyle(
+                  fontSize: 10.sp,
+                  letterSpacing: 0.25.sp,
+                  color: mannerAgeColor,
+                ),
+              ),
+            ],
+          ),
         ),
         centerTitle: true,
+        // 앱바 타이틀의 중앙을 맞추기 위한 박스
+        actions: [SizedBox(width: 30.sp)],
       ),
       body: Column(
         children: [

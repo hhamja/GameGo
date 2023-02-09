@@ -73,13 +73,17 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
             children: [
               Text(
                 userName,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
               SizedBox(width: 3.sp),
               // 매너나이
               Text(
-                '(${_chat.mannerAge.value}세)',
-                style: Theme.of(context).textTheme.labelSmall,
+                '${_chat.mannerAge.value}세',
+                style: TextStyle(
+                  fontSize: 10.sp,
+                  letterSpacing: 0.25.sp,
+                  color: mannerAgeColor,
+                ),
               ),
             ],
           ),
