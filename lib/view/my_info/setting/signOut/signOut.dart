@@ -149,8 +149,16 @@ class _SignOutPageState extends State<SignOutPage> {
             if (selectedLeaveReason == '선택해주세요' ||
                 selectedLeaveReason == null) {
               Get.snackbar(
-                '이유 선택 안함',
-                '탈퇴 이유를 버튼에서 선택해주세요.',
+                '',
+                '',
+                titleText: Text(
+                  '이유 선택 안함',
+                  style: AppTextStyle.snackbarTitleStyle,
+                ),
+                messageText: Text(
+                  '탈퇴 이유를 버튼에서 선택해주세요.',
+                  style: AppTextStyle.snackbarContentStyle,
+                ),
               );
             }
             // 1. 기타사유를 선택한 경우
@@ -159,8 +167,16 @@ class _SignOutPageState extends State<SignOutPage> {
               // 1-1. 텍스트를 입력하지 않은 경우
               if (text.length == 0 || text.isEmpty) {
                 Get.snackbar(
-                  '탈퇴 이유를 작성해주세요.',
-                  '이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
+                  '',
+                  '',
+                  titleText: Text(
+                    '탈퇴 이유를 작성해주세요.',
+                    style: AppTextStyle.snackbarTitleStyle,
+                  ),
+                  messageText: Text(
+                    '이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
+                    style: AppTextStyle.snackbarContentStyle,
+                  ),
                 );
               }
               // 1-2. 텍스트를 한 글자라도 입력한 경우
