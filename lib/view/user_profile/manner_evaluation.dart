@@ -20,6 +20,7 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _itemHeight = 10.sp;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -46,46 +47,55 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
               GoodEvaluationItem(
                 element: _c.kindManner.length,
                 title: GoodEvaluationModel.goodList[0],
+                verticalHeight: _itemHeight,
               ),
               // 시간 약속을 잘 지켜요
               GoodEvaluationItem(
                 element: _c.goodAppointment.length,
                 title: GoodEvaluationModel.goodList[1],
+                verticalHeight: _itemHeight,
               ),
               // 응답이 빨라요
               GoodEvaluationItem(
                 element: _c.fastAnswer.length,
                 title: GoodEvaluationModel.goodList[2],
+                verticalHeight: _itemHeight,
               ),
               // 맨탈이 강해요
               GoodEvaluationItem(
                 element: _c.strongMental.length,
                 title: GoodEvaluationModel.goodList[3],
+                verticalHeight: _itemHeight,
               ),
               // 게임 실력이 뛰어나요
               GoodEvaluationItem(
                 element: _c.goodGameSkill.length,
                 title: GoodEvaluationModel.goodList[4],
+                verticalHeight: _itemHeight,
               ),
               // 착하고 부드럽게 말해요
               GoodEvaluationItem(
                 element: _c.softMannerTalk.length,
                 title: GoodEvaluationModel.goodList[5],
+                verticalHeight: _itemHeight,
               ),
               // 불편하지 않게 편하게 대해줘요
               GoodEvaluationItem(
                 element: _c.goodCommunication.length,
                 title: GoodEvaluationModel.goodList[6],
+                verticalHeight: _itemHeight,
               ),
               // 게임할 떄 소통을 잘해요
               GoodEvaluationItem(
                 element: _c.comfortable.length,
                 title: GoodEvaluationModel.goodList[7],
+                verticalHeight: _itemHeight,
               ),
               // 게임을 진심으로 열심히 해요
               GoodEvaluationItem(
                 element: _c.hardGame.length,
                 title: GoodEvaluationModel.goodList[8],
+                verticalHeight: _itemHeight,
               ),
             ],
           ),

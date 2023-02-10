@@ -3,10 +3,12 @@ import 'package:mannergamer/utilites/index/index.dart';
 class GoodEvaluationItem extends StatelessWidget {
   final int element;
   final String title;
+  final double verticalHeight;
 
   const GoodEvaluationItem({
     required this.element,
     required this.title,
+    required this.verticalHeight,
   });
 
   @override
@@ -14,7 +16,7 @@ class GoodEvaluationItem extends StatelessWidget {
     return element.toInt() != 0
         ? ListTile(
             contentPadding: EdgeInsets.symmetric(
-              vertical: 10.sp,
+              vertical: verticalHeight,
               horizontal: 0,
             ),
             //  매너평가 항목 텍스트
@@ -30,7 +32,7 @@ class GoodEvaluationItem extends StatelessWidget {
                 // 받은 매너평가 항목 총 개수
                 Text(
                   '$element',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ],
             ),

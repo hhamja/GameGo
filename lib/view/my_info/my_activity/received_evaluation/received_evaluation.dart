@@ -23,157 +23,168 @@ class _ReceivedMannerEvaluationPageState
 
   @override
   Widget build(BuildContext context) {
+    final itemHeight = 3.sp;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '받은 매너 평가',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        centerTitle: true,
+        automaticallyImplyLeading: false,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: Obx(
         () => SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpaceData.screenPadding,
+            vertical: 0,
+          ),
           physics: ScrollPhysics(),
           controller: _scrollC,
           child: Column(
-            // 받은 매너 평가
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListTile(
-                minLeadingWidth: 0,
-                title: Text(
-                  '받은 매너 평가',
-                  style: TextStyle(
-                    height: 1.2,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              // 받은 매너 평가
+              Text(
+                '받은 매너 평가',
+                style: Theme.of(context).textTheme.titleSmall,
               ),
-              // 1.'친절하고 매너가 좋아요.'
+              // 친절하고 매너가 좋아요
               GoodEvaluationItem(
                 element: _c.kindManner.length,
                 title: GoodEvaluationModel.goodList[0],
+                verticalHeight: itemHeight,
               ),
-              // 2.'시간 약속을 잘 지켜요.',
+              // 시간 약속을 잘 지켜요
               GoodEvaluationItem(
                 element: _c.goodAppointment.length,
                 title: GoodEvaluationModel.goodList[1],
+                verticalHeight: itemHeight,
               ),
-              // 3.'응답이 빨라요.',
+              // 응답이 빨라요
               GoodEvaluationItem(
                 element: _c.fastAnswer.length,
                 title: GoodEvaluationModel.goodList[2],
+                verticalHeight: itemHeight,
               ),
-              // 4.'맨탈이 강해요.',
+              // 맨탈이 강해요
               GoodEvaluationItem(
                 element: _c.strongMental.length,
                 title: GoodEvaluationModel.goodList[3],
+                verticalHeight: itemHeight,
               ),
-              // 5.'게임 실력이 뛰어나요.',
+              // 게임 실력이 뛰어나요
               GoodEvaluationItem(
                 element: _c.goodGameSkill.length,
                 title: GoodEvaluationModel.goodList[4],
+                verticalHeight: itemHeight,
               ),
-              // 6.'착하고 부드럽게 말해요.',
+              // 착하고 부드럽게 말해요
               GoodEvaluationItem(
                 element: _c.softMannerTalk.length,
                 title: GoodEvaluationModel.goodList[5],
+                verticalHeight: itemHeight,
               ),
-              // 7.'불편하지 않게 편하게 대해줘요.',
+              // 불편하지 않게 편하게 대해줘요
               GoodEvaluationItem(
                 element: _c.goodCommunication.length,
                 title: GoodEvaluationModel.goodList[6],
+                verticalHeight: itemHeight,
               ),
-              // 8.'게임할 떄 소통을 잘해요.',
+              // 게임할 떄 소통을 잘해요
               GoodEvaluationItem(
                 element: _c.comfortable.length,
                 title: GoodEvaluationModel.goodList[7],
+                verticalHeight: itemHeight,
               ),
-              // 9.'게임을 진심으로 열심히 해요.',
+              // 게임을 진심으로 열심히 해요
               GoodEvaluationItem(
                 element: _c.hardGame.length,
                 title: GoodEvaluationModel.goodList[8],
+                verticalHeight: itemHeight,
               ),
-              SizedBox(height: 10),
-              Divider(
-                thickness: 1,
-              ),
+              SizedBox(height: AppSpaceData.heightLarge),
               // 내가 받은 비매너 평가
-              ListTile(
-                minLeadingWidth: 0,
-                horizontalTitleGap: 5,
-                title: Text(
-                  '받은 비매너 평가',
-                  style: TextStyle(
-                    height: 1.2,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Text('동일 항목을 2개 이상 받은 경우에만 표시됩니다.'),
-                ),
+              Text(
+                '받은 비매너 평가',
+                style: Theme.of(context).textTheme.titleSmall,
               ),
-
-              // 1.'불친절하고 매너가 나빠요.',
+              SizedBox(
+                height: 1.sp,
+              ),
+              Text(
+                '(동일 항목을 2개 이상 받은 경우에만 표시됩니다.)',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              // 불친절하고 매너가 나빠요
               BadEvaluationItem(
                 element: _c.badManner.length,
                 title: BadEvaluationModel.badList[0],
+                verticalHeight: itemHeight,
               ),
-              // 2.'시간 약속을 안 지켜요.',
+              // 시간 약속을 안 지켜요
               BadEvaluationItem(
                 element: _c.badAppointment.length,
                 title: BadEvaluationModel.badList[1],
+                verticalHeight: itemHeight,
               ),
-              // 3.'응답이 늦어요.',
+              // 응답이 늦어요
               BadEvaluationItem(
                 element: _c.slowAnswer.length,
                 title: BadEvaluationModel.badList[2],
+                verticalHeight: itemHeight,
               ),
-              // 4.'맨탈이 약해요.',
+              // 맨탈이 약해요
               BadEvaluationItem(
                 element: _c.weakMental.length,
                 title: BadEvaluationModel.badList[3],
+                verticalHeight: itemHeight,
               ),
-              // 5.'게임 실력이 아쉬워요.',
+              // 게임 실력이 아쉬워요
               BadEvaluationItem(
                 element: _c.badGameSkill.length,
                 title: BadEvaluationModel.badList[4],
+                verticalHeight: itemHeight,
               ),
-              // 6.'고의적으로 트롤 행위를 해요.',
+              // 고의적으로 트롤 행위를 해요
               BadEvaluationItem(
                 element: _c.troll.length,
                 title: BadEvaluationModel.badList[5],
+                verticalHeight: itemHeight,
               ),
-              // 7.'욕설이나 험악한 말을 해요',
+              // 욕설이나 험악한 말을 해요
               BadEvaluationItem(
                 element: _c.abuseWord.length,
                 title: BadEvaluationModel.badList[6],
+                verticalHeight: itemHeight,
               ),
-              // 8.'성적인 발언을 해요.',
+              // 성적인 발언을 해요
               BadEvaluationItem(
                 element: _c.sexualWord.length,
                 title: BadEvaluationModel.badList[7],
+                verticalHeight: itemHeight,
               ),
-              // 9.'반말을 사용해요',
+              // 반말을 사용해요
               BadEvaluationItem(
                 element: _c.shortTalk.length,
                 title: BadEvaluationModel.badList[8],
+                verticalHeight: itemHeight,
               ),
-              // 10.'소통을 안해요.',
+              // 소통을 안해요
               BadEvaluationItem(
                 element: _c.noCommunication.length,
                 title: BadEvaluationModel.badList[9],
+                verticalHeight: itemHeight,
               ),
-              // 11.'불편한 분위기를 만들어요.',
+              // 불편한 분위기를 만들어요
               BadEvaluationItem(
                 element: _c.uncomfortable.length,
                 title: BadEvaluationModel.badList[10],
+                verticalHeight: itemHeight,
               ),
-              // 12.'사적인 만남을 하려고 해요.',
+              // 사적인 만남을 하려고 해요
               BadEvaluationItem(
                 element: _c.privateMeeting.length,
                 title: BadEvaluationModel.badList[11],
+                verticalHeight: itemHeight,
               ),
             ],
           ),

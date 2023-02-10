@@ -179,8 +179,6 @@ class EvaluationController extends GetxController {
   }
 
   // 내가 보낸 매너평가 받기
-  // evaluationType == good ? goodEvaluation에 담기
-  // evaluationType == bad ? badEvaluation에 담기
   Future getMySentEvaluation(uid, chatRoomId) async {
     GoodEvaluationModel? goodEvaluation;
     BadEvaluationModel? badEvaluation;
@@ -199,7 +197,8 @@ class EvaluationController extends GetxController {
     if (goodRef.exists) {
       // 매너 평가인 경우
       isGood.value = true;
-      _evaluationDB
+      // 서버에서 매너평가에 대한 데이터 받기
+      await _evaluationDB
           .doc(uid)
           .collection('goodEvaluation')
           .doc(chatRoomId)
@@ -207,23 +206,24 @@ class EvaluationController extends GetxController {
           .then(
         (value) {
           goodEvaluation = GoodEvaluationModel.fromDocumentSnapshot(value);
-          //순서대로 리스트에 넣기, 9개
-          goodCheckList.add(goodEvaluation!.kindManner);
-          goodCheckList.add(goodEvaluation!.goodAppointment);
-          goodCheckList.add(goodEvaluation!.fastAnswer);
-          goodCheckList.add(goodEvaluation!.strongMental);
-          goodCheckList.add(goodEvaluation!.goodGameSkill);
-          goodCheckList.add(goodEvaluation!.softMannerTalk);
-          goodCheckList.add(goodEvaluation!.comfortable);
-          goodCheckList.add(goodEvaluation!.goodCommunication);
-          goodCheckList.add(goodEvaluation!.hardGame);
-          print(goodCheckList);
         },
       );
+      // 받은 데이터를 세분화된 9개의 항목으로 분류
+      goodCheckList.add(goodEvaluation!.kindManner);
+      goodCheckList.add(goodEvaluation!.goodAppointment);
+      goodCheckList.add(goodEvaluation!.fastAnswer);
+      goodCheckList.add(goodEvaluation!.strongMental);
+      goodCheckList.add(goodEvaluation!.goodGameSkill);
+      goodCheckList.add(goodEvaluation!.softMannerTalk);
+      goodCheckList.add(goodEvaluation!.comfortable);
+      goodCheckList.add(goodEvaluation!.goodCommunication);
+      goodCheckList.add(goodEvaluation!.hardGame);
+      print(goodCheckList);
     } else if (badRef.exists) {
       // 비매너 평가인 경우
       isGood.value = false;
-      _evaluationDB
+      // 서버에서 비매너평가 데이터 받기
+      await _evaluationDB
           .doc(uid)
           .collection('badEvaluation')
           .doc(chatRoomId)
@@ -231,29 +231,29 @@ class EvaluationController extends GetxController {
           .then(
         (value) {
           badEvaluation = BadEvaluationModel.fromDocumentSnapshot(value);
-          //순서대로 리스트에 넣기, 12개
-          badCheckList.add(badEvaluation!.badManner);
-          badCheckList.add(badEvaluation!.badAppointment);
-          badCheckList.add(badEvaluation!.slowAnswer);
-          badCheckList.add(badEvaluation!.weakMental);
-          badCheckList.add(badEvaluation!.badGameSkill);
-          badCheckList.add(badEvaluation!.troll);
-          badCheckList.add(badEvaluation!.abuseWord);
-          badCheckList.add(badEvaluation!.sexualWord);
-          badCheckList.add(badEvaluation!.shortTalk);
-          badCheckList.add(badEvaluation!.noCommunication);
-          badCheckList.add(badEvaluation!.uncomfortable);
-          badCheckList.add(badEvaluation!.privateMeeting);
-          print(badCheckList);
         },
       );
+      // 받은 데이터를 세분화된 12개의 항목으로 분류
+      badCheckList.add(badEvaluation!.badManner);
+      badCheckList.add(badEvaluation!.badAppointment);
+      badCheckList.add(badEvaluation!.slowAnswer);
+      badCheckList.add(badEvaluation!.weakMental);
+      badCheckList.add(badEvaluation!.badGameSkill);
+      badCheckList.add(badEvaluation!.troll);
+      badCheckList.add(badEvaluation!.abuseWord);
+      badCheckList.add(badEvaluation!.sexualWord);
+      badCheckList.add(badEvaluation!.shortTalk);
+      badCheckList.add(badEvaluation!.noCommunication);
+      badCheckList.add(badEvaluation!.uncomfortable);
+      badCheckList.add(badEvaluation!.privateMeeting);
+      print(badCheckList);
     } else
       null;
   }
 
   // 내가 이미 보낸 매너평가가 있는지 확인
   // 채팅페이지에 들어가면서 선언
-  checkExistEvaluation(uid, chatRoomId) async {
+  Future checkExistEvaluation(uid, chatRoomId) async {
     final goodRef = await _evaluationDB
         .doc(uid)
         .collection('goodEvaluation')

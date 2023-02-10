@@ -3,10 +3,12 @@ import 'package:mannergamer/utilites/index/index.dart';
 class BadEvaluationItem extends StatelessWidget {
   final int element;
   final String title;
+  final double verticalHeight;
 
   const BadEvaluationItem({
     required this.element,
     required this.title,
+    required this.verticalHeight,
   });
 
   @override
@@ -15,7 +17,7 @@ class BadEvaluationItem extends StatelessWidget {
     return element >= 2
         ? ListTile(
             contentPadding: EdgeInsets.symmetric(
-              vertical: 10.sp,
+              vertical: verticalHeight,
               horizontal: 0,
             ),
             title: Text(
