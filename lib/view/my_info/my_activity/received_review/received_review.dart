@@ -1,6 +1,5 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-
 class ReceivedGameReviewPage extends StatefulWidget {
   const ReceivedGameReviewPage({Key? key}) : super(key: key);
 
@@ -22,28 +21,31 @@ class _ReceivedGameReviewPageState extends State<ReceivedGameReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '받은 게임 후기',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: Obx(
-        () => ListView.separated(
+        () => ListView.builder(
+            padding: EdgeInsets.symmetric(
+              vertical: 0,
+              horizontal: AppSpaceData.screenPadding,
+            ),
             itemBuilder: (BuildContext context, int index) {
               final reviewList = _review.gameReviewList[index];
               return GameReviewItem(
-                reviewList.profileUrl, //후기 보낸 사람의 프로필
-                reviewList.userName, //후기 보낸 사람의 이름
+                reviewList.profileUrl,
+                reviewList.userName,
                 reviewList.content == '' ? '(내용없음)' : reviewList.content,
                 null,
                 null,
-                Jiffy(reviewList.createdAt.toDate()).fromNow(), // '-전'으로 시간표시
-                () => null,
+                Jiffy(reviewList.createdAt.toDate()).fromNow(),
               );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return CustomDivider();
             },
             itemCount: _review.gameReviewList.length),
       ),

@@ -32,22 +32,19 @@ class _UserGameReviewPageState extends State<UserGameReviewPage> {
       ),
       body: Obx(
         () => ListView.builder(
-          padding: EdgeInsets.all(
-            AppSpaceData.screenPadding,
+          padding: EdgeInsets.symmetric(
+            vertical: 0,
+            horizontal: AppSpaceData.screenPadding,
           ),
           itemBuilder: (BuildContext context, int index) {
             final reviewList = _review.gameReviewList[index];
             return GameReviewItem(
-              // 후기 보낸 사람의 프로필
               reviewList.profileUrl,
-              // 후기 보낸 사람의 이름
               reviewList.userName,
               reviewList.content == '' ? '(내용없음)' : reviewList.content,
               null,
               null,
-              // '-전'으로 시간표시
               Jiffy(reviewList.createdAt.toDate()).fromNow(),
-              () => null,
             );
           },
           itemCount: _review.gameReviewList.length,

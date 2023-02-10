@@ -74,18 +74,25 @@ class GameReviewController extends GetxController {
   Future getMySentReviewContent(uid, chatRoomId) async {
     // 후기는 선택사항이라 문서자체가 없어서 null 반환 에러 뜨므로
     // 문서가 존재할때만 데이터 받도록 하기
-    return _gameReviewDB
+    await _gameReviewDB
         .where('chatRoomId', isEqualTo: chatRoomId)
         .where('idFrom', isEqualTo: CurrentUser.uid)
+        // 가장 최근의 값을 반환
+        .orderBy('createdAt', descending: true)
+        // 혹시나 여러개 있을 수 있으므로 에러방지를 위해 한개만 밪기
+        .limit(1)
         .get()
         .then(
-      (docRef) {
-        if (docRef.docs.isNotEmpty) {
-          // 내가 보낸 게임후기 존재
-          // 하나의 문서가 담긴 List이므로 0번째 데이터 Map으로 변환
-          var snapshot = docRef.docs[0].data() as Map<String, dynamic>;
-          // 게임후기의 내용을 RxString 변수에 담기
-          myReviewContent.value = snapshot['content'];
+      (snapshot) {
+        if (snapshot.docs.isNotEmpty) {
+          snapshot.docs.forEach(
+            (e) {
+              // 데이터 화
+              var docData = e.data() as Map<String, dynamic>;
+              // 게임후기의 내용 담기
+              myReviewContent.value = docData['content'];
+            },
+          );
         } else {
           print('내가 보낸 게임후기 null');
         }
