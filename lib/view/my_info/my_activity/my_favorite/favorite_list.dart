@@ -20,30 +20,35 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '관심 게시글',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: Obx(
-        () => ListView.separated(
-          physics: AlwaysScrollableScrollPhysics(), //리스트가 적어도 스크롤 인식 가능
-          separatorBuilder: (BuildContext context, int index) {
-            return CustomDivider();
-          },
+        () => ListView.builder(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpaceData.screenPadding,
+          ),
+          physics: AlwaysScrollableScrollPhysics(),
           itemCount: _favorite.favoriteList.length,
           itemBuilder: (BuildContext context, int index) {
-            final _profileUrl = _favorite.favoriteList[index].profileUrl;
-            final _userName = _favorite.favoriteList[index].userName;
-            final _title = _favorite.favoriteList[index].title;
-            final _gamemode = _favorite.favoriteList[index].gamemode;
-            final _position = _favorite.favoriteList[index].position;
-            final _tear = _favorite.favoriteList[index].tear;
-            _onTap() {
-              Get.toNamed('/postdetail', arguments: {
-                'postId': _favorite.favoriteList[index].postId,
-              });
+            final String _profileUrl = _favorite.favoriteList[index].profileUrl;
+            final String _userName = _favorite.favoriteList[index].userName;
+            final String _title = _favorite.favoriteList[index].title;
+            final String _gamemode = _favorite.favoriteList[index].gamemode;
+            final String? _position = _favorite.favoriteList[index].position;
+            final String? _tear = _favorite.favoriteList[index].tear;
+
+            _onTap() async {
+              Get.toNamed(
+                '/postdetail',
+                arguments: {'postId': _favorite.favoriteList[index].postId},
+              );
             }
 
             return CustomPostListItem(

@@ -91,28 +91,26 @@ class FavoriteController extends GetxController {
         .then(
           // 반복문
           (snapshot) => _postIdList.assignAll(
-            snapshot.docs
-                .map(
-                  // id값을 리스트에 넣기
-                  (e) => e.reference.id,
-                )
-                .toList(),
+            snapshot.docs.map((e) => e.reference.id).toList(),
           ),
         );
     // 반복문
-    return _postIdList.forEach(
+    _postIdList.forEach(
       // postId을 루트 컬렉션 post에서 게시글 데이터 받기
-      (id) => _postDB.doc(id).get().then((e) {
-        var snapshot = e.data() as Map<String, dynamic>;
-        final bool isDeleted = snapshot['isDeleted'];
-        final bool isHidden = snapshot['isDeleted'];
-        // 삭제게시글, 탈퇴유저 게시글은 제외하여 GET
-        if (isDeleted == false && isHidden == false) {
-          favoriteList.add(
-            FavoriteListModel.fromDocumentSnapshot(e),
-          );
-        }
-      }),
+      (id) => _postDB.doc(id).get().then(
+        (e) {
+          var snapshot = e.data() as Map<String, dynamic>;
+          final bool isDeleted = snapshot['isDeleted'];
+          final bool isHidden = snapshot['isDeleted'];
+          // 삭제게시글, 탈퇴유저 게시글은 제외하여 GET
+          if (isDeleted == false && isHidden == false) {
+            favoriteList.add(
+              FavoriteListModel.fromDocumentSnapshot(e),
+            );
+          }
+        },
+      ),
     );
+    return favoriteList;
   }
 }
