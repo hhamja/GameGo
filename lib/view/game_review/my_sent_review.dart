@@ -8,7 +8,7 @@ class MySentReviewPage extends StatefulWidget {
 }
 
 class _MySentReviewPageState extends State<MySentReviewPage> {
-  final EvaluationController _evaluation = Get.find<EvaluationController>();
+  final EvaluationController _evaluation = Get.put(EvaluationController());
   final GameReviewController _review = Get.put(GameReviewController());
   final ScrollController _scrollC = ScrollController();
   // 상대유저 이름, uid, 채팅방 id
@@ -29,97 +29,110 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '내가 보낸 후기',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: Obx(
         () => SingleChildScrollView(
+          padding: EdgeInsets.all(
+            AppSpaceData.screenPadding,
+          ),
           controller: _scrollC,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // 별로예요 : 최고예요 이모지
-                Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    children: [
-                      Text(
-                        !_evaluation.isGood.value ? '\u{1F629}' : '\u{1F60D}',
-                        style: TextStyle(
-                          fontSize: 58,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        !_evaluation.isGood.value ? '별로예요' : '최고예요',
-                        style: TextStyle(color: appBlackColor),
-                      ),
-                    ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // 별로예요 : 최고예요 이모지
+              Padding(
+                padding: EdgeInsets.all(15.sp),
+                child: Column(
+                  children: [
+                    Text(
+                      !_evaluation.isGood.value ? '\u{1F629}' : '\u{1F60D}',
+                      style: TextStyle(fontSize: 45.sp),
+                    ),
+                    Text(
+                      !_evaluation.isGood.value ? '별로예요' : '최고예요',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              // 내가 체크한 비매너 : 매너 평가 항목
+              !_evaluation.isGood.value
+                  // 비매너 평가인 경우
+                  ? ListView.builder(
+                      padding: EdgeInsets.zero,
+                      controller: _scrollC,
+                      shrinkWrap: true,
+                      itemCount: BadEvaluationModel.badList.length,
+                      itemBuilder: (context, index) {
+                        return CheckboxListTile(
+                          activeColor: appPrimaryColor,
+                          value: _evaluation.badCheckList[index],
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (value) => null,
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(
+                            BadEvaluationModel.badList[index].toString(),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        );
+                      },
+                    )
+                  // 매너평가인 경우
+                  : ListView.builder(
+                      padding: EdgeInsets.zero,
+                      controller: _scrollC,
+                      shrinkWrap: true,
+                      itemCount: GoodEvaluationModel.goodList.length,
+                      itemBuilder: (context, index) {
+                        return CheckboxListTile(
+                          activeColor: appPrimaryColor,
+                          value: _evaluation.goodCheckList[index],
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (value) => null,
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(
+                            GoodEvaluationModel.goodList[index].toString(),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        );
+                      },
+                    ),
+
+              // 작성한 거래 후기
+              Container(
+                width: 100.w,
+                margin: EdgeInsets.symmetric(
+                  vertical: AppSpaceData.heightSmall,
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 12.sp,
+                  vertical: 15.sp,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 0.8.sp,
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0.sp), // POINT
                   ),
                 ),
-                // 내가 체크한 비매너 : 매너 평가 항목
-                !_evaluation.isGood.value
-                    ? ListView.builder(
-                        padding: EdgeInsets.zero,
-                        controller: _scrollC,
-                        shrinkWrap: true,
-                        itemCount: BadEvaluationModel.badList.length,
-                        itemBuilder: (context, index) {
-                          return CheckboxListTile(
-                            value: _evaluation.badCheckList[index],
-                            controlAffinity: ListTileControlAffinity.leading,
-                            onChanged: (value) => null,
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              BadEvaluationModel.badList[index].toString(),
-                            ),
-                          );
-                        },
-                      )
-                    : ListView.builder(
-                        padding: EdgeInsets.zero,
-                        controller: _scrollC,
-                        shrinkWrap: true,
-                        itemCount: GoodEvaluationModel.goodList.length,
-                        itemBuilder: (context, index) {
-                          return CheckboxListTile(
-                            value: _evaluation.goodCheckList[index],
-                            controlAffinity: ListTileControlAffinity.leading,
-                            onChanged: (value) => null,
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              GoodEvaluationModel.goodList[index].toString(),
-                            ),
-                          );
-                        },
-                      ),
-                // 작성한 거래 후기
-                Container(
-                  width: MediaQuery.of(context).size.width * 1.0,
-                  margin: EdgeInsets.symmetric(vertical: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      color: Colors.grey,
-                    ),
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(10.0) // POINT
-                            ),
-                  ),
-                  child: Text(_review.myReviewContent.value == ''
+                child: Text(
+                  _review.myReviewContent.value == ''
                       ? '(후기 없음)'
-                      : _review.myReviewContent.value),
-                )
-              ],
-            ),
+                      : _review.myReviewContent.value,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              )
+            ],
           ),
         ),
       ),
