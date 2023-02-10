@@ -155,8 +155,17 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                 // 없다면? 약속설정 X , 토스트 사용자에게 알림
                                 : () {
                                     Get.snackbar(
-                                      '약속설정불가',
-                                      '상대방도 메시지를 보내면 약속을 잡을 수 있어요.',
+                                      '',
+                                      '',
+                                      titleText: Text(
+                                        '약속설정불가',
+                                        style: AppTextStyle.snackbarTitleStyle,
+                                      ),
+                                      messageText: Text(
+                                        '상대방도 메시지를 보내면 약속을 잡을 수 있어요.',
+                                        style:
+                                            AppTextStyle.snackbarContentStyle,
+                                      ),
                                     );
                                   },
                             child: Container(
@@ -258,7 +267,6 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                           },
                                         );
                                       }, //매너평가 페이지로 이동
-                                    
                                     ),
                                   ),
                                   child: Container(

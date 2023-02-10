@@ -37,11 +37,11 @@ class _AddPostPageState extends State<AddPostPage> {
           '',
           titleText: Text(
             '게임모드 선택 안함',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: AppTextStyle.snackbarTitleStyle,
           ),
           messageText: Text(
             '버튼을 클릭하여 게임모드를 선택해주세요.',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: AppTextStyle.snackbarContentStyle,
           ),
         );
       } else {

@@ -99,4 +99,21 @@ class AppTextStyle {
     fontWeight: FontWeight.w500,
     color: appWhiteColor, fontFamily: 'NotoSansCJKkr',
   );
+
+  // 스낵바 제목
+  static final snackbarTitleStyle = TextStyle(
+    // 16-24
+    fontSize: 16.sp,
+    letterSpacing: 0.15.sp,
+    fontWeight: FontWeight.w500,
+    color: appBlackColor,
+    fontFamily: 'NotoSansCJKkr',
+  );
+  // 스낵바 내용
+  static final snackbarContentStyle = TextStyle(
+    // 12-16
+    fontSize: 12.sp,
+    letterSpacing: 0.4.sp,
+    color: appBlackColor, fontFamily: 'NotoSansCJKkr',
+  );
 }

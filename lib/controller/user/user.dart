@@ -176,7 +176,18 @@ class UserController extends GetxController {
       } else {
         // 중복 닉네임인 경우
         // 유저에게 스낵바로 알림
-        Get.snackbar('중복 닉네임', '해당 닉네임은 사용할 수 없습니다.');
+        Get.snackbar(
+          '',
+          '',
+          titleText: Text(
+            '중복 닉네임',
+            style: AppTextStyle.snackbarTitleStyle,
+          ),
+          messageText: Text(
+            '해당 닉네임은 사용할 수 없습니다.',
+            style: AppTextStyle.snackbarContentStyle,
+          ),
+        );
       }
     });
   }
@@ -302,14 +313,30 @@ class UserController extends GetxController {
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
           Get.snackbar(
-            '인증실패',
-            '잘못된 휴대폰 번호입니다.',
+            '',
+            '',
+            titleText: Text(
+              '인증실패',
+              style: AppTextStyle.snackbarTitleStyle,
+            ),
+            messageText: Text(
+              '잘못된 휴대폰 번호입니다.',
+              style: AppTextStyle.snackbarContentStyle,
+            ),
           );
           print('The provided phone number is not valid.');
         } else {
           Get.snackbar(
-            '인증실패',
-            '잠시 후 다시 시도해주세요.',
+            '',
+            '',
+            titleText: Text(
+              '인증실패',
+              style: AppTextStyle.snackbarTitleStyle,
+            ),
+            messageText: Text(
+              '잠시 후 다시 시도해주세요.',
+              style: AppTextStyle.snackbarContentStyle,
+            ),
           );
         }
       },
@@ -337,7 +364,18 @@ class UserController extends GetxController {
       // 에러 코드
       if (e.code == 'invalid-verification-code') {
         // SMS 입력이 틀린 경우
-        Get.snackbar('인증코드 입력 오류', '입력한 인증 코드를 확인해주세요.');
+        Get.snackbar(
+          '',
+          '',
+          titleText: Text(
+            '인증코드 입력 오류',
+            style: AppTextStyle.snackbarTitleStyle,
+          ),
+          messageText: Text(
+            '입력한 인증 코드를 확인해주세요.',
+            style: AppTextStyle.snackbarContentStyle,
+          ),
+        );
       }
       print(e.code);
     }
@@ -471,7 +509,18 @@ class UserController extends GetxController {
       if (e.code == 'invalid-verification-code') {
         // SMS 코드가 틀린 경우
         // 스낵바로 유저에게 알림
-        Get.snackbar('인증코드 입력 오류', '입력한 인증 코드를 확인해주세요.');
+        Get.snackbar(
+          '',
+          '',
+          titleText: Text(
+            '인증코드 입력 오류',
+            style: AppTextStyle.snackbarTitleStyle,
+          ),
+          messageText: Text(
+            '입력한 인증 코드를 확인해주세요.',
+            style: AppTextStyle.snackbarContentStyle,
+          ),
+        );
       } else
         print(e);
     }
