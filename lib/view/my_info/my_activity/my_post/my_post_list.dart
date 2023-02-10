@@ -41,7 +41,7 @@ class MyPostListPage extends StatelessWidget {
                   });
                 }
 
-                return CustomTwoLineListTile(
+                return CustomMyPostListItem(
                   _profileUrl,
                   _title,
                   _gamemode,

@@ -70,7 +70,7 @@ class HomePostList extends GetView<PostController> {
                   arguments: {'postId': controller.postList[index].postId});
             }
 
-            return CustomThreeLineListTile(
+            return CustomPostListItem(
               // 탈퇴유저의 경우 기본프로필로 불러옴
               _profileUrl,
               _userName,

@@ -1,7 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class CustomTwoLineListTile extends StatelessWidget {
-  CustomTwoLineListTile(
+class CustomMyPostListItem extends StatelessWidget {
+  CustomMyPostListItem(
     this.profileUrl,
     this.title,
     this.gamemode,

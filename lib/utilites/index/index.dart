@@ -149,13 +149,13 @@ export '../../component/evaluation_item/good_evaluation_item.dart';
 export '../../component/icon/notification_cicle_icon.dart';
 export '../../component/dialog/big_dialog.dart';
 export '../../component/textButton/filled_textButton.dart';
-export '../../component/listtile/two_line_listTile.dart';
+export '../../component/post_list_item/my_post_list_item.dart';
 export '../../component/post_info/post_info.dart';
 export '../../component/bottomSheet/bottomSheet.dart';
 export '../../component/mannerAge/mannerAge.dart';
 export '../../component/dialog/small_dialog.dart';
 export '../../component/divider/divider.dart';
-export '../../component/listtile/three_line_listTile.dart';
+export '../../component/post_list_item/post_list_item.dart';
 
 // Utilities
 export '../theme/app_padding.dart';
