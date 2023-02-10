@@ -16,11 +16,12 @@ class _MyInfoPageState extends State<MyInfoPage> {
     super.initState();
     _user.getUserInfoByUid(CurrentUser.uid);
     _createdAt =
-        Jiffy(_user.userInfo['createdAt'].toDate()).format('yy. MM. dd');
+        Jiffy(_user.userInfo.value.createdAt.toDate()).format('yy. MM. dd');
   }
 
   @override
   Widget build(BuildContext context) {
+    _user.getUserInfoByUid(CurrentUser.uid);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -55,11 +56,11 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   leading: CircleAvatar(
                     radius: 25.sp,
                     backgroundImage: NetworkImage(
-                      _user.userInfo['profileUrl'],
+                      _user.userInfo.value.profileUrl,
                     ),
                   ),
                   title: Text(
-                    _user.userInfo['userName'],
+                    _user.userInfo.value.userName,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   description: Text(
@@ -73,7 +74,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                 ),
                 SettingsTile(
                   title: CustomMannerAge(
-                    _user.userInfo['mannerAge'].toString(),
+                    _user.userInfo.value.mannerAge.toString(),
                   ),
                 ),
               ],

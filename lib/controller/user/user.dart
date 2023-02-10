@@ -16,7 +16,19 @@ class UserController extends GetxController {
   // 유저리스트
   RxList<UserModel> userList = <UserModel>[].obs;
   // 특정 한명의 유저 정보
-  RxMap<String, dynamic> userInfo = Map<String, dynamic>().obs;
+  Rx<UserModel> userInfo = UserModel(
+    uid: '',
+    userName: '',
+    phoneNumber: '',
+    profileUrl: '',
+    mannerAge: 20,
+    chatPushNtf: false,
+    activityPushNtf: false,
+    marketingConsent: false,
+    nightPushNtf: false,
+    isWithdrawn: false,
+    createdAt: Timestamp.now(),
+  ).obs;
   // 폰번호확인코드저장
   String verificationID = '';
   int? _resendToken;
@@ -528,11 +540,8 @@ class UserController extends GetxController {
 
   // uid를 통해 특정 유저의 정보 받기
   Future getUserInfoByUid(uid) async {
-    return _userDB.doc(uid).get().then(
-      (value) {
-        userInfo.value = value.data()! as Map<String, dynamic>;
-        print(userInfo);
-      },
-    );
+    await _userDB.doc(uid).get().then(
+          (value) => userInfo.value = UserModel.fromDocumentSnapshot(value),
+        );
   }
 }
