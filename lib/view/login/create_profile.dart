@@ -230,6 +230,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         ),
       ),
     );
+    
   }
 
   // 카메라 아이콘 클릭시 띄울 바텀시트
@@ -241,8 +242,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         borderRadius: BorderRadius.circular(10.sp),
       ),
       height: 160.sp,
-      color: appWhiteColor,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomButtomSheet(
             '갤러리에서 사진 선택',

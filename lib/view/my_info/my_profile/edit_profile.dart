@@ -266,8 +266,8 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
         borderRadius: BorderRadius.circular(10.sp),
       ),
       height: 160.sp,
-      color: appWhiteColor, //투염도 설정(나중)
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomButtomSheet(
             '갤러리에서 사진 선택',
