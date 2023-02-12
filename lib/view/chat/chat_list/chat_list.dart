@@ -16,10 +16,10 @@ class _ChatListPageState extends State<ChatListPage> {
   Widget build(BuildContext context) {
     // 제목 텍스트 스타일
     final TextStyle _userNameTextStyle = TextStyle(
-      fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
-      letterSpacing: Theme.of(context).textTheme.bodyMedium!.letterSpacing,
-      fontWeight: Theme.of(context).textTheme.bodyMedium!.fontWeight,
-      color: Theme.of(context).textTheme.bodyMedium!.color,
+      fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
+      letterSpacing: Theme.of(context).textTheme.titleSmall!.letterSpacing,
+      fontWeight: Theme.of(context).textTheme.titleSmall!.fontWeight,
+      color: Theme.of(context).textTheme.titleSmall!.color,
     );
     // 서브 텍스트 스타일
     final TextStyle _contentTextStyle = TextStyle(
