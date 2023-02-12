@@ -21,7 +21,7 @@ class _NoticeDetailPageState extends State<NoticeDetailPage> {
       body: ListView(
         children: [
           ListTile(
-            title: Text('매너게이머 탄생비화'),
+            title: Text('$appName 탄생비화'),
             subtitle: Text('2022.06.22'),
           ),
           Divider(
@@ -31,7 +31,7 @@ class _NoticeDetailPageState extends State<NoticeDetailPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text('매너게이머 출시!!! 1인 개발자로 전향한 민석이의 대작!'),
+            child: Text('$appName 출시!'),
           ),
         ],
       ),

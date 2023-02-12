@@ -15,7 +15,7 @@ class GameReviewController extends GetxController {
   // 선택사항인 게임후기 작성시, gameReview에 보내기
   // 게임후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기
   // 매너후기를 보낸 경우에만 보내기
-  // 비매너 후기를 보낸 경우에는 신고로 매너게이머 팀에 보내지도록 하기
+  // 비매너 후기를 보낸 경우에는 신고로 겜고 팀에 보내지도록 하기
   Future addMannerReview(
     uid,
     GameReviewModel GameReviewModel,

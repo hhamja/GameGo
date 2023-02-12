@@ -9,7 +9,7 @@ class AppNoticeListPage extends StatefulWidget {
 
 class _AppNoticeListPageState extends State<AppNoticeListPage> {
   Map noticeListData = {
-    'noticeTitleList': ['매너게이머 탄생비화', '이제 채팅으로 게임친구를 찾으세요'],
+    'noticeTitleList': ['$appName 탄생비화', '이제 채팅으로 게임친구를 찾으세요'],
     'noticeDateList': ['2022.06.22', '2022.06.23'],
   };
 

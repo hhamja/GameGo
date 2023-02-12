@@ -65,7 +65,7 @@ exports.chatNotification = functions
               // 푸시알림 정보
               const payload = {
                 notification: {
-                  title: "매너게이머 채팅알림",
+                  title: "겜고 채팅알림",
                   body: `${userNameFrom} : ${contentMessage}`,
                   badge: "1",
                   sound: "default",
@@ -294,7 +294,7 @@ exports.activityAndMarketingNotification = functions
           // 앱 공지 알림을 푸시할 메시지에 대한 설정
           const payload = {
             notification: {
-              title: "매너게이머 새소식",
+              title: "겜고 새소식",
               body: `${ntfContent}`,
               badge: "1",
               sound: "default",

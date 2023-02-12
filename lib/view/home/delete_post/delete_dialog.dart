@@ -18,7 +18,8 @@ class _DeleteDialogState extends State<DeleteDialog> {
   // 드랍다운버튼 선택한 값에 따른 페이지 새로고침
   Future<void> _deletePost() async {
     // 이전페이지 홈페이지가 있다면? 홈으로, 나의 정보페이지가 있다면? 나의정보로
-    Get.until((route) => Get.currentRoute == '/myapp');
+    Get.back();
+    Get.back();
     await _post.deletePost(postId);
     if (_.selectedTearValue != '티어') {
       // 티어 선택한 경우( = 3개 다 선택한 경우)
@@ -48,7 +49,6 @@ class _DeleteDialogState extends State<DeleteDialog> {
       () async {
         _deletePost();
       },
-   
     );
   }
 }

@@ -50,7 +50,7 @@ class AccountManagementPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('매너게이머 가입일'),
+            title: Text('$appName 가입일'),
             subtitle: Text('2022.6.25'),
             trailing: TextButton(
               onPressed: () {

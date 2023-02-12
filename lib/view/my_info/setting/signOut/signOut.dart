@@ -35,7 +35,7 @@ class _SignOutPageState extends State<SignOutPage> {
               ),
 
               Text(
-                '매너게이머와 이별하려고 하시나요?  너무 아쉬워요...',
+                '$appName와 이별하려고 하시나요?  너무 아쉬워요...',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -109,7 +109,7 @@ class _SignOutPageState extends State<SignOutPage> {
                       ),
                       textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                        hintText: '소중한 의견은 매너게이머 팀에게 전달돼요',
+                        hintText: '소중한 의견은 $appName팀에게 전달돼요',
                         // hintStyle: TextStyle(color: appBlackColor),
                         // fillColor: appWhiteColor,
                         hintStyle: TextStyle(),
@@ -143,7 +143,7 @@ class _SignOutPageState extends State<SignOutPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: CustomFullFilledTextButton(
-          '매너게이머와 이별하기',
+          '$appName와 이별하기',
           () async {
             //0. 아무것도 선택하지 않은 경우
             if (selectedLeaveReason == '선택해주세요' ||

@@ -15,7 +15,7 @@ class PermissionHandler extends GetxController {
       Get.dialog(
         // 다이어로그 띄우기
         CustomSmallDialog(
-          '기능 사용을 원하실 경우\n설정>앱 관리자>매너게이머에서\n알림 권한을 허용해 주세요.',
+          '기능 사용을 원하실 경우\n설정>앱 관리자>$appName에서\n알림 권한을 허용해 주세요.',
           '닫기',
           '설정으로 이동',
           () => Get.back(),
@@ -45,7 +45,7 @@ class PermissionHandler extends GetxController {
       Get.dialog(
         // 다이어로그 띄우기
         CustomSmallDialog(
-          '기능 사용을 원하실 경우\n설정>앱 관리자>매너게이머에서\n카메라 권한을 허용해 주세요.',
+          '기능 사용을 원하실 경우\n설정>앱 관리자>$appName에서\n카메라 권한을 허용해 주세요.',
           '닫기',
           '설정으로 이동',
           () => Get.back(),
@@ -76,7 +76,7 @@ class PermissionHandler extends GetxController {
       Get.dialog(
         // 다이어로그 띄우기
         CustomSmallDialog(
-          '기능 사용을 원하실 경우\n설정>앱 관리자>매너게이머에서\n사진 접근을 허용해 주세요.',
+          '기능 사용을 원하실 경우\n설정>앱 관리자>$appName에서\n사진 접근을 허용해 주세요.',
           '닫기',
           '설정으로 이동',
           () => Get.back(),
