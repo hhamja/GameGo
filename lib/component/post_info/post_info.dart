@@ -1,9 +1,21 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class CustomPostInfo extends StatelessWidget {
-  final postId, title, gamemode, position, tear;
+  final String postId;
+  final String title;
+  final String gamemode;
+  final String? position;
+  final String? tear;
+  final Function() onTap;
+
   CustomPostInfo(
-      this.postId, this.title, this.gamemode, this.position, this.tear);
+    this.postId,
+    this.title,
+    this.gamemode,
+    this.position,
+    this.tear,
+    this.onTap,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +31,7 @@ class CustomPostInfo extends StatelessWidget {
       minVerticalPadding: 0,
       contentPadding:
           EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
-      onTap: () {
-        Get.toNamed('/postdetail', arguments: {'postId': postId});
-      },
+      onTap: onTap,
       // 게시글 제목
       title: Text(
         title,

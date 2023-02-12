@@ -112,12 +112,29 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // 게시글 정보
-            CustomPostInfo(
-              postId,
-              _post.postInfo.title,
-              _post.postInfo.gamemode,
-              _post.postInfo.position,
-              _post.postInfo.tear,
+            Opacity(
+              // 삭제된 게시글은 투명하게
+              opacity: _post.postInfo.isDeleted ? 0.3 : 1,
+              child: CustomPostInfo(
+                postId,
+                _post.postInfo.isDeleted
+                    // 삭제 게시글
+                    ? '${_post.postInfo.title} (삭제됨)'
+                    // 비 삭제 게시글
+                    : _post.postInfo.title,
+                _post.postInfo.gamemode,
+                _post.postInfo.position,
+                _post.postInfo.tear,
+                // 게시글 박스 클릭 시
+                () => _post.postInfo.isDeleted
+                    // 삭제 게시글의 경우
+                    ? null
+                    // 삭제 게시글이 아닌
+                    : Get.toNamed(
+                        '/postdetail',
+                        arguments: {'postId': postId},
+                      ),
+              ),
             ),
             // 약속 잡는 버튼
             Padding(
