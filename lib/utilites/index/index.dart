@@ -139,6 +139,7 @@ export '../../../controller/user/profile.dart';
 export '../../../controller/favorite/favorite.dart';
 
 // Components
+export '../../../component/dialog/one_button_dialog.dart';
 export '../../../../component/game_review_item/game_review_item.dart';
 export '../../component/icon_button/close_button.dart';
 export '../../component/textButton/outline_textButton.dart';

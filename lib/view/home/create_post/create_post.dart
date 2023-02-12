@@ -28,24 +28,32 @@ class _AddPostPageState extends State<AddPostPage> {
   Widget build(BuildContext context) {
     // 게시글 생성 '완료'버튼 클릭 시
     Future<void> _createPost() async {
-      // 게임모드를 선택했는지 여부
-      if (_button.seledtedPostGamemodeValue == null) {
-        // 버튼에서 아무 게임모드도 선택하지 않은 경우
-        // 게임모드 선택하라고 유저에게 알리기}
-        Get.snackbar(
-          '',
-          '',
-          titleText: Text(
-            '게임모드 선택 안함',
-            style: AppTextStyle.snackbarTitleStyle,
-          ),
-          messageText: Text(
-            '버튼을 클릭하여 게임모드를 선택해주세요.',
-            style: AppTextStyle.snackbarContentStyle,
+      // 게임모드 미선택, 제목과 내용 미작성 시
+      if (_button.seledtedPostGamemodeValue == null ||
+          _titleController.text == '' ||
+          _maintextController.text == '') {
+        // 다이얼로그로 유저에게 알림
+        Get.dialog(
+          CustomOneButtonDialog(
+            '게임모드, 제목, 내용은 필수 입력 항목이에요.',
+            '확인',
+            () => Get.back(),
           ),
         );
+        // Get.snackbar(
+        //   '',
+        //   '',
+        //   titleText: Text(
+        //     '게임모드 선택 안함',
+        //     style: AppTextStyle.snackbarTitleStyle,
+        //   ),
+        //   messageText: Text(
+        //     '버튼을 클릭하여 게임모드를 선택해주세요.',
+        //     style: AppTextStyle.snackbarContentStyle,
+        //   ),
+        // );
       } else {
-        // 게임모드 선택한 경우
+        // 게임모드 선택, 제목작성, 글 내용작성 모두 한 경우
         final postModel = PostModel(
           postId: FirebaseFirestore.instance.collection('post').doc().id,
           uid: CurrentUser.uid,
