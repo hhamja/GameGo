@@ -9,12 +9,11 @@ class CustomSmallDialog extends StatelessWidget {
     this.completeFun,
   );
 
-  final String content; //Dialog 내용
-  final String cancelText; //왼쪽 버튼 내용, ex)취소
-  final String completeText; //오른쪽 버튼 내용, ex)확인
-  final Function() cancelFun; //취소버튼의 onPressed()
-  final Function() completeFun; //완료버튼의 onPressed()
-  // cancelFlex : completeFlex = 1:1이면 버튼 Width는 서로 동일
+  final String content;
+  final String cancelText;
+  final String completeText;
+  final Function() cancelFun;
+  final Function() completeFun;
 
   @override
   Widget build(BuildContext context) {

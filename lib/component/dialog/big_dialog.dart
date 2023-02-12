@@ -25,58 +25,116 @@ class CustomBigDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: AlertDialog(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
+        backgroundColor: appWhiteColor,
+        contentTextStyle: Theme.of(context).textTheme.bodyMedium,
         buttonPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.fromLTRB(0, 20, 0, 30),
-        insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-        title: Center(child: Text(title)),
+        contentPadding: EdgeInsets.only(
+          top: AppSpaceData.screenPadding,
+        ),
+        insetPadding:
+            EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
+        // 제목
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.titleSmall,
+          textAlign: TextAlign.center,
+        ),
         // 내용
         content: Container(
-          width: MediaQuery.of(context).size.width,
+          width: 100.w,
           child: Text(
             content,
             textAlign: TextAlign.center,
           ),
         ),
+        actionsPadding:
+            EdgeInsets.symmetric(horizontal: 15.sp, vertical: 20.sp),
+
         actions: [
           Row(
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // 왼쪽버튼
-              Expanded(
-                flex: cancelFlex,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
-                    padding: EdgeInsets.symmetric(vertical: 13, horizontal: 0),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: cancelFun,
-                  child: Text(
-                    cancelText,
-                    style: TextStyle(color: appBlackColor),
-                  ),
-                ),
+              CustomOutlineTextButton(
+                40.w,
+                5.5.h,
+                cancelText,
+                cancelFun,
+                appBlackColor,
               ),
-              // 오른쪽버튼
-              Expanded(
-                flex: completeFlex,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.blue[300],
-                    padding: EdgeInsets.symmetric(vertical: 13, horizontal: 0),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: completeFun,
-                  child: Text(
-                    completeText,
-                    style: TextStyle(color: appBlackColor),
-                  ),
-                ),
+
+              SizedBox(
+                width: 5.sp,
+              ), // 오른쪽버튼
+              CustomFilledTextButton(
+                40.w,
+                5.5.h,
+                completeText,
+                completeFun,
               ),
             ],
           ),
         ],
       ),
     );
+
+    // return Container(
+    //   child: AlertDialog(
+    //     buttonPadding: EdgeInsets.zero,
+    //     contentPadding: EdgeInsets.fromLTRB(0, 20, 0, 30),
+    //     insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+    //     title: Center(child: Text(title)),
+    //     // 내용
+    //     content: Container(
+    //       width: MediaQuery.of(context).size.width,
+    //       child: Text(
+    //         content,
+    //         textAlign: TextAlign.center,
+    //       ),
+    //     ),
+    //     actions: [
+    //       Row(
+    //         mainAxisSize: MainAxisSize.max,
+    //         children: [
+    //           // 왼쪽버튼
+    //           Expanded(
+    //             flex: cancelFlex,
+    //             child: TextButton(
+    //               style: TextButton.styleFrom(
+    //                 backgroundColor: Colors.grey[300],
+    //                 padding: EdgeInsets.symmetric(vertical: 13, horizontal: 0),
+    //                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    //               ),
+    //               onPressed: cancelFun,
+    //               child: Text(
+    //                 cancelText,
+    //                 style: TextStyle(color: appBlackColor),
+    //               ),
+    //             ),
+    //           ),
+    //           // 오른쪽버튼
+    //           Expanded(
+    //             flex: completeFlex,
+    //             child: TextButton(
+    //               style: TextButton.styleFrom(
+    //                 backgroundColor: Colors.blue[300],
+    //                 padding: EdgeInsets.symmetric(vertical: 13, horizontal: 0),
+    //                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    //               ),
+    //               onPressed: completeFun,
+    //               child: Text(
+    //                 completeText,
+    //                 style: TextStyle(color: appBlackColor),
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }
