@@ -32,6 +32,37 @@ class _EditPostPageState extends State<EditPostPage> {
     });
   }
 
+  // 게시글 수정 '완료'버튼 클릭 시
+  Future<void> _editPost() async {
+    // 게임모드 미선택, 제목과 내용 미작성 시
+    if (_editDropDownController.seledtedPostGamemodeValue == null ||
+        _titleController.text == '' ||
+        _maintextController.text == '') {
+      // 다이얼로그로 유저에게 알림
+      Get.dialog(
+        CustomOneButtonDialog(
+          '게임모드, 제목, 내용은 필수 입력 항목이에요.',
+          '확인',
+          () => Get.back(),
+        ),
+      );
+    } else {
+      // 서버의 게시글 데이터 업데이트
+      await _postController.updatePost(
+        postId,
+        _titleController.text,
+        _maintextController.text,
+        _editDropDownController.seledtedPostGamemodeValue,
+        _editDropDownController.seledtedPostdPositionValue,
+        _editDropDownController.seledtedPostTearValue,
+      );
+      // 게시글 세부 페이지 새로고침
+      await _postController.getPostInfoByid(postId);
+      // Post detail Page로 이동
+      Get.back();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,20 +77,7 @@ class _EditPostPageState extends State<EditPostPage> {
         actions: [
           // 완료 버튼
           TextButton(
-            onPressed: () async {
-              await _postController.updatePost(
-                postId,
-                _titleController.text,
-                _maintextController.text,
-                _editDropDownController.seledtedPostGamemodeValue,
-                _editDropDownController.seledtedPostdPositionValue,
-                _editDropDownController.seledtedPostTearValue,
-              );
-              // 게시글 세부 페이지 새로고침
-              await _postController.getPostInfoByid(postId);
-              // Post detail Page로 이동
-              Get.back();
-            },
+            onPressed: _editPost,
             child: Text(
               '완료',
               style: TextStyle(

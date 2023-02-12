@@ -40,18 +40,6 @@ class _AddPostPageState extends State<AddPostPage> {
             () => Get.back(),
           ),
         );
-        // Get.snackbar(
-        //   '',
-        //   '',
-        //   titleText: Text(
-        //     '게임모드 선택 안함',
-        //     style: AppTextStyle.snackbarTitleStyle,
-        //   ),
-        //   messageText: Text(
-        //     '버튼을 클릭하여 게임모드를 선택해주세요.',
-        //     style: AppTextStyle.snackbarContentStyle,
-        //   ),
-        // );
       } else {
         // 게임모드 선택, 제목작성, 글 내용작성 모두 한 경우
         final postModel = PostModel(
