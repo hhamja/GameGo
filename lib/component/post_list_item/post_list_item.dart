@@ -82,14 +82,14 @@ class CustomPostListItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5.sp),
+                    SizedBox(height: 3.sp),
                     // 제목
                     Text(
                       title,
                       maxLines: 1,
                       style: _titleTextStyle,
                     ),
-                    SizedBox(height: 5.sp),
+                    SizedBox(height: 3.sp),
                     // 게임모드 · 포지션 · 티어
                     Row(
                       children: [

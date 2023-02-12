@@ -56,7 +56,7 @@ class CustomMyPostListItem extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '내일 저녁에 같이 게임할 듀오 여성분 구합니다 많은 관심 부탁드려요.',
+                          title,
                           maxLines: 2,
                           style: _titleTextStyle,
                           overflow: TextOverflow.ellipsis,
@@ -64,7 +64,7 @@ class CustomMyPostListItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 5.sp),
+                  SizedBox(height: 3.sp),
                   // 게임모드 · 포지션 · 티어
                   Row(
                     children: [
