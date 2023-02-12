@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
 class ReportListPage extends StatefulWidget {
@@ -8,82 +9,94 @@ class ReportListPage extends StatefulWidget {
 }
 
 class _ReportListPageState extends State<ReportListPage> {
-  var postId = Get.arguments['postId']; //이전페이지가 게시글 페이지면? null아님
-  var chatRoomId = Get.arguments['chatRoomId']; //이전페이지가 채팅 페이지면? null아님
-  var uid = Get.arguments['uid']; //신고 받는 uid
+  // 이전페이지가 게시글 페이지면? null아님
+  var postId = Get.arguments['postId'];
+  // 이전페이지가 채팅 페이지면? null아님
+  var chatRoomId = Get.arguments['chatRoomId'];
+  // 신고 받는 uid
+  var uid = Get.arguments['uid'];
 
   @override
   Widget build(BuildContext context) {
-    print(uid);
-    print(postId);
-    print(chatRoomId);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '신고',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: ListView(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(
+          AppSpaceData.screenPadding,
+        ),
         shrinkWrap: true,
         children: [
           ListTile(
-            title: Text('신고하는 이유'),
             contentPadding: EdgeInsets.zero,
             subtitle: Text(
-                '회원님의 신고는 익명으로 처리됩니다.위급한 상황이라고 생각된다면 즉시 응급 서비스 기관에 연락해주세요.'),
+              '회원님의 신고는 익명으로 처리됩니다.위급한 상황이라고 생각된다면 즉시 응급 서비스 기관에 연락해주세요.',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ),
-          Divider(thickness: 1),
-          ListView.separated(
-              padding: EdgeInsets.zero,
-              controller: ScrollController(),
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text('${reportPostReason[index]}'),
-                  trailing: Icon(Icons.keyboard_arrow_right_sharp),
-                  onTap: () {
-                    if (index == 1) {
-                      Get.toNamed(
-                        '/illegal',
-                        arguments: {
-                          'chatRoomId': chatRoomId ?? null,
-                          'postId': postId ?? null,
-                          'uid': uid,
-                        },
-                      );
-                    } else if (index == 9) {
-                      Get.toNamed(
-                        '/otherReason',
-                        arguments: {
-                          'chatRoomId': chatRoomId ?? null,
-                          'postId': postId ?? null,
-                          'uid': uid,
-                        },
-                      );
-                    } else {
-                      print(reportPostReason[index].toString());
-                      Get.dialog(
-                        ReportDialog(),
-                        arguments: {
-                          'chatRoomId': chatRoomId ?? null,
-                          'postId': postId ?? null,
-                          'content': reportPostReason[index].toString(),
-                          'uid': uid,
-                        },
-                      );
-                    }
-                  },
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return CustomDivider();
-              },
-              itemCount: reportPostReason.length),
-          Divider(thickness: 1),
+          SizedBox(
+            height: 10.sp,
+          ),
+          ListView.builder(
+            controller: ScrollController(),
+            shrinkWrap: true,
+            itemCount: reportPostReason.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 0,
+                  vertical: 5.sp,
+                ),
+                title: Text(
+                  '${reportPostReason[index]}',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                trailing: Icon(Icons.keyboard_arrow_right_sharp),
+                onTap: () {
+                  if (index == 1) {
+                    // 불법 또는 규제 상품 판매
+                    Get.toNamed(
+                      '/illegal',
+                      arguments: {
+                        'chatRoomId': chatRoomId ?? null,
+                        'postId': postId ?? null,
+                        'uid': uid,
+                      },
+                    );
+                  } else if (index == 9) {
+                    // 기타 사유
+                    Get.toNamed(
+                      '/otherReason',
+                      arguments: {
+                        'chatRoomId': chatRoomId ?? null,
+                        'postId': postId ?? null,
+                        'uid': uid,
+                      },
+                    );
+                  } else {
+                    // 나머지
+                    Get.dialog(
+                      ReportDialog(),
+                      arguments: {
+                        'chatRoomId': chatRoomId ?? null,
+                        'postId': postId ?? null,
+                        'content': reportPostReason[index].toString(),
+                        'uid': uid,
+                      },
+                    );
+                  }
+                },
+              );
+            },
+          ),
         ],
       ),
     );

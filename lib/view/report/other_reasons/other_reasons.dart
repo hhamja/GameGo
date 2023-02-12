@@ -12,41 +12,51 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
   final ScrollController _scrollController = ScrollController();
   final ScrollController _textScrollController = ScrollController();
   final int _maxLength = 300;
-  var postId = Get.arguments['postId']; //이전페이지가 게시글 페이지면? null아님
-  var chatRoomId = Get.arguments['chatRoomId']; //이전페이지가 채팅 페이지면? null아님
-  var uid = Get.arguments['uid']; //신고 받는 uid
+
+  // 이전페이지가 채팅 페이지면? null
+  var postId = Get.arguments['postId'];
+  // 이전페이지가 게시글 페이지면? null
+  var chatRoomId = Get.arguments['chatRoomId'];
+  // 신고 받는 uid
+  var uid = Get.arguments['uid'];
   String textValue = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
-          '신고',
-          style: Theme.of(context).textTheme.titleMedium,
+          '기타사유',
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
         controller: _scrollController,
         reverse: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: AppSpaceData.heightSmall),
             Text(
-              '기타 신고 사유',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              '신고사유가 앞의 신고항목에 없으신가요?',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            SizedBox(
-              height: 10,
+            Text(
+              '원하시는 신고 항목이 없는 경우 신고사유를 입력해주세요.',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            Text('신고사유가 앞의 신고항목에 없으신가요?\n원하시는 신고 항목이 없는 경우 신고사유를 입력해주세요.'),
-            SizedBox(height: 20),
+            SizedBox(height: AppSpaceData.heightSmall),
             TextField(
               cursorColor: cursorColor,
+              style: Theme.of(context).textTheme.bodyMedium,
               autocorrect: false,
               maxLines: null,
+              minLines: 5,
               textAlignVertical: TextAlignVertical.top,
               maxLength: _maxLength,
               keyboardType: TextInputType.text,
@@ -55,25 +65,35 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
               focusNode: FocusNode(canRequestFocus: true),
               controller: _textController,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: EdgeInsets.all(AppSpaceData.screenPadding),
                 counterText: '글자수 제한 : (${textValue.length}/${_maxLength})',
+                counterStyle: Theme.of(context).textTheme.bodySmall,
                 hintText: '신고 사유를 입력해주세요.',
+                hintStyle: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize,
+                  color: appGreyColor,
+                ),
                 fillColor: appWhiteColor,
-                filled: true,
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0.sp),
+                  ),
                   borderSide:
                       BorderSide(color: Colors.grey, style: BorderStyle.solid),
                 ),
                 disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.sp),
+                  ),
                   borderSide:
                       BorderSide(color: Colors.grey, style: BorderStyle.solid),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.sp),
+                  ),
                   borderSide:
-                      BorderSide(color: Colors.grey, style: BorderStyle.solid),
+                      BorderSide(color: appGreyColor, style: BorderStyle.solid),
                 ),
               ),
               onChanged: (value) {
@@ -85,14 +105,18 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
           ],
         ),
       ),
+      // 버튼
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.all(
+          AppSpaceData.screenPadding,
+        ),
         child: CustomFullFilledTextButton(
           '신고사유 제출하기',
           () async {
             final text = _textController.text.trim();
-            // 1. 신고사유 입력하지 않은 경우
+            // 사유 입력에 대한 조건식
             if (text == '' || text.isEmpty) {
+              // 신고사유 입력하지 않은 경우
               Get.snackbar(
                 '',
                 '',
@@ -105,10 +129,8 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
                   style: AppTextStyle.snackbarContentStyle,
                 ),
               );
-            }
-            // 2. 신고사유 입력한 경우
-            else {
-              print(_textController.text.trim());
+            } else {
+              // 신고사유 입력한 경우
               Get.dialog(
                 ReportDialog(),
                 arguments: {

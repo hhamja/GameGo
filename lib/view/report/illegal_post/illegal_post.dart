@@ -16,47 +16,47 @@ class _IllegallyPostedPageState extends State<IllegallyPostedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
-          '신고',
-          style: Theme.of(context).textTheme.titleMedium,
+          '불법 또는 규제 상품 판매',
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
       body: ListView(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(AppSpaceData.screenPadding),
         shrinkWrap: true,
         children: [
-          ListTile(
-            title: Text('불법 또는 규제 상품 판매'),
-            contentPadding: EdgeInsets.zero,
-            subtitle: Text('해당하는 판매 품목을 아래에서 선택해주세요.'),
+          ListView.builder(
+            itemCount: illegalProduct.length,
+            padding: EdgeInsets.zero,
+            controller: ScrollController(),
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 0,
+                  vertical: 5.sp,
+                ),
+                title: Text(
+                  '${illegalProduct[index]}',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                trailing: Icon(Icons.keyboard_arrow_right_sharp),
+                onTap: () {
+                  print(illegalProduct[index].toString());
+                  Get.dialog(ReportDialog(), arguments: {
+                    'chatRoomId': chatRoomId ?? null,
+                    'postId': postId ?? null,
+                    'uid': uid,
+                    'content': illegalProduct[index].toString(),
+                  });
+                },
+              );
+            },
           ),
-          Divider(thickness: 1),
-          ListView.separated(
-              padding: EdgeInsets.zero,
-              controller: ScrollController(),
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text('${illegalProduct[index]}'),
-                  trailing: Icon(Icons.keyboard_arrow_right_sharp),
-                  onTap: () {
-                    print(illegalProduct[index].toString());
-                    Get.dialog(ReportDialog(), arguments: {
-                      'chatRoomId': chatRoomId ?? null,
-                      'postId': postId ?? null,
-                      'uid': uid,
-                      'content': illegalProduct[index].toString(),
-                    });
-                  },
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(thickness: 1);
-              },
-              itemCount: illegalProduct.length),
-          Divider(thickness: 1),
         ],
       ),
     );
