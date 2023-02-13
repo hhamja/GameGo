@@ -1,4 +1,3 @@
-
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MessagesFromPost extends StatefulWidget {
@@ -21,12 +20,12 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   // 채팅 GetX 컨트롤러
   final ChatController _chat = Get.find<ChatController>();
   var _list; // = _chat.messageList
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
     _list = _chat.messageList;
-    chatRoomId = widget.postId + '_' + CurrentUser.uid;
+    chatRoomId = widget.postId + '_' + _auth.currentUser!.uid;
     _list.bindStream(_chat.readAllMessageList(chatRoomId));
   }
 
@@ -128,7 +127,8 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                   _chat.isShowProfile.value = true;
                 }
                 // 내가 보낸 메시지인지에 대한 bool 값
-                final bool _isMe = _list[reversed].idFrom == CurrentUser.uid;
+                final bool _isMe =
+                    _list[reversed].idFrom == _auth.currentUser!.uid;
                 // 메시지 타입에 대한 bool값
                 final bool _appointType = _list[reversed].type == 'appoint';
                 // 나와 상대방 메시지 간격 주기 위한 bool 변수

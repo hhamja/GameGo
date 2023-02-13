@@ -10,12 +10,9 @@ class LogOutDialog extends StatelessWidget {
       '정말 로그아웃 하시겠나요?',
       '취소',
       '확인',
-      () {
-        Get.back();
-      },
+      () => Get.back(),
       () async {
         await _user.signOut();
-        Get.offAllNamed('/main');
       },
     );
   }

@@ -8,6 +8,7 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPageState extends State<AddPostPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   // PostController 선언 (∵ Create Post)
   final PostController _post = Get.find<PostController>();
   // 홈 드랍다운버튼 컨트롤러
@@ -44,9 +45,9 @@ class _AddPostPageState extends State<AddPostPage> {
         // 게임모드 선택, 제목작성, 글 내용작성 모두 한 경우
         final postModel = PostModel(
           postId: FirebaseFirestore.instance.collection('post').doc().id,
-          uid: CurrentUser.uid,
-          userName: CurrentUser.name,
-          profileUrl: CurrentUser.profile,
+          uid: _auth.currentUser!.uid,
+          userName: _auth.currentUser!.displayName!,
+          profileUrl: _auth.currentUser!.photoURL!,
           title: _titleController.text.trim(),
           maintext: _maintextController.text.trim(),
           gamemode: _button.seledtedPostGamemodeValue!,

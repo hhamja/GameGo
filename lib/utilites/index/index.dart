@@ -168,7 +168,6 @@ export '../../utilites/app_data/default_profile/default_profile.dart';
 export '../../utilites/route/route.dart';
 export '../../utilites/binding/binding.dart';
 export '../../utilites/route/route_path.dart';
-export '../../utilites/app_data/currentUser/currentUser.dart';
 
 // Themes
 export '../../main.dart';

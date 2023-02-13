@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 class NtfSettingController extends GetxController with WidgetsBindingObserver {
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   //알림 권한 설정 값
   var isGrantedNtf = true.obs;
 
@@ -42,7 +42,7 @@ class NtfSettingController extends GetxController with WidgetsBindingObserver {
   //채팅, 활동, 앱 공지, 마케팅 수신 동의에 대한 유저의 값 받기
   Future getUserPushNtf() async {
     isGrantedNtf.value = await Permission.notification.status.isGranted;
-    _userDB.doc(CurrentUser.uid).get().then(
+    _userDB.doc(_auth.currentUser!.uid).get().then(
       (value) {
         var snapshot = value.data() as Map<String, dynamic>;
         isChatNtf.value = snapshot['chatPushNtf'];
@@ -55,7 +55,7 @@ class NtfSettingController extends GetxController with WidgetsBindingObserver {
 
   //채팅알림 토글 버튼 클릭 시 업데이트
   Future updateChatPushNtf(chatPushNtf) async {
-    return _userDB.doc(CurrentUser.uid).update(
+    return _userDB.doc(_auth.currentUser!.uid).update(
       {
         'chatPushNtf': chatPushNtf,
       },
@@ -64,7 +64,7 @@ class NtfSettingController extends GetxController with WidgetsBindingObserver {
 
   //활동알림 토글 버튼 클릭 시 업데이트
   Future updateActivityPushNtf(activityPushNtf) async {
-    return _userDB.doc(CurrentUser.uid).update(
+    return _userDB.doc(_auth.currentUser!.uid).update(
       {
         'activityPushNtf': activityPushNtf,
       },
@@ -73,7 +73,7 @@ class NtfSettingController extends GetxController with WidgetsBindingObserver {
 
   //앱 소식 및 공지 알림 토글 버튼 클릭 시 업데이트
   Future updateNightPushNtf(nightPushNtf) async {
-    return _userDB.doc(CurrentUser.uid).update(
+    return _userDB.doc(_auth.currentUser!.uid).update(
       {
         'nightPushNtf': nightPushNtf,
       },
@@ -82,7 +82,7 @@ class NtfSettingController extends GetxController with WidgetsBindingObserver {
 
   //마케팅 수신 동의 토글 버튼 클릭 시 업데이트
   Future updateMarketingConsent(marketingConsent) async {
-    return _userDB.doc(CurrentUser.uid).update(
+    return _userDB.doc(_auth.currentUser!.uid).update(
       {
         'marketingConsent': marketingConsent,
       },
@@ -112,7 +112,6 @@ class NtfSettingController extends GetxController with WidgetsBindingObserver {
             // 앱 설정으로 이동,
             openAppSettings();
           },
-       
         ),
       );
     }

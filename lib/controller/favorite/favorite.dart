@@ -3,7 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class FavoriteController extends GetxController {
   static FavoriteController get to => Get.find<FavoriteController>();
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
   final CollectionReference _favoriteDB =
@@ -20,7 +20,7 @@ class FavoriteController extends GetxController {
     // 나의 관심게시글 경로 참조
     final ref = await _favoriteDB
         .doc('favorite')
-        .collection(CurrentUser.uid)
+        .collection(_auth.currentUser!.uid)
         .doc(postId)
         .get();
     // 해당 게시글이 나의 관심게시글인지 확인
@@ -42,7 +42,7 @@ class FavoriteController extends GetxController {
       // 나의 관심목록에서 제거
       _favoriteDB
           .doc('favorite')
-          .collection(CurrentUser.uid)
+          .collection(_auth.currentUser!.uid)
           .doc(favoriteModel.postId)
           .delete();
       // 해당 게시물 like값 -1
@@ -55,7 +55,7 @@ class FavoriteController extends GetxController {
       // 관심게시글로 추가
       _favoriteDB
           .doc('favorite')
-          .collection(CurrentUser.uid)
+          .collection(_auth.currentUser!.uid)
           .doc(favoriteModel.postId)
           .set(
         {
@@ -85,7 +85,7 @@ class FavoriteController extends GetxController {
     // 관심게시글의 postId의 리스트를 받아서 넣기
     await _favoriteDB
         .doc('favorite')
-        .collection(CurrentUser.uid)
+        .collection(_auth.currentUser!.uid)
         .orderBy('createdAt', descending: true)
         .get()
         .then(

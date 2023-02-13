@@ -10,6 +10,7 @@ class SendReviewPage extends StatefulWidget {
 class _SendReviewPageState extends State<SendReviewPage> {
   final EvaluationController _evaluation = Get.find<EvaluationController>();
   final GameReviewController _review = Get.put(GameReviewController());
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final ScrollController _scrollC = ScrollController();
   final TextEditingController _reviewText = TextEditingController();
 
@@ -282,7 +283,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                 if (_evaluationtype == 'good') {
                   // 매너 평가 인스턴스 생성
                   final GoodEvaluationModel _goodModel = GoodEvaluationModel(
-                    idFrom: CurrentUser.uid,
+                    idFrom: _auth.currentUser!.uid,
                     idTo: uid,
                     evaluationType: _evaluationtype,
                     kindManner: goodBoolList[0]!,
@@ -298,12 +299,12 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   );
                   // notification 인스턴스 생성
                   final NotificationModel _ntfModel = NotificationModel(
-                    idFrom: CurrentUser.uid,
+                    idFrom: _auth.currentUser!.uid,
                     idTo: uid,
                     postId: postId,
                     chatRoomId: chatRoomId,
                     postTitle: postTitle,
-                    userName: CurrentUser.name,
+                    userName: _auth.currentUser!.displayName!,
                     type: 'review',
                     content: '',
                     createdAt: Timestamp.now(),
@@ -316,7 +317,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       _reviewText.text.trim().isNotEmpty) {
                     // 후기 인스턴스 생성
                     final GameReviewModel _reviewModel = GameReviewModel(
-                      idFrom: CurrentUser.uid,
+                      idFrom: _auth.currentUser!.uid,
                       idTo: uid,
                       chatRoomId: chatRoomId,
                       userName:
@@ -341,7 +342,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                 else if (_evaluationtype == 'bad') {
                   // 비매너 평가 인스턴스 생성
                   final BadEvaluationModel _badModel = BadEvaluationModel(
-                    idFrom: CurrentUser.uid,
+                    idFrom: _auth.currentUser!.uid,
                     idTo: uid,
                     evaluationType: _evaluationtype,
                     badManner: badBoolList[0]!,
@@ -366,7 +367,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                       _reviewText.text.trim().isNotEmpty) {
                     // 신고 인스턴스 생성
                     final ReportModel _report = ReportModel(
-                      idFrom: CurrentUser.uid,
+                      idFrom: _auth.currentUser!.uid,
                       idTo: uid,
                       reportContent: _reviewText.text.trim(),
                       createdAt: Timestamp.now(),

@@ -33,6 +33,7 @@ class UserModel {
   // 계정 복구 및 일정기간 재가입 못하게 하기 위함
   final Timestamp? withdrawnAt;
 
+  final Timestamp updatedAt;
   final Timestamp createdAt;
 
   UserModel({
@@ -49,6 +50,7 @@ class UserModel {
     required this.nightPushNtf,
     required this.isWithdrawn,
     this.withdrawnAt,
+    required this.updatedAt,
     required this.createdAt,
   });
 
@@ -68,6 +70,7 @@ class UserModel {
       nightPushNtf: snapshot['nightPushNtf'],
       isWithdrawn: snapshot['isWithdrawn'],
       withdrawnAt: snapshot['withdrawnAt'],
+      updatedAt: snapshot['updatedAt'],
       createdAt: snapshot['createdAt'],
     );
   }

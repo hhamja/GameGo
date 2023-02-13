@@ -2,7 +2,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class UserController extends GetxController {
   static UserController get to => Get.find<UserController>();
-  final _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
@@ -27,6 +27,7 @@ class UserController extends GetxController {
     marketingConsent: false,
     nightPushNtf: false,
     isWithdrawn: false,
+    updatedAt: Timestamp.now(),
     createdAt: Timestamp.now(),
   ).obs;
   // 폰번호확인코드저장
@@ -48,6 +49,7 @@ class UserController extends GetxController {
         'nightPushNtf': userModel.nightPushNtf,
         'isWithdrawn': userModel.isWithdrawn,
         'withdrawnAt': userModel.withdrawnAt,
+        'updatedAt': userModel.updatedAt,
         'createdAt': userModel.createdAt,
       },
     );
@@ -61,14 +63,18 @@ class UserController extends GetxController {
       (snapshot) {
         if (snapshot.docs.isEmpty) {
           // 중복 닉네임 없는 경우
-          _userDB.doc(CurrentUser.uid).update(
+          _userDB.doc(_auth.currentUser!.uid).update(
             // 유저 DB에서 닉네임 수정
             {
               'userName': userName,
+              'updatedAt': Timestamp.now(),
             },
           );
           // 채팅에서 닉네임 수정
-          _chatDB.where('members', arrayContains: CurrentUser.uid).get().then(
+          _chatDB
+              .where('members', arrayContains: _auth.currentUser!.uid)
+              .get()
+              .then(
             // 내가 맴버로 있는 채팅방만 쿼리하여 리스트로 받기
             (value) {
               // 문서리스트 반복문
@@ -77,7 +83,8 @@ class UserController extends GetxController {
                   // 데이터 Map 자료 형태로 변환
                   var snapshot = e.data() as Map<String, dynamic>;
                   // 내가 postingUer로 참여한 채팅방인지 여부를 나타내는 변수
-                  bool isMyPost = snapshot['postingUid'] == CurrentUser.uid;
+                  bool isMyPost =
+                      snapshot['postingUid'] == _auth.currentUser!.uid;
                   // 채팅방 id 값
                   String chatRoomId = snapshot['chatRoomId'];
                   print(isMyPost);
@@ -107,7 +114,7 @@ class UserController extends GetxController {
           );
           // 게시글에서 닉네임 수정
           _postDB
-              .where('uid', isEqualTo: CurrentUser.uid)
+              .where('uid', isEqualTo: _auth.currentUser!.uid)
               .where('isDeleted', isEqualTo: false)
               .get()
               .then(
@@ -135,7 +142,10 @@ class UserController extends GetxController {
             },
           );
           // 게임후기의 닉네임 수정
-          _reviewDB.where('idFrom', isEqualTo: CurrentUser.uid).get().then(
+          _reviewDB
+              .where('idFrom', isEqualTo: _auth.currentUser!.uid)
+              .get()
+              .then(
             // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
             (value) {
               // 문서리스트 반복문
@@ -160,7 +170,7 @@ class UserController extends GetxController {
           // 알림의 닉네임 수정
           _firestore
               .collection('notification')
-              .where('idFrom', isEqualTo: CurrentUser.uid)
+              .where('idFrom', isEqualTo: _auth.currentUser!.uid)
               .get()
               .then(
                 // 내가 보낸 알림만 쿼리하여 리스트로 받기
@@ -183,10 +193,10 @@ class UserController extends GetxController {
               );
           // Auth 정보에서 닉네임 수정
           _auth.currentUser!.updateDisplayName(userName).then(
-                (_) => print('auth의 닉네임 수정'),
+                // 프로필 페이지로 이동
+                (_) => Get.back(),
                 onError: (e) => print(e),
               );
-          FirebaseAuth.instance.currentUser!.reload();
         } else {
           // 중복 닉네임인 경우
           // 유저에게 다이얼로그로 알림
@@ -205,14 +215,15 @@ class UserController extends GetxController {
   // 나의 프로필을 변경하기
   Future updateUserProfile(profileUrl) async {
     // 유저정보에서 프로필 수정
-    _userDB.doc(CurrentUser.uid).update(
+    _userDB.doc(_auth.currentUser!.uid).update(
       {
         'profileUrl': profileUrl,
+        'updatedAt': Timestamp.now(),
       },
     );
 
     // 채팅에서 프로필 수정
-    _chatDB.where('members', arrayContains: CurrentUser.uid).get().then(
+    _chatDB.where('members', arrayContains: _auth.currentUser!.uid).get().then(
       // 내가 맴버로 있는 채팅방만 쿼리하여 리스트로 받기
       (value) {
         // 문서리스트 반복문
@@ -221,7 +232,7 @@ class UserController extends GetxController {
             // 데이터 Map 자료 형태로 변환
             var snapshot = e.data() as Map<String, dynamic>;
             // 내가 postingUer로 참여한 채팅방인지 여부를 나타내는 변수
-            bool isMyPost = snapshot['postingUid'] == CurrentUser.uid;
+            bool isMyPost = snapshot['postingUid'] == _auth.currentUser!.uid;
             // 채팅방 id 값
             final String chatRoomId = snapshot['chatRoomId'];
             print(isMyPost);
@@ -254,7 +265,7 @@ class UserController extends GetxController {
     // 게시글에서 프로필 수정
     _postDB
         .where('isDeleted', isEqualTo: false)
-        .where('uid', isEqualTo: CurrentUser.uid)
+        .where('uid', isEqualTo: _auth.currentUser!.uid)
         .get()
         .then(
       // 삭제하지 않은 나의 게시글만 쿼리
@@ -282,7 +293,7 @@ class UserController extends GetxController {
     );
 
     // 게임후기의 프로필 수정
-    _reviewDB.where('idFrom', isEqualTo: CurrentUser.uid).get().then(
+    _reviewDB.where('idFrom', isEqualTo: _auth.currentUser!.uid).get().then(
       // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
       (value) {
         // 문서리스트 반복문
@@ -307,6 +318,7 @@ class UserController extends GetxController {
 
     // Auth의 프로필 수정
     _auth.currentUser!.updatePhotoURL(profileUrl).then(
+          //
           (_) => print('auth의 프로필 수정'),
           onError: (e) => print(e),
         );
@@ -394,7 +406,7 @@ class UserController extends GetxController {
   // 로그아웃
   Future signOut() async {
     // 로그아웃시 푸시알림 수신 못하게 하기 위해 토큰값 null로 업데이트
-    await _userDB.doc(CurrentUser.uid).update(
+    await _userDB.doc(_auth.currentUser!.uid).update(
       {
         'pushToken': null,
       },
@@ -411,7 +423,7 @@ class UserController extends GetxController {
 
       // 게시글 플래그
       _postDB
-          .where('uid', isEqualTo: CurrentUser.uid)
+          .where('uid', isEqualTo: _auth.currentUser!.uid)
           .where('isDeleted', isEqualTo: false)
           .where('isHidden', isEqualTo: false)
           .get()
@@ -441,7 +453,7 @@ class UserController extends GetxController {
 
       // 채팅 플래그
       _chatDB
-          .where('members', arrayContains: CurrentUser.uid)
+          .where('members', arrayContains: _auth.currentUser!.uid)
           // 채팅방 나가기 플래그가 false로 되어있다는 쿼리 추가하기 > 나중에
           .where('isActive', isEqualTo: true)
           .get()
@@ -470,7 +482,7 @@ class UserController extends GetxController {
       );
 
       // 게임후기 기본 프로필로 수정
-      _reviewDB.where('idFrom', isEqualTo: CurrentUser.uid).get().then(
+      _reviewDB.where('idFrom', isEqualTo: _auth.currentUser!.uid).get().then(
         // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
         (value) {
           // 문서리스트 반복문
@@ -495,7 +507,7 @@ class UserController extends GetxController {
 
       // 유저정보 처리
       // 탈퇴 플래그 true, 탈퇴 시간 업데이트
-      _userDB.doc(CurrentUser.uid).update(
+      _userDB.doc(_auth.currentUser!.uid).update(
         {
           'isWithdrawn': true,
           'withdrawnAt': Timestamp.now(),

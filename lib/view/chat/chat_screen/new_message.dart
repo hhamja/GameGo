@@ -15,11 +15,11 @@ class NewMessage extends StatefulWidget {
 class _NewMessageState extends State<NewMessage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatController _chat = Get.put(ChatController());
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   // 메시지 보내기 클릭 시
   void _sendMessage() async {
     final messageModel = MessageModel(
-      idFrom: CurrentUser.uid,
+      idFrom: _auth.currentUser!.uid,
       idTo: widget.uid,
       content: _messageController.text.trim(),
       type: 'message',
@@ -33,7 +33,7 @@ class _NewMessageState extends State<NewMessage> {
     // 채팅방 데이터의 마지막 채팅 내용, 시간, 맴버 업데이트
     // 맴버 다시 추가 : 상대가 채팅방 나가기하면 맴버에서 uid가 빠지기 때문
     _chat.updateChatRoom(
-      [CurrentUser.uid, widget.uid],
+      [_auth.currentUser!.uid, widget.uid],
       widget.chatRoomId,
       _messageController.text.trim(),
       Timestamp.now(),

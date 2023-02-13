@@ -9,12 +9,12 @@ class ReceivedGameReviewPage extends StatefulWidget {
 
 class _ReceivedGameReviewPageState extends State<ReceivedGameReviewPage> {
   final GameReviewController _review = Get.put(GameReviewController());
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
     // 내가 받은 게임후기 리스트 받기
-    _review.getGameReviewList(CurrentUser.uid);
+    _review.getGameReviewList(_auth.currentUser!.uid);
   }
 
   @override

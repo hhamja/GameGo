@@ -1,6 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class GameReviewController extends GetxController {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final MannerAgeController _age = Get.put(MannerAgeController());
   final CollectionReference _reportDB =
       FirebaseFirestore.instance.collection('report');
@@ -58,7 +59,7 @@ class GameReviewController extends GetxController {
   // 내가 받은 게임후기 리스트로 받기
   Future getGameReviewList(uid) async {
     return _gameReviewDB
-        .where('idTo', isEqualTo: CurrentUser.uid)
+        .where('idTo', isEqualTo: _auth.currentUser!.uid)
         .orderBy('createdAt', descending: true) // 최신일 수록 위로 오게
         .get()
         .then(
@@ -76,7 +77,7 @@ class GameReviewController extends GetxController {
     // 문서가 존재할때만 데이터 받도록 하기
     await _gameReviewDB
         .where('chatRoomId', isEqualTo: chatRoomId)
-        .where('idFrom', isEqualTo: CurrentUser.uid)
+        .where('idFrom', isEqualTo: _auth.currentUser!.uid)
         // 가장 최근의 값을 반환
         .orderBy('createdAt', descending: true)
         // 혹시나 여러개 있을 수 있으므로 에러방지를 위해 한개만 밪기

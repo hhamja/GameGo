@@ -19,7 +19,7 @@ class _MessagesState extends State<Messages> {
   final ChatController _chat = Get.put(ChatController());
   // _chat.messageList
   var _list;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
@@ -116,7 +116,8 @@ class _MessagesState extends State<Messages> {
                   _chat.isShowProfile.value = true;
                 }
                 // 내가 보낸 메시지인지에 대한 bool 값
-                final bool _isMe = _list[reversed].idFrom == CurrentUser.uid;
+                final bool _isMe =
+                    _list[reversed].idFrom == _auth.currentUser!.uid;
                 // 메시지 타입에 대한 bool값
                 final bool _appointType = _list[reversed].type == 'appoint';
                 // 나와 상대방 메시지 간격 주기 위한 bool 변수

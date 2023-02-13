@@ -11,6 +11,7 @@ class NewMessageFromPost extends StatefulWidget {
 }
 
 class _NewMessageFromPostState extends State<NewMessageFromPost> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
   final TextEditingController _messageController = TextEditingController();
@@ -25,13 +26,13 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     });
     // 현재유저정보(=contactUser) 인스턴스
     final UserModel contactUser =
-        await _userDB.doc(CurrentUser.uid).get().then((value) {
+        await _userDB.doc(_auth.currentUser!.uid).get().then((value) {
       return UserModel.fromDocumentSnapshot(value);
     });
     // 채팅방 인스턴스
     final ChatRoomModel chatRoomModel = ChatRoomModel(
       //채팅방 id = postId_현재유저ID
-      chatRoomId: widget.postId + '_' + CurrentUser.uid,
+      chatRoomId: widget.postId + '_' + _auth.currentUser!.uid,
       postId: widget.postId,
       members: [
         postingUser.uid,
@@ -54,7 +55,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     );
     // 메시지 인스턴스 생성
     final MessageModel messageModel = MessageModel(
-      idFrom: CurrentUser.uid,
+      idFrom: _auth.currentUser!.uid,
       idTo: widget.uid,
       content: _messageController.text.trim(),
       type: 'message',
