@@ -44,30 +44,32 @@ class ChatController extends GetxController {
     );
   }
 
-  //새로운 채팅 입력 시 채팅방 생성하기
+  // 새로운 채팅 입력 시 채팅방 생성하기
   Future createNewChatRoom(ChatRoomModel chatRoomModel) async {
     // 채팅방이 존재하지 않는다면? chat col에 채팅방 데이터 추가
     final res = await _chatDB.doc(chatRoomModel.chatRoomId).get();
     if (!res.exists)
       // Chat(col) - 채팅방UID(Doc)
-      await _chatDB.doc(chatRoomModel.chatRoomId).set({
-        'chatRoomId': chatRoomModel.chatRoomId,
-        'postId': chatRoomModel.postId,
-        'members': chatRoomModel.members,
-        'postingUid': chatRoomModel.postingUid,
-        'postingUserProfileUrl': chatRoomModel.postingUserProfileUrl,
-        'postingUserName': chatRoomModel.postingUserName,
-        'contactUid': chatRoomModel.contactUid,
-        'contactUserProfileUrl': chatRoomModel.contactUserProfileUrl,
-        'contactUserName': chatRoomModel.contactUserName,
-        'unReadCount': chatRoomModel.unReadCount,
-        'lastContent': chatRoomModel.lastContent,
-        'isActive': chatRoomModel.isActive,
-        'updatedAt': chatRoomModel.updatedAt,
-      });
+      await _chatDB.doc(chatRoomModel.chatRoomId).set(
+        {
+          'chatRoomId': chatRoomModel.chatRoomId,
+          'postId': chatRoomModel.postId,
+          'members': chatRoomModel.members,
+          'postingUid': chatRoomModel.postingUid,
+          'postingUserProfileUrl': chatRoomModel.postingUserProfileUrl,
+          'postingUserName': chatRoomModel.postingUserName,
+          'contactUid': chatRoomModel.contactUid,
+          'contactUserProfileUrl': chatRoomModel.contactUserProfileUrl,
+          'contactUserName': chatRoomModel.contactUserName,
+          'unReadCount': chatRoomModel.unReadCount,
+          'lastContent': chatRoomModel.lastContent,
+          'isActive': chatRoomModel.isActive,
+          'updatedAt': chatRoomModel.updatedAt,
+        },
+      );
   }
 
-  //새로운 채팅 입력 시 메시지DB 추가하기
+  // 새로운 채팅 입력 시 서버에 추가
   Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
     // 메시지 컬렉션에 추가
     _chatDB.doc(chatRoomId).collection('message').add(
@@ -76,13 +78,16 @@ class ChatController extends GetxController {
         'idFrom': messageModel.idFrom,
         'idTo': messageModel.idTo,
         'type': messageModel.type,
+        'isDeleted': messageModel.isDeleted,
         'timestamp': messageModel.timestamp,
       },
     );
     // 상대 uid의 unReadCount +1
-    _chatDB.doc(chatRoomId).update({
-      'unReadCount.${messageModel.idTo}': FieldValue.increment(1),
-    });
+    _chatDB.doc(chatRoomId).update(
+      {
+        'unReadCount.${messageModel.idTo}': FieldValue.increment(1),
+      },
+    );
   }
 
   // 모든 '채팅' 리스트 스트림으로 받기
@@ -93,17 +98,19 @@ class ChatController extends GetxController {
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
-              .map((e) => ChatRoomModel.fromDocumentSnapshot(e))
+              .map(
+                (e) => ChatRoomModel.fromDocumentSnapshot(e),
+              )
               .toList(),
         );
   }
 
-  //모든 '메시지' 리스트 스트림으로 받기
+  // 모든 '메시지' 리스트 스트림으로 받기
   Stream<List<MessageModel>> readAllMessageList(chatRoomId) async* {
     yield* _chatDB
         .doc(chatRoomId)
         .collection('message')
-        .orderBy('timestamp', descending: false) //최신이 맨 아래
+        .orderBy('timestamp', descending: false)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map(
@@ -112,16 +119,14 @@ class ChatController extends GetxController {
             .toList());
   }
 
-  //메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트
+  // 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트
   Future updateChatRoom(members, chatRoomId, lastContent, updatedAt) async {
-    return _chatDB.doc(chatRoomId).update({
-      'members': members,
-      'lastContent': lastContent,
-      'updatedAt': updatedAt
-    });
+    return _chatDB.doc(chatRoomId).update(
+      {'members': members, 'lastContent': lastContent, 'updatedAt': updatedAt},
+    );
   }
 
-  //메시지페이지를 나갔을 때 나의 안읽은 메시지 수 0으로 업데이트
+  // 메시지페이지를 나갔을 때 나의 안읽은 메시지 수 0으로 업데이트
   Future clearUnReadCount(chatRoomId) async {
     final chatRoomRef = await _chatDB.doc(chatRoomId).get();
     chatRoomRef.exists
@@ -133,35 +138,17 @@ class ChatController extends GetxController {
         : null;
   }
 
-  //메시지를 읽은 것에 대한 파이어스토어 값 업데이트 하기
-  //채팅메시지 페이지를 나가는 순간(dispose)
-  //현재 메시지들의 isRead값을 true로 업데이트
-  Future isReadMessage(chatRoomId) async {
-    await _chatDB
-        .doc(chatRoomId)
-        .collection('message')
-        .doc()
-        .update({'isRead': 'true'});
-  }
-
   //채팅페이지 들어가면, chattingWith 상대 uid로 업데이트
   Future updateChattingWith(uid) async {
-    await _userDB.doc(CurrentUser.uid).update({'chattingWith': uid});
+    await _userDB.doc(CurrentUser.uid).update(
+      {'chattingWith': uid},
+    );
   }
 
-  //채팅페이지에서 나가면, chattingWith 빈값으로 업데이트
+  // 채팅페이지에서 나가면, chattingWith 빈값으로 업데이트
   Future clearChattingWith() async {
-    await _userDB.doc(CurrentUser.uid).update({'chattingWith': null});
-  }
-
-  //상대방의 메시지만 받기
-  Stream isContactUserMessage(chatRoomId) async* {
-    yield* _chatDB
-        .doc(chatRoomId)
-        .collection('message')
-        .where('idFrom', isEqualTo: CurrentUser.uid)
-        .snapshots()
-        .map((event) =>
-            event.docs.map((e) => MessageModel.fromDocumentSnapshot(e)));
+    await _userDB.doc(CurrentUser.uid).update(
+      {'chattingWith': null},
+    );
   }
 }

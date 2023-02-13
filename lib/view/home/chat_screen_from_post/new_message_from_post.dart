@@ -54,11 +54,12 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     );
     // 메시지 인스턴스 생성
     final MessageModel messageModel = MessageModel(
-      timestamp: Timestamp.now(),
-      content: _messageController.text.trim(),
       idFrom: CurrentUser.uid,
       idTo: widget.uid,
+      content: _messageController.text.trim(),
       type: 'message',
+      isDeleted: false,
+      timestamp: Timestamp.now(),
     );
     // 채팅방 만들기, 채팅방이 이미 있다면 실행안됨
     await _chat.createNewChatRoom(chatRoomModel);

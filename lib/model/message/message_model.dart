@@ -1,18 +1,19 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class MessageModel {
-  final id; // 메시지 id
-  final String content; // 메시지내용
-  final String idFrom; // 메시지 보내는 사람 id
-  final String idTo; // 메시지 받는 사람 id
-  final String type;
+  final id;
+  final String content;
+  final String idFrom;
+  final String idTo;
   // 메세지 타입
   // 약속설정 : 'appoint'
   // 게임 후기 : 'review'
   // 채팅 메시지 : 'message'
+  final String type;
+  // 메시지 삭제 여부
+  // 나중에 메시지 삭제 기능도 추가하게 될 가능성이 있으므로 넣음
+  final bool isDeleted;
   final Timestamp timestamp;
-  // 메시지 보낸 시간
-  //FieldValue.serverTimestamp() -> DB서버시간
 
   MessageModel({
     this.id,
@@ -20,10 +21,10 @@ class MessageModel {
     required this.idFrom,
     required this.idTo,
     required this.type,
+    required this.isDeleted,
     required this.timestamp,
   });
 
-  // 파이어스토어 DB로 부터 데이터를 받는 인스턴스 생성
   factory MessageModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     var snapshot = doc.data() as Map<String, dynamic>;
     return MessageModel(
@@ -32,6 +33,7 @@ class MessageModel {
       idFrom: snapshot['idFrom'],
       idTo: snapshot['idTo'],
       type: snapshot['type'],
+      isDeleted: snapshot['isDeleted'],
       timestamp: snapshot['timestamp'],
     );
   }

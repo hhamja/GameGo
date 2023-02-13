@@ -237,15 +237,13 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 Jiffy(_timeStamp.toDate()).format('MM월 dd일 · a hh시 MM분');
             // 약속에 대한 메시지 인스턴스
             final MessageModel _messageModel = MessageModel(
-              timestamp:
-                  Timestamp.now(), // FieldValue.serverTimestamp() -> DB서버시간
+              idFrom: CurrentUser.uid,
+              idTo: uid,
               // content: '$_formatedTimeStamp에\n약속을 설정했어요. 약속은 꼭 지켜주세요 !',
               content: '약속 설정 알림\n$_formatedTimeStamp',
-              // 약속설정 유저의 uid
-              idFrom: CurrentUser.uid,
-              // 약속설정을 당하는(?) 유저의 uid
-              idTo: uid,
               type: 'appoint',
+              isDeleted: false,
+              timestamp: Timestamp.now(),
             );
 
             final AppointmentModel _appointment = AppointmentModel(

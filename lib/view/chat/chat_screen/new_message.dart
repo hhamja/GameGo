@@ -19,11 +19,12 @@ class _NewMessageState extends State<NewMessage> {
   // 메시지 보내기 클릭 시
   void _sendMessage() async {
     final messageModel = MessageModel(
-      timestamp: Timestamp.now(),
-      content: _messageController.text.trim(),
       idFrom: CurrentUser.uid,
       idTo: widget.uid,
+      content: _messageController.text.trim(),
       type: 'message',
+      isDeleted: false,
+      timestamp: Timestamp.now(),
     );
 
     // 메시지 보내기
