@@ -57,151 +57,149 @@ class UserController extends GetxController {
   Future updateUserName(userName) async {
     // 닉네임 중복확인
     // 탈퇴 플래그 처리한 유저 닉네임도 고려할 것이므로 플래그 쿼리 X
-    await _userDB.where('userName', isEqualTo: userName).get().then((snapshot) {
-      if (snapshot.docs.isEmpty) {
-        // 중복 닉네임 없는 경우
-        _userDB.doc(CurrentUser.uid).update(
-          // 유저 DB에서 닉네임 수정
-          {
-            'userName': userName,
-          },
-        );
-        // 채팅에서 닉네임 수정
-        _chatDB.where('members', arrayContains: CurrentUser.uid).get().then(
-          // 내가 맴버로 있는 채팅방만 쿼리하여 리스트로 받기
-          (value) {
-            // 문서리스트 반복문
-            value.docs.forEach(
-              (e) {
-                // 데이터 Map 자료 형태로 변환
-                var snapshot = e.data() as Map<String, dynamic>;
-                // 내가 postingUer로 참여한 채팅방인지 여부를 나타내는 변수
-                bool isMyPost = snapshot['postingUid'] == CurrentUser.uid;
-                // 채팅방 id 값
-                String chatRoomId = snapshot['chatRoomId'];
-                print(isMyPost);
-                print(chatRoomId);
-                // 내가 postingUser인지 contactUser인지 확인
-                if (isMyPost) {
-                  // postingUesr인 경우
-                  _chatDB.doc(chatRoomId).update(
-                    // postingUserName 수정
-                    {'postingUserName': userName},
-                  ).then(
-                    (_) => print('postingUserName 수정'),
-                  );
-                } else {
-                  // contactUser인 경우
-                  _chatDB.doc(chatRoomId).update(
-                    // contactUserName 수정
-                    {'contactUserName': userName},
-                  ).then(
-                    (_) => print('contactUserName 수정'),
-                    onError: (e) => print(e),
-                  );
-                }
-              },
-            );
-          },
-        );
-        // 게시글에서 닉네임 수정
-        _postDB
-            .where('uid', isEqualTo: CurrentUser.uid)
-            .where('isDeleted', isEqualTo: false)
-            .get()
-            .then(
-          // 삭제하지 않은 나의 게시글만 쿼리
-          (value) {
-            // 문서리스트 반복문
-            value.docs.forEach(
-              (e) {
-                // 데이터 Map 자료 형태로 변환
-                var snapshot = e.data() as Map<String, dynamic>;
-                // 게시글 id
-                final String postId = snapshot['postId'];
-                print(postId);
-                // 게시글의 userName 수정
-                _postDB.doc(postId).update(
-                  {
-                    'userName': userName,
-                  },
-                ).then(
-                  (_) => print('게시글 닉네임 수정'),
-                  onError: (e) => print(e),
-                );
-              },
-            );
-          },
-        );
-        // 게임후기의 닉네임 수정
-        _reviewDB.where('idFrom', isEqualTo: CurrentUser.uid).get().then(
-          // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
-          (value) {
-            // 문서리스트 반복문
-            value.docs.forEach(
-              (e) {
-                // 게임후기 id
-                final String reviewId = e.reference.id;
-                print(reviewId);
-                // 게임후기의 userName 수정
-                _reviewDB.doc(reviewId).update(
-                  {
-                    'userName': userName,
-                  },
-                ).then(
-                  (_) => print('내가 보낸 게임후기의 닉네임 수정'),
-                  onError: (e) => print(e),
-                );
-              },
-            );
-          },
-        );
-        // 알림의 닉네임 수정
-        _firestore
-            .collection('notification')
-            .where('idFrom', isEqualTo: CurrentUser.uid)
-            .get()
-            .then(
-              // 내가 보낸 알림만 쿼리하여 리스트로 받기
-              (value) => value.docs.forEach(
-                // 문서리스트 반복문
+    await _userDB.where('userName', isEqualTo: userName).get().then(
+      (snapshot) {
+        if (snapshot.docs.isEmpty) {
+          // 중복 닉네임 없는 경우
+          _userDB.doc(CurrentUser.uid).update(
+            // 유저 DB에서 닉네임 수정
+            {
+              'userName': userName,
+            },
+          );
+          // 채팅에서 닉네임 수정
+          _chatDB.where('members', arrayContains: CurrentUser.uid).get().then(
+            // 내가 맴버로 있는 채팅방만 쿼리하여 리스트로 받기
+            (value) {
+              // 문서리스트 반복문
+              value.docs.forEach(
                 (e) {
-                  // 알림의 문서 id
-                  final ntfId = e.reference.id;
-                  // 알림의 userName 수정
-                  _firestore.collection('notification').doc(ntfId).update(
+                  // 데이터 Map 자료 형태로 변환
+                  var snapshot = e.data() as Map<String, dynamic>;
+                  // 내가 postingUer로 참여한 채팅방인지 여부를 나타내는 변수
+                  bool isMyPost = snapshot['postingUid'] == CurrentUser.uid;
+                  // 채팅방 id 값
+                  String chatRoomId = snapshot['chatRoomId'];
+                  print(isMyPost);
+                  print(chatRoomId);
+                  // 내가 postingUser인지 contactUser인지 확인
+                  if (isMyPost) {
+                    // postingUesr인 경우
+                    _chatDB.doc(chatRoomId).update(
+                      // postingUserName 수정
+                      {'postingUserName': userName},
+                    ).then(
+                      (_) => print('postingUserName 수정'),
+                    );
+                  } else {
+                    // contactUser인 경우
+                    _chatDB.doc(chatRoomId).update(
+                      // contactUserName 수정
+                      {'contactUserName': userName},
+                    ).then(
+                      (_) => print('contactUserName 수정'),
+                      onError: (e) => print(e),
+                    );
+                  }
+                },
+              );
+            },
+          );
+          // 게시글에서 닉네임 수정
+          _postDB
+              .where('uid', isEqualTo: CurrentUser.uid)
+              .where('isDeleted', isEqualTo: false)
+              .get()
+              .then(
+            // 삭제하지 않은 나의 게시글만 쿼리
+            (value) {
+              // 문서리스트 반복문
+              value.docs.forEach(
+                (e) {
+                  // 데이터 Map 자료 형태로 변환
+                  var snapshot = e.data() as Map<String, dynamic>;
+                  // 게시글 id
+                  final String postId = snapshot['postId'];
+                  print(postId);
+                  // 게시글의 userName 수정
+                  _postDB.doc(postId).update(
                     {
                       'userName': userName,
                     },
                   ).then(
-                    (_) => print('내가 보낸 알림의 닉네임 수정'),
+                    (_) => print('게시글 닉네임 수정'),
                     onError: (e) => print(e),
                   );
                 },
-              ),
-            );
-        // Auth 정보에서 닉네임 수정
-        _auth.currentUser!.updateDisplayName(userName).then(
-              (_) => print('auth의 닉네임 수정'),
-              onError: (e) => print(e),
-            );
-      } else {
-        // 중복 닉네임인 경우
-        // 유저에게 스낵바로 알림
-        Get.snackbar(
-          '',
-          '',
-          titleText: Text(
-            '중복 닉네임',
-            style: AppTextStyle.snackbarTitleStyle,
-          ),
-          messageText: Text(
-            '해당 닉네임은 사용할 수 없습니다.',
-            style: AppTextStyle.snackbarContentStyle,
-          ),
-        );
-      }
-    });
+              );
+            },
+          );
+          // 게임후기의 닉네임 수정
+          _reviewDB.where('idFrom', isEqualTo: CurrentUser.uid).get().then(
+            // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
+            (value) {
+              // 문서리스트 반복문
+              value.docs.forEach(
+                (e) {
+                  // 게임후기 id
+                  final String reviewId = e.reference.id;
+                  print(reviewId);
+                  // 게임후기의 userName 수정
+                  _reviewDB.doc(reviewId).update(
+                    {
+                      'userName': userName,
+                    },
+                  ).then(
+                    (_) => print('내가 보낸 게임후기의 닉네임 수정'),
+                    onError: (e) => print(e),
+                  );
+                },
+              );
+            },
+          );
+          // 알림의 닉네임 수정
+          _firestore
+              .collection('notification')
+              .where('idFrom', isEqualTo: CurrentUser.uid)
+              .get()
+              .then(
+                // 내가 보낸 알림만 쿼리하여 리스트로 받기
+                (value) => value.docs.forEach(
+                  // 문서리스트 반복문
+                  (e) {
+                    // 알림의 문서 id
+                    final ntfId = e.reference.id;
+                    // 알림의 userName 수정
+                    _firestore.collection('notification').doc(ntfId).update(
+                      {
+                        'userName': userName,
+                      },
+                    ).then(
+                      (_) => print('내가 보낸 알림의 닉네임 수정'),
+                      onError: (e) => print(e),
+                    );
+                  },
+                ),
+              );
+          // Auth 정보에서 닉네임 수정
+          _auth.currentUser!.updateDisplayName(userName).then(
+                (_) => print('auth의 닉네임 수정'),
+                onError: (e) => print(e),
+              );
+          FirebaseAuth.instance.currentUser!.reload();
+        } else {
+          // 중복 닉네임인 경우
+          // 유저에게 다이얼로그로 알림
+          Get.dialog(
+            CustomOneButtonDialog(
+              '이미 존재하는 닉네임 입니다.\n다른 닉네임으로 변경해주세요.',
+              '확인',
+              () => Get.back(),
+            ),
+          );
+        }
+      },
+    );
   }
 
   // 나의 프로필을 변경하기

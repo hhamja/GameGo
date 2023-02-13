@@ -148,16 +148,11 @@ class _SignOutPageState extends State<SignOutPage> {
             //0. 아무것도 선택하지 않은 경우
             if (selectedLeaveReason == '선택해주세요' ||
                 selectedLeaveReason == null) {
-              Get.snackbar(
-                '',
-                '',
-                titleText: Text(
-                  '이유 선택 안함',
-                  style: AppTextStyle.snackbarTitleStyle,
-                ),
-                messageText: Text(
+              Get.dialog(
+                CustomOneButtonDialog(
                   '탈퇴 이유를 버튼에서 선택해주세요.',
-                  style: AppTextStyle.snackbarContentStyle,
+                  '확인',
+                  () => Get.back(),
                 ),
               );
             }
@@ -166,16 +161,11 @@ class _SignOutPageState extends State<SignOutPage> {
               String text = _textController.text.trim(); //입력한 기타 사유 텍스트
               // 1-1. 텍스트를 입력하지 않은 경우
               if (text.length == 0 || text.isEmpty) {
-                Get.snackbar(
-                  '',
-                  '',
-                  titleText: Text(
-                    '탈퇴 이유를 작성해주세요.',
-                    style: AppTextStyle.snackbarTitleStyle,
-                  ),
-                  messageText: Text(
-                    '이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
-                    style: AppTextStyle.snackbarContentStyle,
+                Get.dialog(
+                  CustomOneButtonDialog(
+                    '탈퇴 이유를 작성해주세요. 이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
+                    '확인',
+                    () => Get.back(),
                   ),
                 );
               }

@@ -117,16 +117,11 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
             // 사유 입력에 대한 조건식
             if (text == '' || text.isEmpty) {
               // 신고사유 입력하지 않은 경우
-              Get.snackbar(
-                '',
-                '',
-                titleText: Text(
-                  '신고 사유 미입력',
-                  style: AppTextStyle.snackbarTitleStyle,
-                ),
-                messageText: Text(
+              Get.dialog(
+                CustomOneButtonDialog(
                   '신고 사유를 입력해주세요.',
-                  style: AppTextStyle.snackbarContentStyle,
+                  '확인',
+                  () => Get.back(),
                 ),
               );
             } else {
