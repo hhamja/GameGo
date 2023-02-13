@@ -19,13 +19,13 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   // 파베 스토리지에서 불러올 사진 url
   String profileImageUrl = DefaultProfle.url;
 
-  //갤러리에서 사진 선택하기
+  // 갤러리에서 사진 선택하기
   Future pickImgFromGallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
-      //갤러리에 사진이 있다면?
+      // 갤러리에 사진이 있다면?
       if (pickedFile != null) {
-        //해당 이미지 담기 _photo변수에 담기
+        // 해당 이미지 담기 _photo변수에 담기
         _photo = File(pickedFile.path);
       } else {
         print('No image selected from Gallery');
@@ -33,7 +33,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     });
   }
 
-  //카메라로 사진 찍기
+  // 카메라로 사진 찍기
   Future pickImgFromCamera() async {
     final pickedFile = await _picker.pickImage(
       source: ImageSource.camera,
@@ -41,14 +41,15 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
     setState(() {
       if (pickedFile != null) {
-        _photo = File(pickedFile.path); //해당 이미지 담기 _photo변수에 담기
+        // 해당 이미지 담기 _photo변수에 담기
+        _photo = File(pickedFile.path);
       } else {
         print('No image selected from Camera');
       }
     });
   }
 
-  //파베 스토리지에 업로드하기
+  // 파베 스토리지에 업로드하기
   Future uploadFile() async {
     if (_photo == null) return;
     //　유저고유 id값을 파일명으로
@@ -64,7 +65,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     }
   }
 
-  //닉네임 입력에 따른 에러 택스트
+  // 닉네임 입력에 따른 에러 택스트
   String get _showErrorText {
     final text = _userNameController.text.trim();
 
@@ -74,7 +75,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     return '';
   }
 
-  //완료버튼
+  // 완료버튼
   validateButton() async {
     // 알림 권한에 대한 상태 값 받기
     final _isGrantedNtf = await Permission.notification.status.isGranted;
@@ -107,7 +108,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       // auth에 닉네임, 프로필 저장
       _auth.currentUser!.updatePhotoURL(profileImageUrl);
       _auth.currentUser!.updateDisplayName(text);
-
       // 홈으로 이동
       Get.offAllNamed('/myapp');
     }
