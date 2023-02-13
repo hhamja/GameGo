@@ -9,7 +9,7 @@ class MyInfoPage extends StatefulWidget {
 
 class _MyInfoPageState extends State<MyInfoPage> {
   final UserController _user = Get.put(UserController());
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   var _createdAt;
   @override
   void initState() {
@@ -21,7 +21,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    _user.getUserInfoByUid(CurrentUser.uid);
+    _user.getUserInfoByUid(_auth.currentUser!.uid);
     return Scaffold(
       appBar: AppBar(
         title: Text(
