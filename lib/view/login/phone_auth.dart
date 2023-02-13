@@ -9,8 +9,6 @@ class PhoneAuthPage extends StatefulWidget {
 }
 
 class _PhoneAuthPageState extends State<PhoneAuthPage> {
-  ProfileController _username = Get.put(ProfileController());
-
   final SmsTimerController _phone = Get.put(SmsTimerController());
   final UserController _user = Get.put(UserController());
   // 핸드폰 번호 입력
@@ -209,11 +207,6 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       _phoneController.text.length == 13) {
                     // 유저정보저장
                     await _user.signUP(_smsController.text.trim());
-
-                    // DB에 유저정보존재 ? 홈 : 닉네임생성페이지  이동
-                    // 폰번호 아규먼트로 전달하기
-                    await _username
-                        .checkIfDocExists(_phoneController.text.trim());
                   }
                 },
               ),

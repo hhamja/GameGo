@@ -135,7 +135,6 @@ export '../../../controller/dropDownButton/home_dropDownBT.dart';
 export '../../../controller/user/user.dart';
 export '../../../controller/mannerAge/mannerAge.dart';
 export '../../../controller/user/sms_timer.dart';
-export '../../../controller/user/profile.dart';
 export '../../../controller/favorite/favorite.dart';
 
 // Components
