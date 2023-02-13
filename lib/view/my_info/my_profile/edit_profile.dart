@@ -9,11 +9,11 @@ class EditMyProfilePage extends StatefulWidget {
 }
 
 class _EditMyProfilePageState extends State<EditMyProfilePage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _nameText = TextEditingController(
-      text: FirebaseAuth.instance.currentUser!.displayName!);
+      text: FirebaseAuth.instance.currentUser!.displayName);
   final UserController _user = Get.put(UserController());
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final ImagePicker _picker = ImagePicker();
 
   // 갤러리에서 선택하거나 카메라로 찍은 사진 담는 변수
@@ -34,40 +34,6 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
       }
     });
   }
-
-  // // 카메라 권한 요청
-  // * 프로필 설정 및 수정할 때
-  // Future requestCameraPermission() async {
-  //   // PermissionStatus status = await Permission.camera.status;
-  //   // 권한 요청
-  //   await Permission.camera.request().then(
-  //     (status) {
-  //       // 결과 확인
-  //       if (status.isGranted) {
-  //         // 승인된 경우
-  //         pickImgFromCamera();
-  //       } else {
-  //         // 거부된 경우
-  //         return Get.dialog(
-  //           // 다이어로그 띄우기
-  //           CustomSmallDialog(
-  //             '기능 사용을 원하실 경우\n설정>앱 관리자>매너게이머에서\n카메라 권한을 허용해 주세요.',
-  //             '닫기',
-  //             '설정으로 이동',
-  //             () => Get.back(),
-  //             () {
-  //               Get.back();
-  //               // 앱 설정으로 이동,
-  //               openAppSettings();
-  //             },
-  //             2,
-  //             3,
-  //           ),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
 
   // 카메라로 사진 찍기
   Future pickImgFromCamera() async {
@@ -231,26 +197,41 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
         child: CustomFullFilledTextButton(
           '완료',
           () async {
-            final text = _nameText.text.trim(); //닉네임
-            //닉네임 2자 이상 + 닉네임을 수정 입력한 경우?
-            if (text.length >= 2 && text != CurrentUser.name) {
-              _user.updateUserName(text); ////닉네임 수정
+            // 닉네임
+            final text = _nameText.text.trim();
+            if (text.length >= 2 && text != _auth.currentUser!.displayName) {
+              // 닉네임 2자 이상 + 닉네임을 수정 입력한 경우?
+              _user.updateUserName(text);
+              if (_photoFile != null) {
+                // 프로필을 변경한 경우
+                // 선택한 갤러리의 사진을 storage에 올리고 url을 profileImageUrl에 받기
+                await uploadFile();
+                // 선택한 사진으로 프로필 업데이트
+                _user.updateUserProfile(profileImageUrl);
+              } else if (profileImageUrl != _auth.currentUser!.photoURL!) {
+                // 기본프로필로 선택하면 ? _photoFile는 null도 된다
+                _user.updateUserProfile(profileImageUrl);
+              } else
+                null;
+            } else {
+              // 닉네임을 변경하지 않은 경우
+              if (_photoFile != null) {
+                // 프로필을 변경한 경우
+                // 선택한 갤러리의 사진을 storage에 올리고 url을 profileImageUrl에 받기
+                await uploadFile();
+                Get.back();
+                // 선택한 사진으로 프로필 업데이트
+                _user.updateUserProfile(profileImageUrl);
+              } else if (profileImageUrl != _auth.currentUser!.photoURL!) {
+                // 기본프로필로 변경한 경우
+                // 기본프로필로 선택하면 ? _photoFile는 null도 된다
+                _user.updateUserProfile(profileImageUrl);
+                Get.back();
+              } else
+                null;
             }
-            //프로필을 변경한 경우
-            if (_photoFile != null) {
-              //선택한 갤러리의 사진을 storage에 올리고 url을 profileImageUrl에 받기
-              await uploadFile();
-              print(profileImageUrl);
-              //선택한 사진으로 프로필 업데이트
-              _user.updateUserProfile(profileImageUrl);
-            } else if (profileImageUrl != CurrentUser.profile) {
-              print(profileImageUrl);
-              //기본프로필로 선택하면 ? _photoFile는 null도 된다
-              _user.updateUserProfile(profileImageUrl);
-            }
-            //내정보 새로고침
-            _user.getUserInfoByUid(CurrentUser.uid);
-            Get.back();
+            // 내정보 새로고침
+            await _user.getUserInfoByUid(_auth.currentUser!.uid);
           },
         ),
       ),

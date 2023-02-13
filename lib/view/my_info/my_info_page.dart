@@ -9,19 +9,20 @@ class MyInfoPage extends StatefulWidget {
 
 class _MyInfoPageState extends State<MyInfoPage> {
   final UserController _user = Get.put(UserController());
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   var _createdAt;
   @override
   void initState() {
     super.initState();
-    _user.getUserInfoByUid(CurrentUser.uid);
+    _user.getUserInfoByUid(_auth.currentUser!.uid);
     _createdAt =
         Jiffy(_user.userInfo.value.createdAt.toDate()).format('yy. MM. dd');
   }
 
   @override
   Widget build(BuildContext context) {
-    _user.getUserInfoByUid(CurrentUser.uid);
+    _user.getUserInfoByUid(_auth.currentUser!.uid);
+    print(Get.currentRoute.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text(

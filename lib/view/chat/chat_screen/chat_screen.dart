@@ -15,6 +15,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
   final PostController _post = Get.put(PostController());
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final EvaluationController _evaluation = Get.put(EvaluationController());
   final AppointmentController _appoint = Get.put(AppointmentController());
   final ChatController _chat = Get.put(ChatController());
@@ -156,7 +157,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     _chat.messageList
                                             .where((element) =>
                                                 element.idFrom ==
-                                                CurrentUser.uid)
+                                                _auth.currentUser!.uid)
                                             .length !=
                                         0
                                 ?

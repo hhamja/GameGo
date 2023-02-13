@@ -89,7 +89,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         uid: _auth.currentUser!.uid,
         userName: text,
         //인증받은 폰번호 이전페이지에서 받기
-        phoneNumber: Get.arguments ?? _auth.currentUser!.phoneNumber,
+        phoneNumber: _auth.currentUser!.phoneNumber.toString(),
         profileUrl: profileImageUrl,
         mannerAge: 20.0,
         chatPushNtf: _isGrantedNtf,
@@ -99,14 +99,15 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         // 야간 알림은 데이터만 넣어놓고 UI는 표시 X
         nightPushNtf: false,
         isWithdrawn: false,
+        updatedAt: Timestamp.now(),
         createdAt: Timestamp.now(),
       );
       // 서버에 유저정보 보내기
       _user.addNewUser(userModel);
-      // Auth에 프로필 URL저장
+      // auth에 닉네임, 프로필 저장
       _auth.currentUser!.updatePhotoURL(profileImageUrl);
-      // Auth에 닉네임저장
       _auth.currentUser!.updateDisplayName(text);
+
       // 홈으로 이동
       Get.offAllNamed('/myapp');
     }
@@ -230,7 +231,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         ),
       ),
     );
-    
   }
 
   // 카메라 아이콘 클릭시 띄울 바텀시트

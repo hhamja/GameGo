@@ -5,7 +5,7 @@ class NtfController extends GetxController {
       FirebaseFirestore.instance.collection('notification');
   // 알림 목록 받을 RXList
   RxList<NotificationModel> ntfList = <NotificationModel>[].obs;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   // notification에 추가하기
   Future addNotification(NotificationModel model) async {
     await _ntfDB.add(
@@ -28,7 +28,7 @@ class NtfController extends GetxController {
     await _ntfDB
         .orderBy('createdAt', descending: true)
         // 나에게 + 앱 공지
-        .where('idTo', whereIn: [CurrentUser.uid, 'ALL'])
+        .where('idTo', whereIn: [_auth.currentUser!.uid, 'ALL'])
         .get()
         .then(
           (snapshot) => ntfList.assignAll(

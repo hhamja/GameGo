@@ -11,7 +11,7 @@ class ChatListPage extends StatefulWidget {
 
 class _ChatListPageState extends State<ChatListPage> {
   final ChatController _chat = Get.put(ChatController());
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     // 제목 텍스트 스타일
@@ -58,8 +58,8 @@ class _ChatListPageState extends State<ChatListPage> {
             // 상대유저 정보, [uid, profileUrl, userName] 순서
             List _chatPartner = [];
             // 채팅 상대방 List에 [uid, 프로필url, 이름]순으로 넣기
-            if (_chatList.postingUid != CurrentUser.uid &&
-                _chatList.contactUid == CurrentUser.uid) {
+            if (_chatList.postingUid != _auth.currentUser!.uid &&
+                _chatList.contactUid == _auth.currentUser!.uid) {
               // 나 == contactUser, 상대방 == postingUser인 경우
               // postingUser 데이터를 담기
               _chatPartner.addAll([
@@ -67,8 +67,8 @@ class _ChatListPageState extends State<ChatListPage> {
                 _chatList.postingUserProfileUrl,
                 _chatList.postingUserName
               ]);
-            } else if (_chatList.postingUid == CurrentUser.uid &&
-                _chatList.contactUid != CurrentUser.uid) {
+            } else if (_chatList.postingUid == _auth.currentUser!.uid &&
+                _chatList.contactUid != _auth.currentUser!.uid) {
               // 나 == postingUser인, 상대방 == contactUser 경우
               // contactUser 데이터를 담기
               _chatPartner.addAll([
@@ -196,7 +196,8 @@ class _ChatListPageState extends State<ChatListPage> {
                             height: 3.sp,
                           ),
                           // 안읽은 메시지 수 0개가 아닐때만 표시
-                          _chatList.unReadCount['${CurrentUser.uid}'] != 0
+                          _chatList.unReadCount['${_auth.currentUser!.uid}'] !=
+                                  0
                               ? Container(
                                   height: 15.sp,
                                   width: 20.sp,
@@ -208,8 +209,8 @@ class _ChatListPageState extends State<ChatListPage> {
                                   child: Center(
                                     child: Text(
                                       // 읽지 않은 메시지 알려주는 빨간숫자
-                                      _chatList
-                                          .unReadCount['${CurrentUser.uid}']
+                                      _chatList.unReadCount[
+                                              '${_auth.currentUser!.uid}']
                                           .toString(),
                                       style: TextStyle(
                                         height: 1.sp,

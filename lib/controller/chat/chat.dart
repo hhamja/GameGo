@@ -1,6 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class ChatController extends GetxController {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _chatDB = FirebaseFirestore.instance.collection('chat');
   final _userDB = FirebaseFirestore.instance.collection('user');
   ScrollController scroll = ScrollController(keepScrollOffset: false);
@@ -93,7 +94,7 @@ class ChatController extends GetxController {
   // 모든 '채팅' 리스트 스트림으로 받기
   Stream<List<ChatRoomModel>> readAllChatList() async* {
     yield* _chatDB
-        .where('members', arrayContains: CurrentUser.uid)
+        .where('members', arrayContains: _auth.currentUser!.uid)
         .orderBy('updatedAt', descending: true) //최신이 맨 위
         .snapshots()
         .map(
@@ -133,21 +134,21 @@ class ChatController extends GetxController {
         ?
         // 나의 안읽은메시지 수 0으로 업데이트
         _chatDB.doc(chatRoomId).update({
-            'unReadCount.${CurrentUser.uid}': 0,
+            'unReadCount.${_auth.currentUser!.uid}': 0,
           })
         : null;
   }
 
   //채팅페이지 들어가면, chattingWith 상대 uid로 업데이트
   Future updateChattingWith(uid) async {
-    await _userDB.doc(CurrentUser.uid).update(
+    await _userDB.doc(_auth.currentUser!.uid).update(
       {'chattingWith': uid},
     );
   }
 
   // 채팅페이지에서 나가면, chattingWith 빈값으로 업데이트
   Future clearChattingWith() async {
-    await _userDB.doc(CurrentUser.uid).update(
+    await _userDB.doc(_auth.currentUser!.uid).update(
       {'chattingWith': null},
     );
   }

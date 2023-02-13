@@ -8,6 +8,7 @@ class PostDetailPage extends StatefulWidget {
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final PostController _post = Get.find<PostController>();
   final FavoriteController _favorite = Get.put(FavoriteController());
   // PostList Page 와 Favorite 에서 PostId값 전달 받음
@@ -45,7 +46,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(
                       vertical: AppSpaceData.screenPadding),
-                  onTap: CurrentUser.uid == _post.postInfo.uid
+                  onTap: _auth.currentUser!.uid == _post.postInfo.uid
                       // 나의 게시글 : 프로필 이동 X
                       ? null
                       // 다른 유저 게시글 : 해당 유저 프로필로 이동
@@ -147,7 +148,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
       ),
       bottomSheet:
           // 나의 게시글 이라면?
-          CurrentUser.uid == _post.postInfo.uid
+          _auth.currentUser!.uid == _post.postInfo.uid
               ? SizedBox.shrink()
               : Padding(
                   padding: EdgeInsets.all(
@@ -167,7 +168,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                 final FavoriteModel _favoriteModel =
                                     FavoriteModel(
                                   postId: postId,
-                                  idFrom: CurrentUser.uid,
+                                  idFrom: _auth.currentUser!.uid,
                                   idTo: _post.postInfo.uid,
                                   createdAt: Timestamp.now(),
                                 );
@@ -175,11 +176,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                 final NotificationModel _ntfModel =
                                     NotificationModel(
                                   // 관심버튼 누른 uid
-                                  idFrom: CurrentUser.uid,
+                                  idFrom: _auth.currentUser!.uid,
                                   // 게시자 uid
                                   idTo: _post.postInfo.uid,
                                   // 관심버튼 누른 유저이름
-                                  userName: CurrentUser.name,
+                                  userName: _auth.currentUser!.displayName!,
                                   postId: postId,
                                   chatRoomId: '', // 대상이 되는 채팅방 없음
                                   postTitle: _post.postInfo.title,
@@ -236,7 +237,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   // 게시물 오른쪽 상단의 아이콘 클릭 시  바텀시트 호출
   openPostBottomSheet() {
     // 나의 게시글인지 타인 게시글인지 판단
-    if (CurrentUser.uid == _post.postInfo.uid) {
+    if (_auth.currentUser!.uid == _post.postInfo.uid) {
       // 나의 게시글
       return Get.bottomSheet(
         Container(

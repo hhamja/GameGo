@@ -8,6 +8,7 @@ class ReportDialog extends StatefulWidget {
 }
 
 class _ReportDialogState extends State<ReportDialog> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final ReportController _report = Get.put(ReportController());
   var reportContent = Get.arguments['content'];
   // 채팅방에서 신고한 경우 null
@@ -26,7 +27,7 @@ class _ReportDialogState extends State<ReportDialog> {
       () => Get.back(),
       () async {
         final ReportModel _model = await ReportModel(
-          idFrom: CurrentUser.uid,
+          idFrom: _auth.currentUser!.uid,
           idTo: uid,
           postId: postId,
           chatRoomId: chatRoomId,

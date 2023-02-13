@@ -10,7 +10,7 @@ class SignOutPage extends StatefulWidget {
 class _SignOutPageState extends State<SignOutPage> {
   final FeedBackController _c = Get.put(FeedBackController());
   final TextEditingController _textController = TextEditingController();
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class _SignOutPageState extends State<SignOutPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${CurrentUser.name}님, 안녕하세요!',
+                '${_auth.currentUser!.displayName!}님, 안녕하세요!',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -45,7 +45,7 @@ class _SignOutPageState extends State<SignOutPage> {
                   '우리가 이별하면 게시글, 채팅, 매너온도, 관심 등 모든 계정 정보가 삭제 됩니다. 삭제된 계정 정보는 평생 복구할 수 없어요.'),
               SizedBox(height: 30),
               Text(
-                '${CurrentUser.name}님이 탈퇴하려는 이유가 궁금해요.',
+                '${_auth.currentUser!.displayName!}님이 탈퇴하려는 이유가 궁금해요.',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
