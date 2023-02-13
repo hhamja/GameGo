@@ -13,135 +13,140 @@ class _SignOutPageState extends State<SignOutPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    final TextStyle _boldText = TextStyle(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 0.25.sp,
+    );
+
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           '탈퇴하기',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
-        centerTitle: true,
+        actions: [
+          CustomCloseButton(),
+        ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                '${_auth.currentUser!.displayName!}님, 안녕하세요!',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+          horizontal: AppSpaceData.screenPadding,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: AppSpaceData.heightSmall),
+            Text(
+              '${_auth.currentUser!.displayName!}님, 안녕하세요!',
+              style: _boldText,
+            ),
+            Text(
+              '$appName와 이별하려고 하시나요?  너무 아쉬워요.',
+              style: _boldText,
+            ),
+            SizedBox(height: 3.sp),
+            Text(
+              '우리가 이별하면 게시글, 채팅, 매너레벨, 관심 등 모든 계정 정보가 삭제 됩니다. 삭제된 계정 정보는 평생 복구할 수 없어요.',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            SizedBox(height: AppSpaceData.heightLarge),
+            Text(
+              '${_auth.currentUser!.displayName!}님이 탈퇴하려는 이유가 궁금해요.',
+              style: _boldText,
+            ),
+            SizedBox(height: 8.sp),
+            DropdownButtonHideUnderline(
+              child: DropdownButton2(
+                style: Theme.of(context).textTheme.bodyMedium,
+                iconSize: 20.sp,
+                buttonPadding: EdgeInsets.fromLTRB(10.sp, 0, 5.sp, 2.sp),
+                isExpanded: true,
+                icon: Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                  color: appBlackColor,
                 ),
-              ),
-
-              Text(
-                '$appName와 이별하려고 하시나요?  너무 아쉬워요...',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                buttonDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.sp),
+                  border: Border.all(width: 0.8.sp, color: Colors.grey),
                 ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                  '우리가 이별하면 게시글, 채팅, 매너온도, 관심 등 모든 계정 정보가 삭제 됩니다. 삭제된 계정 정보는 평생 복구할 수 없어요.'),
-              SizedBox(height: 30),
-              Text(
-                '${_auth.currentUser!.displayName!}님이 탈퇴하려는 이유가 궁금해요.',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                dropdownWidth: 200.sp,
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.sp),
                 ),
-              ), //두꺼운 텍스트로
-              SizedBox(height: 10),
-              DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  iconSize: 30,
-                  buttonPadding: EdgeInsets.fromLTRB(15, 0, 5, 0),
-                  isExpanded: true,
-                  icon: Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    color: appBlackColor,
-                  ),
-                  buttonDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(width: 0.5, color: Colors.grey),
-                  ),
-                  dropdownWidth: 230,
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  hint: Text(
-                    '선택해주세요',
-                    style: TextStyle(
-                      color: appBlackColor,
-                    ),
-                  ),
-                  itemHeight: 40,
-                  buttonElevation: 0,
-                  buttonHeight: 40,
-                  items: leaveAppValue
-                      .map(
-                        (item) => DropdownMenuItem(
-                          onTap: () {}, //각 항목별로 해당하는 문구를 배정시킨 if함수 넣기
-                          value: item,
-                          child: Text(
-                            item,
-                            style: TextStyle(height: 1.2),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  value: selectedLeaveReason,
-                  dropdownOverButton: true,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedLeaveReason = value as String;
-                    });
-                  },
+                hint: Text(
+                  '선택해주세요',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
-              ),
-              SizedBox(height: 10),
-              selectedLeaveReason == '기타'
-                  ? TextFormField(
-                      cursorColor: cursorColor,
-                      onChanged: (value) => setState(
-                        () {
-                          value;
-                        },
-                      ),
-                      textAlign: TextAlign.start,
-                      decoration: InputDecoration(
-                        hintText: '소중한 의견은 $appName팀에게 전달돼요',
-                        // hintStyle: TextStyle(color: appBlackColor),
-                        // fillColor: appWhiteColor,
-                        hintStyle: TextStyle(),
-                        contentPadding: EdgeInsets.all(15),
-                        counterStyle: TextStyle(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(10.0),
+                itemHeight: 40.sp,
+                buttonElevation: 0,
+                buttonHeight: 40.sp,
+                items: leaveAppValue
+                    .map(
+                      (item) => DropdownMenuItem(
+                        // 각 항목별로 해당하는 문구를 배정시킨 if함수 넣기
+                        onTap: () {},
+                        value: item,
+                        child: Text(
+                          item,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
-                      minLines: 8,
-                      maxLines: null,
-                      showCursor: true,
-                      keyboardType: TextInputType.text,
-                      controller: _textController,
-                      textInputAction: TextInputAction.done,
-                      textAlignVertical: TextAlignVertical.center,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     )
-                  : SizedBox.shrink(),
-            ],
-          ),
+                    .toList(),
+                value: selectedLeaveReason,
+                dropdownOverButton: true,
+                onChanged: (value) {
+                  setState(() {
+                    selectedLeaveReason = value as String;
+                  });
+                },
+              ),
+            ),
+            SizedBox(height: 8.sp),
+            selectedLeaveReason == '기타'
+                ? TextFormField(
+                    cursorColor: cursorColor,
+                    onChanged: (value) => setState(
+                      () => value,
+                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.start,
+                    decoration: InputDecoration(
+                      hintText: '소중한 의견은 $appName 팀에게 전달돼요',
+                      hintStyle: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.bodyMedium!.fontSize,
+                        color: appGreyColor,
+                      ),
+                      contentPadding: EdgeInsets.all(12.sp),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: appGreyColor, width: 0.8.sp),
+                        borderRadius: BorderRadius.circular(10.sp),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: appGreyColor, width: 0.8.sp),
+                        borderRadius: BorderRadius.circular(10.sp),
+                      ),
+                    ),
+                    minLines: 8,
+                    maxLines: null,
+                    showCursor: true,
+                    keyboardType: TextInputType.text,
+                    controller: _textController,
+                    textInputAction: TextInputAction.done,
+                    textAlignVertical: TextAlignVertical.center,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  )
+                : SizedBox.shrink(),
+          ],
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.all(AppSpaceData.screenPadding),
         child: CustomFullFilledTextButton(
           '$appName와 이별하기',
           () async {
@@ -155,12 +160,11 @@ class _SignOutPageState extends State<SignOutPage> {
                   () => Get.back(),
                 ),
               );
-            }
-            // 1. 기타사유를 선택한 경우
-            else if (selectedLeaveReason == '기타') {
-              String text = _textController.text.trim(); //입력한 기타 사유 텍스트
-              // 1-1. 텍스트를 입력하지 않은 경우
+            } else if (selectedLeaveReason == '기타') {
+              // 기타 사유
+              final String text = _textController.text.trim();
               if (text.length == 0 || text.isEmpty) {
+                // 텍스트를 입력하지 않은 경우
                 Get.dialog(
                   CustomOneButtonDialog(
                     '탈퇴 이유를 작성해주세요. 이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
@@ -168,28 +172,28 @@ class _SignOutPageState extends State<SignOutPage> {
                     () => Get.back(),
                   ),
                 );
-              }
-              // 1-2. 텍스트를 한 글자라도 입력한 경우
-              else {
+              } else {
+                // 텍스트를 한 글자라도 입력한 경우
                 final SignOutFeedBackModel _model = SignOutFeedBackModel(
                   feedBackContent: text,
                   createdAt: Timestamp.now(),
                 );
-                await _c.addFeedBack(_model); //DB에 피드백 저장
-                _textController.clear(); //작성한 텍스트 필드 내용 제거
-                Get.to(() => CreateProfilePage()); //OTP 인증 페이지로 이동
-                // Get.to(() => SignOutSmsPage()); //OTP 인증 페이지로 이동
+
+                // 피드백 서버에 저장
+                await _c.addFeedBack(_model);
+                _textController.clear();
+                Get.to(() => SignOutSmsPage());
               }
-            }
-            // 2. 기타사유가 아닌 경우
-            else {
+            } else {
+              // 기타사유가 아닌 경우
               final SignOutFeedBackModel _model = SignOutFeedBackModel(
                 feedBackContent: selectedLeaveReason.toString(),
                 createdAt: Timestamp.now(),
               );
-              await _c.addFeedBack(_model); //DB에 피드백 저장
-              _textController.clear(); //작성한 텍스트 필드 내용 제거
-              Get.to(() => SignOutSmsPage()); //OTP 인증 페이지로 이동
+              // 피드백 서버에 저장
+              await _c.addFeedBack(_model);
+              _textController.clear();
+              Get.to(() => SignOutSmsPage());
             }
           },
         ),
