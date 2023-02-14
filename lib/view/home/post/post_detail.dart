@@ -57,7 +57,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                             arguments: {
                               'profileUrl': _post.postInfo.profileUrl,
                               'userName': _post.postInfo.userName,
-                              'mannerAge': _post.mannerAge,
+                              'mannerLevel': _post.level,
                               'uid': _post.postInfo.uid,
                             },
                           );
@@ -70,22 +70,26 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
 
-                  // 매너나이
+                  // 매너Lv
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(_post.mannerAge.toString() + '세',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.25,
-                            color: mannerAgeColor,
-                          )),
                       Text(
-                        '(매너나이)',
+                        'Lv.${_post.level}',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.25,
+                          color: mannerLevelColor,
+                        ),
+                      ),
+                      Text(
+                        '(매너레벨)',
                         style: TextStyle(
                           fontSize: 10.sp,
-                          color: appBlackColor,
+                          color: appDarkGrey,
+                          letterSpacing: 0.5.sp,
+                          height: 0.9.sp,
                         ),
                       ),
                     ],
@@ -220,7 +224,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                   'postId': _post.postInfo.postId,
                                   'uid': _post.postInfo.uid,
                                   'userName': _post.postInfo.userName,
-                                  'mannerAge': _post.mannerAge,
+                                  'mannerLevel': _post.level,
                                   'profileUrl': _post.postInfo.profileUrl,
                                 },
                               );

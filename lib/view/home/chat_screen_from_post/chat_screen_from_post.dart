@@ -10,10 +10,10 @@ class ChatScreenPageFromPost extends StatefulWidget {
 class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
   final ChatController _chat = Get.put(ChatController());
   final String postId = Get.arguments['postId'];
-  // PostDetailPage에서 받은 게시자 uid, 이름, 프로필, 매너나이
+  // PostDetailPage에서 받은 게시자 uid, 이름, 프로필, 매너Lv
   final String uid = Get.arguments['uid'];
   final String userName = Get.arguments['userName'];
-  final String mannerAge = Get.arguments['mannerAge'];
+  final String mannerLevel = Get.arguments['mannerLevel'];
   final String profileUrl = Get.arguments['profileUrl'];
 
   @override
@@ -43,7 +43,7 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
               arguments: {
                 'profileUrl': profileUrl,
                 'userName': userName,
-                'mannerAge': mannerAge,
+                'mannerLevel': mannerLevel,
                 'uid': uid,
               },
             );
@@ -58,13 +58,13 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               SizedBox(width: 3.sp),
-              // 매너나이
+              // 매너Lv
               Text(
-                '${_chat.mannerAge.value}세',
+                'Lv.${_chat.level}',
                 style: TextStyle(
                   fontSize: 10.sp,
                   letterSpacing: 0.25.sp,
-                  color: mannerAgeColor,
+                  color: mannerLevelColor,
                 ),
               ),
             ],

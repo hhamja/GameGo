@@ -11,7 +11,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   // Post Detail, Chat Page에서 받은 데이터
   final String profileUrl = Get.arguments['profileUrl'];
   final String userName = Get.arguments['userName'];
-  final String mannerAge = Get.arguments['mannerAge'];
+  final String mannerLevel = Get.arguments['mannerLevel'];
   // 해당 유저가 탈퇴유저인 경우 : null
   final String uid = Get.arguments['uid'];
 
@@ -43,7 +43,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               style: Theme.of(context).textTheme.titleSmall,
             ),
             SizedBox(height: 23.sp),
-            CustomMannerAge(mannerAge),
+            CustomMannerLevel(mannerLevel, false, ''),
             SizedBox(height: 23.sp),
             CustomDivider(),
             ListTile(

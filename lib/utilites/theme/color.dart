@@ -31,5 +31,5 @@ const Color noticeNtfColor = Colors.blue;
 // 텍스트 필드의 커서 색상
 const Color cursorColor = Colors.blue;
 
-// 매너나이 색상
-const Color mannerAgeColor = Color(0xff16BEBB);
+// 매너Lv 색상
+const Color mannerLevelColor = Color(0xff16BEBB);

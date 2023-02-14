@@ -78,7 +78,6 @@ export '../../view/my_info/etc/faq/faq.dart';
 export '../../view/my_info/etc/feedBack/feedback.dart';
 export '../../view/my_info/etc/notice/notice_list.dart';
 export '../../view/my_info/etc/notice/notice_detail.dart';
-export '../../view/my_info/my_profile/mannerAge.dart';
 export '../../view/my_info/my_activity/received_evaluation/received_evaluation.dart';
 export '../../view/my_info/my_activity/my_favorite/favorite_list.dart';
 export '../../view/my_info/my_activity/my_post/bottomSheets.dart';
@@ -98,6 +97,7 @@ export '../../view/my_info/setting/user_setting/myAccount/authentication.dart';
 export '../../view/my_info/setting/signOut/signOut_sms.dart';
 
 // Models
+export '../../model/mannerLevel/mannerLevel.dart';
 export '../../model/manner_evaluation/good_evaluation_model.dart';
 export '../../model/manner_evaluation/bad_evaluation_model.dart';
 export '../../model/report/report_model.dart';
@@ -133,7 +133,7 @@ export '../../../controller/post/post.dart';
 export '../../../controller/dropDownButton/edit_dropDownBT.dart';
 export '../../../controller/dropDownButton/home_dropDownBT.dart';
 export '../../../controller/user/user.dart';
-export '../../../controller/mannerAge/mannerAge.dart';
+export '../../controller/mannerLevel/mannerLevel.dart';
 export '../../../controller/user/sms_timer.dart';
 export '../../../controller/favorite/favorite.dart';
 
@@ -152,7 +152,7 @@ export '../../component/textButton/filled_textButton.dart';
 export '../../component/post_list_item/my_post_list_item.dart';
 export '../../component/post_info/post_info.dart';
 export '../../component/bottomSheet/bottomSheet.dart';
-export '../../component/mannerAge/mannerAge.dart';
+export '../../component/mannerLevel/mannerLevel.dart';
 export '../../component/dialog/small_dialog.dart';
 export '../../component/divider/divider.dart';
 export '../../component/post_list_item/post_list_item.dart';

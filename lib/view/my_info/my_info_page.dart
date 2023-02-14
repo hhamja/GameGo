@@ -73,8 +73,13 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   },
                 ),
                 SettingsTile(
-                  title: CustomMannerAge(
-                    _user.userInfo.value.mannerAge.toString(),
+                  title: CustomMannerLevel(
+                    // level
+                    '${_user.userInfo.value.mannerLevel ~/ 100}',
+
+                    true,
+                    // exp
+                    '${_user.userInfo.value.mannerLevel % 100}',
                   ),
                 ),
               ],

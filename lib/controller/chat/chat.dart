@@ -17,8 +17,13 @@ class ChatController extends GetxController {
   RxBool isShowDate = false.obs;
   // 서로서로 보낸 메시지가 1개 이상인지; 약속설정 가능 여부
   RxBool isOkAppoint = false.obs;
-  // 채팅방에서 상대방 매너나이
-  RxString mannerAge = ''.obs;
+  // 채팅방에서 상대방 매너Lv
+  Rx<MannerLevelModel> mannerLevel = MannerLevelModel(
+    mannerLevel: '',
+    levelExp: '',
+  ).obs;
+
+  String get level => mannerLevel.value.mannerLevel;
 
   @override
   void onInit() {
@@ -35,14 +40,10 @@ class ChatController extends GetxController {
     super.onClose();
   }
 
-  //채팅에서 받은 데이터에서 내가 아닌 상대방의 uid로 매너나이 받기
-  Future getUserMannerAge(uid) async {
+  // 채팅 상대방의 매너Lv 데이터 받기
+  Future getUserMannerLevel(uid) async {
     await _userDB.doc(uid).get().then(
-      (e) {
-        var data = e.data() as Map<String, dynamic>;
-        mannerAge.value = data['mannerAge'].toString();
-      },
-    );
+        (e) => mannerLevel.value = MannerLevelModel.fromDocumentSnapshot(e));
   }
 
   // 새로운 채팅 입력 시 채팅방 생성하기

@@ -40,7 +40,7 @@ abstract class Paths {
   static const Feedback = '/feedback';
   static const AppNoticeList = '/noticelist';
   static const NoticeDetail = '/notice_detail';
-  static const MannerAge = '/mannerage';
+  static const MannerLevel = '/mannerLevel';
   static const ReceivedReview = '/receivedreview';
   static const ReceivedMannerEvaluation = '/receivedmannerevaluation';
   static const MyPostList = '/mypostlist';

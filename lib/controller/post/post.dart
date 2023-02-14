@@ -25,9 +25,12 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
   ).obs;
 
   PostModel get postInfo => _postInfo.value;
-  // postId로 받은 데이터에서 uid를 다시 넣어 유저의 매너나이 받기
-  RxString _mannerAge = ''.obs;
-  String get mannerAge => _mannerAge.value;
+  // 게시자의 매너레벨
+  Rx<MannerLevelModel> mannerLevel = MannerLevelModel(
+    mannerLevel: '',
+    levelExp: '',
+  ).obs;
+  String get level => mannerLevel.value.mannerLevel;
 
   @override
   void onInit() {
@@ -244,16 +247,9 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
       },
       onError: (e) => print(e),
     );
-    // 1번에서 담은 데이터 중 uid를 넣어 게시자의 매너나이 받기
+    // 1번에서 담은 데이터 중 uid를 넣어 게시자의 매너Lv 받기
     _userDB.doc(_postInfo.value.uid).get().then(
-      (e) {
-        var data = e.data() as Map<String, dynamic>;
-        // 매너나이 프린트
-        print(data['mannerAge']);
-        // num인 매너나이 String으로
-        _mannerAge.value = data['mannerAge'].toString();
-        print(_mannerAge.value);
-      },
-    );
+          (e) => mannerLevel.value = MannerLevelModel.fromDocumentSnapshot(e),
+        );
   }
 }

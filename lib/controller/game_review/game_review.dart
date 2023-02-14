@@ -2,7 +2,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class GameReviewController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final MannerAgeController _age = Get.put(MannerAgeController());
+  final MannerLevelController _level = Get.put(MannerLevelController());
   final CollectionReference _reportDB =
       FirebaseFirestore.instance.collection('report');
   final CollectionReference _gameReviewDB =
@@ -34,8 +34,8 @@ class GameReviewController extends GetxController {
         'createdAt': GameReviewModel.createdAt,
       },
     );
-    // 매너 게임 후기 받는 유저의 매너나이 (+ 0.1)
-    _age.plusMannerAge(uid);
+    // 매너 게임 후기 받는 유저의 매너Lv +
+    _level.plusMannerLevel(uid);
   }
 
   // 비매너 게임 후기를 작성한 경우
@@ -52,8 +52,8 @@ class GameReviewController extends GetxController {
         'createdAt': model.createdAt,
       },
     );
-    // 비매너 게임 후기 받는 유저의 매너나이 (- 0.1)
-    _age.minusMannerAge(model.idTo);
+    // 비매너 게임 후기 받는 유저의 매너Lv -
+    _level.minusMannerLevel(model.idTo);
   }
 
   // 내가 받은 게임후기 리스트로 받기

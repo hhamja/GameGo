@@ -27,8 +27,8 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
     _getAppointment();
     // 게시글에 대한 데이터 받기
     _post.getPostInfoByid(postId);
-    // 상대 유저에 대한 매너나이 받기
-    _chat.getUserMannerAge(uid);
+    // 상대 유저에 대한 매너Lv 받기
+    _chat.getUserMannerLevel(uid);
     // 현재 채팅하는 상대가 누군지 업데이트
     _chat.updateChattingWith(uid);
     // 보낸 리뷰가 존재하는지 여부
@@ -62,7 +62,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               arguments: {
                 'profileUrl': profileUrl,
                 'userName': userName,
-                'mannerAge': _chat.mannerAge.value,
+                'mannerLevel': _chat.level,
                 'uid': uid,
               },
             );
@@ -77,13 +77,13 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               SizedBox(width: 3.sp),
-              // 매너나이
+              // 매너Lv
               Text(
-                '${_chat.mannerAge.value}세',
+                'Lv.${_chat.level}',
                 style: TextStyle(
                   fontSize: 10.sp,
                   letterSpacing: 0.25.sp,
-                  color: mannerAgeColor,
+                  color: mannerLevelColor,
                 ),
               ),
             ],

@@ -2,7 +2,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class NoUserChatScreenPage extends StatelessWidget {
   NoUserChatScreenPage({Key? key}) : super(key: key);
-  // 상대유저정보 (이름, 프로필, 매너나이, uid)
+  // 상대유저정보 (이름, 프로필, uid)
   final String userName = Get.arguments['userName'] + ' (탈퇴)';
   final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];

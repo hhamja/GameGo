@@ -92,7 +92,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         //인증받은 폰번호 이전페이지에서 받기
         phoneNumber: _auth.currentUser!.phoneNumber.toString(),
         profileUrl: profileImageUrl,
-        mannerAge: 20.0,
+        // 3000은 Lv.30 의미
+        mannerLevel: 3000,
         chatPushNtf: _isGrantedNtf,
         activityPushNtf: _isGrantedNtf,
         // 광고성 수신 동의는 처음에 물어보지 않고 유저가 설정했을 때만

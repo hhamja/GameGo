@@ -21,7 +21,7 @@ class UserController extends GetxController {
     userName: '',
     phoneNumber: '',
     profileUrl: '',
-    mannerAge: 20,
+    mannerLevel: 3000,
     chatPushNtf: false,
     activityPushNtf: false,
     marketingConsent: false,
@@ -41,7 +41,7 @@ class UserController extends GetxController {
         'uid': userModel.uid,
         'userName': userModel.userName,
         'profileUrl': userModel.profileUrl,
-        'mannerAge': userModel.mannerAge,
+        'mannerLevel': userModel.mannerLevel,
         'phoneNumber': userModel.phoneNumber,
         'chatPushNtf': userModel.chatPushNtf,
         'activityPushNtf': userModel.activityPushNtf,
@@ -546,8 +546,8 @@ class UserController extends GetxController {
   }
 
   // uid를 통해 특정 유저의 정보 받기
-  Future getUserInfoByUid(uid) async {
-    await _userDB.doc(uid).get().then(
+  Future<UserModel> getUserInfoByUid(uid) async {
+    return _userDB.doc(uid).get().then(
           (value) => userInfo.value = UserModel.fromDocumentSnapshot(value),
         );
   }
