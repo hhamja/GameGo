@@ -78,12 +78,15 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
               ),
               SizedBox(width: 3.sp),
               // 매너Lv
-              Text(
-                'Lv.${_chat.level}',
-                style: TextStyle(
-                  fontSize: 10.sp,
-                  letterSpacing: 0.25.sp,
-                  color: mannerLevelColor,
+              FutureBuilder(
+                future: _chat.getUserMannerLevel(uid),
+                builder: (context, snapshot) => Text(
+                  'Lv.${_chat.level}',
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    letterSpacing: 0.25.sp,
+                    color: mannerLevelColor,
+                  ),
                 ),
               ),
             ],

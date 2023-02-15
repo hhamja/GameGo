@@ -29,6 +29,7 @@ class DetailPostController extends GetxController
   PostModel get postInfo => _postInfo.value;
   // 매너레벨 컨트롤러에서 매너Lv. 값 getter
   String get level => _levelController.level;
+
   // PostList Page 와 Favorite 에서 PostId값 전달 받음
   final String postId = Get.arguments['postId'];
   // 게시물 관심 버튼 클릭하면 on/off 되는 bool 값
@@ -39,11 +40,6 @@ class DetailPostController extends GetxController
     super.onInit();
     getPostInfoByid(postId);
     isFavoritePost(postId);
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   // postId을 통해서 특정 게시글의 데이터 받기
@@ -126,5 +122,10 @@ class DetailPostController extends GetxController
     }
     // 관심버튼 상태를 나타내는 bool변수 토글화
     isFavorite.value = !isFavorite.value;
+  }
+
+  // 매너Lv 받기
+  Future getUserMannerLevel(uid) async {
+    await _levelController.getUserMannerLevel(uid);
   }
 }

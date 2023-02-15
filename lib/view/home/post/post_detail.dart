@@ -21,6 +21,7 @@ class PostDetailPage extends StatelessWidget {
         ],
       ),
       body: _c.obx(
+        onLoading: SizedBox.shrink(),
         // 값이 없을 때
         onEmpty: Center(
           child: Text(
@@ -70,13 +71,16 @@ class PostDetailPage extends StatelessWidget {
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Lv.${_c.level}',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.25,
-                          color: mannerLevelColor,
+                      FutureBuilder(
+                        future: _c.getUserMannerLevel(_c.postInfo.uid),
+                        builder: (context, snapshot) => Text(
+                          'Lv.${_c.level}',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.25,
+                            color: mannerLevelColor,
+                          ),
                         ),
                       ),
                       Text(
