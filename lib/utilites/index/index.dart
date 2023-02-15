@@ -115,6 +115,12 @@ export '../../model/favorite/favorite_model.dart';
 export '../../model/appointment/appointment.dart';
 
 // Controller
+
+export '../../../controller/post/create_post.dart';
+export '../../controller/post/home_post_list.dart';
+export '../../../controller/post/edit_post.dart';
+export '../../../controller/post/delete_post.dart';
+export '../../controller/post/detail_post.dart';
 export '../../../controller/game_review/game_review.dart';
 export '../../../controller/notification/notification.dart';
 export '../../../controller/report/report.dart';
@@ -128,10 +134,6 @@ export '../../../controller/chat/badge.dart';
 export '../../../controller/my_post/my_post_list.dart';
 export '../../../controller/chat/chat.dart';
 export '../../../controller/initialScreen/initialScreen.dart';
-export '../../../controller/dropDownButton/create_dropDownBT.dart';
-export '../../../controller/post/post.dart';
-export '../../../controller/dropDownButton/edit_dropDownBT.dart';
-export '../../../controller/dropDownButton/home_dropDownBT.dart';
 export '../../../controller/user/user.dart';
 export '../../controller/mannerLevel/mannerLevel.dart';
 export '../../../controller/user/sms_timer.dart';

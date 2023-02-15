@@ -30,12 +30,6 @@ class AppRoutes {
       page: () => NoUserChatScreenPage(),
     ),
 
-    // HOME
-    GetPage(
-      name: Paths.HomeDropDownBT,
-      page: () => HomeDropDownButton(),
-      binding: HomeDropDownBinding(),
-    ),
     GetPage(
       name: Paths.Notification,
       page: () => NotificationPage(),
@@ -43,17 +37,14 @@ class AppRoutes {
     GetPage(
       name: Paths.AddPostDropDownBT,
       page: () => AddPostDropDownButton(),
-      binding: CreatePostDropDownBinding(),
     ),
     GetPage(
       name: Paths.AddPost,
       page: () => AddPostPage(),
-      binding: AddPostBinding(),
     ),
     GetPage(
       name: Paths.HomePostList,
       page: () => HomePostList(),
-      binding: HomePostListBinding(),
     ),
     GetPage(
       name: Paths.Postdetail,
@@ -62,17 +53,14 @@ class AppRoutes {
     GetPage(
       name: Paths.DeleteDialog,
       page: () => DeleteDialog(),
-      binding: DeleteDialogBinding(),
     ),
     GetPage(
       name: Paths.EditPostDropDownButton,
       page: () => EditPostDropDownButton(),
-      binding: EditDropDownBinding(),
     ),
     GetPage(
       name: Paths.EditPost,
       page: () => EditPostPage(),
-      binding: EditPostBinding(),
     ),
     GetPage(
       name: Paths.Illegal,

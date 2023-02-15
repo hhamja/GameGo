@@ -31,10 +31,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        // title: Text(
-        //   '약속 설정',
-        //   style: Theme.of(context).textTheme.titleSmall,
-        // ),
         actions: [
           CustomCloseButton(),
         ],
@@ -47,17 +43,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 날짜 설정
-            // Text(
-            //   '날짜',
-            //   style: TextStyle(
-            //       color: appBlackColor,
-            //       fontSize: 18,
-            //       fontWeight: FontWeight.bold),
-            // ),
-            // SizedBox(height: 20),
-            // 약속 날짜 정하기
-            // SizedBox(height: AppSpaceData.heightMedium),
             Text(
               '날짜',
               style: Theme.of(context).textTheme.titleLarge,

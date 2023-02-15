@@ -9,14 +9,8 @@ class AddPostPage extends StatefulWidget {
 
 class _AddPostPageState extends State<AddPostPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // PostController 선언 (∵ Create Post)
-  final PostController _post = Get.find<PostController>();
-  // 홈 드랍다운버튼 컨트롤러
-  final HomePageDropDownBTController _ =
-      Get.find<HomePageDropDownBTController>();
-  // DropDownBTController 선언 (∵ Create Post)
-  CreatePostDropDownBTController _button =
-      Get.put(CreatePostDropDownBTController());
+  final CreatePostController _c = Get.put(CreatePostController());
+
   // 제목 · 본문 Text Controller
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _maintextController = TextEditingController();
@@ -30,7 +24,7 @@ class _AddPostPageState extends State<AddPostPage> {
     // 게시글 생성 '완료'버튼 클릭 시
     Future<void> _createPost() async {
       // 게임모드 미선택, 제목과 내용 미작성 시
-      if (_button.seledtedPostGamemodeValue == null ||
+      if (_c.seledtedPostGamemodeValue == null ||
           _titleController.text == '' ||
           _maintextController.text == '') {
         // 다이얼로그로 유저에게 알림
@@ -50,9 +44,9 @@ class _AddPostPageState extends State<AddPostPage> {
           profileUrl: _auth.currentUser!.photoURL!,
           title: _titleController.text.trim(),
           maintext: _maintextController.text.trim(),
-          gamemode: _button.seledtedPostGamemodeValue!,
-          position: _button.seledtedPostdPositionValue,
-          tear: _button.seledtedPostTearValue,
+          gamemode: _c.seledtedPostGamemodeValue!,
+          position: _c.seledtedPostdPositionValue,
+          tear: _c.seledtedPostTearValue,
           like: 0,
           gameType: 'lol',
           isHidden: false,
@@ -60,7 +54,7 @@ class _AddPostPageState extends State<AddPostPage> {
           updatedAt: Timestamp.now(),
         );
         // 게시물 만들기
-        await _post.createPost(postModel);
+        await _c.createPost(postModel);
         Get.back();
       }
     }

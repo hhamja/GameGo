@@ -22,61 +22,31 @@ class SignOutBinding implements Bindings {
   }
 }
 
-class HomeDropDownBinding implements Bindings {
-  @override
-  void dependencies() {
-    Get.put(HomePageDropDownBTController());
-  }
-}
-
-class CreatePostDropDownBinding implements Bindings {
-  @override
-  void dependencies() {
-    Get.put(CreatePostDropDownBTController());
-  }
-}
-
-class AddPostBinding implements Bindings {
-  @override
-  void dependencies() {
-    Get.put(CreatePostDropDownBTController());
-    Get.put(PostController());
-  }
-}
-
 class HomePostListBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(PostController());
+    Get.put(HomePostController());
   }
 }
 
 class PostDetailBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(PostController());
+    Get.put(DetailPostController());
   }
 }
 
 class DeleteDialogBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(PostController());
-  }
-}
-
-class EditDropDownBinding implements Bindings {
-  @override
-  void dependencies() {
-    Get.put(EditDropDownController());
+    Get.put(DeletePostController());
   }
 }
 
 class EditPostBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put(EditDropDownController());
-    Get.put(PostController());
+    Get.put(EditPostController());
   }
 }
 

@@ -8,12 +8,9 @@ class HomeDropDownButton extends StatefulWidget {
 }
 
 class _HomeDropDownButtonState extends State<HomeDropDownButton> {
-  HomePageDropDownBTController homeDropDownBTController =
-      Get.put(HomePageDropDownBTController());
-
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomePageDropDownBTController>(
+    return GetBuilder<HomePostController>(
       builder: (controller) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

@@ -14,7 +14,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
   final String uid = Get.arguments['uid'];
   final String chatRoomId = Get.arguments['chatRoomId'];
   final String postId = Get.arguments['postId'];
-  final PostController _post = Get.put(PostController());
+  final DetailPostController _post = Get.put(DetailPostController());
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final EvaluationController _evaluation = Get.put(EvaluationController());
   final AppointmentController _appoint = Get.put(AppointmentController());

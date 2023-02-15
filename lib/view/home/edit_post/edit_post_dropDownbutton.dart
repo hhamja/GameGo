@@ -10,7 +10,7 @@ class EditPostDropDownButton extends StatefulWidget {
 class _EditPostDropDownButtonState extends State<EditPostDropDownButton> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditDropDownController>(
+    return GetBuilder<EditPostController>(
       builder: (controller) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,

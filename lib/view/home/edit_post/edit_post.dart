@@ -8,9 +8,8 @@ class EditPostPage extends StatefulWidget {
 }
 
 class _EditPostPageState extends State<EditPostPage> {
-  PostController _postController = Get.find<PostController>();
-  EditDropDownController _editDropDownController =
-      Get.put(EditDropDownController());
+  final EditPostController _c = Get.put(EditPostController());
+  final DetailPostController _detailPost = Get.put(DetailPostController());
   final postId = Get.arguments['postId'];
   final maintext = Get.arguments['maintext'];
   final title = Get.arguments['title'];
@@ -35,7 +34,7 @@ class _EditPostPageState extends State<EditPostPage> {
   // 게시글 수정 '완료'버튼 클릭 시
   Future<void> _editPost() async {
     // 게임모드 미선택, 제목과 내용 미작성 시
-    if (_editDropDownController.seledtedPostGamemodeValue == null ||
+    if (_c.seledtedPostGamemodeValue == null ||
         _titleController.text == '' ||
         _maintextController.text == '') {
       // 다이얼로그로 유저에게 알림
@@ -48,16 +47,16 @@ class _EditPostPageState extends State<EditPostPage> {
       );
     } else {
       // 서버의 게시글 데이터 업데이트
-      await _postController.updatePost(
+      await _c.updatePost(
         postId,
         _titleController.text,
         _maintextController.text,
-        _editDropDownController.seledtedPostGamemodeValue,
-        _editDropDownController.seledtedPostdPositionValue,
-        _editDropDownController.seledtedPostTearValue,
+        _c.seledtedPostGamemodeValue,
+        _c.seledtedPostdPositionValue,
+        _c.seledtedPostTearValue,
       );
       // 게시글 세부 페이지 새로고침
-      await _postController.getPostInfoByid(postId);
+      await _detailPost.getPostInfoByid(postId);
       // Post detail Page로 이동
       Get.back();
     }

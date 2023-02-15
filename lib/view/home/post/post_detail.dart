@@ -1,27 +1,10 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class PostDetailPage extends StatefulWidget {
+class PostDetailPage extends StatelessWidget {
   PostDetailPage({Key? key}) : super(key: key);
 
-  @override
-  State<PostDetailPage> createState() => _PostDetailPageState();
-}
-
-class _PostDetailPageState extends State<PostDetailPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final PostController _post = Get.find<PostController>();
-  final FavoriteController _favorite = Get.put(FavoriteController());
-  // PostList Page 와 Favorite 에서 PostId값 전달 받음
-  final String postId = Get.arguments['postId'];
-
-  @override
-  void initState() {
-    super.initState();
-    // postInfo에 게시글 데이터 담기
-    _post.getPostInfoByid(postId);
-    // 하트아이콘에 적용한 초기 bool값 반환
-    _favorite.isFavoritePost(postId);
-  }
+  final DetailPostController _c = Get.put(DetailPostController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +18,23 @@ class _PostDetailPageState extends State<PostDetailPage> {
               onPressed: openPostBottomSheet, icon: Icon(Icons.more_vert)),
         ],
       ),
-      body: Obx(
-        () => SingleChildScrollView(
+      body: _c.obx(
+        // 값이 없을 때
+        onEmpty: Center(
+          child: Text(
+            '게시글이 없습니다.',
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        // 에러가 떴을 때
+        onError: (error) => Center(
+          child: Text(
+            '게시글을 불러올 수 없습니다.',
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        // 값이 존재할 때
+        (state) => SingleChildScrollView(
           child: Container(
             padding:
                 EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
@@ -46,7 +44,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(
                       vertical: AppSpaceData.screenPadding),
-                  onTap: _auth.currentUser!.uid == _post.postInfo.uid
+                  onTap: _auth.currentUser!.uid == _c.postInfo.uid
                       // 나의 게시글 : 프로필 이동 X
                       ? null
                       // 다른 유저 게시글 : 해당 유저 프로필로 이동
@@ -55,18 +53,18 @@ class _PostDetailPageState extends State<PostDetailPage> {
                             // 상대 프로필 페이지로 이동
                             '/userProfile',
                             arguments: {
-                              'profileUrl': _post.postInfo.profileUrl,
-                              'userName': _post.postInfo.userName,
-                              'mannerLevel': _post.level,
-                              'uid': _post.postInfo.uid,
+                              'profileUrl': _c.postInfo.profileUrl,
+                              'userName': _c.postInfo.userName,
+                              'mannerLevel': _c.level,
+                              'uid': _c.postInfo.uid,
                             },
                           );
                         },
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(_post.postInfo.profileUrl),
+                    backgroundImage: NetworkImage(_c.postInfo.profileUrl),
                   ),
                   title: Text(
-                    _post.postInfo.userName,
+                    _c.postInfo.userName,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
 
@@ -75,7 +73,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Lv.${_post.level}',
+                        'Lv.${_c.level}',
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
@@ -103,7 +101,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     children: [
                       // 제목
                       Text(
-                        _post.postInfo.title,
+                        _c.postInfo.title,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       SizedBox(height: 5.sp),
@@ -111,18 +109,18 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Row(
                         children: [
                           Text(
-                            '${_post.postInfo.gamemode}',
+                            '${_c.postInfo.gamemode}',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
-                            _post.postInfo.position != null
-                                ? ' · ${_post.postInfo.position}'
+                            _c.postInfo.position != null
+                                ? ' · ${_c.postInfo.position}'
                                 : '',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                           Text(
-                            _post.postInfo.tear != null
-                                ? ' · ${_post.postInfo.tear}'
+                            _c.postInfo.tear != null
+                                ? ' · ${_c.postInfo.tear}'
                                 : '',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
@@ -131,7 +129,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       SizedBox(height: AppSpaceData.heightLarge),
                       // 본문글
                       Text(
-                        '${_post.postInfo.maintext}',
+                        '${_c.postInfo.maintext}',
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
@@ -152,7 +150,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
       ),
       bottomSheet:
           // 나의 게시글 이라면?
-          _auth.currentUser!.uid == _post.postInfo.uid
+          _auth.currentUser!.uid == _c.postInfo.uid
               ? SizedBox.shrink()
               : Padding(
                   padding: EdgeInsets.all(
@@ -171,9 +169,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                 // favoriteModel 인스턴스
                                 final FavoriteModel _favoriteModel =
                                     FavoriteModel(
-                                  postId: postId,
+                                  postId: _c.postId,
                                   idFrom: _auth.currentUser!.uid,
-                                  idTo: _post.postInfo.uid,
+                                  idTo: _c.postInfo.uid,
                                   createdAt: Timestamp.now(),
                                 );
                                 // NotificationModel 인스턴스
@@ -182,21 +180,21 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                   // 관심버튼 누른 uid
                                   idFrom: _auth.currentUser!.uid,
                                   // 게시자 uid
-                                  idTo: _post.postInfo.uid,
+                                  idTo: _c.postInfo.uid,
                                   // 관심버튼 누른 유저이름
                                   userName: _auth.currentUser!.displayName!,
-                                  postId: postId,
+                                  postId: _c.postId,
                                   chatRoomId: '', // 대상이 되는 채팅방 없음
-                                  postTitle: _post.postInfo.title,
+                                  postTitle: _c.postInfo.title,
                                   content: '',
                                   type: 'favorite',
                                   createdAt: Timestamp.now(),
                                 );
                                 //관심게시글 등록
-                                await _favorite.clickfavoriteButton(
+                                await _c.clickfavoriteButton(
                                     _favoriteModel, _ntfModel);
                               },
-                              icon: _favorite.isFavorite.value
+                              icon: _c.isFavorite.value
                                   // true => filled
                                   ? Icon(
                                       Icons.favorite,
@@ -221,11 +219,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                               Get.to(
                                 () => ChatScreenPageFromPost(),
                                 arguments: {
-                                  'postId': _post.postInfo.postId,
-                                  'uid': _post.postInfo.uid,
-                                  'userName': _post.postInfo.userName,
-                                  'mannerLevel': _post.level,
-                                  'profileUrl': _post.postInfo.profileUrl,
+                                  'postId': _c.postInfo.postId,
+                                  'uid': _c.postInfo.uid,
+                                  'userName': _c.postInfo.userName,
+                                  'mannerLevel': _c.level,
+                                  'profileUrl': _c.postInfo.profileUrl,
                                 },
                               );
                             },
@@ -241,7 +239,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   // 게시물 오른쪽 상단의 아이콘 클릭 시  바텀시트 호출
   openPostBottomSheet() {
     // 나의 게시글인지 타인 게시글인지 판단
-    if (_auth.currentUser!.uid == _post.postInfo.uid) {
+    if (_auth.currentUser!.uid == _c.postInfo.uid) {
       // 나의 게시글
       return Get.bottomSheet(
         Container(
@@ -259,18 +257,21 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 Get.back();
                 // 나의 게시물 수정 페이지로 이동
                 await Get.to(() => EditPostPage(), arguments: {
-                  'postId': postId,
-                  'maintext': _post.postInfo.maintext,
-                  'title': _post.postInfo.title,
-                  'gamemode': _post.postInfo.gamemode,
-                  'position': _post.postInfo.position,
-                  'tear': _post.postInfo.tear,
+                  'postId': _c.postId,
+                  'maintext': _c.postInfo.maintext,
+                  'title': _c.postInfo.title,
+                  'gamemode': _c.postInfo.gamemode,
+                  'position': _c.postInfo.position,
+                  'tear': _c.postInfo.tear,
                 });
               }),
               CustomButtomSheet('삭제', appRedColor, () async {
                 Get.back();
                 // 삭제에 대해 재요청하는 다이어로그 띄우기
-                await Get.dialog(DeleteDialog(), arguments: {'postId': postId});
+                await Get.dialog(
+                  DeleteDialog(),
+                  arguments: {'postId': _c.postId},
+                );
               }),
             ],
           ),
@@ -297,9 +298,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 Get.toNamed(
                   '/report',
                   arguments: {
-                    'postId': postId,
+                    'postId': _c.postId,
                     // 신고 받는 사람의 uid
-                    'uid': _post.postInfo.uid,
+                    'uid': _c.postInfo.uid,
                   },
                 );
               }),

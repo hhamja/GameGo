@@ -1,68 +1,31 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class PostController extends GetxController with StateMixin<RxList<PostModel>> {
-  static PostController get to => Get.find<PostController>();
-  final CollectionReference _userDB =
-      FirebaseFirestore.instance.collection('user');
+class HomePostController extends GetxController
+    with StateMixin<RxList<PostModel>> {
+  static HomePostController get to => Get.find<HomePostController>();
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
-  // RxList postList [] 선언
-  RxList<PostModel> postList = <PostModel>[].obs;
-  // Post Id로 받은 게시글정보
-  Rx<PostModel> _postInfo = PostModel(
-    postId: '',
-    uid: '',
-    userName: '',
-    profileUrl: '',
-    title: '',
-    maintext: '',
-    gamemode: '',
-    like: 0,
-    gameType: '',
-    isHidden: false,
-    isDeleted: false,
-    updatedAt: Timestamp.now(),
-  ).obs;
 
-  PostModel get postInfo => _postInfo.value;
-  // 게시자의 매너레벨
-  Rx<MannerLevelModel> mannerLevel = MannerLevelModel(
-    mannerLevel: '',
-    levelExp: '',
-  ).obs;
-  String get level => mannerLevel.value.mannerLevel;
+  RxList<PostModel> postList = <PostModel>[].obs;
+
+  // 포지션 드랍다운 버튼 보여주는 bool값
+  bool showPosition = false;
+  // 티어 드랍다운 버튼 보여주는 bool값
+  bool showTear = false;
+  // 게임모드 선택 value, 초기값 = '게임모드'
+  var selectedModeValue = homeGameModeList[0];
+  // 포지션 선택 value, 초기값 = '포지션'
+  var selectedPositionValue = homePostionList[0];
+  // 티어 선택 value, 초기값 = '티어'
+  var selectedTearValue = homeTearList[0];
 
   @override
   void onInit() {
-    readPostData();
     super.onInit();
+    readPostData();
   }
 
-  //만든 게시글 데이터 서버로 보내기
-  Future createPost(PostModel postModel) async {
-    // 루트 컬렉션 post에 저장
-    _postDB.doc(postModel.postId).set(
-      // 문서의 id는 파이어스토어의 자동id 생성 값
-      {
-        'postId': postModel.postId,
-        'uid': postModel.uid,
-        'userName': postModel.userName,
-        'profileUrl': postModel.profileUrl,
-        'title': postModel.title,
-        'maintext': postModel.maintext,
-        'gamemode': postModel.gamemode,
-        'position': postModel.position,
-        'tear': postModel.tear,
-        'like': postModel.like,
-        'gameType': postModel.gameType,
-        'isHidden': postModel.isHidden,
-        'isDeleted': postModel.isDeleted,
-        'updatedAt': postModel.updatedAt,
-      },
-    );
-  }
-
-  //모든 게시물 리스트로 받기
+  // 모든 게시물 리스트로 받기
   Future readPostData() async {
     // 데이터 받기 전 로딩상태
     change(postList, status: RxStatus.loading());
@@ -88,7 +51,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  //게시글을 게임모드 필터링하여 받기
+  // 게시글을 게임모드 필터링하여 받기
   Future filterGamemode(gamemode) async {
     // 리스트 초기화
     postList.clear();
@@ -117,7 +80,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  //게시글을 게임모드, 포지션 필터링하여 받기
+  // 게시글을 게임모드, 포지션 필터링하여 받기
   Future filterPosition(gamemode, position) async {
     // 리스트 초기화
     postList.clear();
@@ -133,8 +96,9 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
         .then(
           (snapshot) => postList.assignAll(
               snapshot.docs.map((e) => PostModel.fromDocumentSnapshot(e))),
-          onError: (err) => change(null,
-              status: RxStatus.error(err.toString())), //데이터 받는 과정에서 에러나는 경우
+          // 데이터 받는 과정에서 에러나는 경우
+          onError: (err) =>
+              change(null, status: RxStatus.error(err.toString())),
         );
     // 데이터가 있다 ? 완료상태 : 빈 상태
     if (postList.isNotEmpty || postList.length > 0) {
@@ -146,7 +110,7 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  //게시글을 게임모드, 포지션, 티어 필터링하여 받기
+  // 게시글을 게임모드, 포지션, 티어 필터링하여 받기
   Future filterTear(gamemode, position, tear) async {
     // 리스트 초기화
     postList.clear();
@@ -178,78 +142,121 @@ class PostController extends GetxController with StateMixin<RxList<PostModel>> {
     }
   }
 
-  //게시글 수정하기
-  Future updatePost(postid, String title, String maintext, String gamemode,
-      String? position, String? tear) async {
-    // post 정보를 수정
-    await _postDB.doc(postid).update(
-      {
-        'title': title,
-        'maintext': maintext,
-        'gamemode': gamemode,
-        'position': position,
-        'tear': tear,
-      },
-    );
-    // notification의 postTitle 수정
-    await FirebaseFirestore.instance
-        .collection('notification')
-        .where('postId', isEqualTo: postid)
-        .get()
-        .then(
-      (value) {
-        // ntf id를 담을 빈 리스트
-        var _ntfIdList = [];
-        // 쿼리한 postId에 해당 하는 ntf id를 리스트에 넣기
-        _ntfIdList.assignAll(
-          value.docs.map(
-            (e) => e.reference.id,
-          ),
-        );
-        // 반복문 -> notification의 postTitle 수정
-        _ntfIdList.forEach(
-          (id) {
-            FirebaseFirestore.instance
-                .collection('notification')
-                .doc(id)
-                .update(
-              //게시글 제목 수정
-              {
-                'postTitle': title,
-              },
-            ).then(
-              (_) => print('ntf에서 게시글 제목 수정'),
-            );
-          },
-        );
-      },
-      onError: (e) => print(e),
-    );
+  // 게임모드가
+  // 솔로,자유 ? 포지션, 티어 둘다 표시
+  // 일반 ? 포지션만 표시
+  // 칼바람, AI ? null
+
+  changeGamemode(modeValue) {
+    selectedModeValue = modeValue as String;
+    selectedPositionValue = '포지션';
+    selectedTearValue = '티어';
+    update();
+    filter(_gamemode) {
+      filterGamemode(_gamemode);
+    }
+
+    // 게임모드 switch - case
+    switch (selectedModeValue) {
+      case '게임모드':
+        showPosition = false;
+        showTear = false;
+        filter(null);
+        break;
+      case '솔로랭크':
+        showPosition = true;
+        showTear = true;
+        filter('솔로랭크');
+        break;
+      case '자유랭크':
+        showPosition = true;
+        showTear = true;
+        filter('자유랭크');
+        break;
+      case '일반게임':
+        showPosition = true;
+        showTear = false;
+        filter('일반게임');
+        break;
+      case '무작위 총력전':
+        showPosition = false;
+        showTear = false;
+        filter('무작위 총력전');
+        break;
+      case 'AI 대전':
+        showPosition = false;
+        showTear = false;
+        filter('AI 대전');
+        break;
+    }
   }
 
-  // 게시글 삭제
-  Future deletePost(postid) async {
-    // idDeleted 삭제 플래그 true로 업데이트
-    return _postDB.doc(postid).update(
-      {
-        'isDeleted': true,
-      },
-    );
+  // 포지션 드랍다운버튼 클릭 시
+  changePosition(value) {
+    selectedPositionValue = value as String;
+    selectedTearValue = '티어';
+    update();
+    filter(gamemode, position) {
+      filterPosition(gamemode, position);
+    }
+
+    // 게임모드 switch - case
+    switch (selectedPositionValue) {
+      case '포지션':
+        filter(selectedModeValue, null);
+        break;
+      case '탑':
+        filter(selectedModeValue, '탑');
+        break;
+      case '정글':
+        filter(selectedModeValue, '정글');
+        break;
+      case '미드':
+        filter(selectedModeValue, '미드');
+        break;
+      case '원딜':
+        filter(selectedModeValue, '원딜');
+        break;
+      case '서포터':
+        filter(selectedModeValue, '서포터');
+        break;
+    }
   }
 
-  // postId을 통해서 특정 게시글의 데이터 받기
-  Future getPostInfoByid(postId) async {
-    // 특정 게시글의 데이터 Rx<PostModel> _postInfo에 담기
-    await _postDB.doc(postId).get().then(
-      (e) {
-        _postInfo.value = PostModel.fromDocumentSnapshot(e);
-        print(_postInfo);
-      },
-      onError: (e) => print(e),
-    );
-    // 1번에서 담은 데이터 중 uid를 넣어 게시자의 매너Lv 받기
-    _userDB.doc(_postInfo.value.uid).get().then(
-          (e) => mannerLevel.value = MannerLevelModel.fromDocumentSnapshot(e),
-        );
+  // 티어 드랍다운버튼 클릭 시
+  changeTear(value) {
+    selectedTearValue = value as String;
+    update();
+    filter(gamemode, position, tear) {
+      filterTear(gamemode, position, tear);
+    }
+
+    // 게임모드 switch - case
+    switch (selectedTearValue) {
+      case '티어':
+        filter(selectedModeValue, selectedPositionValue, null);
+        break;
+      case '언랭크':
+        filter(selectedModeValue, selectedPositionValue, '언랭크');
+        break;
+      case '아이언':
+        filter(selectedModeValue, selectedPositionValue, '아이언');
+        break;
+      case '브론즈':
+        filter(selectedModeValue, selectedPositionValue, '브론즈');
+        break;
+      case '실버':
+        filter(selectedModeValue, selectedPositionValue, '실버');
+        break;
+      case '골드':
+        filter(selectedModeValue, selectedPositionValue, '골드');
+        break;
+      case '플래티넘':
+        filter(selectedModeValue, selectedPositionValue, '플래티넘');
+        break;
+      case '다이아몬드':
+        filter(selectedModeValue, selectedPositionValue, '다이아몬드');
+        break;
+    }
   }
 }

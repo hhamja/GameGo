@@ -5,7 +5,7 @@ class AddPostDropDownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CreatePostDropDownBTController>(builder: (controller) {
+    return GetBuilder<CreatePostController>(builder: (controller) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

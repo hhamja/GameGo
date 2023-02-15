@@ -1,18 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mannergamer/utilites/index/index.dart';
 
-class Homepage extends StatefulWidget {
-  @override
-  State<Homepage> createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  @override
-  void initState() {
-    super.initState();
-    Get.put(PostController());
-  }
-
+class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +26,7 @@ class _HomepageState extends State<Homepage> {
       ),
       floatingActionButton: FloatingActionButton.small(
         onPressed: () {
-          Get.toNamed('/addPost');
+          Get.to(() => AddPostPage());
         },
         child: Icon(
           Icons.add,
