@@ -66,6 +66,7 @@ export '../../view/home/edit_post/edit_post_dropDownbutton.dart';
 export '../../view/home/post/post_list.dart';
 export '../../view/home/delete_post/delete_dialog.dart';
 export '../../view/home/post/post_detail.dart';
+export '../../view/home/post/my_post_detail.dart';
 export '../../view/report/illegal_post/illegal_post.dart';
 export '../../view/report/other_reasons/other_reasons.dart';
 export '../../view/report/dialog/report_dialog.dart';

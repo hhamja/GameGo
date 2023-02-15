@@ -1,9 +1,8 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class PostDetailPage extends StatelessWidget {
-  PostDetailPage({Key? key}) : super(key: key);
+class MyPostDetailPage extends StatelessWidget {
+  MyPostDetailPage({Key? key}) : super(key: key);
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final DetailPostController _c = Get.put(DetailPostController());
 
   @override
@@ -46,18 +45,7 @@ class PostDetailPage extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(
                       vertical: AppSpaceData.screenPadding),
-                  onTap: () async {
-                    Get.toNamed(
-                      // 상대 프로필 페이지로 이동
-                      '/userProfile',
-                      arguments: {
-                        'profileUrl': _c.postInfo.profileUrl,
-                        'userName': _c.postInfo.userName,
-                        'mannerLevel': _c.level,
-                        'uid': _c.postInfo.uid,
-                      },
-                    );
-                  },
+                  onTap: null,
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(_c.postInfo.profileUrl),
                   ),
@@ -146,84 +134,6 @@ class PostDetailPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: Padding(
-        padding: EdgeInsets.all(
-          AppSpaceData.screenPadding,
-        ),
-        child: Container(
-          color: appWhiteColor,
-          child: Row(
-            children: [
-              // 관심(하트)
-              Expanded(
-                flex: 2,
-                child: Obx(
-                  () => IconButton(
-                    onPressed: () async {
-                      // favoriteModel 인스턴스
-                      final FavoriteModel _favoriteModel = FavoriteModel(
-                        postId: _c.postId,
-                        idFrom: _auth.currentUser!.uid,
-                        idTo: _c.postInfo.uid,
-                        createdAt: Timestamp.now(),
-                      );
-                      // NotificationModel 인스턴스
-                      final NotificationModel _ntfModel = NotificationModel(
-                        // 관심버튼 누른 uid
-                        idFrom: _auth.currentUser!.uid,
-                        // 게시자 uid
-                        idTo: _c.postInfo.uid,
-                        // 관심버튼 누른 유저이름
-                        userName: _auth.currentUser!.displayName!,
-                        postId: _c.postId,
-                        chatRoomId: '', // 대상이 되는 채팅방 없음
-                        postTitle: _c.postInfo.title,
-                        content: '',
-                        type: 'favorite',
-                        createdAt: Timestamp.now(),
-                      );
-                      //관심게시글 등록
-                      await _c.clickfavoriteButton(_favoriteModel, _ntfModel);
-                    },
-                    icon: _c.isFavorite.value
-                        // true => filled
-                        ? Icon(
-                            Icons.favorite,
-                            color: appPrimaryColor,
-                            size: 25.sp,
-                          )
-                        // false => not filled
-                        : Icon(
-                            Icons.favorite_border_outlined,
-                            size: 23.sp,
-                            color: appBlackColor,
-                          ),
-                  ),
-                ),
-              ),
-              // 채팅하기 버튼
-              Expanded(
-                flex: 5,
-                child: CustomFullFilledTextButton(
-                  '채팅하기',
-                  () {
-                    Get.to(
-                      () => ChatScreenPageFromPost(),
-                      arguments: {
-                        'postId': _c.postInfo.postId,
-                        'uid': _c.postInfo.uid,
-                        'userName': _c.postInfo.userName,
-                        'mannerLevel': _c.level,
-                        'profileUrl': _c.postInfo.profileUrl,
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 
@@ -237,27 +147,30 @@ class PostDetailPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.sp),
         ),
         // 아이템 개수*50 + 10 (위아래 공간 각  5)
-        height: 60.sp,
+        height: 110.sp,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomButtomSheet(
-              '신고하기',
-              appBlackColor,
-              () {
-                // 다이어로그 끄기
-                Get.back();
-                // 신고하기 페이지로 이동
-                Get.toNamed(
-                  '/report',
-                  arguments: {
-                    'postId': _c.postId,
-                    // 신고 받는 사람의 uid
-                    'uid': _c.postInfo.uid,
-                  },
-                );
-              },
-            ),
+            CustomButtomSheet('게시글 수정', appBlackColor, () async {
+              Get.back();
+              // 나의 게시물 수정 페이지로 이동
+              await Get.to(() => EditPostPage(), arguments: {
+                'postId': _c.postId,
+                'maintext': _c.postInfo.maintext,
+                'title': _c.postInfo.title,
+                'gamemode': _c.postInfo.gamemode,
+                'position': _c.postInfo.position,
+                'tear': _c.postInfo.tear,
+              });
+            }),
+            CustomButtomSheet('삭제', appRedColor, () async {
+              Get.back();
+              // 삭제에 대해 재요청하는 다이어로그 띄우기
+              await Get.dialog(
+                DeleteDialog(),
+                arguments: {'postId': _c.postId},
+              );
+            }),
           ],
         ),
       ),

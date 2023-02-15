@@ -2,7 +2,9 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class HomePostList extends GetView<HomePostController> {
   HomePostList({Key? key}) : super(key: key);
+
   final HomePostController _c = Get.put(HomePostController());
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // 드랍다운버튼 선택한 값에 따른 페이지 새로고침
   Future<void> _refreshFromButtonValue() async {
@@ -69,13 +71,20 @@ class HomePostList extends GetView<HomePostController> {
             final _gamemode = controller.postList[index].gamemode;
             final _position = controller.postList[index].position;
             final _tear = controller.postList[index].tear;
-            //게시글 생성시간, -전
+            final bool _isMe =
+                controller.postList[index].uid == _auth.currentUser!.uid;
             String time =
                 Jiffy(controller.postList[index].updatedAt.toDate()).fromNow();
-            //onTap 함수
-            _onTap() {
-              Get.toNamed('/postdetail',
-                  arguments: {'postId': controller.postList[index].postId});
+            _onTap() async {
+              _isMe
+                  ? Get.to(
+                      () => MyPostDetailPage(),
+                      arguments: {'postId': controller.postList[index].postId},
+                    )
+                  : Get.toNamed(
+                      '/postdetail',
+                      arguments: {'postId': controller.postList[index].postId},
+                    );
             }
 
             return CustomPostListItem(
