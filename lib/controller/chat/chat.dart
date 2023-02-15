@@ -1,34 +1,29 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class ChatController extends GetxController {
+class ChatController extends GetxController
+    with StateMixin<RxList<ChatRoomModel>> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _chatDB = FirebaseFirestore.instance.collection('chat');
   final _userDB = FirebaseFirestore.instance.collection('user');
   ScrollController scroll = ScrollController(keepScrollOffset: false);
-  // 채팅하고 있는 유저의 채팅리스트 담는 RxList 변수
+
   RxList<ChatRoomModel> chatRoomList = <ChatRoomModel>[].obs;
-  // 채팅방안의 모든 메시지 담는 RxList 변수
   RxList<MessageModel> messageList = <MessageModel>[].obs;
-  // 상대 메시지에서 프로필 보여주는 bool 값
+
   RxBool isShowProfile = false.obs;
-  // 메시지시간 표시에 대한 bool 값
   RxBool isShowTime = false.obs;
-  // 메시지시간 표시에 대한 bool 값
   RxBool isShowDate = false.obs;
-  // 서로서로 보낸 메시지가 1개 이상인지; 약속설정 가능 여부
   RxBool isOkAppoint = false.obs;
-  // 채팅방에서 상대방 매너Lv
+
   Rx<MannerLevelModel> mannerLevel = MannerLevelModel(
     mannerLevel: '',
     levelExp: '',
   ).obs;
-
   String get level => mannerLevel.value.mannerLevel;
 
   @override
   void onInit() {
     super.onInit();
-    // 채팅방리스트 스트림으로 받기
     chatRoomList.bindStream(readAllChatList());
     scroll;
   }
@@ -96,13 +91,11 @@ class ChatController extends GetxController {
   Stream<List<ChatRoomModel>> readAllChatList() async* {
     yield* _chatDB
         .where('members', arrayContains: _auth.currentUser!.uid)
-        .orderBy('updatedAt', descending: true) //최신이 맨 위
+        .orderBy('updatedAt', descending: true)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
-              .map(
-                (e) => ChatRoomModel.fromDocumentSnapshot(e),
-              )
+              .map((e) => ChatRoomModel.fromDocumentSnapshot(e))
               .toList(),
         );
   }

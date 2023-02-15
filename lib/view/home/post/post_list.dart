@@ -42,7 +42,7 @@ class HomePostList extends GetView<HomePostController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '게시글이 없습니다.',
+                '게시글이 없어요.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
