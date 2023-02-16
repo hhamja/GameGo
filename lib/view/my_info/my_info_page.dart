@@ -97,7 +97,6 @@ class MyInfoPage extends StatelessWidget {
                   title: CustomMannerLevel(
                     // level
                     '${_c.userInfo.mannerLevel ~/ 100}',
-
                     true,
                     // exp
                     '${_c.userInfo.mannerLevel % 100}',

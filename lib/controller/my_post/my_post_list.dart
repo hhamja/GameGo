@@ -1,10 +1,10 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class MyPostListController extends GetxController {
+class MyPostListController extends GetxController
+    with StateMixin<RxList<PostModel>> {
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // 모든 나의 게시글 리스트 담는 RxList 변수
   RxList<PostModel> myPostList = <PostModel>[].obs;
 
   @override
@@ -15,7 +15,8 @@ class MyPostListController extends GetxController {
 
   // 나의 게시글 받기
   Future getMyPostList() async {
-    return _postDB
+    change(myPostList, status: RxStatus.loading());
+    await _postDB
         .where('uid', isEqualTo: _auth.currentUser!.uid)
         .where('isDeleted', isEqualTo: false)
         .where('isHidden', isEqualTo: false)
@@ -30,5 +31,13 @@ class MyPostListController extends GetxController {
                 .toList(),
           ),
         );
+    // 데이터 상태 change
+    if (myPostList.isNotEmpty || myPostList.length > 0) {
+      // 값을 성공적으로 받은 경우
+      change(myPostList, status: RxStatus.success());
+    } else {
+      // 빈 값인 경우
+      change(myPostList, status: RxStatus.empty());
+    }
   }
 }
