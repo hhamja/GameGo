@@ -24,7 +24,7 @@ class MyPostDetailPage extends StatelessWidget {
         // 값이 없을 때
         onEmpty: Center(
           child: Text(
-            '게시글이 없습니다.',
+            '존재하지 않는 게시글 입니다.',
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),

@@ -12,7 +12,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _nameText = TextEditingController(
       text: FirebaseAuth.instance.currentUser!.displayName);
-  final UserController _user = Get.put(UserController());
+  final MyProfileController _c = Get.find<MyProfileController>();
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final ImagePicker _picker = ImagePicker();
 
@@ -201,16 +201,16 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
             final text = _nameText.text.trim();
             if (text.length >= 2 && text != _auth.currentUser!.displayName) {
               // 닉네임 2자 이상 + 닉네임을 수정 입력한 경우?
-              _user.updateUserName(text);
+              _c.updateUserName(text);
               if (_photoFile != null) {
                 // 프로필을 변경한 경우
                 // 선택한 갤러리의 사진을 storage에 올리고 url을 profileImageUrl에 받기
                 await uploadFile();
                 // 선택한 사진으로 프로필 업데이트
-                _user.updateUserProfile(profileImageUrl);
+                _c.updateUserProfile(profileImageUrl);
               } else if (profileImageUrl != _auth.currentUser!.photoURL!) {
                 // 기본프로필로 선택하면 ? _photoFile는 null도 된다
-                _user.updateUserProfile(profileImageUrl);
+                _c.updateUserProfile(profileImageUrl);
               } else
                 null;
             } else {
@@ -221,17 +221,17 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
                 await uploadFile();
                 Get.back();
                 // 선택한 사진으로 프로필 업데이트
-                _user.updateUserProfile(profileImageUrl);
+                _c.updateUserProfile(profileImageUrl);
               } else if (profileImageUrl != _auth.currentUser!.photoURL!) {
                 // 기본프로필로 변경한 경우
                 // 기본프로필로 선택하면 ? _photoFile는 null도 된다
-                _user.updateUserProfile(profileImageUrl);
+                _c.updateUserProfile(profileImageUrl);
                 Get.back();
               } else
                 null;
             }
             // 내정보 새로고침
-            await _user.getUserInfoByUid(_auth.currentUser!.uid);
+            await _c.getUserInfoByUid(_auth.currentUser!.uid);
           },
         ),
       ),

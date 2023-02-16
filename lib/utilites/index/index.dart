@@ -116,7 +116,7 @@ export '../../model/favorite/favorite_model.dart';
 export '../../model/appointment/appointment.dart';
 
 // Controller
-
+export '../../controller/user/my_profile.dart';
 export '../../../controller/post/create_post.dart';
 export '../../controller/post/home_post_list.dart';
 export '../../../controller/post/edit_post.dart';
@@ -135,7 +135,7 @@ export '../../../controller/chat/badge.dart';
 export '../../../controller/my_post/my_post_list.dart';
 export '../../../controller/chat/chat.dart';
 export '../../../controller/initialScreen/initialScreen.dart';
-export '../../../controller/user/user.dart';
+export '../../controller/user/user_auth.dart';
 export '../../controller/mannerLevel/mannerLevel.dart';
 export '../../../controller/user/sms_timer.dart';
 export '../../../controller/favorite/favorite.dart';

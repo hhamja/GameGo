@@ -28,21 +28,20 @@ class HomePostList extends GetView<HomePostController> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      //새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
+      // 새로고침 시 PostList의 바뀐 값을 반영하여 Ui에 업데이트함
       onRefresh: _refreshFromButtonValue,
       color: appGreyColor,
-      //맨 위에 위치시키는 값
+      // 맨 위에 위치시키는 값
       displacement: 0,
       strokeWidth: 1.2.sp,
       child: controller.obx(
-        // 값이 없을 때
         onEmpty: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '게시글이 없어요.',
+                '게시글이 없습니다.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
@@ -52,7 +51,6 @@ class HomePostList extends GetView<HomePostController> {
             ],
           ),
         ),
-        // 에러가 떴을 때
         onError: (error) => Center(
           child: Text(
             error.toString(),
@@ -61,7 +59,7 @@ class HomePostList extends GetView<HomePostController> {
         ),
         // 값이 존재할 때
         (state) => ListView.builder(
-          //리스트가 적어도 스크롤 인식 가능
+          // 리스트가 적어도 스크롤 인식 가능
           physics: AlwaysScrollableScrollPhysics(),
           itemCount: controller.postList.length,
           itemBuilder: (BuildContext context, int index) {

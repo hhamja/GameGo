@@ -108,7 +108,10 @@ class CustomPostListItem extends StatelessWidget {
                         // 글 시간
                         Text(
                           '·${time}',
-                          style: _subTextStyle,
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: appGreyColor,
+                          ),
                         ),
                       ],
                     ),
