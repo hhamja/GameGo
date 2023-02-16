@@ -1,20 +1,9 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class MyFavoriteList extends StatefulWidget {
+class MyFavoriteList extends StatelessWidget {
   MyFavoriteList({Key? key}) : super(key: key);
 
-  @override
-  State<MyFavoriteList> createState() => _MyFavoriteListState();
-}
-
-class _MyFavoriteListState extends State<MyFavoriteList> {
-  final FavoriteController _favorite = Get.put(FavoriteController());
-
-  @override
-  void initState() {
-    super.initState();
-    _favorite.getFavoriteList(); //현재 유저의 관심 게시글 목록 받기
-  }
+  final FavoriteController _c = Get.put(FavoriteController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +18,57 @@ class _MyFavoriteListState extends State<MyFavoriteList> {
           CustomCloseButton(),
         ],
       ),
-      body: Obx(
-        () => ListView.builder(
+      body: _c.obx(
+        onEmpty: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '관심 게시글이 없습니다.',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              Text(
+                '하트 버튼을 눌러 관심 게시글에 추가해보세요!',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        onError: (_) => Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '정보를 불러올 수 없습니다.',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              Text(
+                '지속적으로 발생한다면 고객센터로 문의해주세요.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        (_) => ListView.builder(
           padding: EdgeInsets.symmetric(
             horizontal: AppSpaceData.screenPadding,
           ),
           physics: AlwaysScrollableScrollPhysics(),
-          itemCount: _favorite.favoriteList.length,
+          itemCount: _c.favoriteList.length,
           itemBuilder: (BuildContext context, int index) {
-            final String _profileUrl = _favorite.favoriteList[index].profileUrl;
-            final String _userName = _favorite.favoriteList[index].userName;
-            final String _title = _favorite.favoriteList[index].title;
-            final String _gamemode = _favorite.favoriteList[index].gamemode;
-            final String? _position = _favorite.favoriteList[index].position;
-            final String? _tear = _favorite.favoriteList[index].tear;
+            final String _profileUrl = _c.favoriteList[index].profileUrl;
+            final String _userName = _c.favoriteList[index].userName;
+            final String _title = _c.favoriteList[index].title;
+            final String _gamemode = _c.favoriteList[index].gamemode;
+            final String? _position = _c.favoriteList[index].position;
+            final String? _tear = _c.favoriteList[index].tear;
 
             _onTap() async {
               Get.toNamed(
                 '/postdetail',
-                arguments: {'postId': _favorite.favoriteList[index].postId},
+                arguments: {'postId': _c.favoriteList[index].postId},
               );
             }
 
