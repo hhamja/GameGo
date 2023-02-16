@@ -105,12 +105,11 @@ class ChatController extends GetxController
     yield* _chatDB
         .doc(chatRoomId)
         .collection('message')
+        .where('isDeleted', isEqualTo: false)
         .orderBy('timestamp', descending: false)
         .snapshots()
         .map((snapshot) => snapshot.docs
-            .map(
-              (e) => MessageModel.fromDocumentSnapshot(e),
-            )
+            .map((e) => MessageModel.fromDocumentSnapshot(e))
             .toList());
   }
 

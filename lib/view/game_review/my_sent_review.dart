@@ -1,5 +1,7 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
+import '../../controller/game_review/my_sent_review.dart';
+
 class MySentReviewPage extends StatefulWidget {
   const MySentReviewPage({super.key});
 
@@ -8,8 +10,7 @@ class MySentReviewPage extends StatefulWidget {
 }
 
 class _MySentReviewPageState extends State<MySentReviewPage> {
-  final EvaluationController _evaluation = Get.put(EvaluationController());
-  final SendGameReviewController _review = Get.put(SendGameReviewController());
+  final MySentGameReviewController _c = Get.put(MySentGameReviewController());
   final ScrollController _scrollC = ScrollController();
   // 상대유저 이름, uid, 채팅방 id
   final String userName = Get.arguments['userName']!;
@@ -20,9 +21,9 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
   void initState() {
     super.initState();
     //1. 내가 보낸 매너 평가 받기
-    _evaluation.getMySentEvaluation(uid, chatRoomId);
+    _c.getMySentEvaluation(uid, chatRoomId);
     //2. 내가 보낸 게임 후기 받기
-    _review.getMySentReviewContent(uid, chatRoomId);
+    _c.getMySentReviewContent(uid, chatRoomId);
   }
 
   @override
@@ -38,8 +39,30 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
           CustomCloseButton(),
         ],
       ),
-      body: Obx(
-        () => SingleChildScrollView(
+      body: _c.obx(
+        onEmpty: Center(
+          child: Text(
+            '존재하는 매너평가가 없습니다.',
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        onError: (_) => Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '정보를 불러올 수 없습니다.',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              Text(
+                '지속적으로 발생한다면 고객센터로 문의해주세요.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        (_) => SingleChildScrollView(
           padding: EdgeInsets.all(
             AppSpaceData.screenPadding,
           ),
@@ -53,18 +76,18 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                 child: Column(
                   children: [
                     Text(
-                      !_evaluation.isGood.value ? '\u{1F629}' : '\u{1F60D}',
+                      !_c.isGood.value ? '\u{1F629}' : '\u{1F60D}',
                       style: TextStyle(fontSize: 45.sp),
                     ),
                     Text(
-                      !_evaluation.isGood.value ? '별로예요' : '최고예요',
+                      !_c.isGood.value ? '별로예요' : '최고예요',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
               ),
               // 내가 체크한 비매너 : 매너 평가 항목
-              !_evaluation.isGood.value
+              !_c.isGood.value
                   // 비매너 평가인 경우
                   ? ListView.builder(
                       padding: EdgeInsets.zero,
@@ -74,7 +97,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                       itemBuilder: (context, index) {
                         return CheckboxListTile(
                           activeColor: appPrimaryColor,
-                          value: _evaluation.badCheckList[index],
+                          value: _c.badCheckList[index],
                           controlAffinity: ListTileControlAffinity.leading,
                           onChanged: (value) => null,
                           contentPadding: EdgeInsets.zero,
@@ -94,7 +117,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                       itemBuilder: (context, index) {
                         return CheckboxListTile(
                           activeColor: appPrimaryColor,
-                          value: _evaluation.goodCheckList[index],
+                          value: _c.goodCheckList[index],
                           controlAffinity: ListTileControlAffinity.leading,
                           onChanged: (value) => null,
                           contentPadding: EdgeInsets.zero,
@@ -126,9 +149,9 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                   ),
                 ),
                 child: Text(
-                  _review.myReviewContent.value == ''
+                  _c.myReviewContent.value == ''
                       ? '(후기 없음)'
-                      : _review.myReviewContent.value,
+                      : _c.myReviewContent.value,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               )

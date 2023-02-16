@@ -6,10 +6,7 @@ class EvaluationController extends GetxController {
       FirebaseFirestore.instance.collection('evaluation');
   final NtfController _ntf = Get.put(NtfController());
 
-  var goodCheckList = [].obs;
-  var badCheckList = [].obs;
-  // 내가 보낸 후기가 매너 후기인지? 비매너 후기 인지? 판단하게 해줄 bool
-  RxBool isGood = false.obs;
+
   // 매너 평가 항목들을 순서대로 담은 리스트 선언
   RxList kindManner = [].obs;
   RxList goodAppointment = [].obs;
@@ -35,10 +32,6 @@ class EvaluationController extends GetxController {
   RxList uncomfortable = [].obs;
   RxList privateMeeting = [].obs;
 
-  // 내가 받은 매너 평가 리스트
-  RxList<int> goodEvaluationList = <int>[].obs;
-  // 내가 받은 비매너 평가 리스트
-  RxList<int> badEvaluationList = <int>[].obs;
   // 보낸 매너평가가 있는지 여부
   RxBool isExistEvaluation = false.obs;
 
@@ -176,79 +169,6 @@ class EvaluationController extends GetxController {
         badEvaluationList.where((e) => e.uncomfortable == true).toList();
     privateMeeting.value =
         badEvaluationList.where((e) => e.privateMeeting == true).toList();
-  }
-
-  // 내가 보낸 매너평가 받기
-  Future getMySentEvaluation(uid, chatRoomId) async {
-    GoodEvaluationModel? goodEvaluation;
-    BadEvaluationModel? badEvaluation;
-    final goodRef = await _evaluationDB
-        .doc(uid)
-        .collection('goodEvaluation')
-        .doc(chatRoomId)
-        .get();
-    final badRef = await _evaluationDB
-        .doc(uid)
-        .collection('badEvaluation')
-        .doc(chatRoomId)
-        .get();
-
-    // 매너, 비매너평가 구분
-    if (goodRef.exists) {
-      // 매너 평가인 경우
-      isGood.value = true;
-      // 서버에서 매너평가에 대한 데이터 받기
-      await _evaluationDB
-          .doc(uid)
-          .collection('goodEvaluation')
-          .doc(chatRoomId)
-          .get()
-          .then(
-        (value) {
-          goodEvaluation = GoodEvaluationModel.fromDocumentSnapshot(value);
-        },
-      );
-      // 받은 데이터를 세분화된 9개의 항목으로 분류
-      goodCheckList.add(goodEvaluation!.kindManner);
-      goodCheckList.add(goodEvaluation!.goodAppointment);
-      goodCheckList.add(goodEvaluation!.fastAnswer);
-      goodCheckList.add(goodEvaluation!.strongMental);
-      goodCheckList.add(goodEvaluation!.goodGameSkill);
-      goodCheckList.add(goodEvaluation!.softMannerTalk);
-      goodCheckList.add(goodEvaluation!.comfortable);
-      goodCheckList.add(goodEvaluation!.goodCommunication);
-      goodCheckList.add(goodEvaluation!.hardGame);
-      print(goodCheckList);
-    } else if (badRef.exists) {
-      // 비매너 평가인 경우
-      isGood.value = false;
-      // 서버에서 비매너평가 데이터 받기
-      await _evaluationDB
-          .doc(uid)
-          .collection('badEvaluation')
-          .doc(chatRoomId)
-          .get()
-          .then(
-        (value) {
-          badEvaluation = BadEvaluationModel.fromDocumentSnapshot(value);
-        },
-      );
-      // 받은 데이터를 세분화된 12개의 항목으로 분류
-      badCheckList.add(badEvaluation!.badManner);
-      badCheckList.add(badEvaluation!.badAppointment);
-      badCheckList.add(badEvaluation!.slowAnswer);
-      badCheckList.add(badEvaluation!.weakMental);
-      badCheckList.add(badEvaluation!.badGameSkill);
-      badCheckList.add(badEvaluation!.troll);
-      badCheckList.add(badEvaluation!.abuseWord);
-      badCheckList.add(badEvaluation!.sexualWord);
-      badCheckList.add(badEvaluation!.shortTalk);
-      badCheckList.add(badEvaluation!.noCommunication);
-      badCheckList.add(badEvaluation!.uncomfortable);
-      badCheckList.add(badEvaluation!.privateMeeting);
-      print(badCheckList);
-    } else
-      null;
   }
 
   // 내가 이미 보낸 매너평가가 있는지 확인
