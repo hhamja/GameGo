@@ -142,6 +142,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             // 시간 설정 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   Jiffy(_time).format('a hh시 mm분'),
@@ -149,6 +150,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ),
                 Container(
                   width: 20.w,
+                  height: 5.h,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.all(
@@ -167,6 +169,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                               AppSpaceData.screenPadding,
                             ),
                             child: TimePickerSpinner(
+                              time: _time,
                               alignment: Alignment.center,
                               is24HourMode: false,
                               normalTextStyle: TextStyle(
@@ -254,7 +257,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             );
             Get.dialog(CustomBigDialog(
               '약속 설정',
-              '${Jiffy(_timeStamp.toDate()).format('MM월 dd일 · a hh시 MM분')}',
+              '${Jiffy(_timeStamp.toDate()).format('MM월 dd일 · a hh시 mm분')}',
               '취소',
               '완료',
               () => Get.back(),
