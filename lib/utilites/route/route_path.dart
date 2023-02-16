@@ -36,31 +36,16 @@ abstract class Paths {
 
   // MyInfoPage
   static const My = '/my';
-  static const FAQ = '/faq';
-  static const Feedback = '/feedback';
-  static const AppNoticeList = '/noticelist';
-  static const NoticeDetail = '/notice_detail';
   static const MannerLevel = '/mannerLevel';
-  static const ReceivedReview = '/receivedreview';
   static const ReceivedMannerEvaluation = '/receivedmannerevaluation';
   static const MyPostList = '/mypostlist';
-  static const ViewReceivedReviews = '/viewreceivedreviews';
-  static const ViewSentReviews = '/viewsentreviews';
   static const ProfileEdit = '/profileedit';
   static const Favorite = '/favorite';
 
   // SETTING
   static const Setting = '/setting';
-  static const Alram = '/alram';
   static const SignOut = '/signout';
   static const LogOutDialog = '/logoutdialog';
-  static const Account = '/account';
-  static const BlockUser = '/blockuser';
-  static const FavoriteUser = '/favoriteuser';
-  static const UnexposeUser = '/unexposeuser';
-  static const EmailEnroll = '/emailenroll';
-  static const EditPhone = '/editphone';
-  static const SelfAuthentication = '/selfauthentication';
 
   // SPLASH
   static const Splash = '/splash';

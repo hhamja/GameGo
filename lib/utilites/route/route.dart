@@ -104,22 +104,7 @@ class AppRoutes {
       name: Paths.My,
       page: () => MyInfoPage(),
     ),
-    GetPage(
-      name: Paths.FAQ,
-      page: () => FAQPage(),
-    ),
-    GetPage(
-      name: Paths.Feedback,
-      page: () => FeedbackPage(),
-    ),
-    GetPage(
-      name: Paths.AppNoticeList,
-      page: () => AppNoticeListPage(),
-    ),
-    GetPage(
-      name: Paths.NoticeDetail,
-      page: () => NoticeDetailPage(),
-    ),
+
     GetPage(
       name: Paths.ReceivedMannerEvaluation,
       page: () => ReceivedMannerEvaluationPage(),
@@ -128,14 +113,7 @@ class AppRoutes {
       name: Paths.MyPostList,
       page: () => MyPostListPage(),
     ),
-    GetPage(
-      name: Paths.ViewReceivedReviews,
-      page: () => ViewReceivedReviews(),
-    ),
-    GetPage(
-      name: Paths.ViewSentReviews,
-      page: () => ViewSentReviews(),
-    ),
+
     GetPage(
       name: Paths.ProfileEdit,
       page: () => EditMyProfilePage(),
@@ -159,35 +137,6 @@ class AppRoutes {
       name: Paths.LogOutDialog,
       page: () => LogOutDialog(),
     ),
-    GetPage(
-      name: Paths.Account,
-      page: () => AccountManagementPage(),
-    ),
-    GetPage(
-      name: Paths.BlockUser,
-      page: () => BlockUserManagement(),
-    ),
-    GetPage(
-      name: Paths.FavoriteUser,
-      page: () => FavoriteUserManagementPage(),
-    ),
-    GetPage(
-      name: Paths.UnexposeUser,
-      page: () => UnexposeUserManagementPage(),
-    ),
-    GetPage(
-      name: Paths.EmailEnroll,
-      page: () => EmailEnrollPage(),
-    ),
-    GetPage(
-      name: Paths.EditPhone,
-      page: () => PhoneNumberEditPage(),
-    ),
-    GetPage(
-      name: Paths.SelfAuthentication,
-      page: () => SelfAuthenticationPage(),
-    ),
-
     // SPLASH
     GetPage(
       name: Paths.Splash,
