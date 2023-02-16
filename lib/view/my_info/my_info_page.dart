@@ -1,27 +1,16 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class MyInfoPage extends StatefulWidget {
+class MyInfoPage extends StatelessWidget {
   MyInfoPage({Key? key}) : super(key: key);
 
-  @override
-  State<MyInfoPage> createState() => _MyInfoPageState();
-}
-
-class _MyInfoPageState extends State<MyInfoPage> {
-  final UserController _user = Get.put(UserController());
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  var _createdAt;
-  @override
-  void initState() {
-    super.initState();
-    _user.getUserInfoByUid(_auth.currentUser!.uid);
-    _createdAt =
-        Jiffy(_user.userInfo.value.createdAt.toDate()).format('yy. MM. dd');
-  }
+  final MyProfileController _c = Get.put(MyProfileController());
 
   @override
   Widget build(BuildContext context) {
-    _user.getUserInfoByUid(_auth.currentUser!.uid);
+    // 가입 날짜
+    final String _createdAt =
+        Jiffy(_c.userInfo.createdAt.toDate()).format('yy. MM. dd');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -40,8 +29,40 @@ class _MyInfoPageState extends State<MyInfoPage> {
           ),
         ],
       ),
-      body: Obx(
-        () => SettingsList(
+      body: _c.obx(
+        onEmpty: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '내 정보를 불러올 수 없습니다.',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              Text(
+                '지속적으로 발생한다면 고객센터로 문의해주세요.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        onError: (_) => Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '내 정보를 불러올 수 없습니다.',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              Text(
+                '지속적으로 발생한다면 고객센터로 문의해주세요.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        (state) => SettingsList(
           lightTheme: SettingsThemeData(
             settingsListBackground: appWhiteColor,
           ),
@@ -56,11 +77,11 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   leading: CircleAvatar(
                     radius: 25.sp,
                     backgroundImage: NetworkImage(
-                      _user.userInfo.value.profileUrl,
+                      _c.userInfo.profileUrl,
                     ),
                   ),
                   title: Text(
-                    _user.userInfo.value.userName,
+                    _c.userInfo.userName,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   description: Text(
@@ -75,11 +96,11 @@ class _MyInfoPageState extends State<MyInfoPage> {
                 SettingsTile(
                   title: CustomMannerLevel(
                     // level
-                    '${_user.userInfo.value.mannerLevel ~/ 100}',
+                    '${_c.userInfo.mannerLevel ~/ 100}',
 
                     true,
                     // exp
-                    '${_user.userInfo.value.mannerLevel % 100}',
+                    '${_c.userInfo.mannerLevel % 100}',
                   ),
                 ),
               ],
