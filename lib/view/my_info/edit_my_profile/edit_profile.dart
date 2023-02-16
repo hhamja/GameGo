@@ -201,7 +201,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
             final text = _nameText.text.trim();
             if (text.length >= 2 && text != _auth.currentUser!.displayName) {
               // 닉네임 2자 이상 + 닉네임을 수정 입력한 경우?
-              _c.updateUserName(text);
+
               if (_photoFile != null) {
                 // 프로필을 변경한 경우
                 // 선택한 갤러리의 사진을 storage에 올리고 url을 profileImageUrl에 받기
@@ -211,27 +211,32 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
               } else if (profileImageUrl != _auth.currentUser!.photoURL!) {
                 // 기본프로필로 선택하면 ? _photoFile는 null도 된다
                 _c.updateUserProfile(profileImageUrl);
-              } else
+              } else {
                 null;
+              }
+              // 닉네임 수정 -> 유저정보 업데이트 -> Get.back()
+              _c.updateUserName(text);
             } else {
               // 닉네임을 변경하지 않은 경우
               if (_photoFile != null) {
                 // 프로필을 변경한 경우
                 // 선택한 갤러리의 사진을 storage에 올리고 url을 profileImageUrl에 받기
                 await uploadFile();
-                Get.back();
                 // 선택한 사진으로 프로필 업데이트
                 _c.updateUserProfile(profileImageUrl);
+                // 유저정보 업데이트 후 페이지 닫기
+                await _c.getUserInfoByUid(_auth.currentUser!.uid);
+                Get.back();
               } else if (profileImageUrl != _auth.currentUser!.photoURL!) {
                 // 기본프로필로 변경한 경우
                 // 기본프로필로 선택하면 ? _photoFile는 null도 된다
                 _c.updateUserProfile(profileImageUrl);
+                // 유저정보 업데이트 후 페이지 닫기
+                await _c.getUserInfoByUid(_auth.currentUser!.uid);
                 Get.back();
               } else
                 null;
             }
-            // 내정보 새로고침
-            await _c.getUserInfoByUid(_auth.currentUser!.uid);
           },
         ),
       ),

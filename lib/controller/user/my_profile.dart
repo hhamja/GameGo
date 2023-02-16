@@ -174,7 +174,11 @@ class MyProfileController extends GetxController
                   },
                 ),
               );
-          Get.back();
+          // 내정보 새로고침
+          getUserInfoByUid(_auth.currentUser!.uid).then(
+            // 내정보 페이지로 이동
+            (_) => Get.back(),
+          );
         } else {
           // 중복 닉네임인 경우
           // 유저에게 다이얼로그로 알림
