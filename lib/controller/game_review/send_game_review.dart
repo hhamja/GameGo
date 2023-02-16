@@ -1,6 +1,6 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
-class GameReviewController extends GetxController {
+class SendGameReviewController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final MannerLevelController _level = Get.put(MannerLevelController());
   final CollectionReference _reportDB =
@@ -10,8 +10,6 @@ class GameReviewController extends GetxController {
 
   // 채팅방에서 확인하는 내가 작성해서 보낸 매너리뷰
   RxString myReviewContent = ''.obs;
-  // 게임후기 리스트
-  RxList<GameReviewModel> gameReviewList = <GameReviewModel>[].obs;
 
   // 선택사항인 게임후기 작성시, gameReview에 보내기
   // 게임후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기
@@ -54,21 +52,6 @@ class GameReviewController extends GetxController {
     );
     // 비매너 게임 후기 받는 유저의 매너Lv -
     _level.minusMannerLevel(model.idTo);
-  }
-
-  // 내가 받은 게임후기 리스트로 받기
-  Future getGameReviewList(uid) async {
-    return _gameReviewDB
-        .where('idTo', isEqualTo: _auth.currentUser!.uid)
-        .orderBy('createdAt', descending: true) // 최신일 수록 위로 오게
-        .get()
-        .then(
-          (snapshot) => gameReviewList.assignAll(
-            snapshot.docs.map(
-              (e) => GameReviewModel.fromDocumentSnapshot(e),
-            ),
-          ),
-        );
   }
 
   // 내가 보낸 게임후기 받기

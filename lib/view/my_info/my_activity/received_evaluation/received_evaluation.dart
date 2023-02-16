@@ -15,11 +15,11 @@ class _ReceivedMannerEvaluationPageState
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
-    super.initState();
     //내가 받은 매너 평가 리스트 받기
     _c.getGoodEvaluationList(_auth.currentUser!.uid);
     //내가 바든 비매너 평가 리스트 받기
     _c.getBadEvaluationList(_auth.currentUser!.uid);
+    super.initState();
   }
 
   @override

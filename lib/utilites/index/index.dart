@@ -33,6 +33,7 @@ export 'package:jiffy/jiffy.dart';
 export 'package:grouped_list/grouped_list.dart';
 
 // Views
+export '../../../../controller/game_review/read_game_review.dart';
 export '../../view/chat/chat_screen/no_user_chat_screen.dart';
 export '../../view/user_profile/no_user_profile.dart';
 export '../../view/splashPage/permission_item.dart';
@@ -108,7 +109,7 @@ export '../../controller/post/home_post_list.dart';
 export '../../../controller/post/edit_post.dart';
 export '../../../controller/post/delete_post.dart';
 export '../../controller/post/detail_post.dart';
-export '../../../controller/game_review/game_review.dart';
+export '../../controller/game_review/send_game_review.dart';
 export '../../../controller/notification/notification.dart';
 export '../../../controller/report/report.dart';
 export '../../../controller/feedback/feedback.dart';

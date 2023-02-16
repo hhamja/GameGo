@@ -9,7 +9,7 @@ class SendReviewPage extends StatefulWidget {
 
 class _SendReviewPageState extends State<SendReviewPage> {
   final EvaluationController _evaluation = Get.find<EvaluationController>();
-  final GameReviewController _review = Get.put(GameReviewController());
+  final SendGameReviewController _review = Get.put(SendGameReviewController());
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final ScrollController _scrollC = ScrollController();
   final TextEditingController _reviewText = TextEditingController();
