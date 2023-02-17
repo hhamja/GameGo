@@ -2,7 +2,9 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class CreatePostController extends GetxController {
   final CollectionReference _postDB =
-      FirebaseFirestore.instance.collection('post');
+      FirebaseFirestore.instance.collection('post');  
+  final HomePostController _ = Get.put(HomePostController());
+
   // 포지션 드랍다운 버튼 보여주는 bool값
   bool showPosition = false;
   // 티어 드랍다운 버튼 보여주는 bool값
@@ -63,5 +65,19 @@ class CreatePostController extends GetxController {
       },
     );
     _batch.commit();
+    if (_.selectedTearValue != '티어') {
+      // 티어 선택한 경우( = 3개 다 선택한 경우)
+      await _.filterTear(
+          _.selectedModeValue, _.selectedPositionValue, _.selectedTearValue);
+    } else if (_.selectedPositionValue != '포지션') {
+      // 티어 선택 X, 모드와 포지션을 선택한 경우
+      await _.filterPosition(_.selectedModeValue, _.selectedPositionValue);
+    } else if (_.selectedModeValue != '게임모드') {
+      // 티어, 포지션 선택 X, 게임모드만 선택한 경우
+      await _.filterGamemode(_.selectedModeValue);
+    } else {
+      // 티어, 포지션, 게임모드 아무것도 선택하지 않은 경우
+      await _.readPostData();
+    }
   }
 }
