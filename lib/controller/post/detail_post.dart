@@ -101,7 +101,7 @@ class DetailPostController extends GetxController
           'like': FieldValue.increment(-1),
         },
       );
-      _batch.commit();
+      await _batch.commit();
     } else {
       // 관심게시글 아닌 경우
       print('이 게시글은 나의 관심게시글이 아님');
@@ -128,7 +128,7 @@ class DetailPostController extends GetxController
           'like': FieldValue.increment(1),
         },
       );
-      _batch.commit();
+      await _batch.commit();
     }
     // 관심버튼 상태를 나타내는 bool변수 토글화
     isFavorite.value = !isFavorite.value;

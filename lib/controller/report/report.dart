@@ -23,6 +23,6 @@ class ReportController extends GetxController {
         'createdAt': model.createdAt,
       },
     );
-    _batch.commit();
+    await _batch.commit();
   }
 }

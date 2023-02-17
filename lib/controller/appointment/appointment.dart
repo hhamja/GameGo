@@ -51,7 +51,7 @@ class AppointmentController extends GetxController {
     );
     // 약속설정 notification에 추가
     _ntf.addNotification(ntfModel, _batch);
-    _batch.commit();
+    await _batch.commit();
   }
 
   // 약속시간 받기 + 약속설정 여부 bool변수에 담기

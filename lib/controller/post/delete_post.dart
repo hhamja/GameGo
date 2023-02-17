@@ -17,7 +17,7 @@ class DeletePostController extends GetxController {
         'isDeleted': true,
       },
     );
-    _batch.commit();
+    await _batch.commit();
     if (_.selectedTearValue != '티어') {
       // 티어 선택한 경우( = 3개 다 선택한 경우)
       await _.filterTear(

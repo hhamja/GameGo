@@ -34,7 +34,7 @@ class SendGameReviewController extends GetxController {
     );
     // 매너 게임 후기 받는 유저의 매너Lv +
     _level.plusMannerLevel(uid, _batch);
-    _batch.commit();
+    await _batch.commit();
   }
 
   // 비매너 게임 후기를 작성한 경우
@@ -56,7 +56,7 @@ class SendGameReviewController extends GetxController {
     );
     // 비매너 게임 후기 받는 유저의 매너Lv -
     _level.minusMannerLevel(model.idTo, _batch);
-    _batch.commit();
+    await _batch.commit();
   }
 
   // 내가 보낸 게임후기 받기

@@ -64,7 +64,7 @@ class EvaluationController extends GetxController {
     // 매너평가 받는 유저의 매너Lv +
     _level.plusMannerLevel(uid, _batch);
 
-    _batch.commit();
+    await _batch.commit();
   }
 
   // 비매너 평가 추가
@@ -97,7 +97,7 @@ class EvaluationController extends GetxController {
     );
     // 비매너 평가 받은 유저의 매너Lv -
     _level.minusMannerLevel(uid, _batch);
-    _batch.commit();
+    await _batch.commit();
   }
 
   // 매너 평가 리스트 받기

@@ -39,12 +39,25 @@ class MyProfileController extends GetxController
   // 유저가 닉네임 변경
   Future updateUserName(userName) async {
     final WriteBatch _batch = FirebaseFirestore.instance.batch();
-
     // 탈퇴 플래그 처리한 유저 닉네임도 고려할 것이므로 플래그 쿼리 X
     final snapshot = await _userDB.where('userName', isEqualTo: userName).get();
     // 닉네임 중복확인
     if (snapshot.docs.isEmpty) {
       // 중복 닉네임 없는 경우
+      final QuerySnapshot chatSnapshot = await _chatDB
+          .where('members', arrayContains: _auth.currentUser!.uid)
+          .get();
+      final QuerySnapshot postSnapshot = await _postDB
+          .where('uid', isEqualTo: _auth.currentUser!.uid)
+          .where('isDeleted', isEqualTo: false)
+          .get();
+      final QuerySnapshot reviewSnapshot = await _reviewDB
+          .where('idFrom', isEqualTo: _auth.currentUser!.uid)
+          .get();
+      final QuerySnapshot ntfSnapshot = await _firestore
+          .collection('notification')
+          .where('idFrom', isEqualTo: _auth.currentUser!.uid)
+          .get();
       // 유저 DB에서 닉네임 수정
       _batch.update(
         _userDB.doc(_auth.currentUser!.uid),
@@ -54,103 +67,57 @@ class MyProfileController extends GetxController
         },
       );
       // 채팅에서 닉네임 수정
-      _chatDB
-          // 내가 맴버로 있는 채팅방 쿼리
-          .where('members', arrayContains: _auth.currentUser!.uid)
-          .get()
-          .then(
-        (value) {
-          value.docs.forEach(
-            (e) {
-              var snapshot = e.data() as Map<String, dynamic>;
-              // 내가 postingUer로 참여한 채팅방인지 여부를 나타내는 변수
-              bool isMyPost = snapshot['postingUid'] == _auth.currentUser!.uid;
-              String chatRoomId = snapshot['chatRoomId'];
-              // 내가 postingUser인지 contactUser인지 확인
-              if (isMyPost) {
-                // postingUesr인 경우
-                _batch.update(
-                  _chatDB.doc(chatRoomId),
-                  {'postingUserName': userName},
-                );
-              } else {
-                // contactUser인 경우
-                _batch.update(
-                  _chatDB.doc(chatRoomId),
-                  {'contactUserName': userName},
-                );
-              }
-            },
-          );
+      chatSnapshot.docs.forEach(
+        (doc) {
+          var docData = doc.data() as Map<String, dynamic>;
+          // 내가 postingUer로 참여한 채팅방인지 여부를 나타내는 변수
+          bool isMyPost = docData['postingUid'] == _auth.currentUser!.uid;
+          // 내가 postingUser인지 contactUser인지 확인
+          if (isMyPost) {
+            // postingUesr인 경우
+            _batch.update(
+              doc.reference,
+              {'postingUserName': userName},
+            );
+          } else {
+            // contactUser인 경우
+            _batch.update(
+              doc.reference,
+              {'contactUserName': userName},
+            );
+          }
         },
       );
       // 게시글에서 닉네임 수정
-      _postDB
-          .where('uid', isEqualTo: _auth.currentUser!.uid)
-          // 삭제하지 않은 나의 게시글만 쿼리
-          .where('isDeleted', isEqualTo: false)
-          .get()
-          .then(
-        (value) {
-          value.docs.forEach(
-            (e) {
-              var snapshot = e.data() as Map<String, dynamic>;
-              final String postId = snapshot['postId'];
-              // 게시글의 userName 수정
-              _batch.update(
-                _postDB.doc(postId),
-                {
-                  'userName': userName,
-                },
-              );
-            },
-          );
-        },
+      postSnapshot.docs.forEach(
+        (doc) => _batch.update(
+          doc.reference,
+          {
+            'userName': userName,
+          },
+        ),
       );
       // 게임후기의 닉네임 수정
-      _reviewDB
-          // 내가 보낸 게임후기만 쿼리
-          .where('idFrom', isEqualTo: _auth.currentUser!.uid)
-          .get()
-          .then(
-        (value) {
-          value.docs.forEach(
-            (e) {
-              final String reviewId = e.reference.id;
-              // 게임후기의 userName 수정
-              _batch.update(
-                _reviewDB.doc(reviewId),
-                {
-                  'userName': userName,
-                },
-              );
-            },
-          );
-        },
+      reviewSnapshot.docs.forEach(
+        // 게임후기의 userName 수정
+        (doc) => _batch.update(
+          doc.reference,
+          {
+            'userName': userName,
+          },
+        ),
       );
-      // 알림의 닉네임 수정
-      _firestore
-          .collection('notification')
-          // 내가 보낸 알림만 쿼리
-          .where('idFrom', isEqualTo: _auth.currentUser!.uid)
-          .get()
-          .then(
-            (value) => value.docs.forEach(
-              (e) {
-                final ntfId = e.reference.id;
-                // 알림의 userName 수정
-                _batch.update(
-                  _firestore.collection('notification').doc(ntfId),
-                  {
-                    'userName': userName,
-                  },
-                );
-              },
-            ),
-          );
+      ntfSnapshot.docs.forEach(
+        (doc) => _batch.update(
+          doc.reference,
+          {
+            'userName': userName,
+          },
+        ),
+      );
       // Auth 정보에서 닉네임 수정
       _auth.currentUser!.updateDisplayName(userName);
-      _batch.commit();
+      await _batch.commit();
       // 내정보 새로고침
       getUserInfoByUid(_auth.currentUser!.uid).then(
         // 내정보 페이지로 이동
@@ -301,6 +268,16 @@ class MyProfileController extends GetxController
   // 나의 프로필을 변경하기
   Future updateUserProfile(profileUrl) async {
     final WriteBatch _batch = FirebaseFirestore.instance.batch();
+    final QuerySnapshot chatSnapshot = await _chatDB
+        .where('members', arrayContains: _auth.currentUser!.uid)
+        .get();
+    final QuerySnapshot postSnapshot = await _postDB
+        .where('uid', isEqualTo: _auth.currentUser!.uid)
+        .where('isDeleted', isEqualTo: false)
+        .get();
+    final QuerySnapshot reviewSnapshot = await _reviewDB
+        .where('idFrom', isEqualTo: _auth.currentUser!.uid)
+        .get();
     // 유저정보에서 프로필 수정
     _batch.update(
       _userDB.doc(_auth.currentUser!.uid),
@@ -309,78 +286,50 @@ class MyProfileController extends GetxController
         'updatedAt': Timestamp.now(),
       },
     );
-    // 채팅에서 프로필 수정
-    _chatDB.where('members', arrayContains: _auth.currentUser!.uid).get().then(
-      // 내가 맴버로 있는 채팅방만 쿼리
-      (value) {
-        value.docs.forEach(
-          (e) {
-            var snapshot = e.data() as Map<String, dynamic>;
-            bool isMyPost = snapshot['postingUid'] == _auth.currentUser!.uid;
-            final String chatRoomId = snapshot['chatRoomId'];
-            // 내가 postingUser인지 contactUser인지 확인
-            if (isMyPost) {
-              // postingUesr인 경우
-              _batch.update(
-                _chatDB.doc(chatRoomId),
-                {'postingUserProfileUrl': profileUrl},
-              );
-            } else {
-              // contactUser인 경우
-              _batch.update(
-                _chatDB.doc(chatRoomId),
-                {'contactUserProfileUrl': profileUrl},
-              );
-            }
-          },
-        );
+    // 채팅에서 닉네임 수정
+    chatSnapshot.docs.forEach(
+      (doc) {
+        var docData = doc.data() as Map<String, dynamic>;
+        // 내가 postingUer로 참여한 채팅방인지 여부를 나타내는 변수
+        bool isMyPost = docData['postingUid'] == _auth.currentUser!.uid;
+        // 내가 postingUser인지 contactUser인지 확인
+        if (isMyPost) {
+          // postingUesr인 경우
+          _batch.update(
+            doc.reference,
+            {'postingUserProfileUrl': profileUrl},
+          );
+        } else {
+          // contactUser인 경우
+          _batch.update(
+            doc.reference,
+            {'contactUserProfileUrl': profileUrl},
+          );
+        }
       },
     );
-
-    // 게시글에서 프로필 수정
-    _postDB
-        // 삭제하지 않은 나의 게시글만 쿼리
-        .where('isDeleted', isEqualTo: false)
-        .where('uid', isEqualTo: _auth.currentUser!.uid)
-        .get()
-        .then(
-      (value) {
-        value.docs.forEach(
-          (e) {
-            var snapshot = e.data() as Map<String, dynamic>;
-            final String postId = snapshot['postId'];
-            // profileUrl 수정
-            _batch.update(
-              _postDB.doc(postId),
-              {
-                'profileUrl': profileUrl,
-              },
-            );
-          },
-        );
-      },
+    // 게시글에서 닉네임 수정
+    postSnapshot.docs.forEach(
+      (doc) => _batch.update(
+        doc.reference,
+        {
+          'profileUrl': profileUrl,
+        },
+      ),
     );
-    // 게임후기의 프로필 수정
-    _reviewDB.where('idFrom', isEqualTo: _auth.currentUser!.uid).get().then(
-      // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
-      (value) {
-        value.docs.forEach(
-          (e) {
-            final String reviewId = e.reference.id;
-            // 게임후기의 userName 수정
-            _batch.update(
-              _reviewDB.doc(reviewId),
-              {
-                'profileUrl': profileUrl,
-              },
-            );
-          },
-        );
-      },
+    // 게임후기의 닉네임 수정
+    reviewSnapshot.docs.forEach(
+      // 게임후기의 userName 수정
+      (doc) => _batch.update(
+        doc.reference,
+        {
+          'profileUrl': profileUrl,
+        },
+      ),
     );
     // Auth의 프로필 수정
     _auth.currentUser!.updatePhotoURL(profileUrl);
-    _batch.commit();
+    await _batch.commit();
   }
 
   // uid를 통해 특정 유저의 정보 받기

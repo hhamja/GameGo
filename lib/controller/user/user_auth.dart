@@ -135,72 +135,47 @@ class UserController extends GetxController {
     try {
       final credential = await PhoneAuthProvider.credential(
           verificationId: verificationID, smsCode: smsCode);
-
-      // 게시글 플래그
-      _postDB
+      final QuerySnapshot postSnapshot = await _postDB
           .where('uid', isEqualTo: _auth.currentUser!.uid)
-          // 삭제하지 않은 나의 게시글 쿼리
           .where('isDeleted', isEqualTo: false)
           .where('isHidden', isEqualTo: false)
-          .get()
-          .then(
-        (value) {
-          value.docs.forEach(
-            (e) {
-              var snapshot = e.data() as Map<String, dynamic>;
-              final String postId = snapshot['postId'];
-              // 게시글 플래그 수정
-              _batch.update(
-                _postDB.doc(postId),
-                {'isHidden': true},
-              );
-            },
-          );
-        },
-      );
-
-      // 채팅 플래그
-      _chatDB
+          .get();
+      final QuerySnapshot chatSnapshot = await _chatDB
           .where('members', arrayContains: _auth.currentUser!.uid)
-          // 채팅방 나가기 플래그가 false로 되어있다는 쿼리 추가하기 > 나중에
-          // 나가지 않고 활성화 된 나의 채팅방 쿼리
           .where('isActive', isEqualTo: true)
-          .get()
-          .then(
-        (value) {
-          value.docs.forEach(
-            (e) {
-              var snapshot = e.data() as Map<String, dynamic>;
-              final String chatRoomId = snapshot['chatRoomId'];
-              // 탈퇴유저의 채팅방 플래그 처리
-              _batch.update(
-                _chatDB.doc(chatRoomId),
-                {'isActive': false},
-              );
-            },
+          .get();
+      final QuerySnapshot reviewSnapshot = await _reviewDB
+          .where('idFrom', isEqualTo: _auth.currentUser!.uid)
+          .get();
+      // 게시글 플래그 처리
+      postSnapshot.docs.forEach(
+        (doc) {
+          _batch.update(
+            doc.reference,
+            {'isHidden': true},
           );
         },
-        onError: (e) => print(e),
+      );
+      // 탈퇴유저의 채팅방 플래그 처리
+      chatSnapshot.docs.forEach(
+        (doc) {
+          _batch.update(
+            doc.reference,
+            {'isActive': false},
+          );
+        },
+      );
+      // 게임후기의 프로필 기본 프로필로 수정
+      reviewSnapshot.docs.forEach(
+        (doc) {
+          _batch.update(
+            doc.reference,
+            {'profileUrl': DefaultProfle.url},
+          );
+        },
       );
 
-      // 게임후기 기본 프로필로 수정
-      _reviewDB.where('idFrom', isEqualTo: _auth.currentUser!.uid).get().then(
-        // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
-        (value) {
-          value.docs.forEach(
-            (e) {
-              final String reviewId = e.reference.id;
-              // 게임후기의 프로필 수정
-              _batch.update(
-                _reviewDB.doc(reviewId),
-                {'profileUrl': DefaultProfle.url},
-              );
-            },
-          );
-        },
-      );
-      // 유저정보 처리
-      // 탈퇴 플래그 true, 탈퇴 시간 업데이트
+      // 유저정보 탈퇴 플래그, 탈퇴 시간 업데이트
       _batch.update(
         _userDB.doc(_auth.currentUser!.uid),
         {
@@ -208,7 +183,7 @@ class UserController extends GetxController {
           'withdrawnAt': Timestamp.now(),
         },
       );
-      _batch.commit();
+      await _batch.commit();
       // // Storage에서 해당 유저의 프로필 삭제
       // FirebaseStorage.instance.ref().child(CurrentUser.uid).delete();
       // 사용자 재인증

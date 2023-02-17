@@ -66,7 +66,7 @@ class ChatController extends GetxController
           'updatedAt': chatRoomModel.updatedAt,
         },
       );
-    _batch.commit();
+    await _batch.commit();
   }
 
   // 새로운 채팅 입력 시 서버에 추가
@@ -86,14 +86,13 @@ class ChatController extends GetxController
       },
     );
     // 상대 uid의 unReadCount +1
-    _batch
-      ..update(
-        _chatDB.doc(chatRoomId),
-        {
-          'unReadCount.${messageModel.idTo}': FieldValue.increment(1),
-        },
-      );
-    _batch.commit();
+    _batch.update(
+      _chatDB.doc(chatRoomId),
+      {
+        'unReadCount.${messageModel.idTo}': FieldValue.increment(1),
+      },
+    );
+    await _batch.commit();
   }
 
   // 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트
@@ -120,7 +119,7 @@ class ChatController extends GetxController
           'unReadCount.${_auth.currentUser!.uid}': 0,
         },
       );
-      _batch.commit();
+      await _batch.commit();
     } else {
       null;
     }

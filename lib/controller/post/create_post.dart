@@ -2,7 +2,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 
 class CreatePostController extends GetxController {
   final CollectionReference _postDB =
-      FirebaseFirestore.instance.collection('post');  
+      FirebaseFirestore.instance.collection('post');
   final HomePostController _ = Get.put(HomePostController());
 
   // 포지션 드랍다운 버튼 보여주는 bool값
@@ -64,7 +64,7 @@ class CreatePostController extends GetxController {
         'updatedAt': postModel.updatedAt,
       },
     );
-    _batch.commit();
+    await _batch.commit();
     if (_.selectedTearValue != '티어') {
       // 티어 선택한 경우( = 3개 다 선택한 경우)
       await _.filterTear(
