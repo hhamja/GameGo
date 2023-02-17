@@ -43,11 +43,13 @@ class ChatController extends GetxController
 
   // 새로운 채팅 입력 시 채팅방 생성하기
   Future createNewChatRoom(ChatRoomModel chatRoomModel) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     // 채팅방이 존재하지 않는다면? chat col에 채팅방 데이터 추가
-    final res = await _chatDB.doc(chatRoomModel.chatRoomId).get();
-    if (!res.exists)
-      // Chat(col) - 채팅방UID(Doc)
-      await _chatDB.doc(chatRoomModel.chatRoomId).set(
+    final chatRoomRes = await _chatDB.doc(chatRoomModel.chatRoomId).get();
+    if (!chatRoomRes.exists)
+      _batch.set(
+        _chatDB.doc(chatRoomModel.chatRoomId),
         {
           'chatRoomId': chatRoomModel.chatRoomId,
           'postId': chatRoomModel.postId,
@@ -64,12 +66,16 @@ class ChatController extends GetxController
           'updatedAt': chatRoomModel.updatedAt,
         },
       );
+    _batch.commit();
   }
 
   // 새로운 채팅 입력 시 서버에 추가
   Future sendNewMessege(MessageModel messageModel, chatRoomId) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     // 메시지 컬렉션에 추가
-    _chatDB.doc(chatRoomId).collection('message').add(
+    _batch.set(
+      _chatDB.doc(chatRoomId).collection('message').doc(),
       {
         'content': messageModel.content,
         'idFrom': messageModel.idFrom,
@@ -80,9 +86,60 @@ class ChatController extends GetxController
       },
     );
     // 상대 uid의 unReadCount +1
-    _chatDB.doc(chatRoomId).update(
+    _batch
+      ..update(
+        _chatDB.doc(chatRoomId),
+        {
+          'unReadCount.${messageModel.idTo}': FieldValue.increment(1),
+        },
+      );
+    _batch.commit();
+  }
+
+  // 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트
+  Future updateChatRoom(members, chatRoomId, lastContent, updatedAt) async {
+    return _chatDB.doc(chatRoomId).update(
       {
-        'unReadCount.${messageModel.idTo}': FieldValue.increment(1),
+        'members': members,
+        'lastContent': lastContent,
+        'updatedAt': updatedAt,
+      },
+    );
+  }
+
+  // 메시지페이지를 나갔을 때 나의 안읽은 메시지 수 0으로 업데이트
+  Future clearUnReadCount(chatRoomId) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
+    final chatRoomRef = await _chatDB.doc(chatRoomId).get();
+    if (chatRoomRef.exists) {
+      // 나의 안읽은메시지 수 0으로 업데이트
+      _batch.update(
+        _chatDB.doc(chatRoomId),
+        {
+          'unReadCount.${_auth.currentUser!.uid}': 0,
+        },
+      );
+      _batch.commit();
+    } else {
+      null;
+    }
+  }
+
+  //채팅페이지 들어가면, chattingWith 상대 uid로 업데이트
+  Future updateChattingWith(uid) async {
+    await _userDB.doc(_auth.currentUser!.uid).update(
+      {
+        'chattingWith': uid,
+      },
+    );
+  }
+
+  // 채팅페이지에서 나가면, chattingWith 빈값으로 업데이트
+  Future clearChattingWith() async {
+    await _userDB.doc(_auth.currentUser!.uid).update(
+      {
+        'chattingWith': null,
       },
     );
   }
@@ -111,38 +168,5 @@ class ChatController extends GetxController
         .map((snapshot) => snapshot.docs
             .map((e) => MessageModel.fromDocumentSnapshot(e))
             .toList());
-  }
-
-  // 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트
-  Future updateChatRoom(members, chatRoomId, lastContent, updatedAt) async {
-    return _chatDB.doc(chatRoomId).update(
-      {'members': members, 'lastContent': lastContent, 'updatedAt': updatedAt},
-    );
-  }
-
-  // 메시지페이지를 나갔을 때 나의 안읽은 메시지 수 0으로 업데이트
-  Future clearUnReadCount(chatRoomId) async {
-    final chatRoomRef = await _chatDB.doc(chatRoomId).get();
-    chatRoomRef.exists
-        ?
-        // 나의 안읽은메시지 수 0으로 업데이트
-        _chatDB.doc(chatRoomId).update({
-            'unReadCount.${_auth.currentUser!.uid}': 0,
-          })
-        : null;
-  }
-
-  //채팅페이지 들어가면, chattingWith 상대 uid로 업데이트
-  Future updateChattingWith(uid) async {
-    await _userDB.doc(_auth.currentUser!.uid).update(
-      {'chattingWith': uid},
-    );
-  }
-
-  // 채팅페이지에서 나가면, chattingWith 빈값으로 업데이트
-  Future clearChattingWith() async {
-    await _userDB.doc(_auth.currentUser!.uid).update(
-      {'chattingWith': null},
-    );
   }
 }

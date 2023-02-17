@@ -6,7 +6,6 @@ class EvaluationController extends GetxController {
       FirebaseFirestore.instance.collection('evaluation');
   final NtfController _ntf = Get.put(NtfController());
 
-
   // 매너 평가 항목들을 순서대로 담은 리스트 선언
   RxList kindManner = [].obs;
   RxList goodAppointment = [].obs;
@@ -38,8 +37,11 @@ class EvaluationController extends GetxController {
   // 매너 평가 보내기
   Future addGoodEvaluation(uid, chatRoomId, GoodEvaluationModel goodEvaluation,
       NotificationModel ntfModel) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     // evaluation / {받는uid} / goodEvaluation / { chatRoomId}에 저장
-    _evaluationDB.doc(uid).collection('goodEvaluation').doc(chatRoomId).set(
+    _batch.set(
+      _evaluationDB.doc(uid).collection('goodEvaluation').doc(chatRoomId),
       {
         'evaluationType': goodEvaluation.evaluationType,
         'idFrom': goodEvaluation.idFrom,
@@ -56,21 +58,24 @@ class EvaluationController extends GetxController {
         'createdAt': goodEvaluation.createdAt,
       },
     );
+
     // 푸시알림 위해 notifiaciton에 추가
-    _ntf.addNotification(ntfModel);
+    _ntf.addNotification(ntfModel, _batch);
     // 매너평가 받는 유저의 매너Lv +
-    _level.plusMannerLevel(uid);
+    _level.plusMannerLevel(uid, _batch);
+
+    _batch.commit();
   }
 
   // 비매너 평가 추가
   // 푸시알림 필요 X이므로 ntf는 추가 X
   Future addBadEvaluation(
-    uid,
-    chatRoomId,
-    BadEvaluationModel badEvaluation,
-  ) async {
+      uid, chatRoomId, BadEvaluationModel badEvaluation) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     // evaluation / {받는uid} / badEvaluation / {chatRoomId}에 저장
-    _evaluationDB.doc(uid).collection('badEvaluation').doc(chatRoomId).set(
+    _batch.set(
+      _evaluationDB.doc(uid).collection('badEvaluation').doc(chatRoomId),
       {
         'evaluationType': badEvaluation.evaluationType,
         'idFrom': badEvaluation.idFrom,
@@ -91,7 +96,8 @@ class EvaluationController extends GetxController {
       },
     );
     // 비매너 평가 받은 유저의 매너Lv -
-    _level.minusMannerLevel(uid);
+    _level.minusMannerLevel(uid, _batch);
+    _batch.commit();
   }
 
   // 매너 평가 리스트 받기

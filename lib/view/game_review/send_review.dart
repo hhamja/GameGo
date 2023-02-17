@@ -310,7 +310,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     createdAt: Timestamp.now(),
                   );
                   // 매너 평가 보내기
-                  await _evaluation.addGoodEvaluation(
+                  _evaluation.addGoodEvaluation(
                       uid, chatRoomId, _goodModel, _ntfModel);
                   // 선택사항인 후기 작성 시
                   if ((_reviewText.text.trim() != '') ||

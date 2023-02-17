@@ -15,12 +15,12 @@ class SendGameReviewController extends GetxController {
   // 게임후기를 채팅의 하위 컬렉션 'reivew'에 보내는 사람 UID로 문서 추가하기
   // 매너후기를 보낸 경우에만 보내기
   // 비매너 후기를 보낸 경우에는 신고로 겜고 팀에 보내지도록 하기
-  Future addMannerReview(
-    uid,
-    GameReviewModel GameReviewModel,
-  ) async {
+  Future addMannerReview(uid, GameReviewModel GameReviewModel) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     // 루트 컬렉션 'gameReview'에 저장
-    _gameReviewDB.add(
+    _batch.set(
+      _gameReviewDB.doc(),
       {
         'idFrom': GameReviewModel.idFrom,
         'idTo': GameReviewModel.idTo,
@@ -33,14 +33,18 @@ class SendGameReviewController extends GetxController {
       },
     );
     // 매너 게임 후기 받는 유저의 매너Lv +
-    _level.plusMannerLevel(uid);
+    _level.plusMannerLevel(uid, _batch);
+    _batch.commit();
   }
 
   // 비매너 게임 후기를 작성한 경우
   // 상대방에게 전달하지 않고 신고하기로 처리하여 운영자가 관리하도록 하기
   Future addUnMannerReview(ReportModel model) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     // 루트 컬렉션 'report'에 저장
-    _reportDB.add(
+    _batch.set(
+      _reportDB.doc(),
       {
         'idFrom': model.idFrom,
         'idTo': model.idTo,
@@ -51,7 +55,8 @@ class SendGameReviewController extends GetxController {
       },
     );
     // 비매너 게임 후기 받는 유저의 매너Lv -
-    _level.minusMannerLevel(model.idTo);
+    _level.minusMannerLevel(model.idTo, _batch);
+    _batch.commit();
   }
 
   // 내가 보낸 게임후기 받기

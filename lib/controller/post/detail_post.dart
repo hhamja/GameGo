@@ -82,28 +82,36 @@ class DetailPostController extends GetxController
   // 관심 버튼 클릭 시 추가 및 제거
   Future clickfavoriteButton(
       FavoriteModel favoriteModel, NotificationModel ntfModel) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     if (isFavorite.value) {
       // 관심게시글인 경우
       print('이 게시글은 나의 관심게시글임');
       // 나의 관심목록에서 제거
-      _favoriteDB
-          .doc('favorite')
-          .collection(_auth.currentUser!.uid)
-          .doc(favoriteModel.postId)
-          .delete();
+      _batch.delete(
+        _favoriteDB
+            .doc('favorite')
+            .collection(_auth.currentUser!.uid)
+            .doc(favoriteModel.postId),
+      );
       // 해당 게시물 like값 -1
-      _postDB.doc(favoriteModel.postId).update({
-        'like': FieldValue.increment(-1),
-      });
+      _batch.update(
+        _postDB.doc(favoriteModel.postId),
+        {
+          'like': FieldValue.increment(-1),
+        },
+      );
+      _batch.commit();
     } else {
       // 관심게시글 아닌 경우
       print('이 게시글은 나의 관심게시글이 아님');
+
       // 관심게시글로 추가
-      _favoriteDB
-          .doc('favorite')
-          .collection(_auth.currentUser!.uid)
-          .doc(favoriteModel.postId)
-          .set(
+      _batch.set(
+        _favoriteDB
+            .doc('favorite')
+            .collection(_auth.currentUser!.uid)
+            .doc(favoriteModel.postId),
         {
           'postId': favoriteModel.postId,
           'idFrom': favoriteModel.idFrom,
@@ -112,13 +120,15 @@ class DetailPostController extends GetxController
         },
       );
       // 관심게시글 추가에 대해 알림 추가
-      _ntf.addNotification(ntfModel);
+      _ntf.addNotification(ntfModel, _batch);
       // 해당 게시물의 like값 +1
-      _postDB.doc(favoriteModel.postId).update(
+      _batch.update(
+        _postDB.doc(favoriteModel.postId),
         {
           'like': FieldValue.increment(1),
         },
       );
+      _batch.commit();
     }
     // 관심버튼 상태를 나타내는 bool변수 토글화
     isFavorite.value = !isFavorite.value;

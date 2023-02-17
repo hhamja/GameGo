@@ -100,9 +100,6 @@ class FCMController extends GetxController {
   void _handleMessage(RemoteMessage message) {
     final type = message.data['type'];
     final screen = message.data['screen'];
-    print(type);
-    print(screen);
-
     // 알림메시지 타입 확인
     if (type == 'message' || type == 'appoint' || type == 'review') {
       // 채팅메시지, 약속설정, 매너후기 알림

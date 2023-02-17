@@ -8,11 +8,16 @@ class DeletePostController extends GetxController {
 
   // 삭제 다이어로그 확인 버튼 클릭
   Future<void> deletePost() async {
-    // 이전페이지 홈페이지가 있다면? 홈으로, 나의 정보페이지가 있다면? 나의정보로
-    Get.back();
-    Get.back();
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     // 서버에서 게시글 삭제 플래그 처리
-    await _deletePost(postId);
+    _batch.update(
+      _postDB.doc(postId),
+      {
+        'isDeleted': true,
+      },
+    );
+    _batch.commit();
     if (_.selectedTearValue != '티어') {
       // 티어 선택한 경우( = 3개 다 선택한 경우)
       await _.filterTear(
@@ -27,14 +32,8 @@ class DeletePostController extends GetxController {
       // 티어, 포지션, 게임모드 아무것도 선택하지 않은 경우
       await _.readPostData();
     }
-  }
-
-  Future _deletePost(postId) async {
-    // idDeleted 삭제 플래그 true로 업데이트
-    return _postDB.doc(postId).update(
-      {
-        'isDeleted': true,
-      },
-    );
+    // 이전페이지 홈페이지가 있다면? 홈으로, 나의 정보페이지가 있다면? 나의정보로
+    Get.back();
+    Get.back();
   }
 }

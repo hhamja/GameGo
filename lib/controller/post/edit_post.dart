@@ -32,7 +32,6 @@ class EditPostController extends GetxController {
 
   // ps. createPage와 달리 EditPage에서는 기존의 선택한 데이터도 불러와야하므로
   // showdropDownPosition(), showdropDownTears()를 추가하여
-
   bool showdropDownPosition() {
     if (seledtedPostGamemodeValue == '솔로랭크' ||
         seledtedPostGamemodeValue == '자유랭크') {
@@ -87,8 +86,11 @@ class EditPostController extends GetxController {
   // 게시글 수정하기
   Future updatePost(postid, String title, String maintext, String gamemode,
       String? position, String? tear) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
     // post 정보를 수정
-    await _postDB.doc(postid).update(
+    _batch.update(
+      _postDB.doc(postid),
       {
         'title': title,
         'maintext': maintext,
@@ -98,38 +100,47 @@ class EditPostController extends GetxController {
       },
     );
     // notification의 postTitle 수정
-    await FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection('notification')
         .where('postId', isEqualTo: postid)
         .get()
         .then(
       (value) {
-        // ntf id를 담을 빈 리스트
-        var _ntfIdList = [];
-        // 쿼리한 postId에 해당 하는 ntf id를 리스트에 넣기
-        _ntfIdList.assignAll(
-          value.docs.map(
-            (e) => e.reference.id,
-          ),
-        );
-        // 반복문 -> notification의 postTitle 수정
-        _ntfIdList.forEach(
-          (id) {
+        value.docs.forEach(
+          (e) => _batch.update(
             FirebaseFirestore.instance
                 .collection('notification')
-                .doc(id)
-                .update(
-              //게시글 제목 수정
-              {
-                'postTitle': title,
-              },
-            ).then(
-              (_) => print('ntf에서 게시글 제목 수정'),
-            );
-          },
+                .doc(e.reference.id),
+            {
+              'postTitle': title,
+            },
+          ),
         );
+        // // ntf id를 담을 빈 리스트
+        // var _ntfIdList = [];
+        // // 쿼리한 postId에 해당 하는 ntf id를 리스트에 넣기
+        // _ntfIdList.assignAll(
+        //   value.docs.map(
+        //     (e) => e.reference.id,
+        //   ),
+        // );
+        // // 반복문 -> notification의 postTitle 수정
+        // _ntfIdList.forEach(
+        //   (id) {
+        //     FirebaseFirestore.instance
+        //         .collection('notification')
+        //         .doc(id)
+        //         .update(
+        //       //게시글 제목 수정
+        //       {'postTitle': title},
+        //     ).then(
+        //       (_) => print('ntf에서 게시글 제목 수정'),
+        //     );
+        //   },
+        // );
       },
       onError: (e) => print(e),
     );
+    _batch.commit();
   }
 }

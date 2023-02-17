@@ -10,7 +10,10 @@ class ReportController extends GetxController {
   // 3. 비매너 게임 후기를 수기로 작성하여 보내는 경우 -> postId = null로 넣기
   // 이유) 어떤 게시글이나 게임, 채팅으로 인해서 신고하게 되었는지 파악하기 위함
   Future addUserReport(ReportModel model) async {
-    _reportDB.add(
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
+    _batch.set(
+      _reportDB.doc(),
       {
         'idFrom': model.idFrom,
         'idTo': model.idTo,
@@ -20,5 +23,6 @@ class ReportController extends GetxController {
         'createdAt': model.createdAt,
       },
     );
+    _batch.commit();
   }
 }

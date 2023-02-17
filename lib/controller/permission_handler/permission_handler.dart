@@ -1,8 +1,8 @@
 import 'package:mannergamer/utilites/index/index.dart';
 
 class PermissionHandler extends GetxController {
-  //알림 권한 요청
-  //회원가입 후 홈페이지 이동하기 전에 권한요청하기
+  // 알림 권한 요청
+  // 회원가입 후 홈페이지 이동하기 전에 권한요청하기
   Future<bool> requestNotificationPermission() async {
     // 권한 요청
     PermissionStatus status = await Permission.notification.request();
@@ -24,7 +24,6 @@ class PermissionHandler extends GetxController {
             // 앱 설정으로 이동,
             openAppSettings();
           },
-        
         ),
       );
       return false;
@@ -54,7 +53,6 @@ class PermissionHandler extends GetxController {
             // 앱 설정으로 이동,
             openAppSettings();
           },
-         
         ),
       );
       return false;
@@ -85,7 +83,6 @@ class PermissionHandler extends GetxController {
             // 앱 설정으로 이동,
             openAppSettings();
           },
-       
         ),
       );
       return false;

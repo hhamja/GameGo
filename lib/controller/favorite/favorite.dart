@@ -19,12 +19,6 @@ class FavoriteController extends GetxController
     getFavoriteList();
   }
 
-  @override
-  void onClose() {
-    // favoriteList.value = [];
-    super.onClose();
-  }
-
   // 나의 관심 게시글 리스트 받기
   Future getFavoriteList() async {
     final List _list = [];

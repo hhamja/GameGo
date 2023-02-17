@@ -5,7 +5,6 @@ class HomePostController extends GetxController
   static HomePostController get to => Get.find<HomePostController>();
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
-
   RxList<PostModel> postList = <PostModel>[].obs;
 
   // 포지션 드랍다운 버튼 보여주는 bool값

@@ -9,7 +9,7 @@ class FeedBackController extends GetxController {
   // 1. 탈퇴하기 페이지에서 기타사유를 선택하여 수기작성 후 '겜고와 이별하기'버튼을 클릭한 경우 (탈퇴하지 않더라도 OTP인증페이지로 이동하는 버튼 클릭시 정보수집)
   // 이유 : 마지막에 변심해서 최종적으로 유저가 탈퇴를 하지 않더라도 유저 의견을 수용 위해
   Future addFeedBack(SignOutFeedBackModel model) async {
-    _feedBackDB.add(
+    await _feedBackDB.add(
       {
         'feedBackContent': model.feedBackContent,
         'createdAt': model.createdAt,

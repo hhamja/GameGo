@@ -3,7 +3,6 @@ import 'package:mannergamer/utilites/index/index.dart';
 class CreatePostController extends GetxController {
   final CollectionReference _postDB =
       FirebaseFirestore.instance.collection('post');
-
   // 포지션 드랍다운 버튼 보여주는 bool값
   bool showPosition = false;
   // 티어 드랍다운 버튼 보여주는 bool값
@@ -41,9 +40,11 @@ class CreatePostController extends GetxController {
 
   // 서버에 게시글 추가하기
   Future createPost(PostModel postModel) async {
-    // 루트 컬렉션 post에 저장
-    _postDB.doc(postModel.postId).set(
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+
+    _batch.set(
       // 문서의 id는 파이어스토어의 자동id 생성 값
+      _postDB.doc(postModel.postId),
       {
         'postId': postModel.postId,
         'uid': postModel.uid,
@@ -61,5 +62,6 @@ class CreatePostController extends GetxController {
         'updatedAt': postModel.updatedAt,
       },
     );
+    _batch.commit();
   }
 }

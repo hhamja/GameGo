@@ -3,6 +3,7 @@ import 'package:mannergamer/utilites/index/index.dart';
 class UserController extends GetxController {
   static UserController get to => Get.find<UserController>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final CollectionReference _userDB =
       FirebaseFirestore.instance.collection('user');
   final CollectionReference _chatDB =
@@ -130,6 +131,7 @@ class UserController extends GetxController {
 
   // 탈퇴하기
   Future deleteUser(smsCode) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
     try {
       final credential = await PhoneAuthProvider.credential(
           verificationId: verificationID, smsCode: smsCode);
@@ -137,27 +139,20 @@ class UserController extends GetxController {
       // 게시글 플래그
       _postDB
           .where('uid', isEqualTo: _auth.currentUser!.uid)
+          // 삭제하지 않은 나의 게시글 쿼리
           .where('isDeleted', isEqualTo: false)
           .where('isHidden', isEqualTo: false)
           .get()
           .then(
-        // 삭제하지 않은 나의 게시글 쿼리
         (value) {
-          // 문서리스트 반복문
           value.docs.forEach(
             (e) {
-              // 데이터 Map 자료 형태로 변환
               var snapshot = e.data() as Map<String, dynamic>;
-              // 게시글 id
               final String postId = snapshot['postId'];
               // 게시글 플래그 수정
-              _postDB.doc(postId).update(
-                {
-                  'isHidden': true,
-                },
-              ).then(
-                (_) => print('게시글 플래그 수정'),
-                onError: (e) => print(e),
+              _batch.update(
+                _postDB.doc(postId),
+                {'isHidden': true},
               );
             },
           );
@@ -168,28 +163,22 @@ class UserController extends GetxController {
       _chatDB
           .where('members', arrayContains: _auth.currentUser!.uid)
           // 채팅방 나가기 플래그가 false로 되어있다는 쿼리 추가하기 > 나중에
+          // 나가지 않고 활성화 된 나의 채팅방 쿼리
           .where('isActive', isEqualTo: true)
           .get()
           .then(
-        // 나가지 않고 활성화 된 나의 채팅방 쿼리
         (value) {
-          // 문서리스트 반복문
           value.docs.forEach(
             (e) {
-              // 데이터 Map 변환
               var snapshot = e.data() as Map<String, dynamic>;
-              // 채팅방 id 값
               final String chatRoomId = snapshot['chatRoomId'];
-              print(chatRoomId);
               // 탈퇴유저의 채팅방 플래그 처리
-              _chatDB.doc(chatRoomId).update(
-                {
-                  'isActive': false,
-                },
+              _batch.update(
+                _chatDB.doc(chatRoomId),
+                {'isActive': false},
               );
             },
           );
-          print('채팅 플래그 처리 완료');
         },
         onError: (e) => print(e),
       );
@@ -198,47 +187,34 @@ class UserController extends GetxController {
       _reviewDB.where('idFrom', isEqualTo: _auth.currentUser!.uid).get().then(
         // 내가 보낸 게임후기만 쿼리하여 리스트로 받기
         (value) {
-          // 문서리스트 반복문
           value.docs.forEach(
             (e) {
-              // 게임후기 id
               final String reviewId = e.reference.id;
-              print(reviewId);
               // 게임후기의 프로필 수정
-              _reviewDB.doc(reviewId).update(
-                {
-                  'profileUrl': DefaultProfle.url,
-                },
-              ).then(
-                (_) => print('게임후기 기본 프로필로 수정'),
-                onError: (e) => print(e),
+              _batch.update(
+                _reviewDB.doc(reviewId),
+                {'profileUrl': DefaultProfle.url},
               );
             },
           );
         },
       );
-
       // 유저정보 처리
       // 탈퇴 플래그 true, 탈퇴 시간 업데이트
-      _userDB.doc(_auth.currentUser!.uid).update(
+      _batch.update(
+        _userDB.doc(_auth.currentUser!.uid),
         {
           'isWithdrawn': true,
           'withdrawnAt': Timestamp.now(),
         },
-      ).then(
-        (_) => print('유저정보 플래그'),
-        onError: (e) => print(e),
       );
-
-      // Storage에서 해당 유저의 프로필 삭제
+      _batch.commit();
+      // // Storage에서 해당 유저의 프로필 삭제
       // FirebaseStorage.instance.ref().child(CurrentUser.uid).delete();
-
       // 사용자 재인증
       await _auth.currentUser!.reauthenticateWithCredential(credential);
-
       // 장치에 저장된 유저 토큰 삭제
       _auth.currentUser!.delete();
-
       print('탈퇴 성공');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-verification-code') {

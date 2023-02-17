@@ -148,11 +148,15 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     _photo == null
                         ? // 갤러리에서 사진 선택하지 않은 경우 나의 기존 프로필 url
                         CircleAvatar(
+                            // 투명색
+                            backgroundColor: Colors.transparent,
                             backgroundImage: NetworkImage(profileImageUrl),
                             radius: 65.sp,
                           )
                         : // 갤러리에서 사진 선택한 경우 선택한 파일의 이미지
                         CircleAvatar(
+                            // 투명색
+                            backgroundColor: Colors.transparent,
                             backgroundImage: FileImage(_photo!),
                             radius: 65.sp,
                           ),
