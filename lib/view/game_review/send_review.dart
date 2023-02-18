@@ -389,7 +389,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
               },
             ),
           );
-        }),
+        }, appPrimaryColor),
       ),
     );
   }

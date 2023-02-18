@@ -195,7 +195,7 @@ class _SignOutPageState extends State<SignOutPage> {
               _textController.clear();
               Get.to(() => SignOutSmsPage());
             }
-          },
+          }, appPrimaryColor
         ),
       ),
     );

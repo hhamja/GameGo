@@ -51,7 +51,7 @@ class PermissionGuidePage extends StatelessWidget {
           await Permission.notification.request();
           // 로그인 방식 선택하는 페이지로 이동
           Get.offAll(MainLogoPage());
-        },
+        }, appPrimaryColor
       ),
     );
   }

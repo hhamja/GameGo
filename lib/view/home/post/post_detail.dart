@@ -221,7 +221,7 @@ class PostDetailPage extends StatelessWidget {
                         'profileUrl': _c.postInfo.profileUrl,
                       },
                     );
-                  },
+                  }, appPrimaryColor
                 ),
               ),
             ],

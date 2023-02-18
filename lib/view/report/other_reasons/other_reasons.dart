@@ -136,7 +136,7 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
                 },
               );
             }
-          },
+          }, appPrimaryColor
         ),
       ),
     );

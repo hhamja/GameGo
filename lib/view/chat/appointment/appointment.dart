@@ -279,6 +279,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               1,
             ));
           },
+          appPrimaryColor,
         ),
       ),
     );

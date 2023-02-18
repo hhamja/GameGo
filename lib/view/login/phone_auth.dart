@@ -177,7 +177,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                 // 유저정보저장
                 await _user.signUP(_smsController.text.trim());
               }
-            },
+            }, appPrimaryColor
           ),
         ),
       ),

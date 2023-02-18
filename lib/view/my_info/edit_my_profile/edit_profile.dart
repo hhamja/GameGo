@@ -237,7 +237,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
               } else
                 null;
             }
-          },
+          }, appPrimaryColor
         ),
       ),
     );

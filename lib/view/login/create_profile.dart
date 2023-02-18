@@ -232,7 +232,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         ),
         child: CustomFullFilledTextButton(
           '완료',
-          validateButton,
+          validateButton, appPrimaryColor
         ),
       ),
     );

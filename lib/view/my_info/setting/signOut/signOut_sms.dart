@@ -180,7 +180,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
               await UserController.to.deleteUser(_smsController.text.trim());
               // 앱 초기 회원가입 페이지로 이동
               Get.offAllNamed('/main');
-            },
+            }, appPrimaryColor
           ),
         ),
       ),
