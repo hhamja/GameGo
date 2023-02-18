@@ -46,13 +46,15 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: AppSpaceData.heightSmall),
               Text(
                 '휴대폰 번호',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
+              SizedBox(height: 3.sp),
               Container(
                 width: 100.w,
-                height: 7.h,
+                height: 8.h,
                 child: TextFormField(
                   cursorColor: cursorColor,
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -116,6 +118,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       '인증번호',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
+                    SizedBox(height: 3.sp),
                     TextFormField(
                       cursorColor: cursorColor,
                       validator: (value) {
@@ -165,51 +168,16 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
         padding: EdgeInsets.all(AppSpaceData.screenPadding),
         child: Visibility(
           visible: isSendSms,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // 이용약관 및 개인정보처리방침
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      // 이용약관에 대한 페이지로 이동
-                    },
-                    child: Text(
-                      '이용약관',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                  Text(
-                    '및',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      // 개인정보페이지로 이동
-                    },
-                    child: Text(
-                      '개인정보취급방침',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                ],
-              ),
-              CustomFullFilledTextButton(
-                '시작하기',
-                () async {
-                  //sms입력 ok , 폰번호 13자리 전부 입력 시
-                  if (_formKey.currentState!.validate() &&
-                      _phoneController.text.length == 13) {
-                    // 유저정보저장
-                    await _user.signUP(_smsController.text.trim());
-                  }
-                },
-              ),
-            ],
+          child: CustomFullFilledTextButton(
+            '시작하기',
+            () async {
+              //sms입력 ok , 폰번호 13자리 전부 입력 시
+              if (_formKey.currentState!.validate() &&
+                  _phoneController.text.length == 13) {
+                // 유저정보저장
+                await _user.signUP(_smsController.text.trim());
+              }
+            },
           ),
         ),
       ),

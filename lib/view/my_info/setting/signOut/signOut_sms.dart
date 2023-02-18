@@ -55,9 +55,10 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                   '휴대폰 번호',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
+                SizedBox(height: 3.sp),
                 Container(
                   width: 100.w,
-                  height: 7.h,
+                  height: 8.h,
                   child: TextFormField(
                     cursorColor: cursorColor,
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -121,6 +122,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                         '인증번호',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
+                      SizedBox(height: 3.sp),
                       TextFormField(
                         cursorColor: cursorColor,
                         validator: (value) {

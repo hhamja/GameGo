@@ -120,7 +120,7 @@ class UserController extends GetxController {
   // 로그아웃
   Future signOut() async {
     // 로그아웃시 푸시알림 수신 못하게 하기 위해 토큰값 null로 업데이트
-    await _userDB.doc(_auth.currentUser!.uid).update(
+    await _userDB.doc(_auth.currentUser?.uid).update(
       {
         'pushToken': null,
       },
