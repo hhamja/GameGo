@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class SignOutPage extends StatefulWidget {
   const SignOutPage({Key? key}) : super(key: key);
@@ -147,56 +147,52 @@ class _SignOutPageState extends State<SignOutPage> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(AppSpaceData.screenPadding),
-        child: CustomFullFilledTextButton(
-          '$appName와 이별하기',
-          () async {
-            //0. 아무것도 선택하지 않은 경우
-            if (selectedLeaveReason == '선택해주세요' ||
-                selectedLeaveReason == null) {
+        child: CustomFullFilledTextButton('$appName와 이별하기', () async {
+          //0. 아무것도 선택하지 않은 경우
+          if (selectedLeaveReason == '선택해주세요' || selectedLeaveReason == null) {
+            Get.dialog(
+              CustomOneButtonDialog(
+                '탈퇴 이유를 버튼에서 선택해주세요.',
+                '확인',
+                () => Get.back(),
+              ),
+            );
+          } else if (selectedLeaveReason == '기타') {
+            // 기타 사유
+            final String text = _textController.text.trim();
+            if (text.length == 0 || text.isEmpty) {
+              // 텍스트를 입력하지 않은 경우
               Get.dialog(
                 CustomOneButtonDialog(
-                  '탈퇴 이유를 버튼에서 선택해주세요.',
+                  '탈퇴 이유를 작성해주세요. 이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
                   '확인',
                   () => Get.back(),
                 ),
               );
-            } else if (selectedLeaveReason == '기타') {
-              // 기타 사유
-              final String text = _textController.text.trim();
-              if (text.length == 0 || text.isEmpty) {
-                // 텍스트를 입력하지 않은 경우
-                Get.dialog(
-                  CustomOneButtonDialog(
-                    '탈퇴 이유를 작성해주세요. 이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
-                    '확인',
-                    () => Get.back(),
-                  ),
-                );
-              } else {
-                // 텍스트를 한 글자라도 입력한 경우
-                final SignOutFeedBackModel _model = SignOutFeedBackModel(
-                  feedBackContent: text,
-                  createdAt: Timestamp.now(),
-                );
-
-                // 피드백 서버에 저장
-                await _c.addFeedBack(_model);
-                _textController.clear();
-                Get.to(() => SignOutSmsPage());
-              }
             } else {
-              // 기타사유가 아닌 경우
+              // 텍스트를 한 글자라도 입력한 경우
               final SignOutFeedBackModel _model = SignOutFeedBackModel(
-                feedBackContent: selectedLeaveReason.toString(),
+                feedBackContent: text,
                 createdAt: Timestamp.now(),
               );
+
               // 피드백 서버에 저장
               await _c.addFeedBack(_model);
               _textController.clear();
               Get.to(() => SignOutSmsPage());
             }
-          }, appPrimaryColor
-        ),
+          } else {
+            // 기타사유가 아닌 경우
+            final SignOutFeedBackModel _model = SignOutFeedBackModel(
+              feedBackContent: selectedLeaveReason.toString(),
+              createdAt: Timestamp.now(),
+            );
+            // 피드백 서버에 저장
+            await _c.addFeedBack(_model);
+            _textController.clear();
+            Get.to(() => SignOutSmsPage());
+          }
+        }, appPrimaryColor),
       ),
     );
   }

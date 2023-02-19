@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class CreateProfilePage extends StatefulWidget {
   CreateProfilePage({Key? key}) : super(key: key);
@@ -230,10 +230,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         padding: EdgeInsets.all(
           AppSpaceData.screenPadding,
         ),
-        child: CustomFullFilledTextButton(
-          '완료',
-          validateButton, appPrimaryColor
-        ),
+        child:
+            CustomFullFilledTextButton('완료', validateButton, appPrimaryColor),
       ),
     );
   }

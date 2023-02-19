@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);

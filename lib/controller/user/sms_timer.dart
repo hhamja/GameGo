@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class SmsTimerController extends GetxController {
   static SmsTimerController get to => Get.find<SmsTimerController>();

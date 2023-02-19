@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 //유저가 탈퇴하기 '기타'사유로 클릭 시 작성하는 수기 작성에 대한 피드백 DB에 저장
 class FeedBackController extends GetxController {

@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 // 신고하는 3가지 상황
 // 1. 게시글에 대해 신고하는 경우

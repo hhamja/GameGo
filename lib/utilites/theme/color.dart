@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 // 0xfff7313f : 여기어때
 // 0xffff0057 : 탈잉

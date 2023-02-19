@@ -1,6 +1,6 @@
-# mannergamer
+# gamego
 
-mannergamer
+gamego
 
 ## Getting Started
 

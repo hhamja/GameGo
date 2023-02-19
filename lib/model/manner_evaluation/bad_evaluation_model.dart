@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class BadEvaluationModel {
   final String evaluationType; //'bad' : 비매너평가

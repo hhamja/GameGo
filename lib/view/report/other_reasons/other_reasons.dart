@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class OtherReasonsPage extends StatefulWidget {
   const OtherReasonsPage({Key? key}) : super(key: key);
@@ -110,34 +110,31 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
         padding: EdgeInsets.all(
           AppSpaceData.screenPadding,
         ),
-        child: CustomFullFilledTextButton(
-          '신고사유 제출하기',
-          () async {
-            final text = _textController.text.trim();
-            // 사유 입력에 대한 조건식
-            if (text == '' || text.isEmpty) {
-              // 신고사유 입력하지 않은 경우
-              Get.dialog(
-                CustomOneButtonDialog(
-                  '신고 사유를 입력해주세요.',
-                  '확인',
-                  () => Get.back(),
-                ),
-              );
-            } else {
-              // 신고사유 입력한 경우
-              Get.dialog(
-                ReportDialog(),
-                arguments: {
-                  'chatRoomId': chatRoomId ?? null,
-                  'postId': postId ?? null,
-                  'uid': uid,
-                  'content': _textController.text.trim(),
-                },
-              );
-            }
-          }, appPrimaryColor
-        ),
+        child: CustomFullFilledTextButton('신고사유 제출하기', () async {
+          final text = _textController.text.trim();
+          // 사유 입력에 대한 조건식
+          if (text == '' || text.isEmpty) {
+            // 신고사유 입력하지 않은 경우
+            Get.dialog(
+              CustomOneButtonDialog(
+                '신고 사유를 입력해주세요.',
+                '확인',
+                () => Get.back(),
+              ),
+            );
+          } else {
+            // 신고사유 입력한 경우
+            Get.dialog(
+              ReportDialog(),
+              arguments: {
+                'chatRoomId': chatRoomId ?? null,
+                'postId': postId ?? null,
+                'uid': uid,
+                'content': _textController.text.trim(),
+              },
+            );
+          }
+        }, appPrimaryColor),
       ),
     );
   }

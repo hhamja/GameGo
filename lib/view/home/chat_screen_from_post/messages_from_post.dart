@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class MessagesFromPost extends StatefulWidget {
   // 게시글 유저의  UID, 게시물 id 값, 상대프로필

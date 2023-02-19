@@ -8,7 +8,7 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 // Packages
-export 'package:mannergamer/view/login/terms_policy/terms_detail_page.dart';
+export 'package:gamego/view/login/terms_policy/terms_detail_page.dart';
 export 'package:webview_flutter/webview_flutter.dart';
 export 'package:sizer/sizer.dart';
 export 'package:shared_preferences/shared_preferences.dart';

@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class CustomDivider extends StatelessWidget {
   const CustomDivider({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class ReportListPage extends StatefulWidget {
   const ReportListPage({Key? key}) : super(key: key);

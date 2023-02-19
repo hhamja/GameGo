@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class InitialScreenCntroller extends GetxController {
   static InitialScreenCntroller get to => Get.find<InitialScreenCntroller>();

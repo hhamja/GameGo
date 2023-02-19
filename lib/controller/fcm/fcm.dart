@@ -1,5 +1,5 @@
-import 'package:mannergamer/firebase_options.dart';
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/firebase_options.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class FCMController extends GetxController {
   FirebaseMessaging _fcm = FirebaseMessaging.instance;

@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class FcmTokenController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;

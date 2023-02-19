@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class AlarmBottomSheet extends StatelessWidget {
   const AlarmBottomSheet({super.key});

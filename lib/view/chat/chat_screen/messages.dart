@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class Messages extends StatefulWidget {
   // 상대유저 이름, 기본프로필, 채팅방 id 값

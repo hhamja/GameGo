@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class UserMannerEvaluationPage extends StatefulWidget {
   const UserMannerEvaluationPage({Key? key}) : super(key: key);

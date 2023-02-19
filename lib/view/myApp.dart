@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class SignOutSmsPage extends StatefulWidget {
   SignOutSmsPage({Key? key}) : super(key: key);
@@ -173,15 +173,12 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
         padding: EdgeInsets.all(AppSpaceData.screenPadding),
         child: Visibility(
           visible: isSendSms,
-          child: CustomFullFilledTextButton(
-            '$appName와 이별하기',
-            () async {
-              // 유저정보 삭제
-              await UserController.to.deleteUser(_smsController.text.trim());
-              // 앱 초기 회원가입 페이지로 이동
-              Get.offAllNamed('/main');
-            }, appPrimaryColor
-          ),
+          child: CustomFullFilledTextButton('$appName와 이별하기', () async {
+            // 유저정보 삭제
+            await UserController.to.deleteUser(_smsController.text.trim());
+            // 앱 초기 회원가입 페이지로 이동
+            Get.offAllNamed('/main');
+          }, appPrimaryColor),
         ),
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class GameReviewModel {
   final String idFrom; //리뷰 보낸 uid

@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.mannergamer" "\0"
-            VALUE "FileDescription", "mannergamer" "\0"
+            VALUE "CompanyName", "com.gamego" "\0"
+            VALUE "FileDescription", "gamego" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mannergamer" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.mannergamer. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mannergamer.exe" "\0"
-            VALUE "ProductName", "mannergamer" "\0"
+            VALUE "InternalName", "gamego" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 com.gamego. All rights reserved." "\0"
+            VALUE "OriginalFilename", "gamego.exe" "\0"
+            VALUE "ProductName", "gamego" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

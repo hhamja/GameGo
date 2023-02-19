@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class AppTextStyle {
   // 반응형 앱을 위해 폰트사이즈 sp로 설정

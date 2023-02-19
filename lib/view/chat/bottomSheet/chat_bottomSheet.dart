@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class ChatBottomSheet extends StatefulWidget {
   final String chatRoomId; //신고할 때 넣을 채팅방 id값

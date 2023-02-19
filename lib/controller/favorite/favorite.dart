@@ -1,5 +1,5 @@
-import 'package:mannergamer/model/favorite/favoriteList.model.dart';
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/model/favorite/favoriteList.model.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class FavoriteController extends GetxController
     with StateMixin<RxList<FavoriteListModel>> {

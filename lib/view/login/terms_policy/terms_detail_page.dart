@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class TermsDetailPage extends StatefulWidget {
   @override
@@ -24,7 +24,6 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
           onPageStarted: (String url) {},
           onPageFinished: (String url) {
             String script = 'document.body.style.background = "#f5f5f7";';
-            
           },
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {

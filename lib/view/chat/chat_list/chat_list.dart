@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 // import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ChatListPage extends GetView<ChatController> {

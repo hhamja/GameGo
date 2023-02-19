@@ -5,14 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "mannergamer",
+      "name": "gamego",
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
       "deviceId": "emulator-5554"
     },
     {
-      "name": "mannergamer2",
+      "name": "gamego2",
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
@@ -24,7 +24,7 @@
   "compounds": [
 		{
 			"name": "All Devices",
-			"configurations": ["mannergamer", "mannergamer2"],
+			"configurations": ["gamego", "gamego2"],
 		}
 	]
 }

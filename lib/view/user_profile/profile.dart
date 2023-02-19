@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class UserProfilePage extends StatefulWidget {
   UserProfilePage({super.key});

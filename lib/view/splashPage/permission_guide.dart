@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mannergamer/utilites/app_data/app_name/app_name.dart';
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/app_data/app_name/app_name.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class PermissionGuidePage extends StatelessWidget {
   @override
@@ -44,15 +44,12 @@ class PermissionGuidePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomFullFilledTextButton(
-        '확인',
-        () async {
-          // 알림 권한 요청
-          await Permission.notification.request();
-          // 로그인 방식 선택하는 페이지로 이동
-          Get.offAll(MainLogoPage());
-        }, appPrimaryColor
-      ),
+      bottomNavigationBar: CustomFullFilledTextButton('확인', () async {
+        // 알림 권한 요청
+        await Permission.notification.request();
+        // 로그인 방식 선택하는 페이지로 이동
+        Get.offAll(MainLogoPage());
+      }, appPrimaryColor),
     );
   }
 }

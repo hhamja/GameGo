@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class MannerLevelModel {
   // 매너레벨, 초기레벨 Lv.30

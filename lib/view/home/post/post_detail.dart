@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class PostDetailPage extends StatelessWidget {
   PostDetailPage({Key? key}) : super(key: key);
@@ -208,21 +208,18 @@ class PostDetailPage extends StatelessWidget {
               // 채팅하기 버튼
               Expanded(
                 flex: 5,
-                child: CustomFullFilledTextButton(
-                  '채팅하기',
-                  () {
-                    Get.to(
-                      () => ChatScreenPageFromPost(),
-                      arguments: {
-                        'postId': _c.postInfo.postId,
-                        'uid': _c.postInfo.uid,
-                        'userName': _c.postInfo.userName,
-                        'mannerLevel': _c.level,
-                        'profileUrl': _c.postInfo.profileUrl,
-                      },
-                    );
-                  }, appPrimaryColor
-                ),
+                child: CustomFullFilledTextButton('채팅하기', () {
+                  Get.to(
+                    () => ChatScreenPageFromPost(),
+                    arguments: {
+                      'postId': _c.postInfo.postId,
+                      'uid': _c.postInfo.uid,
+                      'userName': _c.postInfo.userName,
+                      'mannerLevel': _c.level,
+                      'profileUrl': _c.postInfo.profileUrl,
+                    },
+                  );
+                }, appPrimaryColor),
               ),
             ],
           ),

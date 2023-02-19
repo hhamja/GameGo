@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 import 'firebase_options.dart';
 
 @pragma('vm:entry-point')

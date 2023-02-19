@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class IllegallyPostedPage extends StatefulWidget {
   const IllegallyPostedPage({Key? key}) : super(key: key);

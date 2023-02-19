@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class AppointmentModel {
   final String idFrom; //약속을 설정한 사람

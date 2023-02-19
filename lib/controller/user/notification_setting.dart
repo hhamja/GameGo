@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 class NtfSettingController extends GetxController with WidgetsBindingObserver {
   final CollectionReference _userDB =

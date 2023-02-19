@@ -1,4 +1,4 @@
-import 'package:mannergamer/utilites/index/index.dart';
+import 'package:gamego/utilites/index/index.dart';
 
 // 흰색 백그라운드에 outline이 핑크색
 class CustomFullOutlineTextButton extends StatelessWidget {
