@@ -46,6 +46,7 @@ class CustomOneButtonDialog extends StatelessWidget {
                 5.5.h,
                 buttonText,
                 onPressed,
+                appPrimaryColor,
               ),
             ],
           ),

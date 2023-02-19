@@ -6,12 +6,14 @@ class CustomFilledTextButton extends StatelessWidget {
     this.h,
     this.content,
     this.onPressed,
+    this.backgroundColor,
   );
 
   final double? w;
   final double? h;
   final String content;
   final Function() onPressed;
+  final backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,7 @@ class CustomFilledTextButton extends StatelessWidget {
       width: w,
       height: h,
       decoration: BoxDecoration(
-        color: appPrimaryColor,
-        // border: Border.(
-        //   color: appPrimaryColor,
-        //   width: 0.3.w,
-        // ),
+        color: backgroundColor,
         borderRadius: BorderRadius.all(
           Radius.circular(10.sp),
         ),

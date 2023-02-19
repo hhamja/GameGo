@@ -60,6 +60,7 @@ class CustomSmallDialog extends StatelessWidget {
                 5.5.h,
                 completeText,
                 completeFun,
+                appPrimaryColor,
               ),
             ],
           ),
