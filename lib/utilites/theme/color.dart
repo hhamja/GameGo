@@ -4,14 +4,15 @@ import 'package:gamego/utilites/index/index.dart';
 // 0xffff0057 : 탈잉
 const Color appPrimaryColor = Color(0xffff0057);
 // 블랙
-const Color appBlackColor = Color(0xFF333333);
+const Color appBlackColor = Color(0xFF222222);
+// const Color appBlackColor = Color(0xFF);
 // 그레이
 const Color appDeepDarkGrey = Color(0xFF303c4c);
 final Color appDarkGrey = Colors.grey[600]!;
 const Color appGreyColor = Colors.grey;
 final Color appLightGray = Colors.grey[300]!;
 // 흰색
-const Color appWhiteColor = Color(0xFFf5f5f7);
+const Color appWhiteColor = Color(0xFFFFFFFF);
 // 파란색
 const Color appBlueColor = Colors.blue;
 // 빨강색 에러 텍스트 컬러
