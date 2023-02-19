@@ -52,6 +52,7 @@ class AppTextStyle {
       // 16-24
       fontSize: 16.sp,
       letterSpacing: 0.5.sp,
+      fontWeight: FontWeight.normal,
       color: appBlackColor, fontFamily: 'NotoSansCJKkr',
     ),
     bodyMedium: TextStyle(

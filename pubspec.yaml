@@ -61,6 +61,7 @@ dependencies:
   shared_preferences: ^2.0.17
   flutter_launcher_icons: ^0.11.0
   sizer: ^2.0.15
+  webview_flutter: ^4.0.2
   
 
 dev_dependencies:
@@ -84,27 +85,6 @@ flutter:
     - family: Jalnan
       fonts:
         - asset: assets/fonts/JalnanOTF.otf
-  # 에스코어드림
-    - family: SCDream
-      fonts:
-        - asset: assets/fonts/SCDream1.otf
-          weight: 100
-        - asset: assets/fonts/SCDream2.otf
-          weight: 200
-        - asset: assets/fonts/SCDream3.otf
-          weight: 300
-        - asset: assets/fonts/SCDream4.otf
-          weight: 400
-        - asset: assets/fonts/SCDream5.otf
-          weight: 500
-        - asset: assets/fonts/SCDream6.otf
-          weight: 600
-        - asset: assets/fonts/SCDream7.otf
-          weight: 700
-        - asset: assets/fonts/SCDream8.otf
-          weight: 800
-        - asset: assets/fonts/SCDream9.otf
-          weight: 900
     # 노토 산즈 kr
     - family: NotoSansCJKkr
       fonts:

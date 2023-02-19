@@ -8,6 +8,8 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 // Packages
+export 'package:mannergamer/view/login/terms_policy/terms_detail_page.dart';
+export 'package:webview_flutter/webview_flutter.dart';
 export 'package:sizer/sizer.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:permission_handler/permission_handler.dart';
@@ -33,7 +35,9 @@ export 'package:jiffy/jiffy.dart';
 export 'package:grouped_list/grouped_list.dart';
 
 // Views
-export '../../../../controller/game_review/read_game_review.dart';
+export '../../view/login/terms_policy/policy_detail_page%20copy.dart';
+export '../../view/login/terms_policy/check_box_tile.dart';
+export '../../view/login/terms_policy/terms_policy.dart';
 export '../../view/chat/chat_screen/no_user_chat_screen.dart';
 export '../../view/user_profile/no_user_profile.dart';
 export '../../view/splashPage/permission_item.dart';
@@ -103,6 +107,8 @@ export '../../model/favorite/favorite_model.dart';
 export '../../model/appointment/appointment.dart';
 
 // Controller
+export '../../controller/permission_handler/permission_handler.dart';
+export '../../../../controller/game_review/read_game_review.dart';
 export '../../controller/user/my_profile.dart';
 export '../../../controller/post/create_post.dart';
 export '../../controller/post/home_post_list.dart';
@@ -149,6 +155,7 @@ export '../../component/post_list_item/post_list_item.dart';
 
 // Utilities
 export '../theme/app_padding.dart';
+export '../../utilites/url_launcher/url_launcher.dart';
 export '../../utilites/app_data/app_name/app_name.dart';
 export '../theme/color.dart';
 export '../theme/app_theme.dart';
@@ -161,4 +168,3 @@ export '../../utilites/route/route_path.dart';
 
 // Themes
 export '../../main.dart';
-export '../../controller/permission_handler/permission_handler.dart';

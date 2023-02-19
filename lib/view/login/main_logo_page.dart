@@ -5,10 +5,6 @@ class MainLogoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //디바이스 전체 w
-    print(MediaQuery.of(context).size.width);
-    //디바이스 전체 h
-    print(MediaQuery.of(context).size.height);
     return Scaffold(
       body: Container(
         color: appPrimaryColor,
@@ -47,9 +43,7 @@ class MainLogoPage extends StatelessWidget {
                       color: appWhiteColor,
                     ),
                   ),
-                  onPressed: () {
-                    Get.to(() => PhoneAuthPage());
-                  },
+                  onPressed: () => Get.to(() => TermsPolicyAgreementPage()),
                 ),
               ),
             ],
