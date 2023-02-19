@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "mannergamer-c2546"
-  }
+    "gamego": "gamego-ef2ef",
+    "default": "gamego-ef2ef"
+  },
+  "targets": {},
+  "etags": {}
 }

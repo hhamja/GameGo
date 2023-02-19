@@ -1,7 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-
 admin.initializeApp();
 
 // 채팅 메시지 푸시 알림에 대한 함수
@@ -165,7 +164,6 @@ exports.activityAndMarketingNotification = functions
                   body: `"${userNameFrom}"님이 매너 후기를 보냈어요.`,
                   badge: "1",
                   sound: "default",
-                
                 },
                 // 채팅페이지로 페이지 이동을 위한 데이터 전달
                 // 이동 시 아규먼트로 데이터 전달 위해

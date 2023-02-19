@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1090390887405-v3e2ttc6bvm7m9b4dvfdnbakhq4uhjba.apps.googleusercontent.com</string>
+	<string>481543250834-iumlae284s99dhgg21vgsmf42ea6fvlb.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1090390887405-v3e2ttc6bvm7m9b4dvfdnbakhq4uhjba</string>
+	<string>com.googleusercontent.apps.481543250834-iumlae284s99dhgg21vgsmf42ea6fvlb</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>481543250834-85urk2ded1tsfnpe70hsseiresvpu0m0.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCm5PWhthwwCDjOrL2ICzinf5WIMQN4-aQ</string>
+	<string>AIzaSyD_M7v4kCJOPaPTapXwWAjsuxDEX7lHD6s</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1090390887405</string>
+	<string>481543250834</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mannergamer.mannergamer</string>
+	<string>com.gamego.gamego</string>
 	<key>PROJECT_ID</key>
-	<string>mannergamer-c2546</string>
+	<string>gamego-ef2ef</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mannergamer-c2546.appspot.com</string>
+	<string>gamego-ef2ef.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1090390887405:ios:57f639627a2590d0d9b5e4</string>
+	<string>1:481543250834:ios:72f9615f707a5ae159974b</string>
 </dict>
 </plist>

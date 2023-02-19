@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,32 +49,22 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCp9f7EVZrisE-Kf96hwooJgAv1OtqCTls',
-    appId: '1:1090390887405:web:dfa971cff8f168a4d9b5e4',
-    messagingSenderId: '1090390887405',
-    projectId: 'mannergamer-c2546',
-    authDomain: 'mannergamer-c2546.firebaseapp.com',
-    storageBucket: 'mannergamer-c2546.appspot.com',
-    measurementId: 'G-WHS4FB278Z',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBh0EZOx44fQxm_a-VBqDabtvP0qH16Vuk',
-    appId: '1:1090390887405:android:425089d55f409499d9b5e4',
-    messagingSenderId: '1090390887405',
-    projectId: 'mannergamer-c2546',
-    storageBucket: 'mannergamer-c2546.appspot.com',
+    apiKey: 'AIzaSyB6P9dNhMRKBJ-b7SUVl_Rpno_3a3YLfs4',
+    appId: '1:481543250834:android:3a8868a1b27013b559974b',
+    messagingSenderId: '481543250834',
+    projectId: 'gamego-ef2ef',
+    storageBucket: 'gamego-ef2ef.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCm5PWhthwwCDjOrL2ICzinf5WIMQN4-aQ',
-    appId: '1:1090390887405:ios:c3b3b740ff1f564fd9b5e4',
-    messagingSenderId: '1090390887405',
-    projectId: 'mannergamer-c2546',
-    storageBucket: 'mannergamer-c2546.appspot.com',
-    iosClientId:
-        '1090390887405-v3e2ttc6bvm7m9b4dvfdnbakhq4uhjba.apps.googleusercontent.com',
-    iosBundleId: 'com.mannergamer.mannergamer',
+    apiKey: 'AIzaSyD_M7v4kCJOPaPTapXwWAjsuxDEX7lHD6s',
+    appId: '1:481543250834:ios:72f9615f707a5ae159974b',
+    messagingSenderId: '481543250834',
+    projectId: 'gamego-ef2ef',
+    storageBucket: 'gamego-ef2ef.appspot.com',
+    androidClientId: '481543250834-85urk2ded1tsfnpe70hsseiresvpu0m0.apps.googleusercontent.com',
+    iosClientId: '481543250834-iumlae284s99dhgg21vgsmf42ea6fvlb.apps.googleusercontent.com',
+    iosBundleId: 'com.gamego.gamego',
   );
 }
