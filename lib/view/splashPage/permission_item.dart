@@ -14,16 +14,24 @@ class PermissionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.fromLTRB(0, 4.sp, 5.sp, 0),
           child: icon,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(permissionName),
-            Text(guideContent),
+            Text(
+              permissionName,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            Text(
+              guideContent,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ],
         ),
       ],
