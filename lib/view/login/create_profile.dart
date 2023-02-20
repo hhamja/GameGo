@@ -109,8 +109,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       // auth에 닉네임, 프로필 저장
       _auth.currentUser!.updatePhotoURL(profileImageUrl);
       _auth.currentUser!.updateDisplayName(text);
-      // // 홈으로 이동
-      // Get.offAllNamed('/myapp');
+      // 홈으로 이동
+      Get.offAllNamed('/myapp');
     }
   }
 
@@ -230,8 +230,11 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         padding: EdgeInsets.all(
           AppSpaceData.screenPadding,
         ),
-        child:
-            CustomFullFilledTextButton('완료', validateButton, appPrimaryColor),
+        child: CustomFullFilledTextButton(
+          '완료',
+          validateButton,
+          appPrimaryColor,
+        ),
       ),
     );
   }

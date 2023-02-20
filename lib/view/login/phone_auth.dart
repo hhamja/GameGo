@@ -168,14 +168,20 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
         padding: EdgeInsets.all(AppSpaceData.screenPadding),
         child: Visibility(
           visible: isSendSms,
-          child: CustomFullFilledTextButton('시작하기', () async {
-            //sms입력 ok , 폰번호 13자리 전부 입력 시
-            if (_formKey.currentState!.validate() &&
-                _phoneController.text.length == 13) {
-              // 유저정보저장
-              await _user.signUP(_smsController.text.trim());
-            }
-          }, appPrimaryColor),
+          child: CustomFullFilledTextButton(
+            '시작하기',
+            () async {
+              //sms입력 ok , 폰번호 13자리 전부 입력 시
+              if (_formKey.currentState!.validate() &&
+                  _phoneController.text.length == 13) {
+                // 유저정보저장
+                await _user.signUP(
+                  _smsController.text.trim(),
+                );
+              }
+            },
+            appPrimaryColor,
+          ),
         ),
       ),
     );

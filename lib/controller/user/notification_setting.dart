@@ -11,8 +11,8 @@ class NtfSettingController extends GetxController with WidgetsBindingObserver {
   // 채팅, 활동, 이벤트 및 소식, 야간 알림 순
   var isChatNtf = true.obs;
   var isActivitNtf = true.obs;
-  var isMarketingConsent = true.obs;
-  var isNightNtf = true.obs;
+  var isMarketingConsent = false.obs;
+  var isNightNtf = false.obs;
 
   @override
   void onInit() {

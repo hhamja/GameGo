@@ -8,12 +8,12 @@ export 'package:sms_autofill/sms_autofill.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 
 // Packages
+export 'package:change_app_package_name/change_app_package_name.dart';
 export 'package:gamego/view/login/terms_policy/terms_detail_page.dart';
 export 'package:webview_flutter/webview_flutter.dart';
 export 'package:sizer/sizer.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:permission_handler/permission_handler.dart';
-export 'package:decimal/decimal.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
 export 'package:firebase_analytics/firebase_analytics.dart';
