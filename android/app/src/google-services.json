@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "481543250834",
+    "project_id": "gamego-ef2ef",
+    "storage_bucket": "gamego-ef2ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481543250834:android:a9b09149bb3ae43759974b",
+        "android_client_info": {
+          "package_name": "com.gamego.gamego"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481543250834-bac9qhkmlotevag2qne15030708qm9re.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6P9dNhMRKBJ-b7SUVl_Rpno_3a3YLfs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "481543250834-bac9qhkmlotevag2qne15030708qm9re.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "481543250834-iumlae284s99dhgg21vgsmf42ea6fvlb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gamego.gamego"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
