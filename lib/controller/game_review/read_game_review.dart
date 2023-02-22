@@ -7,7 +7,7 @@ class ReadGameReviewController extends GetxController
       FirebaseFirestore.instance.collection('gameReview');
 
   // 게임후기 리스트
-  RxList<GameReviewModel> gameReviewList = <GameReviewModel>[].obs;
+  // RxList<GameReviewModel> gameReviewList = <GameReviewModel>[].obs;
 
   // 내가 받은 게임후기 리스트로 받기
   Future getGameReviewList(uid) async {
