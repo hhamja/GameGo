@@ -15,16 +15,16 @@ class _ReceivedMannerEvaluationPageState
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
-    //내가 받은 매너 평가 리스트 받기
+    // 내가 받은 매너 평가 리스트 받기
     _c.getGoodEvaluationList(_auth.currentUser!.uid);
-    //내가 바든 비매너 평가 리스트 받기
+    // 내가 바든 비매너 평가 리스트 받기
     _c.getBadEvaluationList(_auth.currentUser!.uid);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final itemHeight = 3.sp;
+    final itemHeight = 4.0;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -108,9 +108,7 @@ class _ReceivedMannerEvaluationPageState
                 '받은 비매너 평가',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              SizedBox(
-                height: 1.sp,
-              ),
+              SizedBox(height: 3),
               Text(
                 '(동일 항목을 2개 이상 받은 경우에만 표시됩니다.)',
                 style: Theme.of(context).textTheme.bodySmall,

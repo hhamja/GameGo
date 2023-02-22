@@ -14,9 +14,6 @@ void main() async {
   Jiffy.locale('ko');
 
   runApp(
-    // DevicePreview(
-    //   enabled: true,
-    //   builder: (context) =>
     Sizer(
       builder: (context, orientation, deviceType) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -34,6 +31,5 @@ void main() async {
         home: SplashPage(),
       ),
     ),
-    // ),
   );
 }

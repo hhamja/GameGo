@@ -26,7 +26,9 @@ class Homepage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.small(
         onPressed: () {
-          Get.to(() => AddPostPage());
+          Get.to(
+            () => AddPostPage(),
+          );
         },
         child: Icon(
           Icons.add,

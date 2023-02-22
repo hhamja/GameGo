@@ -8,9 +8,12 @@ class IllegallyPostedPage extends StatefulWidget {
 }
 
 class _IllegallyPostedPageState extends State<IllegallyPostedPage> {
-  var postId = Get.arguments['postId']; //이전페이지가 게시글 페이지면? null아님
-  var chatRoomId = Get.arguments['chatRoomId']; //이전페이지가 채팅 페이지면? null아님
-  var uid = Get.arguments['uid']; //신고 받는 uid
+  // 이전페이지가 게시글 페이지면? null아님
+  var postId = Get.arguments['postId'];
+  // 이전페이지가 채팅 페이지면? null아님
+  var chatRoomId = Get.arguments['chatRoomId'];
+  // 신고 받는 uid
+  var uid = Get.arguments['uid'];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class _IllegallyPostedPageState extends State<IllegallyPostedPage> {
               return ListTile(
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 0,
-                  vertical: 5.sp,
+                  vertical: 6.5,
                 ),
                 title: Text(
                   '${illegalProduct[index]}',

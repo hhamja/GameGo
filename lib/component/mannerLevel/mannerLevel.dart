@@ -20,7 +20,7 @@ class CustomMannerLevel extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.centerLeft,
-          heightFactor: 1.sp,
+          heightFactor: 1.2,
           child: Container(
             // container에 마우스 올리면 매너Lv에 대한 설명나오게 하기
             child: Row(
@@ -35,12 +35,12 @@ class CustomMannerLevel extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 35.sp),
+          margin: EdgeInsets.only(top: 45),
           child: Column(
             children: [
               Row(
                 children: [
-                  SizedBox(width: 40.sp),
+                  SizedBox(width: 52),
                   Expanded(
                     flex: 1,
                     child: Column(
@@ -49,8 +49,7 @@ class CustomMannerLevel extends StatelessWidget {
                         Text(
                           '첫 Lv.30',
                           style: TextStyle(
-                            fontSize: 16,
-                            letterSpacing: 0.1.sp,
+                            fontSize: 14,
                             color: appGreyColor,
                           ),
                         ),
@@ -64,7 +63,6 @@ class CustomMannerLevel extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      padding: EdgeInsets.only(bottom: 0.sp),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -72,8 +70,8 @@ class CustomMannerLevel extends StatelessWidget {
                           Text(
                             'Lv.${level} ',
                             style: TextStyle(
-                              fontSize: 26,
-                              height: 1.sp,
+                              fontSize: 25,
+                              height: 1.2,
                               fontWeight: FontWeight.w500,
                               color: mannerLevelColor,
                             ),
@@ -124,7 +122,7 @@ class CustomMannerLevel extends StatelessWidget {
                       interval: 0,
                       labelPosition: LinearLabelPosition.inside,
                       axisTrackStyle: LinearAxisTrackStyle(
-                        thickness: 6.sp,
+                        thickness: 8,
                         edgeStyle: LinearEdgeStyle.bothCurve,
                       ),
                       showLabels: true,
@@ -132,7 +130,7 @@ class CustomMannerLevel extends StatelessWidget {
                         LinearBarPointer(
                           value: double.parse(exp),
                           color: appDarkGrey,
-                          thickness: 6.sp,
+                          thickness: 8,
                           edgeStyle: LinearEdgeStyle.bothCurve,
                         ),
                       ],

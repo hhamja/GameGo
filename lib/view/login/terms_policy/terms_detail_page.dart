@@ -58,14 +58,14 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: appBackgroudColor,
         automaticallyImplyLeading: false,
         actions: [
           CustomCloseButton(),
         ],
       ),
       body: Container(
-        color: Colors.white,
+        color: appBackgroudColor,
         child: WebViewWidget(
           controller: _controller,
         ),

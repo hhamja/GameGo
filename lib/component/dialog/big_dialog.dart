@@ -25,8 +25,7 @@ class CustomBigDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: appWhiteColor,
         contentTextStyle: Theme.of(context).textTheme.bodyMedium,
         buttonPadding: EdgeInsets.zero,
@@ -49,7 +48,7 @@ class CustomBigDialog extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        actionsPadding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 26),
+        actionsPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 26),
 
         actions: [
           Row(
@@ -58,19 +57,17 @@ class CustomBigDialog extends StatelessWidget {
             children: [
               // 왼쪽버튼
               CustomOutlineTextButton(
-                40.w,
-                5.5.h,
+                35.w,
+                45,
                 cancelText,
                 cancelFun,
-                appBlackColor,
+                appDeepDarkGrey,
               ),
-
-              SizedBox(
-                width: 5.sp,
-              ), // 오른쪽버튼
+              SizedBox(width: 10),
+              // 오른쪽버튼
               CustomFilledTextButton(
-                40.w,
-                5.5.h,
+                35.w,
+                45,
                 completeText,
                 completeFun,
                 appPrimaryColor,

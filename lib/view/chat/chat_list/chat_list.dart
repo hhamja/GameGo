@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gamegoapp/utilites/index/index.dart';
-// import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ChatListPage extends GetView<ChatController> {
   ChatListPage({Key? key}) : super(key: key);
@@ -151,10 +150,10 @@ class ChatListPage extends GetView<ChatController> {
                           children: <Widget>[
                             // 상대 유저 프로필
                             Container(
-                              height: 35.sp,
-                              width: 35.sp,
+                              height: 48,
+                              width: 48,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.sp),
+                                borderRadius: BorderRadius.circular(20),
                                 child: Image.network(
                                   _chatList.isActive
                                       // 상대 비탈퇴 : 상대의 프로필
@@ -198,22 +197,22 @@ class ChatListPage extends GetView<ChatController> {
                                 Text(
                                   _time,
                                   style: TextStyle(
-                                    fontSize: 10.sp,
+                                    fontSize: 12,
                                     color: appGreyColor,
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 3.sp,
+                                  height: 4,
                                 ),
                                 // 안읽은 메시지 수 0개가 아닐때만 표시
                                 _chatList.unReadCount[
                                             '${_auth.currentUser!.uid}'] !=
                                         0
                                     ? Container(
-                                        height: 15.sp,
-                                        width: 26,
+                                        height: 18,
+                                        width: 30,
                                         decoration: BoxDecoration(
-                                          color: Colors.red,
+                                          color: appPrimaryColor,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
                                         ),
@@ -224,8 +223,8 @@ class ChatListPage extends GetView<ChatController> {
                                                     '${_auth.currentUser!.uid}']
                                                 .toString(),
                                             style: TextStyle(
-                                              height: 1.sp,
-                                              fontSize: 9.sp,
+                                              height: 1.2,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w500,
                                               color: appWhiteColor,
                                             ),
@@ -239,71 +238,6 @@ class ChatListPage extends GetView<ChatController> {
                         ),
                       ),
                     ),
-                    // child: ListTile(
-                    //   // 상대 유저 프로필 사진
-                    //   leading: CircleAvatar(
-                    //     // 상대가 탈퇴가 아님 : 상대 프로필 표시
-                    //     // 상대가 탈퇴유저 : 기본 프로필 표시
-                    //     backgroundImage: NetworkImage(
-                    //         _chatList.isActive ? _chatPartner[1] : DefaultProfle.url),
-                    //   ),
-                    //   // 이름 · 시간
-                    //   title: Text(
-                    //     _chatPartner[2],
-                    //     maxLines: 1,
-                    //   ),
-                    //   // 마지막 대화 내용
-                    //   subtitle: Text(
-                    //     _chatList.lastContent,
-                    //     maxLines: 1,
-                    //     softWrap: true,
-                    //     overflow: TextOverflow.ellipsis,
-                    //   ),
-                    //   // 최근시간 · 읽지 않은 메시지 수
-                    //   trailing: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //     crossAxisAlignment: CrossAxisAlignment.end,
-                    //     children: [
-                    //       Text(
-                    //         _time,
-                    //         style: TextStyle(fontSize: 10),
-                    //       ),
-                    //       // 안읽은 메시지 수 0개가 아닐때만 표시
-                    //       _chatList.unReadCount['${CurrentUser.uid}'] != 0
-                    //           ? CircleAvatar(
-                    //               backgroundColor: Colors.red,
-                    //               radius: 10,
-                    //               child: Text(
-                    //                 // 읽지 않은 메시지 알려주는 빨간숫자
-                    //                 _chatList.unReadCount['${CurrentUser.uid}']
-                    //                     .toString(),
-                    //                 style:
-                    //                     TextStyle(fontSize: 12, color: appWhiteColor),
-                    //               ),
-                    //             )
-                    //           : SizedBox.shrink(),
-                    //     ],
-                    //   ),
-                    //   onTap: () async {
-                    //     // 페이지 이동
-                    //     Get.toNamed(
-                    //       // 상대가 탈퇴 유저인지 확인
-                    //       _chatList.isActive
-                    //           // 탈퇴유저 아님
-                    //           ? '/chatscreen'
-                    //           // 탈퇴유저임
-                    //           : '/noUserChatScreen',
-                    //       arguments: {
-                    //         'chatRoomId': _chatList.chatRoomId,
-                    //         'postId': _chatList.postId,
-                    //         // 상대유저 uid, 프로필, 닉네임
-                    //         'uid': _chatPartner[0],
-                    //         'profileUrl': _chatPartner[1],
-                    //         'userName': _chatPartner[2],
-                    //       },
-                    //     );
-                    //   },
-                    // ),
                   );
                 },
               ),

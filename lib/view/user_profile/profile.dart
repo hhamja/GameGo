@@ -32,22 +32,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
         padding: EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
         child: Column(
           children: [
-            SizedBox(height: 23.sp),
+            SizedBox(height: AppSpaceData.heightMedium),
             CircleAvatar(
               backgroundImage: NetworkImage(profileUrl),
-              radius: 62.sp,
+              radius: 80,
             ),
-            SizedBox(height: 10.sp),
+            SizedBox(height: 13),
             Text(
               userName,
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            SizedBox(height: 23.sp),
+            SizedBox(height: AppSpaceData.heightMedium),
             CustomMannerLevel(mannerLevel, false, ''),
-            SizedBox(height: 23.sp),
+            SizedBox(height: AppSpaceData.heightSmall),
             CustomDivider(),
             ListTile(
-              contentPadding: EdgeInsets.symmetric(vertical: 5.sp),
+              contentPadding: EdgeInsets.symmetric(vertical: 8),
               title: Text(
                 '받은 매너 평가',
                 style: Theme.of(context).textTheme.bodyMedium,
@@ -63,7 +63,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               trailing: Icon(Icons.keyboard_arrow_right_outlined),
             ),
             ListTile(
-              contentPadding: EdgeInsets.symmetric(vertical: 5.sp),
+              contentPadding: EdgeInsets.symmetric(vertical: 8),
               title: Text(
                 '받은 게임 후기',
                 style: Theme.of(context).textTheme.bodyMedium,

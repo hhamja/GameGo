@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-// import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gamegoapp/utilites/index/index.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -15,7 +14,8 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
     super.initState();
-    _ntf.getNtfList(); //내가 받은 알림 리스트 서버에서 받기
+    // 내가 받은 알림 리스트 서버에서 받기
+    _ntf.getNtfList();
   }
 
   // 아이콘 조건식
@@ -23,16 +23,28 @@ class _NotificationPageState extends State<NotificationPage> {
   NotificationCircleIcon iconByType(ntfType) {
     if (ntfType == 'review') {
       // 매너후기
-      return NotificationCircleIcon(mannerReviewNtfColor, CupertinoIcons.pen);
+      return NotificationCircleIcon(
+        mannerReviewNtfColor,
+        CupertinoIcons.pen,
+      );
     } else if (ntfType == 'appoint') {
       // 약속설정
-      return NotificationCircleIcon(appointNtfColor, CupertinoIcons.calendar);
+      return NotificationCircleIcon(
+        appointNtfColor,
+        CupertinoIcons.calendar,
+      );
     } else if (ntfType == 'favorite') {
       // 게시글 관심
-      return NotificationCircleIcon(favoriteNtfColor, CupertinoIcons.heart);
+      return NotificationCircleIcon(
+        favoriteNtfColor,
+        CupertinoIcons.heart,
+      );
     } else {
       // 앱 공지 및 마케팅
-      return NotificationCircleIcon(noticeNtfColor, CupertinoIcons.mic);
+      return NotificationCircleIcon(
+        noticeNtfColor,
+        CupertinoIcons.mic,
+      );
     }
   }
 
@@ -102,7 +114,6 @@ class _NotificationPageState extends State<NotificationPage> {
                 //     ],
                 //   ),
                 //   child:
-
                 ListTile(
               minLeadingWidth: 0,
               isThreeLine: true,

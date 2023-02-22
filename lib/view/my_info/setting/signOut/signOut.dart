@@ -16,7 +16,6 @@ class _SignOutPageState extends State<SignOutPage> {
     final TextStyle _boldText = TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.bold,
-      letterSpacing: 0.25.sp,
     );
 
     return Scaffold(
@@ -46,7 +45,7 @@ class _SignOutPageState extends State<SignOutPage> {
               '$appName와 이별하려고 하시나요?  너무 아쉬워요.',
               style: _boldText,
             ),
-            SizedBox(height: 3.sp),
+            SizedBox(height: 10),
             Text(
               '우리가 이별하면 게시글, 채팅, 매너레벨, 관심 등 모든 계정 정보가 삭제 됩니다. 삭제된 계정 정보는 평생 복구할 수 없어요.',
               style: Theme.of(context).textTheme.bodyMedium,
@@ -56,32 +55,32 @@ class _SignOutPageState extends State<SignOutPage> {
               '${_auth.currentUser!.displayName!}님이 탈퇴하려는 이유가 궁금해요.',
               style: _boldText,
             ),
-            SizedBox(height: 8.sp),
+            SizedBox(height: 20),
             DropdownButtonHideUnderline(
               child: DropdownButton2(
                 style: Theme.of(context).textTheme.bodyMedium,
                 iconSize: 26,
-                buttonPadding: EdgeInsets.fromLTRB(10.sp, 0, 5.sp, 2.sp),
+                buttonPadding: EdgeInsets.fromLTRB(16, 0, 10, 3),
                 isExpanded: true,
                 icon: Icon(
                   Icons.keyboard_arrow_down_sharp,
                   color: appBlackColor,
                 ),
                 buttonDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.sp),
-                  border: Border.all(width: 0.8.sp, color: Colors.grey),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(width: 1, color: Colors.grey),
                 ),
-                dropdownWidth: 200.sp,
+                dropdownWidth: 300,
                 dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.sp),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 hint: Text(
                   '선택해주세요',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                itemHeight: 40.sp,
+                itemHeight: 60,
                 buttonElevation: 0,
-                buttonHeight: 40.sp,
+                buttonHeight: 50,
                 items: leaveAppValue
                     .map(
                       (item) => DropdownMenuItem(
@@ -104,7 +103,7 @@ class _SignOutPageState extends State<SignOutPage> {
                 },
               ),
             ),
-            SizedBox(height: 8.sp),
+            SizedBox(height: 10),
             selectedLeaveReason == '기타'
                 ? TextFormField(
                     cursorColor: cursorColor,
@@ -122,14 +121,12 @@ class _SignOutPageState extends State<SignOutPage> {
                       ),
                       contentPadding: EdgeInsets.all(16),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: appGreyColor, width: 0.8.sp),
-                        borderRadius: BorderRadius.circular(10.sp),
+                        borderSide: BorderSide(color: appGreyColor, width: 1),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: appGreyColor, width: 0.8.sp),
-                        borderRadius: BorderRadius.circular(10.sp),
+                        borderSide: BorderSide(color: appGreyColor, width: 1),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     minLines: 8,
@@ -147,52 +144,57 @@ class _SignOutPageState extends State<SignOutPage> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(AppSpaceData.screenPadding),
-        child: CustomFullFilledTextButton('$appName와 이별하기', () async {
-          //0. 아무것도 선택하지 않은 경우
-          if (selectedLeaveReason == '선택해주세요' || selectedLeaveReason == null) {
-            Get.dialog(
-              CustomOneButtonDialog(
-                '탈퇴 이유를 버튼에서 선택해주세요.',
-                '확인',
-                () => Get.back(),
-              ),
-            );
-          } else if (selectedLeaveReason == '기타') {
-            // 기타 사유
-            final String text = _textController.text.trim();
-            if (text.length == 0 || text.isEmpty) {
-              // 텍스트를 입력하지 않은 경우
+        child: CustomFullFilledTextButton(
+          '$appName와 이별하기',
+          () async {
+            //0. 아무것도 선택하지 않은 경우
+            if (selectedLeaveReason == '선택해주세요' ||
+                selectedLeaveReason == null) {
               Get.dialog(
                 CustomOneButtonDialog(
-                  '탈퇴 이유를 작성해주세요. 이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
+                  '탈퇴 이유를 버튼에서 선택해주세요.',
                   '확인',
                   () => Get.back(),
                 ),
               );
+            } else if (selectedLeaveReason == '기타') {
+              // 기타 사유
+              final String text = _textController.text.trim();
+              if (text.length == 0 || text.isEmpty) {
+                // 텍스트를 입력하지 않은 경우
+                Get.dialog(
+                  CustomOneButtonDialog(
+                    '탈퇴 이유를 작성해주세요. 이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
+                    '확인',
+                    () => Get.back(),
+                  ),
+                );
+              } else {
+                // 텍스트를 한 글자라도 입력한 경우
+                final SignOutFeedBackModel _model = SignOutFeedBackModel(
+                  feedBackContent: text,
+                  createdAt: Timestamp.now(),
+                );
+
+                // 피드백 서버에 저장
+                await _c.addFeedBack(_model);
+                _textController.clear();
+                Get.to(() => SignOutSmsPage());
+              }
             } else {
-              // 텍스트를 한 글자라도 입력한 경우
+              // 기타사유가 아닌 경우
               final SignOutFeedBackModel _model = SignOutFeedBackModel(
-                feedBackContent: text,
+                feedBackContent: selectedLeaveReason.toString(),
                 createdAt: Timestamp.now(),
               );
-
               // 피드백 서버에 저장
               await _c.addFeedBack(_model);
               _textController.clear();
               Get.to(() => SignOutSmsPage());
             }
-          } else {
-            // 기타사유가 아닌 경우
-            final SignOutFeedBackModel _model = SignOutFeedBackModel(
-              feedBackContent: selectedLeaveReason.toString(),
-              createdAt: Timestamp.now(),
-            );
-            // 피드백 서버에 저장
-            await _c.addFeedBack(_model);
-            _textController.clear();
-            Get.to(() => SignOutSmsPage());
-          }
-        }, appPrimaryColor),
+          },
+          appPrimaryColor,
+        ),
       ),
     );
   }

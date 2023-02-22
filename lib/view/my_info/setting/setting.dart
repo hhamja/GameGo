@@ -122,14 +122,15 @@ class _SettingPageState extends State<SettingPage> {
                     '서비스 이용 약관',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  onPressed: (_) {},
+                  onPressed: (_) async => Get.to(() => TermsDetailPage()),
                 ),
                 SettingsTile.navigation(
                   title: Text(
                     '개인정보 취급 처리 방침',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  onPressed: (_) {},
+                  onPressed: (_) async =>
+                      Get.to(() => PrivacyPolicyDetailPage()),
                 ),
                 SettingsTile.navigation(
                   title: Text(

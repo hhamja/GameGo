@@ -76,21 +76,21 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
                 fillColor: appWhiteColor,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10.0.sp),
+                    Radius.circular(20),
                   ),
                   borderSide:
                       BorderSide(color: Colors.grey, style: BorderStyle.solid),
                 ),
                 disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10.sp),
+                    Radius.circular(20),
                   ),
                   borderSide:
                       BorderSide(color: Colors.grey, style: BorderStyle.solid),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10.sp),
+                    Radius.circular(20),
                   ),
                   borderSide:
                       BorderSide(color: appGreyColor, style: BorderStyle.solid),
@@ -107,34 +107,36 @@ class _OtherReasonsPageState extends State<OtherReasonsPage> {
       ),
       // 버튼
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(
-          AppSpaceData.screenPadding,
+        padding: EdgeInsets.all(AppSpaceData.screenPadding),
+        child: CustomFullFilledTextButton(
+          '신고사유 제출하기',
+          () async {
+            final text = _textController.text.trim();
+            // 사유 입력에 대한 조건식
+            if (text == '' || text.isEmpty) {
+              // 신고사유 입력하지 않은 경우
+              Get.dialog(
+                CustomOneButtonDialog(
+                  '신고 사유를 입력해주세요.',
+                  '확인',
+                  () => Get.back(),
+                ),
+              );
+            } else {
+              // 신고사유 입력한 경우
+              Get.dialog(
+                ReportDialog(),
+                arguments: {
+                  'chatRoomId': chatRoomId ?? null,
+                  'postId': postId ?? null,
+                  'uid': uid,
+                  'content': _textController.text.trim(),
+                },
+              );
+            }
+          },
+          appPrimaryColor,
         ),
-        child: CustomFullFilledTextButton('신고사유 제출하기', () async {
-          final text = _textController.text.trim();
-          // 사유 입력에 대한 조건식
-          if (text == '' || text.isEmpty) {
-            // 신고사유 입력하지 않은 경우
-            Get.dialog(
-              CustomOneButtonDialog(
-                '신고 사유를 입력해주세요.',
-                '확인',
-                () => Get.back(),
-              ),
-            );
-          } else {
-            // 신고사유 입력한 경우
-            Get.dialog(
-              ReportDialog(),
-              arguments: {
-                'chatRoomId': chatRoomId ?? null,
-                'postId': postId ?? null,
-                'uid': uid,
-                'content': _textController.text.trim(),
-              },
-            );
-          }
-        }, appPrimaryColor),
       ),
     );
   }

@@ -15,8 +15,7 @@ class CustomOneButtonDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: appWhiteColor,
         contentTextStyle: Theme.of(context).textTheme.bodyMedium,
         buttonPadding: EdgeInsets.zero,
@@ -32,17 +31,17 @@ class CustomOneButtonDialog extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
         ),
-        actionsPadding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 26),
+        actionsPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 26),
 
         actions: [
           Row(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // 확인 버튼
               CustomFilledTextButton(
                 80.w,
-                5.5.h,
+                45,
                 buttonText,
                 onPressed,
                 appPrimaryColor,

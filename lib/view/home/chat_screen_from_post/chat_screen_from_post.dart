@@ -57,15 +57,15 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
                 userName,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              SizedBox(width: 3.sp),
+              SizedBox(width: 5),
               // 매너Lv
               FutureBuilder(
                 future: _chat.getUserMannerLevel(uid),
                 builder: (context, snapshot) => Text(
                   'Lv.${_chat.level}',
                   style: TextStyle(
-                    fontSize: 10.sp,
-                    letterSpacing: 0.25.sp,
+                    fontSize: 13,
+                    letterSpacing: 0.5,
                     color: mannerLevelColor,
                   ),
                 ),
@@ -74,8 +74,10 @@ class _ChatScreenPageFromPostState extends State<ChatScreenPageFromPost> {
           ),
         ),
         centerTitle: true,
-        // 앱바 타이틀의 중앙을 맞추기 위한 박스
-        actions: [SizedBox(width: 30.sp)],
+        actions: [
+          // 앱바 타이틀의 중앙을 맞추기 위한 박스
+          SizedBox(width: 35),
+        ],
       ),
       body: Column(
         children: [

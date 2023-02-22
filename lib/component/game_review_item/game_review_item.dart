@@ -42,12 +42,10 @@ class GameReviewItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 30.sp,
-            width: 30.sp,
+            height: 45,
+            width: 45,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(
-                15.sp,
-              ),
+              borderRadius: BorderRadius.circular(20),
               child: Image.network(
                 profileUrl,
                 fit: BoxFit.fill,
@@ -56,9 +54,7 @@ class GameReviewItem extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(
-                left: AppSpaceData.screenPadding * 0.8,
-              ),
+              padding: EdgeInsets.only(left: AppSpaceData.screenPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -73,9 +69,9 @@ class GameReviewItem extends StatelessWidget {
                       ),
                       // 시간
                       Text(
-                        '·${time}',
+                        time,
                         style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: 14,
                           color: Colors.grey,
                         ),
                       ),

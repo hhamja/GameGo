@@ -42,7 +42,7 @@ class _ReportListPageState extends State<ReportListPage> {
             ),
           ),
           SizedBox(
-            height: 10.sp,
+            height: 13,
           ),
           ListView.builder(
             controller: ScrollController(),
@@ -52,7 +52,7 @@ class _ReportListPageState extends State<ReportListPage> {
               return ListTile(
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 0,
-                  vertical: 5.sp,
+                  vertical: 6.5,
                 ),
                 title: Text(
                   '${reportPostReason[index]}',

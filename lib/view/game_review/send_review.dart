@@ -70,7 +70,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   ),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
-                      EdgeInsets.all(15.sp),
+                      EdgeInsets.all(17),
                     ),
                   ),
                   child: _evaluationtype == 'bad'
@@ -78,7 +78,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                           children: [
                             Text(
                               '\u{1F629}',
-                              style: TextStyle(fontSize: 45.sp),
+                              style: TextStyle(fontSize: 60),
                             ),
                             Text(
                               '별로예요',
@@ -97,7 +97,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                                 child: Text(
                                   '\u{1F629}',
                                   style: TextStyle(
-                                    fontSize: 40.sp,
+                                    fontSize: 50,
                                     color: Colors.grey,
                                   ),
                                 ),
@@ -106,8 +106,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
                             Text(
                               '별로예요',
                               style: TextStyle(
-                                fontSize: 16,
-                                letterSpacing: 0.25.sp,
+                                fontSize: 14,
+                                letterSpacing: 0.3,
                                 color: Colors.grey,
                               ),
                             ),
@@ -121,7 +121,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                   ),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
-                      EdgeInsets.all(15.sp),
+                      EdgeInsets.all(17),
                     ),
                   ),
                   child: _evaluationtype == 'good'
@@ -130,7 +130,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                             Text(
                               '\u{1F60D}',
                               style: TextStyle(
-                                fontSize: 45.sp,
+                                fontSize: 60,
                               ),
                             ),
                             Text(
@@ -150,7 +150,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
                                 child: Text(
                                   '\u{1F60D}',
                                   style: TextStyle(
-                                    fontSize: 40.sp,
+                                    fontSize: 50,
                                     color: Colors.grey,
                                   ),
                                 ),
@@ -159,8 +159,8 @@ class _SendReviewPageState extends State<SendReviewPage> {
                             Text(
                               '최고예요',
                               style: TextStyle(
-                                fontSize: 16,
-                                letterSpacing: 0.25.sp,
+                                fontSize: 14,
+                                letterSpacing: 0.3,
                                 color: Colors.grey,
                               ),
                             ),
@@ -233,18 +233,16 @@ class _SendReviewPageState extends State<SendReviewPage> {
                               Theme.of(context).textTheme.bodyMedium!.fontSize,
                           color: appGreyColor,
                         ),
-                        contentPadding: EdgeInsets.all(10.sp),
+                        contentPadding: EdgeInsets.all(16),
                         counterText: '남겨주신 후기는 상대방에게 전달돼요.',
                         counterStyle: TextStyle(),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.7.sp),
-                          borderRadius: BorderRadius.circular(10.0.sp),
+                          borderSide: BorderSide(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.7.sp),
-                          borderRadius: BorderRadius.circular(10.0.sp),
+                          borderSide: BorderSide(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
                       minLines: 5,

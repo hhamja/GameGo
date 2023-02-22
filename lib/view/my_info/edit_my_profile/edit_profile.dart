@@ -115,24 +115,26 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
                         ? //갤러리에서 사진 선택하지 않은 경우 나의 기존 프로필 url
                         CircleAvatar(
                             backgroundImage: NetworkImage(profileImageUrl),
-                            radius: 65.sp,
+                            radius: 85,
                           )
                         : //갤러리에서 사진 선택한 경우 선택한 파일의 이미지
                         CircleAvatar(
                             backgroundImage: FileImage(_photoFile!),
-                            radius: 65.sp,
+                            radius: 85,
                           ),
                     Positioned(
-                      bottom: 6.sp,
-                      right: 6.sp,
+                      bottom: 8,
+                      right: 8,
                       child: Container(
-                        padding: EdgeInsets.all(4.sp),
+                        padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: appWhiteColor),
+                          shape: BoxShape.circle,
+                          color: appWhiteColor,
+                        ),
                         child: Icon(
                           Icons.camera_alt,
                           color: appBlackColor,
-                          size: 23.sp,
+                          size: 30,
                         ),
                       ),
                     ),
@@ -178,12 +180,11 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
                 ),
               ],
             ),
-            SizedBox(height: 3.sp),
+            SizedBox(height: 5),
             Text(
               _showErrorText,
               style: TextStyle(
                 fontSize: 16,
-                letterSpacing: 0.5,
                 color: Colors.red,
               ),
             )
@@ -243,12 +244,12 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
   // 카메라 아이콘 클릭시 띄울 바텀시트
   showBottomSheet() {
     return Container(
-      margin: EdgeInsets.all(AppSpaceData.screenPadding * 0.5),
+      margin: EdgeInsets.all(AppSpaceData.screenPadding),
       decoration: BoxDecoration(
         color: appWhiteColor,
-        borderRadius: BorderRadius.circular(10.sp),
+        borderRadius: BorderRadius.circular(20),
       ),
-      height: 160.sp,
+      height: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

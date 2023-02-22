@@ -151,26 +151,28 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                             // 투명색
                             backgroundColor: Colors.transparent,
                             backgroundImage: NetworkImage(profileImageUrl),
-                            radius: 65.sp,
+                            radius: 85,
                           )
                         : // 갤러리에서 사진 선택한 경우 선택한 파일의 이미지
                         CircleAvatar(
                             // 투명색
                             backgroundColor: Colors.transparent,
                             backgroundImage: FileImage(_photo!),
-                            radius: 65.sp,
+                            radius: 85,
                           ),
                     Positioned(
-                      bottom: 6.sp,
-                      right: 6.sp,
+                      bottom: 8,
+                      right: 8,
                       child: Container(
-                        padding: EdgeInsets.all(4.sp),
+                        padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: appWhiteColor),
+                          shape: BoxShape.circle,
+                          color: appWhiteColor,
+                        ),
                         child: Icon(
                           Icons.camera_alt,
                           color: appBlackColor,
-                          size: 23.sp,
+                          size: 30,
                         ),
                       ),
                     ),
@@ -214,12 +216,11 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     RegExp(r'[a-z|A-Z|0-9|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]'))
               ],
             ),
-            SizedBox(height: 3.sp),
+            SizedBox(height: 5),
             Text(
               _showErrorText,
               style: TextStyle(
                 fontSize: 16,
-                letterSpacing: 0.5,
                 color: Colors.red,
               ),
             )
@@ -242,12 +243,12 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   // 카메라 아이콘 클릭시 띄울 바텀시트
   Container showBottomSheet() {
     return Container(
-      margin: EdgeInsets.all(AppSpaceData.screenPadding * 0.5),
+      margin: EdgeInsets.all(AppSpaceData.screenPadding),
       decoration: BoxDecoration(
         color: appWhiteColor,
-        borderRadius: BorderRadius.circular(10.sp),
+        borderRadius: BorderRadius.circular(20),
       ),
-      height: 160.sp,
+      height: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

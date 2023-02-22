@@ -26,20 +26,15 @@ class _NewMessageState extends State<NewMessage> {
       isDeleted: false,
       timestamp: Timestamp.now(),
     );
-
+    // 입력한 메시지 지우기
+    setState(() => _messageController.clear());
     // 메시지 보내기
-    await _chat.sendNewMessege(messageModel, widget.chatRoomId);
+    _chat.sendNewMessege(messageModel, widget.chatRoomId);
 
     // 채팅방 데이터의 마지막 채팅 내용, 시간, 맴버 업데이트
     // 맴버 다시 추가 : 상대가 채팅방 나가기하면 맴버에서 uid가 빠지기 때문
-    _chat.updateChatRoom(
-      [_auth.currentUser!.uid, widget.uid],
-      widget.chatRoomId,
-      _messageController.text.trim(),
-      Timestamp.now(),
-    );
-    // 입력한 메시지 지우기
-    setState(() => _messageController.clear());
+    _chat.updateChatRoom(messageModel, widget.chatRoomId);
+
     // 맨밑으로 스크롤이동
     _chat.scroll.jumpTo(0);
   }
@@ -47,19 +42,11 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5.sp),
+      padding: EdgeInsets.all(6.5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // IconButton(
-          //   onPressed: () {}, //클릭 시 사진보내기 (나중)
-          //   icon: Icon(
-          //     Icons.add_sharp,
-          //     size: 30,
-          //     color: Colors.grey[500],
-          //   ),
-          // ),
           // 메시지 입력란
           Expanded(
             child: TextField(
@@ -75,10 +62,12 @@ class _NewMessageState extends State<NewMessage> {
                 isDense: true,
                 filled: true,
                 fillColor: Colors.grey[200],
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10.sp, vertical: 8.sp),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(26),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide.none,
                 ),
                 hintText: '메시지 보내기',
@@ -88,7 +77,7 @@ class _NewMessageState extends State<NewMessage> {
                 ),
               ),
               onChanged: (value) {
-                setState(() {});
+                setState(() => value);
               },
             ),
           ),

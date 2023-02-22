@@ -95,6 +95,7 @@ class _EditPostPageState extends State<EditPostPage> {
         reverse: true,
         child: Column(
           children: [
+            SizedBox(height: 20),
             // 모드, 포지션, 티어 드랍다운버튼
             EditPostDropDownButton(),
             Padding(
@@ -104,7 +105,7 @@ class _EditPostPageState extends State<EditPostPage> {
                 children: [
                   Divider(
                     thickness: 1,
-                    height: 30.sp,
+                    height: 40,
                     color: appGreyColor,
                   ),
                   // 제목입력
@@ -129,7 +130,7 @@ class _EditPostPageState extends State<EditPostPage> {
                           ? null
                           : IconButton(
                               // 드랍다운 버튼과 오른쪽 끝선을 맞추기 위한 수치
-                              padding: EdgeInsets.all(3.sp),
+                              padding: EdgeInsets.all(4),
                               alignment: Alignment.centerRight,
                               icon: Icon(
                                 Icons.clear,
@@ -150,7 +151,7 @@ class _EditPostPageState extends State<EditPostPage> {
                   ),
                   Divider(
                     thickness: 1,
-                    height: 30.sp,
+                    height: 40,
                     color: appGreyColor,
                   ),
                   // 본문입력
@@ -175,7 +176,7 @@ class _EditPostPageState extends State<EditPostPage> {
                           ? null
                           : IconButton(
                               // 드랍다운 버튼과 오른쪽 끝선을 맞추기 위한 수치
-                              padding: EdgeInsets.all(3.sp),
+                              padding: EdgeInsets.all(4),
                               alignment: Alignment.centerRight,
                               icon: Icon(
                                 Icons.clear,

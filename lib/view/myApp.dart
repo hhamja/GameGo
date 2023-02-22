@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       body: _bodylist[tabIndex],
       bottomNavigationBar: Obx(
         () => Padding(
-          padding: EdgeInsets.symmetric(vertical: 5.sp),
+          padding: EdgeInsets.symmetric(vertical: 6.5),
           child: BottomNavigationBar(
             onTap: (value) => setState(() => tabIndex = value),
             currentIndex: tabIndex,
@@ -72,22 +72,21 @@ class _MyAppState extends State<MyApp> {
                         child: Icon(
                           CupertinoIcons.chat_bubble_2,
                         ),
-                        position:
-                            badges.BadgePosition.topEnd(end: -2.sp, top: 0),
+                        position: badges.BadgePosition.topEnd(end: -2, top: 0),
                         badgeStyle: badges.BadgeStyle(
                           badgeColor: appPrimaryColor,
-                          padding: EdgeInsets.all(3.5.sp),
+                          padding: EdgeInsets.all(5),
                         ),
                       ),
                       badges.Badge(
                         position:
-                            badges.BadgePosition.topEnd(end: -3.sp, top: -1.sp),
+                            badges.BadgePosition.topEnd(end: -3.5, top: -1),
                         child: Icon(
                           CupertinoIcons.chat_bubble_2_fill,
                         ),
                         badgeStyle: badges.BadgeStyle(
                           badgeColor: appPrimaryColor,
-                          padding: EdgeInsets.all(3.5.sp),
+                          padding: EdgeInsets.all(5),
                         ),
                       ),
                       '채팅',

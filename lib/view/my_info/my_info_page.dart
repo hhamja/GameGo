@@ -25,7 +25,6 @@ class MyInfoPage extends StatelessWidget {
               );
             },
             icon: Icon(Icons.settings_outlined),
-            iconSize: 18.sp,
           ),
         ],
       ),
@@ -75,7 +74,7 @@ class MyInfoPage extends StatelessWidget {
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   leading: CircleAvatar(
-                    radius: 25.sp,
+                    radius: 30,
                     backgroundImage: NetworkImage(
                       _c.userInfo.profileUrl,
                     ),
@@ -88,9 +87,13 @@ class MyInfoPage extends StatelessWidget {
                     '가입일 : $_createdAt',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  trailing: Icon(Icons.keyboard_control_outlined),
+                  trailing: Icon(
+                    Icons.keyboard_control_outlined,
+                  ),
                   onPressed: (value) {
-                    Get.to(() => EditMyProfilePage());
+                    Get.to(
+                      () => EditMyProfilePage(),
+                    );
                   },
                 ),
                 SettingsTile(
@@ -168,24 +171,6 @@ class MyInfoPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               tiles: <SettingsTile>[
-                // SettingsTile.navigation(
-                //   title: Text('공지사항'),
-                //   onPressed: (_) {
-                //     Get.to(() => AppNoticeListPage());
-                //   },
-                // ),
-                // SettingsTile.navigation(
-                //   title: Text('1:1 문의 및 피드백'),
-                //   onPressed: (_) {
-                //     Get.to(() => FeedbackPage());
-                //   },
-                // ),
-                // SettingsTile.navigation(
-                //   title: Text('FAQ'),
-                //   onPressed: (_) {
-                //     Get.to(() => FAQPage());
-                //   },
-                // ),
                 SettingsTile.navigation(
                   title: Text(
                     '설정',

@@ -72,12 +72,14 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
             children: [
               // 별로예요 : 최고예요 이모지
               Padding(
-                padding: EdgeInsets.all(15.sp),
+                padding: EdgeInsets.all(17),
                 child: Column(
                   children: [
                     Text(
                       !_c.isGood.value ? '\u{1F629}' : '\u{1F60D}',
-                      style: TextStyle(fontSize: 45.sp),
+                      style: TextStyle(
+                        fontSize: 60,
+                      ),
                     ),
                     Text(
                       !_c.isGood.value ? '별로예요' : '최고예요',
@@ -128,7 +130,6 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                         );
                       },
                     ),
-
               // 작성한 거래 후기
               Container(
                 width: 100.w,
@@ -137,15 +138,15 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
                 ),
                 padding: EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 15.sp,
+                  vertical: 20,
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    width: 0.8.sp,
+                    width: 1,
                     color: Colors.grey,
                   ),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10.0.sp), // POINT
+                    Radius.circular(20),
                   ),
                 ),
                 child: Text(

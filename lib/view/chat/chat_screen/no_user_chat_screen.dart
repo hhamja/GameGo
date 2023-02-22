@@ -48,12 +48,14 @@ class _NoUserChatScreenPageState extends State<NoUserChatScreenPage> {
               Get.bottomSheet(
                 ChatBottomSheet(
                   chatRoomId: chatRoomId,
-                  //신고받은 uid
+                  // 신고받은 uid
                   uid: uid,
                 ),
               ),
             },
-            icon: Icon(Icons.more_vert),
+            icon: Icon(
+              Icons.more_vert,
+            ),
           ),
         ],
       ),

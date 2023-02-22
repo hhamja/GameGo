@@ -28,7 +28,7 @@ class GoodEvaluationItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.people_alt_outlined),
-                SizedBox(width: 4.sp),
+                SizedBox(width: 5),
                 // 받은 매너평가 항목 총 개수
                 Text(
                   '$element',

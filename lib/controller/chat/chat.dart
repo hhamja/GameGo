@@ -96,12 +96,12 @@ class ChatController extends GetxController
   }
 
   // 메시지를 보낼 때 마다 마지막 채팅, 최근 시간 업데이트
-  Future updateChatRoom(members, chatRoomId, lastContent, updatedAt) async {
+  Future updateChatRoom(MessageModel model, chatRoomId) async {
     return _chatDB.doc(chatRoomId).update(
       {
-        'members': members,
-        'lastContent': lastContent,
-        'updatedAt': updatedAt,
+        'members': [model.idFrom, model.idTo],
+        'lastContent': model.content,
+        'updatedAt': model.timestamp,
       },
     );
   }

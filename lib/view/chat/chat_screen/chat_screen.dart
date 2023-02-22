@@ -76,15 +76,15 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                 userName,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              SizedBox(width: 3.sp),
+              SizedBox(width: 5),
               // 매너Lv
               FutureBuilder(
                 future: _chat.getUserMannerLevel(uid),
                 builder: (context, snapshot) => Text(
                   'Lv.${_chat.level}',
                   style: TextStyle(
-                    fontSize: 10.sp,
-                    letterSpacing: 0.25.sp,
+                    fontSize: 13,
+                    letterSpacing: 0.5,
                     color: mannerLevelColor,
                   ),
                 ),
@@ -166,12 +166,15 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                 ?
                                 // 있다면? 약속설정 가능 O
                                 () {
-                                    Get.to(() => AppointmentPage(), arguments: {
-                                      'chatRoomId': chatRoomId,
-                                      'uid': uid,
-                                      'postId': postId,
-                                      'postTitle': _post.postInfo.title,
-                                    });
+                                    Get.to(
+                                      () => AppointmentPage(),
+                                      arguments: {
+                                        'chatRoomId': chatRoomId,
+                                        'uid': uid,
+                                        'postId': postId,
+                                        'postTitle': _post.postInfo.title,
+                                      },
+                                    );
                                   }
                                 // 없다면? 약속설정 X , 토스트 사용자에게 알림
                                 : () => Get.dialog(
@@ -182,11 +185,11 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                       ),
                                     ),
                             child: Container(
-                              padding: EdgeInsets.all(4.sp),
+                              padding: EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 0.8.sp, color: Colors.grey),
-                                borderRadius: BorderRadius.circular(5.sp),
+                                border:
+                                    Border.all(width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -197,7 +200,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     Icons.calendar_month,
                                     color: appBlackColor,
                                   ),
-                                  SizedBox(width: 3.sp),
+                                  SizedBox(width: 4),
                                   // 약속시간 > 현재 ? 약속시간 표시
                                   // 약속시간 <= 현재 ?
                                   Text(
@@ -231,11 +234,11 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                     );
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.all(4.sp),
+                                    padding: EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          width: 0.8.sp, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(5.sp),
+                                          width: 1, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -248,7 +251,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                           Icons.sticky_note_2_outlined,
                                           color: appBlackColor,
                                         ),
-                                        SizedBox(width: 3.sp),
+                                        SizedBox(width: 4),
                                         Text(
                                           '보낸 후기 확인하기',
                                           style: Theme.of(context)
@@ -263,7 +266,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                               InkWell(
                                   onTap: () => Get.dialog(
                                     CustomSmallDialog(
-                                      '$userName님과 게임을 하셨나요?', '취소',
+                                      '$userName님과 게임을 하셨나요?', '아니요',
                                       '네, 게임했어요',
                                       () => Get.back(),
                                       () {
@@ -271,23 +274,24 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                         Get.to(
                                           () => SendReviewPage(),
                                           arguments: {
-                                            'uid': uid, //상대 uid
-                                            'chatRoomId': chatRoomId, //채팅방 id
-                                            'postTitle':
-                                                _post.postInfo.title, //게시글 제목
-                                            'postId': postId, //게시글 id
-                                            'userName': userName, //상대유저이름
+                                            // 상대 uid
+                                            'uid': uid,
+                                            // 상대유저이름
+                                            'userName': userName,
+                                            'chatRoomId': chatRoomId,
+                                            'postTitle': _post.postInfo.title,
+                                            'postId': postId,
                                           },
                                         );
                                       }, //매너평가 페이지로 이동
                                     ),
                                   ),
                                   child: Container(
-                                    padding: EdgeInsets.all(4.sp),
+                                    padding: EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          width: 0.8.sp, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(5.sp),
+                                          width: 1, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
@@ -300,7 +304,7 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                                           Icons.sticky_note_2_outlined,
                                           color: appBlackColor,
                                         ),
-                                        SizedBox(width: 3.sp),
+                                        SizedBox(width: 4),
                                         Text(
                                           '후기 보내기',
                                           style: Theme.of(context)
@@ -316,7 +320,6 @@ class _ChatScreenPageState extends State<ChatScreenPage> {
                 ],
               ),
             ),
-
             // 메시지 보여주는 부분
             Expanded(
               child: Stack(

@@ -19,8 +19,8 @@ class AddPostDropDownButton extends StatelessWidget {
               itemPadding: EdgeInsets.symmetric(
                 horizontal: AppSpaceData.screenPadding,
               ),
-              buttonHeight: 50.sp,
-              itemHeight: 50.sp,
+              buttonHeight: 70,
+              itemHeight: 70,
               isExpanded: true,
 
               hint: Text(
@@ -53,8 +53,8 @@ class AddPostDropDownButton extends StatelessWidget {
                 itemPadding: EdgeInsets.symmetric(
                   horizontal: AppSpaceData.screenPadding,
                 ),
-                buttonHeight: 50.sp,
-                itemHeight: 50.sp,
+                buttonHeight: 70,
+                itemHeight: 70,
                 isExpanded: true,
                 hint: Text(
                   '포지션',
@@ -91,8 +91,8 @@ class AddPostDropDownButton extends StatelessWidget {
                 itemPadding: EdgeInsets.symmetric(
                   horizontal: AppSpaceData.screenPadding,
                 ),
-                buttonHeight: 50.sp,
-                itemHeight: 50.sp,
+                buttonHeight: 70,
+                itemHeight: 70,
                 isExpanded: true,
                 hint: Text(
                   '티어',

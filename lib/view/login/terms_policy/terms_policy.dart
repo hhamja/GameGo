@@ -76,10 +76,10 @@ class _TermsPolicyAgreementPageState extends State<TermsPolicyAgreementPage> {
                   IconButton(
                     padding: EdgeInsets.zero,
                     alignment: Alignment.centerRight,
-                    onPressed: () async => Get.to(TermsDetailPage()),
+                    onPressed: () async => Get.to(() => TermsDetailPage()),
                     icon: Icon(
                       Icons.keyboard_arrow_right,
-                      size: 23,
+                      size: 25,
                     ),
                   ),
                 ),
@@ -97,7 +97,7 @@ class _TermsPolicyAgreementPageState extends State<TermsPolicyAgreementPage> {
                         Get.to(() => PrivacyPolicyDetailPage()),
                     icon: Icon(
                       Icons.keyboard_arrow_right,
-                      size: 23,
+                      size: 25,
                     ),
                   ),
                 ),

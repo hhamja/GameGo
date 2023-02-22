@@ -115,12 +115,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 titleTextStyle: TextStyle(
                   fontSize: 18,
                   letterSpacing: 0.25,
-                  height: 1.sp,
+                  height: 1,
                 ),
                 titleCentered: true, //연.월.일 가운데 정렬 여부
                 leftChevronPadding: EdgeInsets.zero,
                 rightChevronPadding: EdgeInsets.zero,
-                headerPadding: EdgeInsets.fromLTRB(0, 0, 0, 10), //헤더 박스 패딩
+                headerPadding: EdgeInsets.fromLTRB(0, 0, 0, 5), //헤더 박스 패딩
                 leftChevronIcon: Icon(
                   Icons.arrow_left,
                 ), //왼쪽 화살표 아이콘 버튼
@@ -138,7 +138,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ),
               ],
             ),
-            SizedBox(height: 3.sp),
+            SizedBox(height: 10),
             // 시간 설정 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,11 +150,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ),
                 Container(
                   width: 20.w,
-                  height: 5.h,
+                  height: 40,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.all(
-                      Radius.circular(10.sp),
+                      Radius.circular(20),
                     ),
                   ),
                   child: TextButton(
@@ -162,7 +162,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       Get.dialog(
                         Dialog(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.sp)),
+                              borderRadius: BorderRadius.circular(20)),
                           backgroundColor: appWhiteColor,
                           child: Padding(
                             padding: EdgeInsets.all(
@@ -181,8 +181,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
                               ),
                               highlightedTextStyle:
                                   Theme.of(context).textTheme.headlineSmall,
-                              spacing: 30.sp,
-                              itemHeight: 40.sp,
+                              spacing: 0,
+                              itemHeight: 60,
+                              itemWidth: 80,
                               isForce2Digits: true,
                               minutesInterval: 5,
                               onTimeChange: (time) {

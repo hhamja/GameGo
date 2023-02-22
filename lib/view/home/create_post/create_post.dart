@@ -91,6 +91,7 @@ class _AddPostPageState extends State<AddPostPage> {
         reverse: true,
         child: Column(
           children: [
+            SizedBox(height: 20),
             // 모드, 포지션, 티어 드랍다운버튼
             AddPostDropDownButton(),
             Padding(
@@ -100,7 +101,7 @@ class _AddPostPageState extends State<AddPostPage> {
                 children: [
                   Divider(
                     thickness: 1,
-                    height: 30.sp,
+                    height: 40,
                     color: appGreyColor,
                   ),
                   // 제목입력
@@ -125,7 +126,7 @@ class _AddPostPageState extends State<AddPostPage> {
                           ? null
                           : IconButton(
                               // 드랍다운 버튼과 오른쪽 끝선을 맞추기 위한 수치
-                              padding: EdgeInsets.all(3.sp),
+                              padding: EdgeInsets.all(4),
                               alignment: Alignment.centerRight,
                               icon: Icon(
                                 Icons.clear,
@@ -146,7 +147,7 @@ class _AddPostPageState extends State<AddPostPage> {
                   ),
                   Divider(
                     thickness: 1,
-                    height: 30.sp,
+                    height: 40,
                     color: appGreyColor,
                   ),
                   // 본문입력
@@ -166,12 +167,12 @@ class _AddPostPageState extends State<AddPostPage> {
                             Theme.of(context).textTheme.bodyMedium!.fontSize,
                         color: appGreyColor,
                       ),
-                      hintText: '자세하게 작성하면 매칭확률이 올라가요 :)',
+                      hintText: '글 내용을 작성해주세요 :)',
                       suffixIcon: _maintextController.text.isEmpty
                           ? null
                           : IconButton(
                               // 드랍다운 버튼과 오른쪽 끝선을 맞추기 위한 수치
-                              padding: EdgeInsets.all(3.sp),
+                              padding: EdgeInsets.all(4),
                               alignment: Alignment.centerRight,
                               icon: Icon(
                                 Icons.clear,
@@ -194,7 +195,9 @@ class _AddPostPageState extends State<AddPostPage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(MediaQuery.of(context).viewInsets.bottom),
+              padding: EdgeInsets.all(
+                MediaQuery.of(context).viewInsets.bottom,
+              ),
             ),
           ],
         ),

@@ -2,7 +2,7 @@
 
 class AppSpaceData {
   // 모든 스크린에 공통적으로 적용한 패딩 값
-  static const screenPadding = 25.0;
+  static const screenPadding = 16.0;
 
   static const heightLarge = 66.0;
   static const heightMedium = 44.0;

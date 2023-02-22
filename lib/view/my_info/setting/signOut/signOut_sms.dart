@@ -36,7 +36,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
         automaticallyImplyLeading: false,
         title: Text(
           '계정 재인증',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         actions: [
           CustomCloseButton(),
@@ -53,15 +53,15 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                 SizedBox(height: AppSpaceData.heightMedium),
                 Text(
                   '휴대폰 번호',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
-                SizedBox(height: 3.sp),
+                SizedBox(height: 5),
                 Container(
                   width: 100.w,
-                  height: 8.h,
+                  height: 65,
                   child: TextFormField(
                     cursorColor: cursorColor,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                     validator: (value) {
                       final phone = value!.trim();
                       if (phone.length != 13) {
@@ -85,7 +85,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                       hintText: '숫자만 입력해주세요.',
                       hintStyle: TextStyle(
                         fontSize:
-                            Theme.of(context).textTheme.bodyMedium!.fontSize,
+                            Theme.of(context).textTheme.bodyLarge!.fontSize,
                         color: appGreyColor,
                       ),
                     ),
@@ -95,7 +95,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                 GetBuilder<SmsTimerController>(
                   builder: (controller) => CustomOutlineTextButton(
                     100.w,
-                    6.h,
+                    45,
                     !isSendSms ? '인증번호 받기' : '재전송(${_phone.count}초)',
                     () async {
                       if (!isSendSms && _phoneController.text.length == 13) {
@@ -108,7 +108,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                         await _user.verifyPhone('+82${_phoneController.text}');
                       }
                     },
-                    appBlackColor,
+                    appDeepDarkGrey,
                   ),
                 ),
                 SizedBox(height: AppSpaceData.heightLarge),
@@ -120,9 +120,9 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                     children: [
                       Text(
                         '인증번호',
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
-                      SizedBox(height: 3.sp),
+                      SizedBox(height: 5),
                       TextFormField(
                         cursorColor: cursorColor,
                         validator: (value) {
@@ -136,7 +136,7 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                         },
                         maxLength: 6,
                         autocorrect: false,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.bodyLarge,
                         textInputAction: TextInputAction.done,
                         controller: _smsController,
                         keyboardType: TextInputType.number,
@@ -146,17 +146,15 @@ class _SignOutSmsPageState extends State<SignOutSmsPage> {
                           errorStyle: TextStyle(
                             fontSize:
                                 Theme.of(context).textTheme.bodySmall!.fontSize,
-                            height: 0.07.h,
+                            height: 1,
                             color: appRedColor,
                           ),
                           border: InputBorder.none,
                           counterText: '',
                           hintText: '인증번호 6자리를 입력해주세요.',
                           hintStyle: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontSize,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyLarge!.fontSize,
                             color: appGreyColor,
                           ),
                         ),

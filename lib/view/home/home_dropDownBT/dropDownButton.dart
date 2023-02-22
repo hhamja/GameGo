@@ -19,8 +19,8 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
             child: DropdownButton2(
               style: Theme.of(context).textTheme.bodyMedium,
               buttonWidth:
-                  controller.selectedModeValue == '무작위 총력전' ? 101.sp : 72.sp,
-              dropdownWidth: 110.sp,
+                  controller.selectedModeValue == '무작위 총력전' ? 150 : 100,
+              dropdownWidth: 150,
               isExpanded: true,
               items: homeGameModeList.map(
                 (item) {
@@ -38,17 +38,15 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
             ),
           ),
 
-          SizedBox(
-            width: 8.0.sp,
-          ),
+          SizedBox(width: 5),
           // 포지션 드랍다운 버튼
           Visibility(
             visible: controller.showPosition,
             child: DropdownButtonHideUnderline(
               child: DropdownButton2(
                 style: Theme.of(context).textTheme.bodyMedium,
-                buttonWidth: 60.sp,
-                dropdownWidth: 80.sp,
+                buttonWidth: 85,
+                dropdownWidth: 100,
                 isExpanded: true,
                 items: homePostionList.map(
                   (item) {
@@ -66,9 +64,7 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
               ),
             ),
           ),
-          SizedBox(
-            width: 8.0.sp,
-          ),
+          SizedBox(width: 5),
           // 티어 드랍다운 버튼
           Visibility(
             visible: controller.showTear,
@@ -77,9 +73,9 @@ class _HomeDropDownButtonState extends State<HomeDropDownButton> {
                 style: Theme.of(context).textTheme.bodyMedium,
                 buttonWidth: controller.selectedTearValue == '다이아몬드' ||
                         controller.selectedTearValue == '플래티넘'
-                    ? 85.sp
-                    : 70.sp,
-                dropdownWidth: 100.sp,
+                    ? 110
+                    : 80,
+                dropdownWidth: 130,
                 isExpanded: true,
                 items: homeTearList
                     .map(

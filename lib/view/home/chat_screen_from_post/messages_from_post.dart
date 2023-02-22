@@ -15,11 +15,10 @@ class MessagesFromPost extends StatefulWidget {
 }
 
 class _MessagesFromPostState extends State<MessagesFromPost> {
-  // 채팅방 id
   var chatRoomId;
-  // 채팅 GetX 컨트롤러
   final ChatController _chat = Get.find<ChatController>();
-  var _list; // = _chat.messageList
+  // _chat.messageList
+  var _list;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
@@ -33,7 +32,6 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
   void dispose() {
     // 나의 안읽은 메시지 수 0으로 업데이트
     _chat.clearUnReadCount(chatRoomId);
-
     super.dispose();
   }
 
@@ -48,26 +46,26 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
     );
     // 시간 텍스트 스타일
     final TextStyle _timeTextStyle = TextStyle(
-      fontSize: 10.sp,
-      height: 1.5.sp,
+      fontSize: 13,
+      height: 1.5,
       color: appGreyColor,
     );
 
     return Obx(
       () => Padding(
         // 스크롤 바
-        padding: EdgeInsets.all(3.0.sp),
+        padding: EdgeInsets.all(4),
         child: Scrollbar(
           controller: _chat.scroll,
           interactive: true,
-          thickness: 3.sp,
+          thickness: 3,
           // 채팅리스트 박스의 패딩
           child: Container(
             padding: EdgeInsets.fromLTRB(
               AppSpaceData.screenPadding,
               0,
               // 오른쪽은 스크롤바의 패딩 값 만큼 고려
-              AppSpaceData.screenPadding - 3.sp,
+              AppSpaceData.screenPadding - 4,
               0,
             ),
             child: ListView.builder(
@@ -143,13 +141,13 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                     ? // 나의 메시지
                     Container(
                         margin: isChangeUser
-                            ? EdgeInsets.only(top: 10.sp)
-                            : EdgeInsets.symmetric(vertical: 2.sp),
+                            ? EdgeInsets.only(top: 13)
+                            : EdgeInsets.symmetric(vertical: 2),
                         child: Column(
                           children: [
                             _chat.isShowDate.value
                                 ? Padding(
-                                    padding: EdgeInsets.all(10.sp),
+                                    padding: EdgeInsets.all(13),
                                     // 날짜
                                     child: Text(
                                       _date.toString(),
@@ -170,27 +168,30 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                         textAlign: TextAlign.start,
                                         style: _timeTextStyle,
                                       ),
-                                      SizedBox(width: 5.sp),
+                                      SizedBox(width: 6),
                                       Container(
                                         constraints:
                                             BoxConstraints(maxWidth: 70.w),
                                         decoration: BoxDecoration(
                                           color: appPrimaryColor,
                                           borderRadius: BorderRadius.all(
-                                            Radius.circular(16),
+                                            Radius.circular(20),
                                           ),
                                         ),
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 8.sp, horizontal: 16),
+                                          vertical: 10,
+                                          horizontal: 16,
+                                        ),
                                         // 메시지 입력 리스트
                                         child: Text(
                                           _list[reversed].content.toString(),
                                           textWidthBasis: TextWidthBasis.parent,
                                           style: TextStyle(
-                                              fontSize: _bodyMedium.fontSize,
-                                              letterSpacing:
-                                                  _bodyMedium.letterSpacing,
-                                              color: appWhiteColor),
+                                            fontSize: _bodyMedium.fontSize,
+                                            letterSpacing:
+                                                _bodyMedium.letterSpacing,
+                                            color: appWhiteColor,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -211,13 +212,13 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                     : // 상대방 메시지
                     Container(
                         margin: isChangeUser
-                            ? EdgeInsets.only(top: 10.sp)
-                            : EdgeInsets.symmetric(vertical: 2.sp),
+                            ? EdgeInsets.only(top: 13)
+                            : EdgeInsets.symmetric(vertical: 2),
                         child: Column(
                           children: [
                             _chat.isShowDate.value
                                 ? Padding(
-                                    padding: EdgeInsets.all(10.sp),
+                                    padding: EdgeInsets.all(13),
                                     // 날짜
                                     child: Text(
                                       _date.toString(),
@@ -237,32 +238,28 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                       // 상대프로필
                                       _chat.isShowProfile.value
                                           ? CircleAvatar(
-                                              radius: 15.sp,
+                                              radius: 19.5,
                                               backgroundImage: NetworkImage(
                                                 widget.profileUrl,
                                               ),
                                             )
-                                          : SizedBox(width: 30.sp),
-                                      SizedBox(width: 4.sp),
+                                          : SizedBox(width: 39),
+                                      SizedBox(width: 5),
                                       Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
                                           Container(
-                                            constraints: BoxConstraints(
-                                              maxWidth: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.6,
-                                            ),
+                                            constraints:
+                                                BoxConstraints(maxWidth: 60.w),
                                             decoration: BoxDecoration(
                                               color: Color(0xFFEEEEEE),
                                               borderRadius: BorderRadius.all(
-                                                Radius.circular(16),
+                                                Radius.circular(20),
                                               ),
                                             ),
                                             padding: EdgeInsets.symmetric(
-                                              vertical: 8.sp,
+                                              vertical: 10,
                                               horizontal: 16,
                                             ),
                                             // 메시지
@@ -273,7 +270,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                               style: _bodyMedium,
                                             ),
                                           ),
-                                          SizedBox(width: 5.sp),
+                                          SizedBox(width: 6),
                                           Text(
                                             _chat.isShowTime.value ? _time : '',
                                             textAlign: TextAlign.start,

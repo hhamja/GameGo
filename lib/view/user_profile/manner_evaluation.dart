@@ -20,7 +20,7 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _itemHeight = 10.sp;
+    final _itemHeight = 12.0;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

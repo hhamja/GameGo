@@ -18,7 +18,7 @@ class PermissionItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 4.sp, 5.sp, 0),
+          padding: EdgeInsets.fromLTRB(0, 5, 6.5, 0),
           child: icon,
         ),
         Column(

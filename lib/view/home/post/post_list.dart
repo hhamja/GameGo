@@ -33,7 +33,8 @@ class HomePostList extends GetView<HomePostController> {
       color: appGreyColor,
       // 맨 위에 위치시키는 값
       displacement: 0,
-      strokeWidth: 1.2.sp,
+
+      strokeWidth: 1,
       child: controller.obx(
         onEmpty: Center(
           child: Column(
@@ -51,9 +52,9 @@ class HomePostList extends GetView<HomePostController> {
             ],
           ),
         ),
-        onError: (error) => Center(
+        onError: (_) => Center(
           child: Text(
-            error.toString(),
+            '페이지를 불러올 수 없습니다.',
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),

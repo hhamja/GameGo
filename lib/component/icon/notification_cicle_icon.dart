@@ -6,18 +6,18 @@ class NotificationCircleIcon extends StatelessWidget {
     this.icon,
   );
 
-  final Color? backgroundColor; //아이콘 배경 색
-  final IconData? icon; //아이콘
+  final Color? backgroundColor;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 10.sp,
+      radius: 13,
       backgroundColor: backgroundColor,
       child: Center(
         child: Icon(
           icon,
-          size: 10.sp,
+          size: 13,
           color: appWhiteColor,
         ),
       ),

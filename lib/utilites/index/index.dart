@@ -48,7 +48,6 @@ export '../../view/game_review/send_review.dart';
 export '../../view/myApp.dart';
 export '../../view/splashPage/splash.dart';
 export '../../view/chat/bottomSheet/chat_bottomSheet.dart';
-export '../../view/chat/appointment/alarm_bottomSheet.dart';
 export '../../view/chat/appointment/appointment.dart';
 export '../../view/chat/chat_screen/messages.dart';
 export '../../view/chat/chat_screen/new_message.dart';

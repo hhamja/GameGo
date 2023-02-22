@@ -7,11 +7,11 @@ class CustomCloseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      padding: EdgeInsets.only(right: 20),
+      padding: EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
       icon: Icon(
         CupertinoIcons.clear,
-        color: Colors.grey,
-        size: 25,
+        color: appBlackColor,
+        size: 22,
       ),
       onPressed: () => Get.back(),
     );

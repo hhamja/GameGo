@@ -16,7 +16,9 @@ class PostDetailPage extends StatelessWidget {
           // 내 게시글인 경우 : openMypostBottomSheet() : openBottomSheet()
           IconButton(
             onPressed: openPostBottomSheet,
-            icon: Icon(Icons.more_vert),
+            icon: Icon(
+              Icons.more_vert,
+            ),
           ),
         ],
       ),
@@ -39,14 +41,14 @@ class PostDetailPage extends StatelessWidget {
         // 값이 존재할 때
         (state) => SingleChildScrollView(
           child: Container(
-            padding:
-                EdgeInsets.symmetric(horizontal: AppSpaceData.screenPadding),
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSpaceData.screenPadding,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: AppSpaceData.screenPadding),
+                  contentPadding: EdgeInsets.symmetric(vertical: 20),
                   onTap: () async {
                     Get.toNamed(
                       // 상대 프로필 페이지로 이동
@@ -78,7 +80,7 @@ class PostDetailPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 0.25,
+                            letterSpacing: 0.5,
                             color: mannerLevelColor,
                           ),
                         ),
@@ -86,10 +88,10 @@ class PostDetailPage extends StatelessWidget {
                       Text(
                         '(매너레벨)',
                         style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: 13,
                           color: appDarkGrey,
-                          letterSpacing: 0.5.sp,
-                          height: 0.9.sp,
+                          letterSpacing: 0.5,
+                          height: 1.2,
                         ),
                       ),
                     ],
@@ -97,7 +99,8 @@ class PostDetailPage extends StatelessWidget {
                 ),
                 CustomDivider(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 26),
+                  padding:
+                      EdgeInsets.symmetric(vertical: AppSpaceData.heightMedium),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -106,7 +109,7 @@ class PostDetailPage extends StatelessWidget {
                         _c.postInfo.title,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(height: 5.sp),
+                      SizedBox(height: AppSpaceData.heightSmall),
                       // 게임모드, 포지션, 티어
                       Row(
                         children: [
@@ -135,13 +138,6 @@ class PostDetailPage extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-
-                      // SizedBox(height: 30),
-                      // 채팅 · 좋아요 · 조회 수
-                      // Text('채팅 1 · 관심 1 · 조회 82',
-                      //     style: TextStyle(fontSize: 15, color: appBlackColor54),
-                      //     textAlign: TextAlign.right,
-                      //     textWidthBasis: TextWidthBasis.longestLine),
                     ],
                   ),
                 ),
@@ -194,12 +190,12 @@ class PostDetailPage extends StatelessWidget {
                         ? Icon(
                             Icons.favorite,
                             color: appPrimaryColor,
-                            size: 25.sp,
+                            size: 31,
                           )
                         // false => not filled
                         : Icon(
                             Icons.favorite_border_outlined,
-                            size: 23.sp,
+                            size: 28,
                             color: appBlackColor,
                           ),
                   ),
@@ -208,18 +204,22 @@ class PostDetailPage extends StatelessWidget {
               // 채팅하기 버튼
               Expanded(
                 flex: 5,
-                child: CustomFullFilledTextButton('채팅하기', () {
-                  Get.to(
-                    () => ChatScreenPageFromPost(),
-                    arguments: {
-                      'postId': _c.postInfo.postId,
-                      'uid': _c.postInfo.uid,
-                      'userName': _c.postInfo.userName,
-                      'mannerLevel': _c.level,
-                      'profileUrl': _c.postInfo.profileUrl,
-                    },
-                  );
-                }, appPrimaryColor),
+                child: CustomFullFilledTextButton(
+                  '채팅하기',
+                  () {
+                    Get.to(
+                      () => ChatScreenPageFromPost(),
+                      arguments: {
+                        'postId': _c.postInfo.postId,
+                        'uid': _c.postInfo.uid,
+                        'userName': _c.postInfo.userName,
+                        'mannerLevel': _c.level,
+                        'profileUrl': _c.postInfo.profileUrl,
+                      },
+                    );
+                  },
+                  appPrimaryColor,
+                ),
               ),
             ],
           ),
@@ -232,13 +232,12 @@ class PostDetailPage extends StatelessWidget {
   openPostBottomSheet() async {
     return Get.bottomSheet(
       Container(
-        margin: EdgeInsets.all(AppSpaceData.screenPadding * 0.5),
+        margin: EdgeInsets.all(AppSpaceData.screenPadding),
         decoration: BoxDecoration(
           color: appWhiteColor,
-          borderRadius: BorderRadius.circular(10.sp),
+          borderRadius: BorderRadius.circular(20),
         ),
-        // 아이템 개수*50 + 10 (위아래 공간 각  5)
-        height: 60.sp,
+        height: 80,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

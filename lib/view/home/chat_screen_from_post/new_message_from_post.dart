@@ -1,8 +1,10 @@
 import 'package:gamegoapp/utilites/index/index.dart';
 
 class NewMessageFromPost extends StatefulWidget {
-  final String uid; // 게시글 유저 uid
-  final String postId; //게시물 id
+  // 게시글 유저 uid
+  final String uid;
+  // 게시물 id
+  final String postId;
   NewMessageFromPost({Key? key, required this.uid, required this.postId})
       : super(key: key);
 
@@ -31,20 +33,21 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
     });
     // 채팅방 인스턴스
     final ChatRoomModel chatRoomModel = ChatRoomModel(
-      //채팅방 id = postId_현재유저ID
+      // 채팅방 id = postId_현재유저ID
       chatRoomId: widget.postId + '_' + _auth.currentUser!.uid,
       postId: widget.postId,
+      // postingUser, contactUser 순으로 넣기
       members: [
         postingUser.uid,
         contactUser.uid,
-      ], //postingUser, contactUser 순으로 넣기
+      ],
       postingUid: postingUser.uid,
       postingUserProfileUrl: postingUser.profileUrl,
       postingUserName: postingUser.userName,
       contactUid: contactUser.uid,
       contactUserProfileUrl: contactUser.profileUrl,
       contactUserName: contactUser.userName,
-      //읽지않은 메시지를 '보낸'Uid와 그 수 {게시자 : 0, 상대유저 : 0}
+      // 읽지않은 메시지를 '보낸'Uid와 그 수 {게시자 : 0, 상대유저 : 0}
       unReadCount: {
         postingUser.uid: 0,
         contactUser.uid: 0,
@@ -62,12 +65,12 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
       isDeleted: false,
       timestamp: Timestamp.now(),
     );
+    // 메시지 텍스트필드 초기화
+    setState(() => _messageController.clear());
     // 채팅방 만들기, 채팅방이 이미 있다면 실행안됨
     await _chat.createNewChatRoom(chatRoomModel);
     // 보낸 메시지 파이어스토어 message 컬렉션에 저장하기
-    await _chat.sendNewMessege(messageModel, chatRoomModel.chatRoomId);
-    // 메시지 텍스트필드 초기화
-    setState(() => _messageController.clear());
+    _chat.sendNewMessege(messageModel, chatRoomModel.chatRoomId);
     // 보낸 메시지로 화면이동
     // 0인이유 : Listview.builder의 reverse가 true이므로 Top과 Bottom이 반전됨
     _chat.scroll.jumpTo(0);
@@ -76,19 +79,11 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5.sp),
+      padding: EdgeInsets.all(6.5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // IconButton(
-          //   onPressed: () {}, //클릭 시 사진보내기 (나중)
-          //   icon: Icon(
-          //     Icons.add_sharp,
-          //     size: 30,
-          //     color: Colors.grey[500],
-          //   ),
-          // ),
           // 메시지 입력란
           Expanded(
             child: Container(
@@ -105,10 +100,12 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
                   isDense: true,
                   filled: true,
                   fillColor: Colors.grey[200],
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10.sp, vertical: 8.sp),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 10,
+                  ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(26),
+                    borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide.none,
                   ),
                   hintText: '메시지 보내기',
@@ -118,7 +115,7 @@ class _NewMessageFromPostState extends State<NewMessageFromPost> {
                   ),
                 ),
                 onChanged: (value) {
-                  setState(() {});
+                  setState(() => value);
                 },
               ),
             ),

@@ -44,8 +44,7 @@ class MyPostDetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: AppSpaceData.screenPadding),
+                  contentPadding: EdgeInsets.symmetric(vertical: 20),
                   onTap: null,
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(_c.postInfo.profileUrl),
@@ -66,7 +65,7 @@ class MyPostDetailPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 0.25,
+                            letterSpacing: 0.5,
                             color: mannerLevelColor,
                           ),
                         ),
@@ -74,10 +73,10 @@ class MyPostDetailPage extends StatelessWidget {
                       Text(
                         '(매너레벨)',
                         style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: 13,
                           color: appDarkGrey,
-                          letterSpacing: 0.5.sp,
-                          height: 0.9.sp,
+                          letterSpacing: 0.5,
+                          height: 1.2,
                         ),
                       ),
                     ],
@@ -85,7 +84,8 @@ class MyPostDetailPage extends StatelessWidget {
                 ),
                 CustomDivider(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 26),
+                  padding:
+                      EdgeInsets.symmetric(vertical: AppSpaceData.heightMedium),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -94,7 +94,7 @@ class MyPostDetailPage extends StatelessWidget {
                         _c.postInfo.title,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      SizedBox(height: 5.sp),
+                      SizedBox(height: AppSpaceData.heightSmall),
                       // 게임모드, 포지션, 티어
                       Row(
                         children: [
@@ -123,13 +123,6 @@ class MyPostDetailPage extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-
-                      // SizedBox(height: 30),
-                      // 채팅 · 좋아요 · 조회 수
-                      // Text('채팅 1 · 관심 1 · 조회 82',
-                      //     style: TextStyle(fontSize: 15, color: appBlackColor54),
-                      //     textAlign: TextAlign.right,
-                      //     textWidthBasis: TextWidthBasis.longestLine),
                     ],
                   ),
                 ),
@@ -145,36 +138,48 @@ class MyPostDetailPage extends StatelessWidget {
   openPostBottomSheet() async {
     return Get.bottomSheet(
       Container(
-        margin: EdgeInsets.all(AppSpaceData.screenPadding * 0.5),
+        margin: EdgeInsets.all(AppSpaceData.screenPadding),
         decoration: BoxDecoration(
           color: appWhiteColor,
-          borderRadius: BorderRadius.circular(10.sp),
+          borderRadius: BorderRadius.circular(20),
         ),
-        // 아이템 개수*50 + 10 (위아래 공간 각  5)
-        height: 110.sp,
+        height: 140,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomButtomSheet('게시글 수정', appBlackColor, () async {
-              Get.back();
-              // 나의 게시물 수정 페이지로 이동
-              await Get.to(() => EditPostPage(), arguments: {
-                'postId': _c.postId,
-                'maintext': _c.postInfo.maintext,
-                'title': _c.postInfo.title,
-                'gamemode': _c.postInfo.gamemode,
-                'position': _c.postInfo.position,
-                'tear': _c.postInfo.tear,
-              });
-            }),
-            CustomButtomSheet('삭제', appRedColor, () async {
-              Get.back();
-              // 삭제에 대해 재요청하는 다이어로그 띄우기
-              await Get.dialog(
-                DeleteDialog(),
-                arguments: {'postId': _c.postId},
-              );
-            }),
+            CustomButtomSheet(
+              '게시글 수정',
+              appBlackColor,
+              () async {
+                Get.back();
+                // 나의 게시물 수정 페이지로 이동
+                await Get.to(
+                  () => EditPostPage(),
+                  arguments: {
+                    'postId': _c.postId,
+                    'maintext': _c.postInfo.maintext,
+                    'title': _c.postInfo.title,
+                    'gamemode': _c.postInfo.gamemode,
+                    'position': _c.postInfo.position,
+                    'tear': _c.postInfo.tear,
+                  },
+                );
+              },
+            ),
+            CustomButtomSheet(
+              '삭제',
+              appRedColor,
+              () async {
+                Get.back();
+                // 삭제에 대해 재요청하는 다이어로그 띄우기
+                await Get.dialog(
+                  DeleteDialog(),
+                  arguments: {
+                    'postId': _c.postId,
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),

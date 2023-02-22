@@ -26,7 +26,7 @@ class AppTextStyle {
     // 제목
     titleLarge: TextStyle(
       // 22-28
-      fontSize: 18.sp,
+      fontSize: 25,
       fontWeight: FontWeight.w500,
       color: appBlackColor,
       fontFamily: 'NotoSansCJKkr',
@@ -85,7 +85,7 @@ class AppTextStyle {
     ),
     labelSmall: TextStyle(
       // 11-16
-      fontSize: 11.sp,
+      fontSize: 14,
       letterSpacing: 0.5,
       fontWeight: FontWeight.w500,
       color: appBlackColor, fontFamily: 'NotoSansCJKkr',

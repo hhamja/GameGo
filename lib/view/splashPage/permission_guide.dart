@@ -19,13 +19,14 @@ class PermissionGuidePage extends StatelessWidget {
               Text(
                 '앱 접근 권한 안내',
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: 27,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: AppSpaceData.heightMedium),
               Text(
                 '${appName}는 아래 권한들을 필요로 합니다.\n서비스 사용 중 앱에서 요청 시 허용해주세요.',
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(height: AppSpaceData.heightMedium),
               PermissionItem(

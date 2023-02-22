@@ -64,7 +64,7 @@ class CustomMyPostListItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 3.sp),
+                  SizedBox(height: 3),
                   // 게임모드 · 포지션 · 티어
                   Row(
                     children: [

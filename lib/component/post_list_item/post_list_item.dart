@@ -41,7 +41,7 @@ class CustomPostListItem extends StatelessWidget {
     );
     // 제목 아래의 서브 텍스트
     final TextStyle _subTextStyle = TextStyle(
-      fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+      fontSize: 14,
       letterSpacing: Theme.of(context).textTheme.bodySmall!.letterSpacing,
       fontWeight: Theme.of(context).textTheme.bodySmall!.fontWeight,
       color: appGreyColor,
@@ -55,10 +55,10 @@ class CustomPostListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 35.sp,
-              width: 35.sp,
+              height: 45,
+              width: 45,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.sp),
+                borderRadius: BorderRadius.circular(20),
                 child: Image.network(
                   profileUrl,
                   fit: BoxFit.fill,
@@ -82,14 +82,14 @@ class CustomPostListItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 3.sp),
+                    SizedBox(height: 3),
                     // 제목
                     Text(
                       title,
                       maxLines: 1,
                       style: _titleTextStyle,
                     ),
-                    SizedBox(height: 3.sp),
+                    SizedBox(height: 3),
                     // 게임모드 · 포지션 · 티어
                     Row(
                       children: [
@@ -107,11 +107,8 @@ class CustomPostListItem extends StatelessWidget {
                         ),
                         // 글 시간
                         Text(
-                          '·${time}',
-                          style: TextStyle(
-                            fontSize: 10.sp,
-                            color: appGreyColor,
-                          ),
+                          time == '' ? '' : '·${time}',
+                          style: _subTextStyle,
                         ),
                       ],
                     ),
