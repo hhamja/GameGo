@@ -47,7 +47,7 @@ class _SignOutPageState extends State<SignOutPage> {
             ),
             SizedBox(height: 10),
             Text(
-              '우리가 이별하면 게시글, 채팅, 매너레벨, 관심 등 모든 계정 정보가 삭제 됩니다. 삭제된 계정 정보는 평생 복구할 수 없어요.',
+              '우리가 이별하면 게시글, 채팅, 매너레벨, 관심 등 모든 계정 정보가 삭제 돼요. 삭제된 계정 정보는 평생 복구할 수 없어요.',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(height: AppSpaceData.heightLarge),
@@ -164,7 +164,7 @@ class _SignOutPageState extends State<SignOutPage> {
                 // 텍스트를 입력하지 않은 경우
                 Get.dialog(
                   CustomOneButtonDialog(
-                    '탈퇴 이유를 작성해주세요. 이유를 작성하지 않으면, 탈퇴가 불가능합니다.',
+                    '탈퇴 이유를 작성해주세요. 이유를 작성하지 않으면, 탈퇴가 불가능해요.',
                     '확인',
                     () => Get.back(),
                   ),

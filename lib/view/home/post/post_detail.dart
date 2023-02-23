@@ -27,14 +27,14 @@ class PostDetailPage extends StatelessWidget {
         // 값이 없을 때
         onEmpty: Center(
           child: Text(
-            '존재하지 않는 게시글 입니다.',
+            '존재하지 않는 게시글이에요.',
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
         // 에러가 떴을 때
         onError: (error) => Center(
           child: Text(
-            '게시글을 불러올 수 없습니다.',
+            '게시글을 불러올 수 없어요.',
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
@@ -61,7 +61,8 @@ class PostDetailPage extends StatelessWidget {
                       },
                     );
                   },
-                  leading: CircleAvatar( backgroundColor: Colors.transparent,
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.transparent,
                     backgroundImage: NetworkImage(_c.postInfo.profileUrl),
                   ),
                   title: Text(

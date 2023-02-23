@@ -18,7 +18,7 @@ class NoUserProfilePage extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          '존재하지 않는 사용자입니다.',
+          '존재하지 않는 사용자이에요.',
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ),

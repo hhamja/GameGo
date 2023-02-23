@@ -42,7 +42,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
       body: _c.obx(
         onEmpty: Center(
           child: Text(
-            '존재하는 매너평가가 없습니다.',
+            '존재하는 매너평가가 없어요.',
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
@@ -52,7 +52,7 @@ class _MySentReviewPageState extends State<MySentReviewPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '정보를 불러올 수 없습니다.',
+                '정보를 불러올 수 없어요.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(

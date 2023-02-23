@@ -25,7 +25,7 @@ class PermissionGuidePage extends StatelessWidget {
               ),
               SizedBox(height: AppSpaceData.heightMedium),
               Text(
-                '${appName}는 아래 권한들을 필요로 합니다.\n서비스 사용 중 앱에서 요청 시 허용해주세요.',
+                '${appName}는 아래 권한들이 필요해요!\n서비스 사용 중 앱에서 요청 시 허용해주세요.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(height: AppSpaceData.heightMedium),

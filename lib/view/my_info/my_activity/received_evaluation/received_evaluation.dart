@@ -110,7 +110,7 @@ class _ReceivedMannerEvaluationPageState
               ),
               SizedBox(height: 3),
               Text(
-                '(동일 항목을 2개 이상 받은 경우에만 표시됩니다.)',
+                '(동일 항목을 2개 이상 받은 경우에만 표시돼요.)',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               // 불친절하고 매너가 나빠요

@@ -33,7 +33,7 @@ class _UserGameReviewPageState extends State<UserGameReviewPage> {
       body: _c.obx(
         onEmpty: Center(
           child: Text(
-            '받은 게임 후기가 없습니다.',
+            '받은 게임 후기가 없어요.',
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
@@ -43,7 +43,7 @@ class _UserGameReviewPageState extends State<UserGameReviewPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '정보를 불러올 수 없습니다.',
+                '정보를 불러올 수 없어요.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(

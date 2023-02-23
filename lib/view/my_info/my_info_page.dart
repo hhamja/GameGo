@@ -35,7 +35,7 @@ class MyInfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '내 정보를 불러올 수 없습니다.',
+                '내 정보를 불러올 수 없어요.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
@@ -51,7 +51,7 @@ class MyInfoPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '내 정보를 불러올 수 없습니다.',
+                '내 정보를 불러올 수 없어요.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
@@ -75,7 +75,7 @@ class MyInfoPage extends StatelessWidget {
                 SettingsTile.navigation(
                   leading: CircleAvatar(
                     radius: 30,
-                     backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.transparent,
                     backgroundImage: NetworkImage(
                       _c.userInfo.profileUrl,
                     ),

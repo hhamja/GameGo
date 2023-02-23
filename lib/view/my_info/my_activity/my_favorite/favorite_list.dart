@@ -25,7 +25,7 @@ class MyFavoriteList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '관심 게시글이 없습니다.',
+                '관심 게시글이 없어요.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
@@ -41,7 +41,7 @@ class MyFavoriteList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '정보를 불러올 수 없습니다.',
+                '정보를 불러올 수 없어요.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(

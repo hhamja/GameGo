@@ -272,7 +272,7 @@ class _SendReviewPageState extends State<SendReviewPage> {
         child: CustomFullFilledTextButton('후기 보내기', () {
           Get.dialog(
             CustomSmallDialog(
-              '"$userName"에게 한번 보낸 후기는\n수정 및 삭제가 불가합니다',
+              '"$userName"에게 한번 보낸 후기는\n수정 및 삭제할 수 없어요.',
               '취소',
               '보내기',
               () => Get.back(),

@@ -42,7 +42,7 @@ class HomePostList extends GetView<HomePostController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '게시글이 없습니다.',
+                '존재하는 게시글이 없어요.',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
@@ -54,7 +54,7 @@ class HomePostList extends GetView<HomePostController> {
         ),
         onError: (_) => Center(
           child: Text(
-            '페이지를 불러올 수 없습니다.',
+            '페이지를 불러올 수 없어요.',
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),

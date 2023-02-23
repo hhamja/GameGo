@@ -34,7 +34,7 @@ class _TermsDetailPageState extends State<TermsDetailPage> {
           onWebResourceError: (WebResourceError error) {
             Center(
               child: Text(
-                '페이지를 불러올 수 없습니다.',
+                '페이지를 불러올 수 없어요.',
                 style: TextStyle(
                   // 14-20
                   fontSize: 18,

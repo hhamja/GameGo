@@ -37,7 +37,7 @@ class _ReportListPageState extends State<ReportListPage> {
           ListTile(
             contentPadding: EdgeInsets.zero,
             subtitle: Text(
-              '회원님의 신고는 익명으로 처리됩니다.위급한 상황이라고 생각된다면 즉시 응급 서비스 기관에 연락해주세요.',
+              '회원님의 신고는 익명으로 처리됩니다.위급한 상황이라고 생각된다면 즉시 응급 서비스 기관에 연락해 주시기 바랍니다.',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
