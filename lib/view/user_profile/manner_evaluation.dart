@@ -61,7 +61,7 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
                 title: GoodEvaluationModel.goodList[2],
                 verticalHeight: _itemHeight,
               ),
-              // 맨탈이 강해요
+              // 멘탈이 강해요
               GoodEvaluationItem(
                 element: _c.strongMental.length,
                 title: GoodEvaluationModel.goodList[3],
@@ -85,7 +85,7 @@ class _UserMannerEvaluationPageState extends State<UserMannerEvaluationPage> {
                 title: GoodEvaluationModel.goodList[6],
                 verticalHeight: _itemHeight,
               ),
-              // 게임할 떄 소통을 잘해요
+              // 게임할 때 소통을 잘해요
               GoodEvaluationItem(
                 element: _c.comfortable.length,
                 title: GoodEvaluationModel.goodList[7],

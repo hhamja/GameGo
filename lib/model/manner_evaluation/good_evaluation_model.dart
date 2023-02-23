@@ -7,11 +7,11 @@ class GoodEvaluationModel {
   final bool kindManner; //'친절하고 매너가 좋아요.'
   final bool goodAppointment; // '시간 약속을 잘 지켜요.'
   final bool fastAnswer; //'응답이 빨라요.'
-  final bool strongMental; // '맨탈이 강해요.'
+  final bool strongMental; // '멘탈이 강해요.'
   final bool goodGameSkill; // '게임 실력이 뛰어나요.'
   final bool softMannerTalk; // '착하고 부드럽게 말해요.'
   final bool comfortable; // '불편하지 않게 편하게 대해줘요.'
-  final bool goodCommunication; //'게임할 떄 소통을 잘해요.'
+  final bool goodCommunication; //'게임할 때 소통을 잘해요.'
   final bool hardGame; // '게임을 진심으로 열심히 해요.'
   final Timestamp createdAt; //생성시간
 
@@ -55,11 +55,11 @@ class GoodEvaluationModel {
     '친절하고 매너가 좋아요.',
     '시간 약속을 잘 지켜요.',
     '응답이 빨라요.',
-    '맨탈이 강해요.',
+    '멘탈이 강해요.',
     '게임 실력이 뛰어나요.',
     '착하고 부드럽게 말해요.',
     '불편하지 않게 편하게 대해줘요.',
-    '게임할 떄 소통을 잘해요.',
+    '게임할 때 소통을 잘해요.',
     '게임을 진심으로 열심히 해요.',
   ];
 }

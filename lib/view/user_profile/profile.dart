@@ -34,6 +34,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           children: [
             SizedBox(height: AppSpaceData.heightMedium),
             CircleAvatar(
+               backgroundColor: Colors.transparent,
               backgroundImage: NetworkImage(profileUrl),
               radius: 80,
             ),

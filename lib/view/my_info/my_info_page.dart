@@ -75,6 +75,7 @@ class MyInfoPage extends StatelessWidget {
                 SettingsTile.navigation(
                   leading: CircleAvatar(
                     radius: 30,
+                     backgroundColor: Colors.transparent,
                     backgroundImage: NetworkImage(
                       _c.userInfo.profileUrl,
                     ),

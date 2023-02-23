@@ -96,7 +96,7 @@ class _SettingPageState extends State<SettingPage> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   description: Text(
-                    '이벤트 및 앱 소석 알림을 받습니다.',
+                    '이벤트 및 앱 소식 알림을 받습니다.',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),

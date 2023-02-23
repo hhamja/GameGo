@@ -46,7 +46,7 @@ class MyPostDetailPage extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(vertical: 20),
                   onTap: null,
-                  leading: CircleAvatar(
+                  leading: CircleAvatar( backgroundColor: Colors.transparent,
                     backgroundImage: NetworkImage(_c.postInfo.profileUrl),
                   ),
                   title: Text(

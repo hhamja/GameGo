@@ -27,6 +27,7 @@ class AppThemeData {
         size: 26,
       ),
     ),
+
     // 바텀시트
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: appBackgroudColor,

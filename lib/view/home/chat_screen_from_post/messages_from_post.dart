@@ -238,7 +238,7 @@ class _MessagesFromPostState extends State<MessagesFromPost> {
                                       // 상대프로필
                                       _chat.isShowProfile.value
                                           ? CircleAvatar(
-                                              radius: 19.5,
+                                              radius: 19.5, backgroundColor: Colors.transparent,
                                               backgroundImage: NetworkImage(
                                                 widget.profileUrl,
                                               ),

@@ -114,11 +114,12 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
                     _photoFile == null
                         ? //갤러리에서 사진 선택하지 않은 경우 나의 기존 프로필 url
                         CircleAvatar(
+                           backgroundColor: Colors.transparent,
                             backgroundImage: NetworkImage(profileImageUrl),
                             radius: 85,
                           )
                         : //갤러리에서 사진 선택한 경우 선택한 파일의 이미지
-                        CircleAvatar(
+                        CircleAvatar( backgroundColor: Colors.transparent,
                             backgroundImage: FileImage(_photoFile!),
                             radius: 85,
                           ),

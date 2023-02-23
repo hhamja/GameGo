@@ -61,7 +61,7 @@ class PostDetailPage extends StatelessWidget {
                       },
                     );
                   },
-                  leading: CircleAvatar(
+                  leading: CircleAvatar( backgroundColor: Colors.transparent,
                     backgroundImage: NetworkImage(_c.postInfo.profileUrl),
                   ),
                   title: Text(
