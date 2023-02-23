@@ -224,7 +224,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             // <Timestamp> 약속날짜와 시간
             Timestamp _timeStamp = Timestamp.fromDate(dateTime);
             final String _formatedTimeStamp =
-                Jiffy(_timeStamp.toDate()).format('MM월 dd일 · a hh시 MM분');
+                Jiffy(_timeStamp.toDate()).format('MM월 dd일 · a hh시 mm분');
             // 약속에 대한 메시지 인스턴스
             final MessageModel _messageModel = MessageModel(
               idFrom: _auth.currentUser!.uid,
@@ -242,6 +242,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               // 약속설정을 당하는(?) 유저의 uid
               idTo: uid,
               timestamp: _timeStamp,
+
               createdAt: Timestamp.now(),
             );
 

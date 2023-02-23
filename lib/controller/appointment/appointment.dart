@@ -39,6 +39,7 @@ class AppointmentController extends GetxController {
         'idFrom': messageModel.idFrom,
         'idTo': messageModel.idTo,
         'type': messageModel.type,
+        'isDeleted': messageModel.isDeleted,
         'timestamp': messageModel.timestamp,
       },
     );
