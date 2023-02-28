@@ -3,7 +3,6 @@ import 'package:gamegoapp/utilites/index/index.dart';
 class UserModel {
   final String uid;
   final String userName;
-  final String phoneNumber;
   final String profileUrl;
 
   // 초기값 Lv.30
@@ -37,7 +36,6 @@ class UserModel {
   UserModel({
     required this.uid,
     required this.userName,
-    required this.phoneNumber,
     required this.profileUrl,
     required this.mannerLevel,
     this.chattingWith,
@@ -56,7 +54,6 @@ class UserModel {
     var snapshot = doc.data() as Map<String, dynamic>;
     return UserModel(
       uid: snapshot['uid'],
-      phoneNumber: snapshot['phoneNumber'],
       userName: snapshot['userName'],
       profileUrl: snapshot['profileUrl'],
       mannerLevel: snapshot['mannerLevel'],

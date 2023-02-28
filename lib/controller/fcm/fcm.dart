@@ -127,7 +127,7 @@ class FCMController extends GetxController {
       // type == 'notice'
       // 앱 이벤트 및 소식 알림
       // 페이지 이동 지정안하면 홈페이지 이동함
-      print('앱 이벤트 및 소식 알림');
+      debugPrint('앱 이벤트 및 소식 알림');
     }
   }
 }

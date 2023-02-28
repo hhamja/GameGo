@@ -93,11 +93,6 @@ class AppRoutes {
       name: Paths.UserName,
       page: () => CreateProfilePage(),
     ),
-    GetPage(
-      name: Paths.PhoneAuth,
-      page: () => PhoneAuthPage(),
-      binding: PhoneAuthBinding(),
-    ),
 
     // MyInfoPage
     GetPage(

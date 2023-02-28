@@ -14,7 +14,7 @@ class CustomFullFilledTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100.w,
-      height: 50.0,
+      height: 50,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.all(

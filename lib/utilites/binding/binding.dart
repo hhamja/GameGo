@@ -65,10 +65,3 @@ class SignInBinding implements Bindings {
     Get.put(UserController());
   }
 }
-
-class PhoneAuthBinding implements Bindings {
-  @override
-  void dependencies() {
-    Get.put(UserController());
-  }
-}

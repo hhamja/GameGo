@@ -31,7 +31,6 @@ abstract class Paths {
 
   // LOGIN
   static const Main = '/main';
-  static const PhoneAuth = '/phone';
   static const UserName = '/username';
 
   // MyInfoPage

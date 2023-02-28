@@ -67,7 +67,7 @@ class PermissionHandler extends GetxController {
     // 결과 확인
     if (status.isGranted) {
       // 승인된 경우
-      print('승인');
+      debugPrint('승인');
       return true;
     } else {
       // 거절된 경우

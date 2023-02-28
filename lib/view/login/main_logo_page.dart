@@ -2,7 +2,6 @@ import 'package:gamegoapp/utilites/index/index.dart';
 
 class MainLogoPage extends StatelessWidget {
   MainLogoPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,20 +20,13 @@ class MainLogoPage extends StatelessWidget {
                   height: 300,
                 ),
               ),
-              Container(
-                height: 60,
-                color: appPrimaryColor,
-                child: TextButton(
-                  child: Text(
-                    '휴대폰으로 시작하기',
-                    style: TextStyle(
-                      fontSize: 20,
-                      letterSpacing: 0.25,
-                      color: appWhiteColor,
-                    ),
-                  ),
-                  onPressed: () => Get.to(
-                    () => TermsPolicyAgreementPage(),
+              GestureDetector(
+                onTap: () => Get.to(() => TermsPolicyAgreementPage()),
+                child: Container(
+                  child: Image.asset(
+                    'assets/google.png',
+                    width: 60,
+                    height: 60,
                   ),
                 ),
               ),

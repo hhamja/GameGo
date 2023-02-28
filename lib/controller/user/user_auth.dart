@@ -12,20 +12,35 @@ class UserController extends GetxController {
       FirebaseFirestore.instance.collection('post');
   final CollectionReference _reviewDB =
       FirebaseFirestore.instance.collection('gameReview');
+  GoogleSignInAuthentication? googleAuth;
 
-  // 폰번호확인코드저장
-  String verificationID = '';
-  int? _resendToken;
+  // 구글 소셜 로그인으로 가입
+  Future signInWithGoogle() async {
+    // 구글 로그인하는 창 띄우기
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    // 구글 로그인 정보 받기
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+    // credentail 생성
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    // 가입하기
+    await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 
-  // 유저 생성하기
+  // // 구글 소셜 로그인으로 가입
+  // Future signInWithGoogleCredential() async {}
+
+  // 유저 정보 DB에 추가
   Future addNewUser(UserModel userModel) async {
-    await _userDB.doc(userModel.uid).set(
+    _userDB.doc(userModel.uid).set(
       {
         'uid': userModel.uid,
         'userName': userModel.userName,
         'profileUrl': userModel.profileUrl,
         'mannerLevel': userModel.mannerLevel,
-        'phoneNumber': userModel.phoneNumber,
         'chatPushNtf': userModel.chatPushNtf,
         'activityPushNtf': userModel.activityPushNtf,
         'marketingConsent': userModel.marketingConsent,
@@ -38,89 +53,10 @@ class UserController extends GetxController {
     );
   }
 
-  // 폰으로 SMS 전송
-  Future verifyPhone(String phonenumber) async {
-    return _auth.verifyPhoneNumber(
-      // 폰번호
-      phoneNumber: phonenumber,
-      // 인증 성공시
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      // 잘못된 전화번호 또는 SMS 할당량 초과 여부 등과 같은 인증실패 시
-      verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          Get.snackbar(
-            '',
-            '',
-            titleText: Text(
-              '인증실패',
-              style: AppTextStyle.snackbarTitleStyle,
-            ),
-            messageText: Text(
-              '잘못된 휴대폰 번호입니다.',
-              style: AppTextStyle.snackbarContentStyle,
-            ),
-          );
-          print('The provided phone number is not valid.');
-        } else {
-          Get.snackbar(
-            '',
-            '',
-            titleText: Text(
-              '인증실패',
-              style: AppTextStyle.snackbarTitleStyle,
-            ),
-            messageText: Text(
-              '잠시 후 다시 시도해주세요.',
-              style: AppTextStyle.snackbarContentStyle,
-            ),
-          );
-        }
-      },
-      // 기기로 코드 전송 시 처리
-      codeSent: (String verificationId, int? resendToken) {
-        verificationID = verificationId;
-        // 120초안에 재전송시 토큰
-        _resendToken = resendToken;
-      },
-      // 자동 SMS 코드 처리가 실패할 때의 시간 초과를 처리
-      codeAutoRetrievalTimeout: (String verificationId) {},
-      forceResendingToken: _resendToken, //sms 재전송 시의 토큰
-      timeout: const Duration(seconds: 120),
-    );
-  }
-
-  // 휴대폰 번호로 신규 가입하기
-  Future signUP(token) async {
-    try {
-      final credential = PhoneAuthProvider.credential(
-          verificationId: verificationID, smsCode: token);
-      _auth.signInWithCredential(credential);
-      print('signUp successful');
-    } on FirebaseAuthException catch (e) {
-      // 에러 코드
-      if (e.code == 'invalid-verification-code') {
-        // SMS 입력이 틀린 경우
-        Get.snackbar(
-          '',
-          '',
-          titleText: Text(
-            '인증코드 입력 오류',
-            style: AppTextStyle.snackbarTitleStyle,
-          ),
-          messageText: Text(
-            '입력한 인증 코드를 확인해주세요.',
-            style: AppTextStyle.snackbarContentStyle,
-          ),
-        );
-      }
-      print(e.code);
-    }
-  }
-
   // 로그아웃
   Future signOut() async {
     // 로그아웃시 푸시알림 수신 못하게 하기 위해 토큰값 null로 업데이트
-    await _userDB.doc(_auth.currentUser?.uid).update(
+    _userDB.doc(_auth.currentUser?.uid).update(
       {
         'pushToken': null,
       },
@@ -130,11 +66,9 @@ class UserController extends GetxController {
   }
 
   // 탈퇴하기
-  Future deleteUser(smsCode) async {
+  Future deleteUser() async {
     final WriteBatch _batch = FirebaseFirestore.instance.batch();
     try {
-      final credential = await PhoneAuthProvider.credential(
-          verificationId: verificationID, smsCode: smsCode);
       final QuerySnapshot postSnapshot = await _postDB
           .where('uid', isEqualTo: _auth.currentUser!.uid)
           .where('isDeleted', isEqualTo: false)
@@ -186,11 +120,20 @@ class UserController extends GetxController {
       await _batch.commit();
       // // Storage에서 해당 유저의 프로필 삭제
       // FirebaseStorage.instance.ref().child(CurrentUser.uid).delete();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
       // 사용자 재인증
       await _auth.currentUser!.reauthenticateWithCredential(credential);
       // 장치에 저장된 유저 토큰 삭제
       _auth.currentUser!.delete();
-      print('탈퇴 성공');
+      debugPrint('탈퇴 성공');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-verification-code') {
         // SMS 코드가 틀린 경우
@@ -208,7 +151,7 @@ class UserController extends GetxController {
           ),
         );
       } else
-        print(e);
+        debugPrint(e.toString());
     }
   }
 }

@@ -28,7 +28,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         // 해당 이미지 담기 _photo변수에 담기
         _photo = File(pickedFile.path);
       } else {
-        print('No image selected from Gallery');
+        debugPrint('No image selected from Gallery');
       }
     });
   }
@@ -44,7 +44,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         // 해당 이미지 담기 _photo변수에 담기
         _photo = File(pickedFile.path);
       } else {
-        print('No image selected from Camera');
+        debugPrint('No image selected from Camera');
       }
     });
   }
@@ -61,7 +61,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       await ref.putFile(_photo!);
       profileImageUrl = await ref.getDownloadURL();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -89,8 +89,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       UserModel userModel = UserModel(
         uid: _auth.currentUser!.uid,
         userName: text,
-        //인증받은 폰번호 이전페이지에서 받기
-        phoneNumber: _auth.currentUser!.phoneNumber.toString(),
         profileUrl: profileImageUrl,
         // 3000은 Lv.30 의미
         mannerLevel: 3000,

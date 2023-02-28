@@ -17,7 +17,6 @@ class MyProfileController extends GetxController
   Rx<UserModel> _userInfo = UserModel(
     uid: '',
     userName: '',
-    phoneNumber: '',
     profileUrl: '',
     mannerLevel: 3000,
     chatPushNtf: false,

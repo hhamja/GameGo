@@ -86,7 +86,7 @@ class DetailPostController extends GetxController
 
     if (isFavorite.value) {
       // 관심게시글인 경우
-      print('이 게시글은 나의 관심게시글임');
+      debugPrint('이 게시글은 나의 관심게시글임');
       // 나의 관심목록에서 제거
       _batch.delete(
         _favoriteDB
@@ -104,7 +104,7 @@ class DetailPostController extends GetxController
       await _batch.commit();
     } else {
       // 관심게시글 아닌 경우
-      print('이 게시글은 나의 관심게시글이 아님');
+      debugPrint('이 게시글은 나의 관심게시글이 아님');
 
       // 관심게시글로 추가
       _batch.set(

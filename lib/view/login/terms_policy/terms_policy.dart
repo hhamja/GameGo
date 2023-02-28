@@ -9,6 +9,7 @@ class TermsPolicyAgreementPage extends StatefulWidget {
 }
 
 class _TermsPolicyAgreementPageState extends State<TermsPolicyAgreementPage> {
+  final UserController _c = Get.put(UserController());
   bool _isButtonValid = false;
   bool _isConfirmedTerms = false;
   bool _isConfirmedPrivacyPolicy = false;
@@ -116,10 +117,12 @@ class _TermsPolicyAgreementPageState extends State<TermsPolicyAgreementPage> {
           100.w,
           50,
           '다음',
-          () => _isConfirmedTerms && _isConfirmedPrivacyPolicy
-              ? Get.to(
-                  () => PhoneAuthPage(),
-                )
+          () async => _isConfirmedTerms && _isConfirmedPrivacyPolicy
+              ? _c.signInWithGoogle().then(
+                    (value) => value != null
+                        ? Get.to(() => CreateProfilePage())
+                        : debugPrint('로그인 안됨'),
+                  )
               : null,
           _isConfirmedTerms && _isConfirmedPrivacyPolicy
               ? appPrimaryColor

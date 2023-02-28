@@ -6,6 +6,7 @@ export 'package:flutter/services.dart';
 export 'dart:async';
 
 // Packages
+export 'package:google_sign_in/google_sign_in.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 export 'package:change_app_package_name/change_app_package_name.dart';
 export 'package:gamegoapp/view/login/terms_policy/terms_detail_page.dart';
@@ -36,8 +37,8 @@ export '../../view/login/terms_policy/check_box_tile.dart';
 export '../../view/login/terms_policy/terms_policy.dart';
 export '../../view/chat/chat_screen/no_user_chat_screen.dart';
 export '../../view/user_profile/no_user_profile.dart';
-export '../../view/splashPage/permission_item.dart';
-export '../../view/splashPage/permission_guide.dart';
+export '../../view/splash_page/permission_item.dart';
+export '../../view/splash_page/permission_guide.dart';
 export '../../view/my_info/edit_my_profile/edit_profile.dart';
 export '../../view/my_info/my_activity/received_review/received_review.dart';
 export '../../view/game_review/my_sent_review.dart';
@@ -46,7 +47,7 @@ export '../../view/user_profile/game_review.dart';
 export '../../view/user_profile/manner_evaluation.dart';
 export '../../view/game_review/send_review.dart';
 export '../../view/myApp.dart';
-export '../../view/splashPage/splash.dart';
+export '../../view/splash_page/splash.dart';
 export '../../view/chat/bottomSheet/chat_bottomSheet.dart';
 export '../../view/chat/appointment/appointment.dart';
 export '../../view/chat/chat_screen/messages.dart';
@@ -71,7 +72,6 @@ export '../../view/report/illegal_post/illegal_post.dart';
 export '../../view/report/other_reasons/other_reasons.dart';
 export '../../view/report/dialog/report_dialog.dart';
 export '../../view/report/report_list/report_list.dart';
-export '../../view/login/phone_auth.dart';
 export '../../view/login/create_profile.dart';
 export '../../view/login/main_logo_page.dart';
 export '../../view/my_info/my_info_page.dart';
@@ -79,9 +79,8 @@ export '../../view/my_info/my_activity/received_evaluation/received_evaluation.d
 export '../../view/my_info/my_activity/my_favorite/favorite_list.dart';
 export '../../view/my_info/my_activity/my_post/my_post_list.dart';
 export '../../view/my_info/setting/setting.dart';
-export '../../view/my_info/setting/signOut/signOut.dart';
-export '../../view/my_info/setting/logOut/logOut_dialog.dart';
-export '../../view/my_info/setting/signOut/signOut_sms.dart';
+export '../../view/my_info/setting/sign_out/sign_out.dart';
+export '../../view/my_info/setting/log_out/log_out_dialog.dart';
 
 // Models
 export '../../model/mannerLevel/mannerLevel.dart';

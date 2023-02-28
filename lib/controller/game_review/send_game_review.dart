@@ -83,7 +83,7 @@ class SendGameReviewController extends GetxController {
             },
           );
         } else {
-          print('내가 보낸 게임후기 null');
+          debugPrint('내가 보낸 게임후기 null');
         }
       },
     );

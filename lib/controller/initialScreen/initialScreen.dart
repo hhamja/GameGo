@@ -42,15 +42,15 @@ class InitialScreenCntroller extends GetxController {
       Get.offAll(() => PermissionGuidePage());
     } else if (user == null) {
       // 로컬로 유저정보가 없는 경우로서 로그아웃 또는 탈퇴한 경우
-      print('신규유저');
+      debugPrint('신규유저');
       return Get.offAll(() => MainLogoPage());
     } else if (!doc.exists) {
       // 이전에 프로필 생성은 안하고 폰인증만 받은 유저
-      print('Auth에만 있고 DB에는 없는 유저');
+      debugPrint('Auth에만 있고 DB에는 없는 유저');
       return Get.offAll(() => CreateProfilePage());
     } else {
       // 프로필 생성까지 한 유저가 다시 로그인
-      print('Auth에도 있고 DB에도 등록되어 있는 유저 : $user');
+      debugPrint('Auth에도 있고 DB에도 등록되어 있는 유저 : $user');
       return Get.offAll(
         () => MyApp(),
         binding: MyAppBinding(),

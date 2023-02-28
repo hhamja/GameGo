@@ -28,10 +28,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -51,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB6P9dNhMRKBJ-b7SUVl_Rpno_3a3YLfs4',
-    appId: '1:481543250834:android:04419f3ed29da0e359974b',
+    appId: '1:481543250834:android:a9b09149bb3ae43759974b',
     messagingSenderId: '481543250834',
     projectId: 'gamego-ef2ef',
     storageBucket: 'gamego-ef2ef.appspot.com',
@@ -59,12 +56,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD_M7v4kCJOPaPTapXwWAjsuxDEX7lHD6s',
-    appId: '1:481543250834:ios:023856854f24978159974b',
+    appId: '1:481543250834:ios:93a339387cdc993159974b',
     messagingSenderId: '481543250834',
     projectId: 'gamego-ef2ef',
     storageBucket: 'gamego-ef2ef.appspot.com',
-    androidClientId: '481543250834-85urk2ded1tsfnpe70hsseiresvpu0m0.apps.googleusercontent.com',
-    iosClientId: '481543250834-lgha2r0mglmb1stt4a6kfpb7funs4cd2.apps.googleusercontent.com',
-    iosBundleId: 'com.example.gamego',
+    androidClientId: '481543250834-0phvlc49joi6lg0n8e1kh5dj426v5ahf.apps.googleusercontent.com',
+    iosClientId: '481543250834-r946rnh6mgsq5qa0cp3jthjqkgeg0p77.apps.googleusercontent.com',
+    iosBundleId: 'com.example.gamegoapp',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyD_M7v4kCJOPaPTapXwWAjsuxDEX7lHD6s',
+    appId: '1:481543250834:ios:ad24d524b8e48beb59974b',
+    messagingSenderId: '481543250834',
+    projectId: 'gamego-ef2ef',
+    storageBucket: 'gamego-ef2ef.appspot.com',
+    androidClientId: '481543250834-0phvlc49joi6lg0n8e1kh5dj426v5ahf.apps.googleusercontent.com',
+    iosClientId: '481543250834-9nm8do15s8qieasnc1fqif6gqi6ih85o.apps.googleusercontent.com',
+    iosBundleId: 'com.example.gamegoapp.RunnerTests',
   );
 }

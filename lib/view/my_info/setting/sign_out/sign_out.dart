@@ -9,6 +9,7 @@ class SignOutPage extends StatefulWidget {
 
 class _SignOutPageState extends State<SignOutPage> {
   final FeedBackController _c = Get.put(FeedBackController());
+  final UserController _userC = Get.put(UserController());
   final TextEditingController _textController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
@@ -179,7 +180,6 @@ class _SignOutPageState extends State<SignOutPage> {
                 // 피드백 서버에 저장
                 await _c.addFeedBack(_model);
                 _textController.clear();
-                Get.to(() => SignOutSmsPage());
               }
             } else {
               // 기타사유가 아닌 경우
@@ -190,7 +190,7 @@ class _SignOutPageState extends State<SignOutPage> {
               // 피드백 서버에 저장
               await _c.addFeedBack(_model);
               _textController.clear();
-              Get.to(() => SignOutSmsPage());
+              _userC.deleteUser();
             }
           },
           appPrimaryColor,

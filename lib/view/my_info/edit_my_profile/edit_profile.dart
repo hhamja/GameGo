@@ -30,7 +30,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
       if (pickedFile != null) {
         _photoFile = File(pickedFile.path); //해당 이미지 담기 _photofile변수에 담기
       } else {
-        print('No image selected from Gallery');
+        debugPrint('No image selected from Gallery');
       }
     });
   }
@@ -45,7 +45,7 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
       if (pickedFile != null) {
         _photoFile = File(pickedFile.path); //해당 이미지 담기 _photofile변수에 담기
       } else {
-        print('No image selected from Camera');
+        debugPrint('No image selected from Camera');
       }
     });
   }
@@ -58,13 +58,13 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
     try {
       //('storage/profile/{uid}') 경로
       final ref = _storage.ref().child('profile').child(fileName!);
-      print(ref);
-      print(_photoFile);
+      debugPrint(ref.toString());
+      debugPrint(_photoFile.toString());
       await ref.putFile(_photoFile!); //스토리지에 업로드
       profileImageUrl = await ref.getDownloadURL(); //업로드한 사진 url받기
-      print(profileImageUrl);
+      debugPrint(profileImageUrl);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -114,12 +114,13 @@ class _EditMyProfilePageState extends State<EditMyProfilePage> {
                     _photoFile == null
                         ? //갤러리에서 사진 선택하지 않은 경우 나의 기존 프로필 url
                         CircleAvatar(
-                           backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
                             backgroundImage: NetworkImage(profileImageUrl),
                             radius: 85,
                           )
                         : //갤러리에서 사진 선택한 경우 선택한 파일의 이미지
-                        CircleAvatar( backgroundColor: Colors.transparent,
+                        CircleAvatar(
+                            backgroundColor: Colors.transparent,
                             backgroundImage: FileImage(_photoFile!),
                             radius: 85,
                           ),

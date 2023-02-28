@@ -331,9 +331,9 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     await _review.addMannerReview(uid, _reviewModel);
                     // 작성한 후기 텍스트 전부 삭제
                     _reviewText.clear();
-                    print('매너평가 + 후기작성 O');
+                    debugPrint('매너평가 + 후기작성 O');
                   } else {
-                    print('매너평가 + 후기작성 X');
+                    debugPrint('매너평가 + 후기작성 X');
                   }
                 }
                 // '별로예요'를 선택한 경우
@@ -374,9 +374,9 @@ class _SendReviewPageState extends State<SendReviewPage> {
                     await _review.addUnMannerReview(_report);
                     // 작성한 후기 텍스트 전부 삭제
                     _reviewText.clear();
-                    print('비매너평가 + 후기작성 O');
+                    debugPrint('비매너평가 + 후기작성 O');
                   } else {
-                    print('비매너평가 + 후기작성 X');
+                    debugPrint('비매너평가 + 후기작성 X');
                   }
                 }
                 null;

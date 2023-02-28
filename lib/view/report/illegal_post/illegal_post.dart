@@ -49,7 +49,7 @@ class _IllegallyPostedPageState extends State<IllegallyPostedPage> {
                 ),
                 trailing: Icon(Icons.keyboard_arrow_right_sharp),
                 onTap: () {
-                  print(illegalProduct[index].toString());
+                  debugPrint(illegalProduct[index].toString());
                   Get.dialog(ReportDialog(), arguments: {
                     'chatRoomId': chatRoomId ?? null,
                     'postId': postId ?? null,

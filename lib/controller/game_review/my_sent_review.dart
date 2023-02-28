@@ -54,7 +54,7 @@ class MySentGameReviewController extends GetxController with StateMixin {
       goodCheckList.add(goodEvaluation!.comfortable);
       goodCheckList.add(goodEvaluation!.goodCommunication);
       goodCheckList.add(goodEvaluation!.hardGame);
-      print(goodCheckList);
+      debugPrint(goodCheckList.toString());
     } else if (badRef.exists) {
       // 비매너 평가인 경우
       isGood.value = false;
@@ -83,7 +83,7 @@ class MySentGameReviewController extends GetxController with StateMixin {
       badCheckList.add(badEvaluation!.noCommunication);
       badCheckList.add(badEvaluation!.uncomfortable);
       badCheckList.add(badEvaluation!.privateMeeting);
-      print(badCheckList);
+      debugPrint(badCheckList.toString());
     } else {
       // 둘다 존재하지 않는 경우
       change(null, status: RxStatus.empty());
@@ -118,7 +118,7 @@ class MySentGameReviewController extends GetxController with StateMixin {
           );
         } else {
           myReviewContent.value = '';
-          print('내가 보낸 게임후기 null');
+          debugPrint('내가 보낸 게임후기 null');
         }
       },
     );
