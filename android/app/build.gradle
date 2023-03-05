@@ -65,8 +65,8 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         multiDexEnabled true
-        versionCode 4
-        versionName "1.0.0"    
+        versionCode 5
+        versionName "1.0.1"    
         }
 
     signingConfigs {
@@ -97,15 +97,18 @@ flutter {
 
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.2.0')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.android.support:multidex:2.0.1'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-auth'
+    // implementation 'com.google.firebase:firebase-auth'
+    implementation ('com.google.firebase:firebase-auth'){
+        exclude group: 'com.google.android.gms', module: 'play-services-safetynet'
+    }
     implementation 'com.google.firebase:firebase-functions'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-analytics'

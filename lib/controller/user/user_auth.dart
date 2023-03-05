@@ -30,9 +30,6 @@ class UserController extends GetxController {
     await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  // // 구글 소셜 로그인으로 가입
-  // Future signInWithGoogleCredential() async {}
-
   // 유저 정보 DB에 추가
   Future addNewUser(UserModel userModel) async {
     _userDB.doc(userModel.uid).set(
@@ -41,6 +38,7 @@ class UserController extends GetxController {
         'userName': userModel.userName,
         'profileUrl': userModel.profileUrl,
         'mannerLevel': userModel.mannerLevel,
+        'pushToken': userModel.pushToken,
         'chatPushNtf': userModel.chatPushNtf,
         'activityPushNtf': userModel.activityPushNtf,
         'marketingConsent': userModel.marketingConsent,
@@ -131,27 +129,10 @@ class UserController extends GetxController {
       );
       // 사용자 재인증
       await _auth.currentUser!.reauthenticateWithCredential(credential);
-      // 장치에 저장된 유저 토큰 삭제
       _auth.currentUser!.delete();
       debugPrint('탈퇴 성공');
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-verification-code') {
-        // SMS 코드가 틀린 경우
-        // 스낵바로 유저에게 알림
-        Get.snackbar(
-          '',
-          '',
-          titleText: Text(
-            '인증코드 입력 오류',
-            style: AppTextStyle.snackbarTitleStyle,
-          ),
-          messageText: Text(
-            '입력한 인증 코드를 확인해주세요.',
-            style: AppTextStyle.snackbarContentStyle,
-          ),
-        );
-      } else
-        debugPrint(e.toString());
+      debugPrint(e.toString());
     }
   }
 }

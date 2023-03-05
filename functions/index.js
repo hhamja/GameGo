@@ -100,7 +100,7 @@ exports.chatNotification = functions
           console.log("messageType == appoint");
         } else if (userTo["pushToken"] == "") {
           console.log("pushToken가 null임");
-        } else {
+        }  else {
           console.log("유저 찾을 수가 없어요");
         }
       })
@@ -133,7 +133,8 @@ exports.activityAndMarketingNotification = functions
       .get()
       .then((snapshotUserTo) => {
         const userTo = snapshotUserTo.data();
-        console.log(`Found user to: ${userTo["userName"]}`);
+        const userName = userTo["userName"];
+        console.log(`Found user from: ${userName}`);
         const activityNtf = userTo["activityPushNtf"];
         const marketingConsent = userTo["marketingConsent"];
         const nightNtf = userTo["nightPushNtf"];
